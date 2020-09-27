@@ -5,11 +5,13 @@
 #pragma once
 #include "collision.h"
 
+class GameObject;
+
 class TowerCollision :public Collision
 {
 public:
 	HRESULT Init();
-	virtual void Check(Collision* othor);
+	virtual void OnCollisionEnter(GameObject* othor);
 	void UpdatePos();
 };
 

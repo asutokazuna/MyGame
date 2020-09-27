@@ -17,15 +17,15 @@ HRESULT TowerCollision::Init()
 	return E_NOTIMPL;
 }
 
-void TowerCollision::Check(Collision * othor)
+void TowerCollision::OnCollisionEnter(GameObject* othor)
 {
-	if (othor->GetTag() == COL_MISSILE) {
+	if (othor->CompareTag(COL_MISSILE)) {
 		m_Parent->GetComponent<TowerEnergy>()->AddEnergy(1);
-		othor->m_Parent->GetComponent<MissileMove>()->m_nLife = 0;
+		othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
-	if (othor->GetTag() == COL_MISSILE_ENEMY) {
+	if (othor->CompareTag(COL_MISSILE_ENEMY)) {
 		m_Parent->GetComponent<TowerEnergy>()->AddEnergy(-1);
-		othor->m_Parent->GetComponent<MissileMove>()->m_nLife = 0;
+		othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
 }
 

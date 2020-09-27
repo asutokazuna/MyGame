@@ -8,9 +8,12 @@
 #include "GameObject.h"
 #include "ImGui/imgui.h"
 
-Fade* Fade::m_instance = nullptr;
 static Mesh* UI;
 
+/**
+ * @brief 初期化
+ * @return なし
+ */
 void Fade::InitInst()
 {
 	m_Mesh = new GameObject();
@@ -24,11 +27,19 @@ void Fade::InitInst()
 	m_State = FADE_NONE;
 }
 
+/**
+ * @brief 終了
+ * @return なし
+ */
 void Fade::UninitInst()
 {
 	delete m_Mesh;
 }
 
+/**
+ * @brief 更新
+ * @return なし
+ */
 void Fade::UpdateInst()
 {
 	if (m_State == FADE_NONE) {
@@ -58,6 +69,10 @@ void Fade::UpdateInst()
 	}
 }
 
+/**
+ * @brief 描画
+ * @return なし
+ */
 void Fade::DrawInst()
 {
 #ifdef _DEBUG
@@ -74,11 +89,19 @@ void Fade::DrawInst()
 	m_Mesh->Draw();
 }
 
+/**
+ * @brief フェード中か判定する
+ * @return フェード中ならtrue
+ */
 bool Fade::IsFadeInst()
 {
 	return m_isFade;
 }
 
+/**
+ * @brief フェード処理
+ * @return なし
+ */
 void Fade::SetState(FADE_STATE state)
 {
 	m_State = state;
@@ -92,49 +115,67 @@ void Fade::SetState(FADE_STATE state)
 	}
 }
 
+/**
+ * @brief 初期化
+ * @return なし
+ */
 void Fade::Init()
 {
-	Get()->InitInst();
+	GetInstance().InitInst();
 }
 
+/**
+ * @brief 終了
+ * @return なし
+ */
 void Fade::Uninit()
 {
-	Get()->UninitInst();
-	delete m_instance;
+	GetInstance().UninitInst();
 }
 
+/**
+ * @brief 更新
+ * @return なし
+ */
 void Fade::Update()
 {
-	Get()->UpdateInst();
+	GetInstance().UpdateInst();
 }
 
+/**
+ * @brief 描画
+ * @return なし
+ */
 void Fade::Draw()
 {
-	Get()->DrawInst();
+	GetInstance().DrawInst();
 }
 
+/**
+ * @brief フェード中か判定する
+ * @return フェード中ならtrue
+ */
 bool Fade::IsFade()
 {
-	return Get()->IsFadeInst();
+	return GetInstance().IsFadeInst();
 }
 
+/**
+ * @brief フェードイン
+ * @return なし
+ */
 void Fade::FadeIn()
 {
-	Get()->SetState(FADE_IN);
+	GetInstance().SetState(FADE_IN);
 }
 
+/**
+ * @brief フェードアウト
+ * @return なし
+ */
 void Fade::FadeOut()
 {
-	Get()->SetState(FADE_OUT);
-}
-
-Fade* Fade::Get()
-{
-	if (m_instance == nullptr) {
-		m_instance = new Fade();
-	}
-
-	return m_instance;
+	GetInstance().SetState(FADE_OUT);
 }
 
 // EOF

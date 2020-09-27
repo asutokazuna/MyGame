@@ -9,6 +9,7 @@
  */
 GameObject::GameObject() {
 	transform = AddComponent<Transform>();
+	tag = 0;
 }
 
 /**
@@ -116,6 +117,15 @@ void GameObject::DrawAlpha()
 	 for (auto& child : m_ChildList) {
 		 child->OnCollisionEnter(gameObbj);
 	 }
+ }
+
+ /**
+  * @brief ƒ^ƒO‚Ì”äŠr
+  * @return ˆê’v‚µ‚Ä‚¢‚ê‚Îtrue
+  */
+ bool GameObject::CompareTag(int objTag)
+ {
+	 return objTag == tag;
  }
 
 // EOF

@@ -4,6 +4,9 @@
  */
 #include "Transform.h"
 
+/**
+ * @brief コンストラクタ
+ */
 Transform::Transform()
 {
 	position = { 0,0,0 };
@@ -18,21 +21,37 @@ Transform::Transform()
 	quaternion = { 1,0,0,0 };
 }
 
+/**
+ * @brief 座標の取得
+ * @return 座標
+ */
 Vector3 Transform::GetPosition() 
 {
 	return position;
 }
 
+/**
+ * @brief 回転の取得
+ * @return 回転
+ */
 Vector3 Transform::GetRotation()
 {
 	return rotation;
 }
 
+/**
+ * @brief 大きさの取得
+ * @return 大きさ
+ */
 Vector3 Transform::GetScale()
 {
 	return scale;
 }
 
+/**
+ * @brief 前方向の取得
+ * @return 前方向
+ */
 Vector3 Transform::GetForward()
 {
 	Vector3 forward = {0,0,1};
@@ -42,6 +61,12 @@ Vector3 Transform::GetForward()
 	return forward;
 }
 
+/**
+ * @brief 回転させる
+ * @param[in]	kind 回転させる軸
+ * @param[in]	rad	回転させる角度(ラジアン)
+ * @return 実体
+ */
 Transform& Transform::AngleAxis(AxisKind kind, float rad)
 {
 	Vector3 axis = { 1,0,0 };

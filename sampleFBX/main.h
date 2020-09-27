@@ -1,14 +1,9 @@
-//=============================================================================
-//
-// メイン処理 [main.h]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/**
+ * @file main.h
+ * @brief メイン
+ */
 #pragma once
 
-//*****************************************************************************
-// インクルードファイル
-//*****************************************************************************
 #include <windows.h>
 #include <tchar.h>
 #include <mmsystem.h>
@@ -48,9 +43,6 @@ using namespace DirectX;
 #define SCREEN_HEIGHT	(720)				// ウインドウの高さ
 #define SCREEN_CENTER_X	(SCREEN_WIDTH/2)	// ウインドウの中心Ｘ座標
 #define SCREEN_CENTER_Y	(SCREEN_HEIGHT/2)	// ウインドウの中心Ｙ座標
-
-#define	NUM_VERTEX		(4)					// 頂点数
-#define	NUM_POLYGON		(2)					// ポリゴン数
 
 #define FRAME_RATE		(60)
 

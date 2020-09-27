@@ -18,7 +18,12 @@ protected:
 	int m_GUID;								//!< ハッシュとなるユニークID
 
 public:
-
+	/**
+	 * @brief データのセット
+	 * @param[in] num	識別子またはユニークID
+	 * @param[in] data	保存しておきたいデータ
+	 * @return なし
+	 */
 	void Set(int num, T* data) {
 		m_GUID = num;
 		std::unique_ptr<T> buf(data);
@@ -26,6 +31,11 @@ public:
 	}
 
 public:
+	/**
+	 * @brief データの取得
+	 * @param[in] id データをセットしたときの識別子またはユニークID
+	 * @return データ
+	 */
 	T* Get(int id) {
 		return m_data[id].get();
 	}
@@ -42,7 +52,12 @@ protected:
 	int m_GUID;								//!< ハッシュとなるユニークID
 
 public:
-
+	/**
+	 * @brief データのセット
+	 * @param[in] num	識別子またはユニークID
+	 * @param[in] data	保存しておきたいデータ
+	 * @return なし
+	 */
 	void Set(int num, T* data) {
 		m_GUID = num;
 		Microsoft::WRL::ComPtr<T> buf;
@@ -51,10 +66,14 @@ public:
 	}
 
 public:
+	/**
+	 * @brief データの取得
+	 * @param[in] id データをセットしたときの識別子またはユニークID
+	 * @return データ
+	 */
 	T* Get(int id) {
 		return m_data[id].Get();
 	}
 };
-
 
 // EOF

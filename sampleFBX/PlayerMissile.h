@@ -9,6 +9,10 @@
 class CExplosion;
 class Transform;
 
+/**
+ * @class PlayerMissile
+ * @brief プレイヤーのミサイル
+ */
 class PlayerMissile: public Missile
 {
 private:

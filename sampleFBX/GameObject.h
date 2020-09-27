@@ -9,6 +9,19 @@
 #include "Transform.h"
 #include "Object.h"
 
+enum GameObjectTag 
+{
+	OBJ_TAG_PLAYER,
+	OBJ_TAG_PLAYERMISSILE,
+	OBJ_TAG_ENEMY,
+	OBJ_TAG_ENEMYMISSILE,
+	OBJ_TAG_TOWER,
+	OBJ_TAG_CORE_PLAYER,
+	OBJ_TAG_CORE_ENEMY,
+
+	OBJ_TAG_MAX
+};
+
 /**
  * @class GameObject
  * @brief ゲームオブジェクト
@@ -16,7 +29,8 @@
 class GameObject :public Object
 {
 protected:
-	Transform *transform;			//!< トランスフォーム
+	Transform	*transform;			//!< トランスフォーム
+	int			tag;				//!< オブジェクト識別用タグ
 
 public:
 	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
@@ -76,6 +90,12 @@ public:
 	 * @return なし
 	 */
 	virtual void OnCollisionEnter(GameObject* gameObbj);
+
+	/**
+	 * @brief タグの比較
+	 * @return 一致していればtrue
+	 */
+	bool CompareTag(int objTag);
 
 	/**
  * @breif コンポーネントの取得

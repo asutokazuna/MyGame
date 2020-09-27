@@ -102,7 +102,7 @@ ID3D11PixelShader* ShaderData::GetPixelShader(int kind)
  * @param[in] 取得したい種類のenum
  * @return 引数に対応したインプットレイアウト
  */
-ID3D11InputLayout * ShaderData::GetInputLayout(int kind)
+ID3D11InputLayout* ShaderData::GetInputLayout(int kind)
 {
 	return ShaderData::GetInstance().m_IL.Get(kind);
 }

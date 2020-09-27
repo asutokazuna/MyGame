@@ -15,7 +15,6 @@ protected:
 	CoreState* m_State;
 public:
 	HRESULT Init();
-	/*void Update();*/
 	int GetLife();
 };
 

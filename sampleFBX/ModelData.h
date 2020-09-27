@@ -1,6 +1,6 @@
 /**
- * @file CPlayer
- * @brief プレイヤークラス
+ * @file ModelData
+ * @brief モデルデータ
  */
 #pragma once
 #include <Windows.h>
@@ -20,6 +20,10 @@ enum ModelKind
 	MODEL_MAX
 };
 
+/**
+ * @class ModelData
+ * @brief モデルデータ
+ */
 class ModelData:public Singleton<ModelData>
 {
 public:
@@ -32,11 +36,26 @@ private:
 	CFbxLight	m_light;	//!< 光源情報
 
 public:
+
+	/**
+	 * @brief 初期化
+	 * @return なし
+	 */
 	void Initinstance();
 	void UninitInstance();
 
+	/**
+	 * @brief 初期化
+	 * @return なし
+	 */
 	static void Init();
 	static void Uninit();
+
+	/**
+	 * @brief モデルデータの取得
+	 * @param[in] kind 取得したいテクスチャのID
+	 * @return 引数に合わせたモデルデータ
+	 */
 	static CFbxModel* GetData(ModelKind kind);
 };
 

@@ -17,14 +17,6 @@ HRESULT Core::Init()
 
 	return E_NOTIMPL;
 }
-//
-//void Core::Update()
-//{
-//	GameObject::Update();
-//	if (m_State->GetLife() <= 0) {
-//		SceneGame::GameOver();
-//	}
-//}
 
 int Core::GetLife()
 {

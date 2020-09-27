@@ -11,14 +11,16 @@
 #include "collision.h"
 #include "MissileCollision.h"
 
- //*****************************************************************************
- // É}ÉNÉçíËã`
- //*****************************************************************************
-#define SPEED			(15.0f)
 
 HRESULT PlayerMissile::Init()
 {
-	m_col = AddComponent<MissileCollision>();
+	{
+		m_col = AddComponent<MissileCollision>();
+		m_col->SetSize({ 20,20,20 })->SetPos(transform->position)
+			->SetActive(false);
+		m_col->SetTag(Collision::COL_MISSILE);
+	}
+	tag = Collision::COL_MISSILE;
 	Missile::Init();
 	m_col->SetTag(Collision::COL_MISSILE);
 	return S_OK;

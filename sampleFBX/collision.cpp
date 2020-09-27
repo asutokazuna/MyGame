@@ -8,6 +8,9 @@
 std::unordered_map<int, Collision*> Collision::m_List;
 static bool m_isViewCol = true;
 
+/**
+ * @breif コンストラクタ
+ */
 Collision::Collision()
 {
 	static int num = 0;
@@ -18,11 +21,18 @@ Collision::Collision()
 	m_tag = 0;
 }
 
+/**
+ * @brief デストラクタ
+ */
 Collision::~Collision()
 {
 	m_List.erase(id);
 }
 
+/**
+ * @breif 初期化処理
+ * @return なし
+ */
 HRESULT Collision::Init()
 {
 	//pos = m_Parent->GetTransform().position;
@@ -47,6 +57,10 @@ HRESULT Collision::Init()
 	return S_OK;
 }
 
+/**
+ * @breif 終了
+ * @return なし
+ */
 void Collision::Uninit()
 {
 #ifdef _DEBUG
@@ -54,6 +68,10 @@ void Collision::Uninit()
 #endif
 }
 
+/**
+ * @breif 更新
+ * @return なし
+ */
 void Collision::Update()
 {
 	pos = m_Parent->GetTransform().position;
@@ -66,6 +84,10 @@ void Collision::Update()
 #endif
 }
 
+/**
+ * @breif 描画
+ * @return なし
+ */
 void Collision::Draw()
 {
 #if _DEBUG
@@ -88,6 +110,10 @@ void Collision::Draw()
 #endif
 }
 
+/**
+ * @breif 描画
+ * @return なし
+ */
 void Collision::DrawAlpha()
 {
 #ifdef _DEBUG
@@ -96,11 +122,19 @@ void Collision::DrawAlpha()
 #endif
 }
 
+/**
+ * @breif タグの設定
+ * @return なし
+ */
 void Collision::SetTag(int tag)
 {
 	m_tag = tag;
 }
 
+/**
+ * @breif リストにある全てのオブジェクトが当たっているか判定する
+ * @return なし
+ */
 void Collision::Check()
 {
 	for (std::unordered_map<int, Collision*>::iterator col = m_List.begin(), colend = m_List.end(); col != colend; ++col) {
@@ -114,37 +148,45 @@ void Collision::Check()
 			}
 
 			if (CheckBox(col->second->pos, col->second->size, othor->second->pos, othor->second->size)) {
-				col->second->Check((othor->second));
+				col->second->OnCollisionEnter((othor->second->m_Parent));
 			}
 		}
 	}
 }
 
-void Collision::Check(Collision* othor)
-{
-	for (auto col : m_List)
-	{
-		//if (col == this) {//tag
-	}
-}
-
+/**
+ * @breif 座標の設定
+ * @return 実体
+ */
 Collision * Collision::SetPos(Vector3 position)
 {
 	pos = position;
 	return this;
 }
 
+/**
+ * @breif 大きさの設定
+ * @return 実体
+ */
 Collision * Collision::SetSize(Vector3 Size)
 {
 	size = Size;
 	return this;
 }
 
+/**
+ * @breif タグの取得
+ * @return タグの数値
+ */
 int Collision::GetTag()
 {
 	return m_tag;
 }
 
+/**
+ * @breif バウンディングボックスでの当たり判定の比較
+ * @return 当たっていればtrue
+ */
 bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize)
 {
 	bool isHit = false;
@@ -170,6 +212,10 @@ bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vect
 	return isHit;
 }
 
+/**
+ * @breif 当たり判定のリストの初期化
+ * @return なし
+ */
 void Collision::Clear()
 {
 	m_List.clear();

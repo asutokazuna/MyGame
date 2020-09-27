@@ -5,10 +5,24 @@
 #pragma once
 #include "Mesh.h"
 
+/**
+ * @class FieldMesh
+ * @brief °‚ÌƒƒbƒVƒ…
+ */
 class FieldMesh :public Mesh
 {
 public:
+
+	/**
+	 * @brief ‰Šú‰»
+	 * @return ‚È‚µ
+	 */
 	HRESULT Init();
+
+	/**
+	 * @brief •`‰æ
+	 * @return ‚È‚µ
+	 */
 	void Draw();
 };
 

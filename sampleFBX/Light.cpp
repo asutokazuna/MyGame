@@ -7,11 +7,6 @@
 #include <direct.h>
 
 using namespace DirectX;
-//
-//#define LIGHT0_DIFFUSE	XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-//#define LIGHT0_AMBIENT	XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-//#define LIGHT0_SPECULAR	XMFLOAT4(0.f,0.f,0.f,1.0f)
-//#define LIGHT0_DIR	XMFLOAT3(0.0f,-1.0f,-1.0f)
 
 #define LIGHT0_DIFFUSE	XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
 #define LIGHT0_AMBIENT	XMFLOAT4(0.2f,0.2f,0.2f,1.0f)

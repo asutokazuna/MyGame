@@ -28,6 +28,10 @@ MODEL_TABLE m_table[MODEL_MAX] = {
 	{PATH_CORE, MODEL_CORE},
 };
 
+/**
+ * @brief 初期化
+ * @return なし
+ */
 void ModelData::Initinstance()
 {
 	HRESULT hr = S_OK;
@@ -52,6 +56,10 @@ void ModelData::UninitInstance()
 {
 }
 
+/**
+ * @brief 初期化
+ * @return なし
+ */
 void ModelData::Init()
 {
 	ModelData::GetInstance().Initinstance();
@@ -62,6 +70,11 @@ void ModelData::Uninit()
 	ModelData::GetInstance().UninitInstance();
 }
 
+/**
+ * @brief モデルデータの取得
+ * @param[in] kind 取得したいテクスチャのID
+ * @return 引数に合わせたモデルデータ
+ */
 CFbxModel * ModelData::GetData(ModelKind kind)
 {
 	return ModelData::GetInstance().m_data.Get(kind);

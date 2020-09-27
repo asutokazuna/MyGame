@@ -1,3 +1,7 @@
+/**
+ * @file Object.h
+ * @brief ベースとなるオブジェクトクラス
+ */
 #include "Object.h"
 
 void Object::Destroy(Object* obj) 

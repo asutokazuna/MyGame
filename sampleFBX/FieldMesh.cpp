@@ -11,6 +11,10 @@
 
 #define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
 
+/**
+ * @brief 初期化
+ * @return なし
+ */
 HRESULT FieldMesh::Init()
 {
 	HRESULT hr = S_OK;
@@ -107,6 +111,10 @@ HRESULT FieldMesh::Init()
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 描画
+ * @return なし
+ */
 void FieldMesh::Draw()
 {
 	m_View = CCamera::Get()->GetView();

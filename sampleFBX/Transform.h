@@ -24,14 +24,34 @@ public:
 	Vector3 axisZ;
 	Quaternion quaternion;
 
+public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	Transform();
 
+	/**
+	 * @brief 座標の取得
+	 * @return 座標
+	 */
 	Vector3 GetPosition();
 
+	/**
+	 * @brief 回転の取得
+	 * @return 回転
+	 */
 	Vector3 GetRotation();
 
+	/**
+	 * @brief 大きさの取得
+	 * @return 大きさ
+	 */
 	Vector3 GetScale();
 
+	/**
+	 * @brief 前方向の取得
+	 * @return 前方向
+	 */
 	Vector3 GetForward();
 
 	enum AxisKind
@@ -44,6 +64,12 @@ public:
 		AXIS_WORLD_Z,
 	};
 
+	/**
+	 * @brief 回転させる
+	 * @param[in]	kind 回転させる軸
+	 * @param[in]	rad	回転させる角度(ラジアン)
+	 * @return 実体
+	 */
 	Transform& AngleAxis(AxisKind kind, float rad);
 };
 
