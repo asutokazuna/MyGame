@@ -16,9 +16,9 @@ public:
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
-	Vector3 worldPosition;
-	Vector3 worldRotation;
-	Vector3 worldScale;
+	Vector3 localPosition;
+	Vector3 localRotation;
+	Vector3 localScale;
 	Vector3 axisX;
 	Vector3 axisY;
 	Vector3 axisZ;

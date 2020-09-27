@@ -1,6 +1,6 @@
 /**
  * @file GameObject.h
- * @brief コンポーネントオブジェクト
+ * @brief ゲームオブジェクト
  */
 #pragma once
 #include <list>
@@ -20,6 +20,7 @@ protected:
 
 public:
 	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
+	//std::list<GameObject*> m_ChildList;	//!< 子オブジェクトリスト
 
 public:
 	std::list<Component*> m_ComponentList;		//!< コンポーネントリスト
@@ -69,6 +70,12 @@ public:
 	 * @return トランスフォーム
 	 */
 	Transform& GetTransform();
+
+	/**
+	 * @brief 当たり判定処理
+	 * @return なし
+	 */
+	virtual void OnCollisionEnter(GameObject* gameObbj);
 
 	/**
  * @breif コンポーネントの取得

@@ -19,7 +19,6 @@ protected:
 	MissileMove* m_Move;
 public:
 	Missile();
-	~Missile();
 	HRESULT Init();
 	void Uninit();
 	void Update();

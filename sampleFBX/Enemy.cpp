@@ -17,14 +17,6 @@
 #define PATH_ENEMY		"data/model/X_wing.fbx"
 #define SPEED			(5.0f)
 
-Enemy::Enemy()
-{
-}
-
-Enemy::~Enemy()
-{
-}
-
 HRESULT Enemy::Init()
 {
 	HRESULT hr = S_OK;	
@@ -47,7 +39,7 @@ void Enemy::Uninit()
 
 void Enemy::Update()
 {
-	m_Missile->Fire(&transform->position, transform->quaternion);
+	//m_Missile->Fire(&transform->position, transform->quaternion);
 	m_Missile->Update();
 	GameObject::Update();
 }

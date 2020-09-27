@@ -15,8 +15,6 @@ class Enemy: public GameObject
 private:
 	EnemyMissile* m_Missile;
 public:
-	Enemy();
-	~Enemy();
 	HRESULT Init();
 	void Uninit();
 	void Update();

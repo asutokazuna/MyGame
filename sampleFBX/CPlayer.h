@@ -8,9 +8,11 @@
 #include "Box.h"
 #include "GameObject.h"
 #include <memory>
+#include <list>
 
 class PlayerMissile;
 class Collision;
+
 class CPlayer: public GameObject
 {
 private:
@@ -22,17 +24,13 @@ private:
 	bool m_bHit;			//!< Õ“Ë‚Ì—L–³
 
 private:
-	std::unique_ptr<PlayerMissile[]> m_Missile;
+	std::list<PlayerMissile*> m_Missile;
 	Collision* m_col;
 
 public:
 	CPlayer();
-	~CPlayer();
 	HRESULT Init();
-	void Uninit();
 	void Update();
-	void Draw();
-	void DrawAlpha();
 };
 
 // EOF

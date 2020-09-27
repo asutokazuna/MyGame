@@ -25,6 +25,12 @@ public:
 	 * @brief デストラクタ
 	 */
 	virtual ~Component(){}
+	
+	/**
+	 * @brief 当たり判定処理
+	 * @return なし
+	 */
+	virtual void OnCollisionEnter(GameObject* gameObbj){}
 
 };
 

@@ -8,14 +8,12 @@
 
 class CExplosion;
 class Transform;
+
 class PlayerMissile: public Missile
 {
 private:
-	CExplosion* m_exp;		//!< 爆発エフェクト
 
 public:
-	PlayerMissile();
-	~PlayerMissile();
 	HRESULT Init();
 
 };

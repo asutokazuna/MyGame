@@ -39,10 +39,10 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 
 	mtxRot = mtxWorld = XMMatrixIdentity();
 
-	mtxScale = XMMatrixScaling(transform.worldScale.x, transform.worldScale.y, transform.worldScale.z);
+	mtxScale = XMMatrixScaling(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScale);
 
-	mtxRot = XMMatrixRotationRollPitchYaw(transform.worldRotation.x, transform.worldRotation.y, transform.worldRotation.z);
+	mtxRot = XMMatrixRotationRollPitchYaw(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 	mtxAxis = mtxRot;
 
@@ -58,7 +58,7 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 	mtxRot = XMMatrixMultiply(mtxRot, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
-	mtxTranslate = XMMatrixTranslation(transform.worldPosition.x, transform.worldPosition.y, transform.worldPosition.z);
+	mtxTranslate = XMMatrixTranslation(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
 	//Vector3 pos= 

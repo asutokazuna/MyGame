@@ -14,7 +14,7 @@ private:
 public:
 	int m_nStat;			//!< 0:未使用, 1:使用中
 	int m_nLife;			//!< 寿命
-	int m_Speed;
+	float m_Speed;
 public:
 	MissileMove();
 	~MissileMove();

@@ -16,14 +16,6 @@
  //*****************************************************************************
 #define SPEED			(15.0f)
 
-PlayerMissile::PlayerMissile()
-{
-}
-
-PlayerMissile::~PlayerMissile()
-{
-}
-
 HRESULT PlayerMissile::Init()
 {
 	m_col = AddComponent<MissileCollision>();

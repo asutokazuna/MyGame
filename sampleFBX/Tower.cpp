@@ -35,7 +35,7 @@ void Tower::Update()
 {
 	m_LifeGauge->SetTransform(*transform);
 	m_LifeGauge->Update();
-	float value = m_Energy->GetEnergy();
+	float value = (float)m_Energy->GetEnergy();
 	m_LifeGauge->SetValue(value);
 	GameObject::Update();
 }

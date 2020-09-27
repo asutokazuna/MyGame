@@ -9,9 +9,9 @@ Transform::Transform()
 	position = { 0,0,0 };
 	rotation = { 0,0,0 };
 	scale = { 1,1,1 };
-	worldPosition = { 0,0,0 };
-	worldRotation = { 0,0,0 };
-	worldScale = { 1,1,1 };
+	localPosition = { 0,0,0 };
+	localRotation = { 0,0,0 };
+	localScale = { 1,1,1 };
 	axisX = { 1,0,0 };
 	axisY = { 0,1,0 };
 	axisZ = { 0,0,1 };

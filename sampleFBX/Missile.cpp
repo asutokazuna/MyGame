@@ -14,10 +14,6 @@ Missile::Missile()
 	m_col = nullptr;
 }
 
-Missile::~Missile()
-{
-}
-
 HRESULT Missile::Init()
 {
 	HRESULT hr = S_OK;	
@@ -83,6 +79,7 @@ bool Missile::Fire(Vector3 * pos, Quaternion quat)
 	m_col->SetActive(true);
 	transform->position = *pos;
 	transform->quaternion = quat;
+	m_col->SetPos(*pos);
 	m_Move->m_nLife = 3 * 60;		// 5•b
 	m_Move->m_nStat = 1;			// ’Ç”ö’†
 	return true;

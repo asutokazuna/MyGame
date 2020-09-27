@@ -2,6 +2,8 @@
  * @file TowerEnergy
  * @brief TowerEnergyƒNƒ‰ƒX
  */
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "TowerEnergy.h"
 #include "ImGui/imgui.h"
 
