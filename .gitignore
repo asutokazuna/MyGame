@@ -1,0 +1,11 @@
+/.vs
+/sampleFBX/x64
+/sampleFBX/x86
+/sampleFBX/DirectXTex
+
+*.exe
+*.user
+*.ilk
+*.pdb
+*.iobj
+*.ipdb

@@ -1,0 +1,85 @@
+/**
+ * @file ShaderData
+ * @brief シェーダーデータクラス
+ */
+#pragma once
+#include <d3d11.h>
+#include <vector>
+#include "Singleton.h"
+#include "Data.h"
+
+/**
+ * @class シェーダーデータを格納するクラス
+ */
+class ShaderData: public Singleton<ShaderData>
+{
+public:
+	friend class Singleton<ShaderData>;		//!< シングルトンでのインスタンスの生成用
+
+private:
+	DXData<ID3D11VertexShader> m_VS;		//!< バーテックスシェーダー
+	DXData<ID3D11PixelShader> m_PS;		//!< ピクセルシェーダー
+	DXData<ID3D11InputLayout> m_IL;		//!< インプットレイアウト
+
+private:
+
+	/**
+	 * @brief　データの初期化
+	 * @return なし
+	 */
+	void InitInstance();
+	
+public:
+	/**
+	 * @enum バーテックスシェーダーの種類
+	 */
+	enum VS_KIND
+	{
+		VS_VERTEX,
+		VS_MAX
+	};
+
+	/**
+	 * @enum ピクセルシェーダーの種類
+	 */
+	enum PS_KIND
+	{
+		PS_PIXEL,
+		PS_MAX
+	};
+
+	/**
+	 * @biref 初期化処理
+	 * @return なし
+	 */
+	static void Init();
+
+	/**
+	 * @brief 終了処理
+	 * @return なし
+	 */
+	static void Uninit();
+
+	/**
+	 * @brief バーテックスシェーダーの取得
+	 * @param[in] 取得したい種類のenum
+	 * @return 引数に対応したシェーダーデータ
+	 */
+	static ID3D11VertexShader* GetVertexShader(int kind);
+
+	/**
+	 * @brief ピクセルシェーダーの取得
+	 * @param[in] 取得したい種類のenum
+	 * @return 引数に対応したシェーダーデータ
+	 */
+	static ID3D11PixelShader* GetPixelShader(int kind);
+
+	/**
+	 * @brief インプットレイアウトの取得
+	 * @param[in] 取得したい種類のenum
+	 * @return 引数に対応したインプットレイアウト
+	 */
+	static ID3D11InputLayout* GetInputLayout(int kind);
+};
+
+// EOF
