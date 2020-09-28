@@ -22,14 +22,17 @@ CScene* SceneManager::m_nowScene = nullptr;
 int SceneManager::m_SceneID = 0;
 int SceneManager::m_NextSceneID = 0;
 
+/**
+ * @brief コンストラクタ
+ */
 SceneManager::SceneManager(): m_pCamera(nullptr),m_pSky(nullptr)
 {
 }
 
-SceneManager::~SceneManager()
-{
-}
-
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void SceneManager::Init()
 {
 	ShaderData::Init();
@@ -44,17 +47,25 @@ void SceneManager::Init()
 	m_pSky->Init();
 	Fade::Init();
 
-	ObjectManager::Init();
 	m_nowScene = new SceneTitle();
+	m_nowScene->Awake();
+	ObjectManager::Awake();
+
 	m_nowScene->Init();
+	ObjectManager::Init();
 }
 
+/**
+ * @brief 終了処理
+ * @return なし
+ */
 void SceneManager::Uninit()
 {
+	ObjectManager::Uninit();
+
 	if(m_nowScene)
 	m_nowScene->Uninit();
 
-	ObjectManager::Uninit();
 
 	if(m_pSky)
 	m_pSky->Uninit();
@@ -71,6 +82,10 @@ void SceneManager::Uninit()
 	delete m_nowScene;
 }
 
+/**
+ * @brief 更新処理
+ * @return  なし
+ */
 void SceneManager::Update()
 {
 	Fade::Update();
@@ -90,6 +105,10 @@ void SceneManager::Update()
 	Collision::Check();
 }
 
+/**
+ * @brief 描画処理
+ * @return  なし
+ */
 void SceneManager::Draw()
 {	
 	m_pSky->Draw();
@@ -100,12 +119,20 @@ void SceneManager::Draw()
 	Fade::Draw();
 }
 
+/**
+ * @brief デフォルトのカメラを設定
+ * @return なし
+ */
 void SceneManager::SetDefCamera()
 {
 	CCamera::Set(m_pCamera);
 	m_pCamera->Init();
 }
 
+/**
+ * @brief シーンチェンジ
+ * @return なし
+ */
 void SceneManager::Change()
 {
 	if (m_SceneID == m_NextSceneID) {
@@ -114,6 +141,7 @@ void SceneManager::Change()
 
 	m_SceneID = m_NextSceneID;
 
+	ObjectManager::Uninit();
 	m_nowScene->Uninit();
 	delete m_nowScene;
 	ObjectManager::Clear();
@@ -134,10 +162,20 @@ void SceneManager::Change()
 		break;
 	}
 	SetDefCamera();
+	m_nowScene->Awake();
+	ObjectManager::Awake();
+
 	m_nowScene->Init();
+
+	ObjectManager::Init();
 	Fade::FadeIn();
 }
 
+/**
+ * @brief シーンチェンジ
+ * @param sceneID 移動先のシーンのID
+ * @return なし
+ */
 void SceneManager::Change(ESCENE sceneID)
 {
 	m_NextSceneID = sceneID;

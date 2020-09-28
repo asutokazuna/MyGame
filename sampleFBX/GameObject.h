@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file GameObject.h
- * @brief ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+ * @brief ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #pragma once
 #include <list>
@@ -11,6 +11,7 @@
 
 enum GameObjectTag 
 {
+	OBJ_TAG_NONE,
 	OBJ_TAG_PLAYER,
 	OBJ_TAG_PLAYERMISSILE,
 	OBJ_TAG_ENEMY,
@@ -24,82 +25,82 @@ enum GameObjectTag
 
 /**
  * @class GameObject
- * @brief ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+ * @brief ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 class GameObject :public Object
 {
 protected:
-	Transform	*transform;			//!< ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
-	int			tag;				//!< ƒIƒuƒWƒFƒNƒg¯•Ê—pƒ^ƒO
+	Transform	*transform;			//!< ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
+	int			tag;				//!< ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè­˜åˆ¥ç”¨ã‚¿ã‚°
 
 public:
-	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< qƒIƒuƒWƒFƒNƒgƒŠƒXƒg
-	//std::list<GameObject*> m_ChildList;	//!< qƒIƒuƒWƒFƒNƒgƒŠƒXƒg
+	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆ
+	//std::list<GameObject*> m_ChildList;	//!< å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆ
 
 public:
-	std::list<Component*> m_ComponentList;		//!< ƒRƒ“ƒ|[ƒlƒ“ƒgƒŠƒXƒg
+	std::list<Component*> m_ComponentList;		//!< ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒªã‚¹ãƒˆ
 
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	GameObject();
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	~GameObject() override;
 
 	/**
-	 * @brief XVˆ—
-	 * @return  ‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @return  ãªã—
 	 */
 	void Update();
 
 	/**
-	 * @brief XVˆ—
-	 * @return  ‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @return  ãªã—
 	 */
 	void LateUpdate() override;
 
 	/**
-	 * @brief •`‰æˆ—
-	 * @return  ‚È‚µ
+	 * @brief æç”»å‡¦ç†
+	 * @return  ãªã—
 	 */
 	void Draw() override;
 
 	/**
-	 * @brief •`‰æˆ—
-	 * @return  ‚È‚µ
+	 * @brief æç”»å‡¦ç†
+	 * @return  ãªã—
 	 */
 	void DrawAlpha() override;
 
 	/**
-	 * @brief qƒIƒuƒWƒFƒNƒg‚Ìİ’è
-	 * @return ‚È‚µ
+	 * @brief å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¨­å®š
+	 * @return ãªã—
 	 */
 	void SetChild(GameObject* child);
 
 	/**
-	 * @brief ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìæ“¾
-	 * @return ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	 * @brief ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®å–å¾—
+	 * @return ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 	 */
 	Transform& GetTransform();
 
 	/**
-	 * @brief “–‚½‚è”»’èˆ—
-	 * @return ‚È‚µ
+	 * @brief å½“ãŸã‚Šåˆ¤å®šå‡¦ç†
+	 * @return ãªã—
 	 */
 	virtual void OnCollisionEnter(GameObject* gameObbj);
 
 	/**
-	 * @brief ƒ^ƒO‚Ì”äŠr
-	 * @return ˆê’v‚µ‚Ä‚¢‚ê‚Îtrue
+	 * @brief ã‚¿ã‚°ã®æ¯”è¼ƒ
+	 * @return ä¸€è‡´ã—ã¦ã„ã‚Œã°true
 	 */
 	bool CompareTag(int objTag);
 
 	/**
- * @breif ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾
- * @return ƒNƒ‰ƒX‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @breif ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾—
+ * @return ã‚¯ãƒ©ã‚¹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 	template<class T>
 	T* GetComponent()
@@ -114,8 +115,8 @@ public:
 	}
 
 	/**
-	 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
-	 * @return ’Ç‰Á‚µ‚½ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌÀ‘Ì
+	 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¿½åŠ 
+	 * @return è¿½åŠ ã—ãŸã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®Ÿä½“
 	 */
 	template<class T>
 	T* AddComponent()

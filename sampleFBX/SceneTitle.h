@@ -1,18 +1,31 @@
-/**
+﻿/**
  * @file SceneTitle
- * @brief �^�C�g���V�[���N���X
+ * @brief タイトルシーンクラス
  */
 #pragma once
 #include "Scene.h"
 
 class TitleUI;
+
+/**
+ * @class SceneTitle
+ * @brief タイトルシーン
+ */
 class SceneTitle :public CScene
 {
 private:
 	TitleUI* m_UI;
 public:
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	HRESULT Init();
-	void Uninit();
+
+	/**
+	 * @brief 更新処理
+	 * @return  なし
+	 */
 	void Update();
 };
 

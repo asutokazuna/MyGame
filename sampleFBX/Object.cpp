@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Object.h
- * @brief ƒx[ƒX‚Æ‚È‚éƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX
+ * @brief ãƒ™ãƒ¼ã‚¹ã¨ãªã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹
  */
 #include "Object.h"
 
@@ -10,48 +10,55 @@ void Object::Destroy(Object* obj)
 }
 
 /**
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+ */
+ //Object::Object():m_isActive(true)
+ //{
+ //}
+
+/**
+ * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Object::~Object() {}
 
 /**
- * @brief ‰Šú‰»ˆ—
+ * @brief åˆæœŸåŒ–å‡¦ç†
  */
 void Object::Awake() {}
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return@‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @returnã€€ãªã—
  */
 HRESULT Object::Init() { return S_OK; }
 
 /**
- * @brief I—¹ˆ—
- * @return@‚È‚µ
+ * @brief çµ‚äº†å‡¦ç†
+ * @returnã€€ãªã—
  */
 void Object::Uninit() {}
 
 /**
- * @brief XVˆ—
- * @return@‚È‚µ
+ * @brief æ›´æ–°å‡¦ç†
+ * @returnã€€ãªã—
  */
 void Object::Update() {}
 
 /**
- * @brief XVˆ—
- * @return@‚È‚µ
+ * @brief æ›´æ–°å‡¦ç†
+ * @returnã€€ãªã—
  */
 void Object::LateUpdate() {}
 
 /**
- * @brief •`‰æˆ—
- * @return@‚È‚µ
+ * @brief æç”»å‡¦ç†
+ * @returnã€€ãªã—
  */
 void Object::Draw() {}
 
 /**
- * @brief “§–¾•”•ª•`‰æˆ—
- * @return@‚È‚µ
+ * @brief é€æ˜éƒ¨åˆ†æç”»å‡¦ç†
+ * @returnã€€ãªã—
  */
 void Object::DrawAlpha() {}
 

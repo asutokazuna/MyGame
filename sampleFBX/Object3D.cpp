@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Object3D.h
- * @brief 3DƒIƒuƒWƒFƒNƒg—pƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #include "Object3D.h"
 #include "CCamera.h"
@@ -9,7 +9,7 @@
 #include "Graphics.h"
 
 /**
- * @breif ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @breif ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Object3D::Object3D()
 {
@@ -18,8 +18,8 @@ Object3D::Object3D()
 }
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 HRESULT Object3D::Init()
 {
@@ -28,30 +28,30 @@ HRESULT Object3D::Init()
 	HRESULT hr = S_OK;
 
 	m_light.m_direction = XMFLOAT3(0, 0, 0);
-	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXƒ‚ƒfƒ‹
+	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXãƒ¢ãƒ‡ãƒ«
 
 	return hr;
 }
 
 /**
- * @breif I—¹
- * @return ‚È‚µ
+ * @breif çµ‚äº†
+ * @return ãªã—
  */
 void Object3D::Uninit()
 {
 }
 
 /**
- * @breif XV
- * @return ‚È‚µ
+ * @breif æ›´æ–°
+ * @return ãªã—
  */
 void Object3D::Update()
 {
 }
 
 /**
- * @breif •`‰æ
- * @return ‚È‚µ
+ * @breif æç”»
+ * @return ãªã—
  */
 void Object3D::Draw()
 {
@@ -59,52 +59,54 @@ void Object3D::Draw()
 
 	m_world = MyMath::StoreXMFloat4x4(*m_Transform);
 
-	// FBXƒtƒ@ƒCƒ‹•\¦
+	CGraphics::SetCullMode(CULLMODE_CW);
+	CGraphics::SetZWrite(true);
+	CGraphics::SetBlendState(BS_NONE);
+	// FBXãƒ•ã‚¡ã‚¤ãƒ«è¡¨ç¤º
 	m_Model->Render(m_world, pCamera->GetView(), pCamera->GetProj(), eOpacityOnly);
 }
 
 /**
- * @breif •`‰æ
- * @return ‚È‚µ
+ * @breif æç”»
+ * @return ãªã—
  */
 void Object3D::DrawAlpha()
 {
-
 	CGraphics::SetCullMode(CULLMODE_CW);
 	CGraphics::SetZWrite(true);
 	CGraphics::SetBlendState(BS_NONE);
 	CCamera* pCamera = CCamera::Get();
-	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXƒ‚ƒfƒ‹
+	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXãƒ¢ãƒ‡ãƒ«
 
 	m_Model->Render(m_world, pCamera->GetView(), pCamera->GetProj(), eTransparentOnly);
 }
 
 /**
- * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚Ìí—Ş‚ğİ’è
- * @param	kind	•\¦‚·‚éƒ‚ƒfƒ‹‚Ì¯•Êq
- * @retrun À‘Ì
+ * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡ã‚’è¨­å®š
+ * @param	kind	è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è­˜åˆ¥å­
+ * @retrun å®Ÿä½“
  */
 Object3D& Object3D::SetModel(int kind) {
 	m_ModelIndex = kind;
-	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXƒ‚ƒfƒ‹
+	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXãƒ¢ãƒ‡ãƒ«
 	return *this;
 }
 
 /**
- * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚Ìí—Ş‚ğİ’è
- * @param	kind	•\¦‚·‚éƒ‚ƒfƒ‹‚Ì¯•Êq
- * @retrun À‘Ì
+ * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡ã‚’è¨­å®š
+ * @param	kind	è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è­˜åˆ¥å­
+ * @retrun å®Ÿä½“
  */
 Object3D& Object3D::SetModel(ModelKind kind) {
 	m_ModelIndex = (int)kind;
-	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXƒ‚ƒfƒ‹
+	m_Model = ModelData::GetData((ModelKind)m_ModelIndex);	//!< FBXãƒ¢ãƒ‡ãƒ«
 	return *this;
 }
 
 /**
- * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚ÌF‚ğİ’è
- * @param	mat	•\¦‚·‚éF
- * @retrun À‘Ì
+ * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è‰²ã‚’è¨­å®š
+ * @param	mat	è¡¨ç¤ºã™ã‚‹è‰²
+ * @retrun å®Ÿä½“
  */
 void Object3D::SetMaterial(TFbxMaterial& mat)
 {

@@ -1,16 +1,28 @@
-/*
+﻿/*
  *@file ObjectManager.h
- * @brief �I�u�W�F�N�g�Ǘ��N���X
+ * @brief オブジェクト管理クラス
  */
 #include "ObjectManager.h"
 
-HRESULT ObjectManager::Init()
+/**
+ * @brief 初期化処理
+ * @return　なし
+ */
+void ObjectManager::Awake()
 {
 	auto& buff = ObjectManager::GetInstance().m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Awake();
 	}
+}
 
+/**
+ * @brief 初期化処理
+ * @return　なし
+ */
+ HRESULT ObjectManager::Init()
+{
+	 auto& buff = ObjectManager::GetInstance().m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Init();
 	}
@@ -18,6 +30,10 @@ HRESULT ObjectManager::Init()
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 終了処理
+ * @return　なし
+ */
 void ObjectManager::Uninit()
 {
 	auto& buff = ObjectManager::GetInstance().m_ObjList;
@@ -26,6 +42,10 @@ void ObjectManager::Uninit()
 	}
 }
 
+/**
+ * @brief 更新処理
+ * @return　なし
+ */
 void ObjectManager::Update()
 {
 	auto& buff = ObjectManager::GetInstance().m_ObjList;
@@ -36,7 +56,11 @@ void ObjectManager::Update()
 		obj.second.get()->LateUpdate();
 	}
 }
-
+	
+/**
+ * @brief 描画処理
+ * @return　なし
+ */
 void ObjectManager::Draw()
 {
 	auto& buff = ObjectManager::GetInstance().m_ObjList;

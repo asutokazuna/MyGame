@@ -1,77 +1,82 @@
-/**
+ï»¿/**
  * @file Object.h
- * @brief ƒx[ƒX‚Æ‚È‚éƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX
+ * @brief ãƒ™ãƒ¼ã‚¹ã¨ãªã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "main.h"
 
 /**
  * @class Object
- * @breif ƒx[ƒXƒIƒuƒWƒFƒNƒg
+ * @breif ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 class Object
 {
 protected:
-	bool m_isActive;		//!< ƒAƒNƒeƒBƒu‚©‚Ç‚¤‚©
+	bool m_isActive;		//!< ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‹ã©ã†ã‹
 
 public:
 	/**
-	 * @brief –¢À‘•
-	 * @return ‚È‚µ
+	 * @brief æœªå®Ÿè£…
+	 * @return ãªã—
 	 */
 	static void Destroy(Object* obj);
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 */
+	//Object();
+
+	/**
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	virtual ~Object();
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	virtual void Awake();
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return@‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual HRESULT Init();
 
 	/**
-	 * @brief I—¹ˆ—
-	 * @return@‚È‚µ
+	 * @brief çµ‚äº†å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual void Uninit();
 
 	/**
-	 * @brief XVˆ—
-	 * @return@‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual void Update();
 
 	/**
-	 * @brief XVˆ—
-	 * @return@‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual void LateUpdate();
 
 	/**
-	 * @brief •`‰æˆ—
-	 * @return@‚È‚µ
+	 * @brief æç”»å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual void Draw();
 
 	/**
-	 * @brief “§–¾•”•ª•`‰æˆ—
-	 * @return@‚È‚µ
+	 * @brief é€æ˜éƒ¨åˆ†æç”»å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	virtual void DrawAlpha();
 
 	/**
-	 * @brief —LŒø‰»‚ÌØ‚è‘Ö‚¦
-	 * @param[in] flg ƒIƒuƒWƒFƒNƒg‚Ì—LŒø‰»ƒtƒ‰ƒO
-	 * @return ‚È‚µ
+	 * @brief æœ‰åŠ¹åŒ–ã®åˆ‡ã‚Šæ›¿ãˆ
+	 * @param[in] flg ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æœ‰åŠ¹åŒ–ãƒ•ãƒ©ã‚°
+	 * @return ãªã—
 	 */
 	void SetActive(bool flg) {
 		m_isActive = flg;

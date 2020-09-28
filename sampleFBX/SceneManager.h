@@ -1,6 +1,6 @@
-/**
+﻿/**
  * @file SceneManager
- * @brief �V�[���}�l�[�W���[�N���X
+ * @brief シーンマネージャークラス
  */
 #pragma once
 #include "Singleton.h"
@@ -11,12 +11,12 @@ class CSky;
 
 /**
  * @class SceneManager
- * @brief �V�[���Ǘ��N���X
+ * @brief シーン管理クラス
  */
 class SceneManager:public Singleton<SceneManager>
 {
 public:
-	friend class Singleton<SceneManager>;		//!< �V���O���g��
+	friend class Singleton<SceneManager>;		//!< シングルトン
 
 public:
 	enum ESCENE
@@ -32,21 +32,56 @@ private:
 	static int m_SceneID;
 	static int m_NextSceneID;
 
-	CCamera*	m_pCamera;			// �A�N�e�B�u�ȃJ����
+	CCamera*	m_pCamera;			// アクティブなカメラ
 	CSky*	m_pSky;
 
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	SceneManager();
-	~SceneManager();
 
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	void Init();
+
+	/**
+	 * @brief 終了処理
+	 * @return なし
+	 */
 	void Uninit();
+
+	/**
+	 * @brief 更新処理
+	 * @return  なし
+	 */
 	void Update();
+
+	/**
+	 * @brief 描画処理
+	 * @return  なし
+	 */
 	void Draw();
 
+	/**
+	 * @brief デフォルトのカメラを設定
+	 * @return なし
+	 */
 	void SetDefCamera();
 
+	/**
+	 * @brief シーンチェンジ
+	 * @return なし
+	 */
 	void Change();
+
+	/**
+	 * @brief シーンチェンジ
+	 * @param sceneID 移動先のシーンのID
+	 * @return なし
+	 */
 	static void Change(ESCENE sceneID);
 };
 

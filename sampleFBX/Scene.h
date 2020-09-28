@@ -1,6 +1,6 @@
-//=======================================================================================
+ï»¿//=======================================================================================
 //
-//	  ƒQ[ƒ€ƒV[ƒ“ ƒNƒ‰ƒX’è‹` [Scene.h]
+//	  ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ ã‚¯ãƒ©ã‚¹å®šç¾© [Scene.h]
 //
 //=======================================================================================
 #pragma once
@@ -11,18 +11,19 @@
 class CScene
 {
 protected:
-	static CScene*	m_pScene;		// ƒAƒNƒeƒBƒu ƒV[ƒ“
+	static CScene*	m_pScene;		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ– ã‚·ãƒ¼ãƒ³
 
-	TCHAR		m_szDebug[1024];	// ƒfƒoƒbƒO—p•¶š—ñ
-	int			m_FPS;				// ƒtƒŒ[ƒ€”ƒJƒEƒ“ƒg—p
+	TCHAR		m_szDebug[1024];	// ãƒ‡ãƒãƒƒã‚°ç”¨æ–‡å­—åˆ—
+	int			m_FPS;				// ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆç”¨
 
-	//-------- ƒQ[ƒ€—pƒIƒuƒWƒFƒNƒg
-	std::list<Object*>	m_pObj;				// ƒIƒuƒWƒFƒNƒgæ“ª
+	//-------- ã‚²ãƒ¼ãƒ ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	std::list<Object*>	m_pObj;				// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…ˆé ­
 
 public:
 	CScene();
 	virtual ~CScene();
 
+	virtual void Awake();
 	virtual HRESULT Init();
 	virtual void Uninit();
 	virtual void Update();

@@ -1,38 +1,61 @@
-/**
+ï»¿/**
  * @file CCamera.h
- * @brief ƒJƒƒ‰ƒNƒ‰ƒX
+ * @brief ã‚«ãƒ¡ãƒ©ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "main.h"
 #include "Transform.h"
+#include "GameObject.h"
 
-class CCamera
+/**
+ * @class CCamera
+ * @brief ã‚«ãƒ¡ãƒ©
+ */
+class CCamera:public GameObject
 {
 protected:
-	XMFLOAT3	m_vEye;		//!< ‹“_À•W
-	XMFLOAT3	m_vLook;	//!< ’‹“_À•W
-	XMFLOAT3	m_vUp;		//!< ã•ûƒxƒNƒgƒ‹
-	XMFLOAT4X4	m_View;		//!< ƒrƒ…[•ÏŠ·
-	XMFLOAT4X4	m_Proj;		//!< Ë‰e•ÏŠ·
-	float		m_fFOVY;	//!< ‹–ìŠp
-	float		m_fAspect;	//!< ƒAƒXƒyƒNƒg”ä
-	float		m_fNearZ;	//!< ‘O•ûƒNƒŠƒbƒv‹——£
-	float		m_fFarZ;	//!< Œã•ûƒNƒŠƒbƒv‹——£
-	static XMFLOAT3 m_vNowEye;	//!< Œ»İ‚Ì‹“_
-	static XMFLOAT3 m_vNowLook;	//!< Œ»İ‚Ì’‹“_
-	static XMFLOAT3 m_vNowUp;	//!< Œ»İ‚Ìã•ûƒxƒNƒgƒ‹
+	XMFLOAT3	m_vEye;		//!< è¦–ç‚¹åº§æ¨™
+	XMFLOAT3	m_vLook;	//!< æ³¨è¦–ç‚¹åº§æ¨™
+	XMFLOAT3	m_vUp;		//!< ä¸Šæ–¹ãƒ™ã‚¯ãƒˆãƒ«
+	XMFLOAT4X4	m_View;		//!< ãƒ“ãƒ¥ãƒ¼å¤‰æ›
+	XMFLOAT4X4	m_Proj;		//!< å°„å½±å¤‰æ›
+	float		m_fFOVY;	//!< è¦–é‡è§’
+	float		m_fAspect;	//!< ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
+	float		m_fNearZ;	//!< å‰æ–¹ã‚¯ãƒªãƒƒãƒ—è·é›¢
+	float		m_fFarZ;	//!< å¾Œæ–¹ã‚¯ãƒªãƒƒãƒ—è·é›¢
+	static XMFLOAT3 m_vNowEye;	//!< ç¾åœ¨ã®è¦–ç‚¹
+	static XMFLOAT3 m_vNowLook;	//!< ç¾åœ¨ã®æ³¨è¦–ç‚¹
+	static XMFLOAT3 m_vNowUp;	//!< ç¾åœ¨ã®ä¸Šæ–¹ãƒ™ã‚¯ãƒˆãƒ«
 	Transform *m_transform;
 
 private:
-	static CCamera* m_pCamera;	//!< Œ»İ—LŒø‚ÈƒJƒƒ‰
+	static CCamera* m_pCamera;	//!< ç¾åœ¨æœ‰åŠ¹ãªã‚«ãƒ¡ãƒ©
 
 public:
-	CCamera();
-	~CCamera();
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
+	 */
 	virtual HRESULT Init();
+
+	/**
+	 * @brief çµ‚äº†å‡¦ç†
+	 * @return ãªã—
+	 */
 	virtual void Uninit();
+
+	/**
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @return ãªã—
+	 */
 	virtual void Update();
+
+	/**
+	 * @brief æç”»å‡¦ç†
+	 * @return ãªã—
+	 */
 	virtual void Draw();
+
 	virtual void SetPos(XMFLOAT3 eye);
 	void SetTransform(Transform& trans);
 

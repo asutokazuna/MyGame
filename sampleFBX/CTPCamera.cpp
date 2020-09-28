@@ -14,9 +14,14 @@ namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル�
 	const XMFLOAT3 g_vUp(0.0f, 1.0f, 0.0f);
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT CTPCamera::Init()
 {
 	HRESULT hr = S_OK;
+	m_isActive = false;
 	m_vEye = g_vEye;
 	m_vLook = g_vLook;
 	m_vUp = g_vUp;
@@ -58,10 +63,5 @@ void CTPCamera::Update()
 	// 行列更新
 	CCamera::Update();
 }
-//
-//void CTPCamera::SetTransform(Transform* transform)
-//{
-//	*m_transform = *transform;
-//}
 
 // EOF

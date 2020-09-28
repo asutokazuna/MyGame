@@ -1,24 +1,18 @@
-#include "CCamera.h"
+ï»¿#include "CCamera.h"
 #include "ImGui/imgui.h"
 
-// Ã“Iƒƒ“ƒo
+// é™çš„ãƒ¡ãƒ³ãƒ
 CCamera* CCamera::m_pCamera = nullptr;
 const float NEARZ = 10.0f;
 const float FAR_Z = 10000.0f;
-XMFLOAT3 CCamera::m_vNowEye;	//!< Œ»İ‚Ì‹“_
-XMFLOAT3 CCamera::m_vNowLook;	//!< Œ»İ‚Ì’‹“_
-XMFLOAT3 CCamera::m_vNowUp;		//!< Œ»İ‚Ìã•ûƒxƒNƒgƒ‹
+XMFLOAT3 CCamera::m_vNowEye;	//!< ç¾åœ¨ã®è¦–ç‚¹
+XMFLOAT3 CCamera::m_vNowLook;	//!< ç¾åœ¨ã®æ³¨è¦–ç‚¹
+XMFLOAT3 CCamera::m_vNowUp;		//!< ç¾åœ¨ã®ä¸Šæ–¹ãƒ™ã‚¯ãƒˆãƒ«
 
-CCamera::CCamera()
-{
-
-}
-
-CCamera::~CCamera()
-{
-
-}
-
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
 HRESULT CCamera::Init()
 {
 	HRESULT hr = S_OK;
@@ -36,14 +30,26 @@ HRESULT CCamera::Init()
 	return hr;
 }
 
+/**
+ * @brief çµ‚äº†å‡¦ç†
+ * @return ãªã—
+ */
 void CCamera::Uninit()
 {
 
 }
 
+/**
+ * @brief æ›´æ–°å‡¦ç†
+ * @return ãªã—
+ */
 void CCamera::Update()
 {
-	// n“_A’‹“_Aã•ûƒxƒNƒgƒ‹‚ğ‹ß‚Ã‚¯‚é
+	if (this->m_isActive == false) {
+		//return;
+	}
+
+	// å§‹ç‚¹ã€æ³¨è¦–ç‚¹ã€ä¸Šæ–¹ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿‘ã¥ã‘ã‚‹
 	m_vNowEye.x = m_vNowEye.x * 0.5f + m_vEye.x * 0.5f;
 	m_vNowEye.y = m_vNowEye.y * 0.5f + m_vEye.y * 0.5f;
 	m_vNowEye.z = m_vNowEye.z * 0.5f + m_vEye.z * 0.5f;
@@ -54,14 +60,18 @@ void CCamera::Update()
 	m_vNowUp.y = m_vNowUp.y * 0.5f + m_vUp.y * 0.5f;
 	m_vNowUp.z = m_vNowUp.z * 0.5f + m_vUp.z * 0.5f;
 	XMStoreFloat3(&m_vNowUp, XMVector3Normalize(XMLoadFloat3(&m_vNowUp)));
-	// ƒrƒ…[•ÏŠ·XV
+	// ãƒ“ãƒ¥ãƒ¼å¤‰æ›æ›´æ–°
 	XMStoreFloat4x4(&m_View,
 		XMMatrixLookAtLH(XMLoadFloat3(&m_vNowEye), XMLoadFloat3(&m_vNowLook), XMLoadFloat3(&m_vNowUp)));
 
-	// Ë‰e•ÏŠ·XV
+	// å°„å½±å¤‰æ›æ›´æ–°
 	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));
 }
 
+/**
+ * @brief æç”»å‡¦ç†
+ * @return ãªã—
+ */
 void CCamera::Draw()
 {
 #ifdef _DEBUG
@@ -85,7 +95,15 @@ XMFLOAT3& CCamera::GetEye() { return m_vEye; }
 XMFLOAT3& CCamera::GetLook() { return m_vLook; }
 
 void CCamera::SetLook(XMFLOAT3 vLook) { m_vLook = vLook; }
-void CCamera::Set(CCamera* pCamera) { m_pCamera = pCamera; }
+
+void CCamera::Set(CCamera* pCamera) 
+{
+	if (m_pCamera != NULL) {
+		m_pCamera->m_isActive = false;
+	}
+	m_pCamera = pCamera; 
+	m_pCamera->m_isActive = true;
+}
 
 CCamera* CCamera::Get() { 
 	return m_pCamera; 

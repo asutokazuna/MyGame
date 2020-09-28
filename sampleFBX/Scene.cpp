@@ -1,29 +1,32 @@
-#include "Scene.h"
+ï»¿#include "Scene.h"
 #include "Graphics.h"
 
-// Ã“Iƒƒ“ƒo
+// é™çš„ãƒ¡ãƒ³ãƒ
 CScene*	CScene::m_pScene = nullptr;
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 CScene::CScene() : m_FPS(0)
 {
 	m_szDebug[0] = _T('\0');
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 CScene::~CScene()
 {
 
 }
 
-// ‰Šú‰»
-HRESULT CScene::Init()
+void CScene::Awake()
 {
-	HRESULT hr = S_OK;
-	
 	for (auto& obj : m_pObj) {
 		obj->Awake();
 	}
+}
+
+// åˆæœŸåŒ–
+HRESULT CScene::Init()
+{
+	HRESULT hr = S_OK;
 
 	for (auto& obj : m_pObj) {
 		obj->Init();
@@ -32,19 +35,19 @@ HRESULT CScene::Init()
 	return hr;
 }
 
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 void CScene::Uninit()
 {
-	// ‘SƒIƒuƒWƒFƒNƒgI—¹
+	// å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆçµ‚äº†
 	for (auto& obj : m_pObj) {
 		obj->Uninit();
 	}
 }
 
-// XV
+// æ›´æ–°
 void CScene::Update()
 {
-	// ‘SƒIƒuƒWƒFƒNƒgXV
+	// å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
 	for (auto& obj : m_pObj) {
 		obj->Update();
 	}
@@ -54,24 +57,24 @@ void CScene::Update()
 
 }
 
-// •`‰æ
+// æç”»
 void CScene::Draw()
 {
-	m_szDebug[0] = _T('\0');	// ƒfƒoƒbƒO•¶Žš—ñ‰Šú‰»
+	m_szDebug[0] = _T('\0');	// ãƒ‡ãƒãƒƒã‚°æ–‡å­—åˆ—åˆæœŸåŒ–
 
-	// FPS ‚ð‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß‚Ì•¶Žš—ñ‚ðì¬
+	// FPS ã‚’ç”»é¢ã«æç”»ã™ã‚‹ãŸã‚ã®æ–‡å­—åˆ—ã‚’ä½œæˆ
 	TCHAR	str[256];
 	_stprintf_s(str, _countof(str), _T("FPS = %d\n"), m_FPS);
 	lstrcat(m_szDebug, str);
 
-	// ƒJƒƒ‰”½‰f
+	// ã‚«ãƒ¡ãƒ©åæ˜ 
 	//if (m_pCamera) {
 	//	//m_pCamera->Draw();
 	//}
 
-	// ‘O–ÊƒJƒŠƒ“ƒO (FBX‚Í•\— ‚ª”½“]‚·‚é‚½‚ß)
+	// å‰é¢ã‚«ãƒªãƒ³ã‚° (FBXã¯è¡¨è£ãŒåè»¢ã™ã‚‹ãŸã‚)
 	CGraphics::SetCullMode(CULLMODE_CW);
-	CGraphics::SetBlendState(BS_NONE);			// ƒAƒ‹ƒtƒ@ˆ—‚µ‚È‚¢
+	CGraphics::SetBlendState(BS_NONE);			// ã‚¢ãƒ«ãƒ•ã‚¡å‡¦ç†ã—ãªã„
 	CGraphics::SetZWrite(true);
 
 	for (auto& obj : m_pObj) {
@@ -79,24 +82,24 @@ void CScene::Draw()
 	}
 
 	CGraphics::SetZWrite(false);
-	CGraphics::SetBlendState(BS_ALPHABLEND);	// ”¼“§–¾•`‰æ
+	CGraphics::SetBlendState(BS_ALPHABLEND);	// åŠé€æ˜Žæç”»
 	for (auto& obj : m_pObj) {
 		obj->DrawAlpha();
 	}
 }
 
-// ƒV[ƒ“Ø‘Ö
+// ã‚·ãƒ¼ãƒ³åˆ‡æ›¿
 void CScene::Set(CScene* pScene)
 {
-	// ƒV[ƒ“‚ÌI—¹
+	// ã‚·ãƒ¼ãƒ³ã®çµ‚äº†
 	if (m_pScene) {
 		m_pScene->Uninit();
 	}
 
-	// ƒV[ƒ““ü‘Ö
+	// ã‚·ãƒ¼ãƒ³å…¥æ›¿
 	m_pScene = pScene;
 
-	// ƒV[ƒ“‚ÌŠJŽn
+	// ã‚·ãƒ¼ãƒ³ã®é–‹å§‹
 	if (m_pScene) {
 		m_pScene->Init();
 	}

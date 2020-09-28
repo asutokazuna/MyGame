@@ -1,6 +1,6 @@
-/*
+ï»¿/*
  *@file ObjectManager.h
- * @brief ƒIƒuƒWƒFƒNƒgŠÇ—ƒNƒ‰ƒX
+ * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Singleton.h"
@@ -12,23 +12,23 @@ class Object;
 
 /*
  *@class objectManager
- * @brief ƒIƒuƒWƒFƒNƒgŠÇ—ƒNƒ‰ƒX
+ * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 class ObjectManager : public Singleton<ObjectManager>
 {
 public:
-	friend class Singleton<ObjectManager>;		//!< ƒVƒ“ƒOƒ‹ƒgƒ“ƒNƒ‰ƒX‚Å‚Ì¶¬‚ğ‰Â”\‚É
+	friend class Singleton<ObjectManager>;		//!< ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¯ãƒ©ã‚¹ã§ã®ç”Ÿæˆã‚’å¯èƒ½ã«
 
 private:
 	std::unordered_map<std::string, std::unique_ptr<Object>> m_ObjList;
-	std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // ‚ ‚Æ‚Å‚â‚é
+	std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // ã‚ã¨ã§ã‚„ã‚‹
 
 public:
 
 	/**
-	 * @brief ƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	 * @param[in] name ƒIƒuƒWƒFƒNƒg–¼
-	 * @return ¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ÌÀ‘Ì
+	 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+	 * @param[in] name ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
+	 * @return ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å®Ÿä½“
 	 */
 	template <class T>
 	static T* Create(std::string name)
@@ -40,9 +40,9 @@ public:
 	}
 
 	/**
-	 * @brief ƒIƒuƒWƒFƒNƒg‚Ìæ“¾
-	 * @param[in] name æ“¾‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg‚Ì–¼‘O
-	 * @retrun ƒIƒuƒWƒFƒNƒg‚Ìƒ|ƒCƒ“ƒ^
+	 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å–å¾—
+	 * @param[in] name å–å¾—ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰
+	 * @retrun ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
 	 */
 	template <class T>
 	static T* FindObject(std::string name)
@@ -51,8 +51,8 @@ public:
 	}
 
 	/**
-	 * @breif ƒIƒuƒWƒFƒNƒgƒŠƒXƒg‚ÌƒNƒŠƒA
-	 * @return ‚È‚µ
+	 * @breif ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆã®ã‚¯ãƒªã‚¢
+	 * @return ãªã—
 	 */
 	static void Clear()
 	{
@@ -60,26 +60,32 @@ public:
 	}
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return@‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @returnã€€ãªã—
+	 */
+	static void Awake();
+
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	static HRESULT Init();
 
 	/**
-	 * @brief I—¹ˆ—
-	 * @return@‚È‚µ
+	 * @brief çµ‚äº†å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	static void Uninit();
 
 	/**
-	 * @brief XVˆ—
-	 * @return@‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	static void Update();
 	
 	/**
-	 * @brief •`‰æˆ—
-	 * @return@‚È‚µ
+	 * @brief æç”»å‡¦ç†
+	 * @returnã€€ãªã—
 	 */
 	static void Draw();
 

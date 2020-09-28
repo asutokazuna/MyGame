@@ -1,19 +1,20 @@
-/**
+ï»¿/**
  * @file BulletTime.cpp
- * @breif ƒoƒŒƒbƒgƒ^ƒCƒ€•—HƒJƒƒ‰
+ * @breif ãƒãƒ¬ãƒƒãƒˆã‚¿ã‚¤ãƒ é¢¨ï¼Ÿã‚«ãƒ¡ãƒ©
  */
 #include "BulletTime.h"
 #include "CPlayer.h"
 
-// ‰ñ“]‘¬“xiŠp‘¬“xAƒ‰ƒWƒAƒ“j
+// å›è»¢é€Ÿåº¦ï¼ˆè§’é€Ÿåº¦ã€ãƒ©ã‚¸ã‚¢ãƒ³ï¼‰
 namespace {
-	const float g_fRotateSpeed = 1;	// ’PˆÊF“x
+	const float g_fRotateSpeed = 1;	// å˜ä½ï¼šåº¦
 	const float g_fRadius = 156.0f;
 }
 
 HRESULT CBulletTime::Init()
 {
 	HRESULT hr = S_OK;
+	m_isActive = false;
 	m_vEye = XMFLOAT3(0.0f, 0.0f, -g_fRadius * 2.0f);
 	m_vLook = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
@@ -32,24 +33,24 @@ void CBulletTime::Uninit()
 
 void CBulletTime::Update()
 {
-	// Šp“xXV
+	// è§’åº¦æ›´æ–°
 	m_fangle += g_fRotateSpeed;
 	if (m_fangle >= 180) {
 		m_fangle -= 360;
 	}
-	// ‰ñ“]ƒ}ƒgƒŠƒbƒNƒX¶¬
+	// å›è»¢ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ç”Ÿæˆ
 	XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(m_fangle));
-	// ‹“_À•W‚ğ‰ñ“]
+	// è¦–ç‚¹åº§æ¨™ã‚’å›è»¢
 	XMStoreFloat3(&m_vEye,
 	XMVector3TransformCoord(
 	XMVectorSet(0.0f, 0.0f, -g_fRadius * 2,1.0f),mRotate));
 
-	//// ƒvƒŒƒCƒ„[ˆÊ’u‚ÉˆÚ“®
+	//// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã«ç§»å‹•
 	//m_vLook = CPlayer::GetPos();
 	//m_vEye.x += m_vLook.x;
 	//m_vEye.y += m_vLook.y;
 	//m_vEye.z += m_vLook.z;
-	// s—ñXV
+	// è¡Œåˆ—æ›´æ–°
 	CCamera::Update();
 }
 

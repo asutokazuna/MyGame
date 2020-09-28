@@ -1,11 +1,11 @@
-/**
+ï»¿/**
  * @file GameObject.h
- * @brief ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+ * @brief ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #include "GameObject.h"
 
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 GameObject::GameObject() {
 	transform = AddComponent<Transform>();
@@ -13,7 +13,7 @@ GameObject::GameObject() {
 }
 
 /**
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
+ * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 GameObject::~GameObject() {
 	for (auto com : m_ComponentList)
@@ -26,8 +26,8 @@ GameObject::~GameObject() {
 }
 
 /**
- * @brief XVˆ—
- * @return  ‚È‚µ
+ * @brief æ›´æ–°å‡¦ç†
+ * @return  ãªã—
  */
 void GameObject::Update()
 {
@@ -41,8 +41,8 @@ void GameObject::Update()
 }
 
 /**
- * @brief XVˆ—
- * @return  ‚È‚µ
+ * @brief æ›´æ–°å‡¦ç†
+ * @return  ãªã—
  */
 void GameObject::LateUpdate()
 {
@@ -56,8 +56,8 @@ void GameObject::LateUpdate()
 }
 
 /**
- * @brief •`‰æˆ—
- * @return  ‚È‚µ
+ * @brief æç”»å‡¦ç†
+ * @return  ãªã—
  */
 void GameObject::Draw()
 {
@@ -70,8 +70,8 @@ void GameObject::Draw()
 }
 
 /**
- * @brief •`‰æˆ—
- * @return  ‚È‚µ
+ * @brief æç”»å‡¦ç†
+ * @return  ãªã—
  */
 void GameObject::DrawAlpha()
 {
@@ -84,8 +84,8 @@ void GameObject::DrawAlpha()
 }
 
 /**
- * @brief qƒIƒuƒWƒFƒNƒg‚Ìİ’è
- * @return ‚È‚µ
+ * @brief å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¨­å®š
+ * @return ãªã—
  */
  void GameObject::SetChild(GameObject * child)
  {
@@ -98,16 +98,16 @@ void GameObject::DrawAlpha()
  }
 
  /**
-  * @brief ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìæ“¾
-  * @return ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+  * @brief ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®å–å¾—
+  * @return ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
   */
  Transform& GameObject::GetTransform() {
 	 return *transform;
  }
 
  /**
-  * @brief “–‚½‚è”»’èˆ—
-  * @return ‚È‚µ
+  * @brief å½“ãŸã‚Šåˆ¤å®šå‡¦ç†
+  * @return ãªã—
   */
  void GameObject::OnCollisionEnter(GameObject * gameObbj)
  {
@@ -120,8 +120,8 @@ void GameObject::DrawAlpha()
  }
 
  /**
-  * @brief ƒ^ƒO‚Ì”äŠr
-  * @return ˆê’v‚µ‚Ä‚¢‚ê‚Îtrue
+  * @brief ã‚¿ã‚°ã®æ¯”è¼ƒ
+  * @return ä¸€è‡´ã—ã¦ã„ã‚Œã°true
   */
  bool GameObject::CompareTag(int objTag)
  {

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file SceneTitle
- * @brief ƒ^ƒCƒgƒ‹ƒV[ƒ“ƒNƒ‰ƒX
+ * @brief ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã‚¯ãƒ©ã‚¹
  */
 #include "SceneTitle.h"
 #include "TitleUI.h"
@@ -8,35 +8,27 @@
 #include "SceneManager.h"
 #include "ObjectManager.h"
 
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
 HRESULT SceneTitle::Init()
 {
-	m_UI = new TitleUI();
-	SetObj(m_UI);
-
-	CScene::Init();
-
-	std::string test("test");
-
-	GameObject* aaa = ObjectManager::Create<GameObject>(test);
-
-	GameObject* temp = ObjectManager::FindObject<GameObject>(test);
+	m_UI = ObjectManager::Create<TitleUI>("TitleUI");
 
 	return E_NOTIMPL;
 }
 
-void SceneTitle::Uninit()
-{
-	CScene::Uninit();
-	delete m_UI;
-}
-
+/**
+ * @brief æ›´æ–°å‡¦ç†
+ * @return  ãªã—
+ */
 void SceneTitle::Update()
 {
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		SceneManager::Change(SceneManager::ESCENE::SCENE_GAME);
 		return;
 	}
-	CScene::Update();
 }
 
 // EOF

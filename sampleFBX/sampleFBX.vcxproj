@@ -23,7 +23,7 @@
     <ProjectGuid>{F689424B-4FB5-4016-ADF7-84EF52E2FB34}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>sample</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -172,7 +172,6 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSky.cpp" />
     <ClCompile Include="CTPCamera.cpp" />
-    <ClCompile Include="Data.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
     <ClCompile Include="EnemyMissile.cpp" />

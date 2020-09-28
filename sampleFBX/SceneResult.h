@@ -1,12 +1,16 @@
-/**
+﻿/**
  * @file SceneResult
- * @brief ���U���g�V�[���N���X
+ * @brief リザルトシーンクラス
  */
 #pragma once
 #include "Scene.h"
 
 class GameObject;
 
+/**
+ * @class SceneResult
+ * @biref リザルトシーン
+ */
 class SceneResult :public CScene
 {
 private:
@@ -14,10 +18,18 @@ private:
 	GameObject* m_Win;
 	GameObject* m_Lose;
 public:
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	HRESULT Init();
-	void Uninit();
+
+	/**
+	 * @brief 更新処理
+	 * @return  なし
+	 */
 	void Update();
-	void Draw();
 };
 
 // EOF
