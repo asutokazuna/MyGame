@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file MissileMove
- * @brief ƒ~ƒTƒCƒ‹‚Ì“®‚«ƒNƒ‰ƒX
+ * @brief ãƒŸã‚µã‚¤ãƒ«ã®å‹•ãã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Component.h"
@@ -12,13 +12,16 @@ class MissileMove :public Component
 private:
 	Transform* m_transform;
 public:
-	int m_nStat;			//!< 0:–¢g—p, 1:g—p’†
-	int m_nLife;			//!< õ–½
+	int m_nStat;			//!< 0:æœªä½¿ç”¨, 1:ä½¿ç”¨ä¸­
+	int m_nLife;			//!< å¯¿å‘½
 	float m_Speed;
 public:
 	MissileMove();
-	~MissileMove();
 
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
+	 */
 	HRESULT Init();
 	void Update();
 };

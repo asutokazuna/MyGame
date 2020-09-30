@@ -1,17 +1,21 @@
-/**
+﻿/**
  * @file Missile
- * @brief �~�T�C���N���X
+ * @brief ミサイルクラス
  * @date 2020/06/19
  */
 #pragma once
-
 #include "main.h"
 #include "Box.h"
 #include "GameObject.h"
 
+// 前方宣言
 class Collision;
 class MissileMove;
 
+/**
+ * @class Missile
+ * @brief ミサイルクラスr
+ */
 class Missile: public GameObject
 {
 protected:
@@ -19,8 +23,12 @@ protected:
 	MissileMove* m_Move;
 public:
 	Missile();
-	HRESULT Init();
-	void Uninit();
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	void Awake();
 	void Update();
 	void Draw();
 	void DrawAlpha();

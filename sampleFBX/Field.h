@@ -1,28 +1,28 @@
-/**
+ï»¿/**
  * @file Field.h
- * @brief ’n–ÊƒNƒ‰ƒX
+ * @brief åœ°é¢ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "GameObject.h"
 
+// å‰æ–¹å®£è¨€
 class FieldMesh;
 
 /**
  * @class Field
- * @breif ’n–Ê
+ * @breif åœ°é¢
  */
 class Field :public GameObject
 {
 private:
-	FieldMesh* m_Mesh;		//!< °‚ÌƒƒbƒVƒ…
+	FieldMesh* m_Mesh;		//!< åºŠã®ãƒ¡ãƒƒã‚·ãƒ¥
 
 public:
-
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
-	HRESULT Init();
+	void Awake();
 };
 
 // EOF

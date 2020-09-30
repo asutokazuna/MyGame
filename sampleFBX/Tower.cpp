@@ -1,6 +1,6 @@
-/**
+﻿/**
  * @file Tower
- * @brief Tower�N���X
+ * @brief Towerクラス
  */
 #include "Tower.h"
 #include "Object3D.h"
@@ -10,7 +10,11 @@
 #include "FbxModel.h"
 #include "Gauge.h"
 
-HRESULT Tower::Init()
+ /**
+  * @brief 初期化処理
+  * @return なし
+  */
+void Tower::Awake()
 {
 	m_Object3D = &AddComponent<Object3D>()->SetModel(MODEL_TOWER);
 	transform->scale = 0.5f;
@@ -18,9 +22,8 @@ HRESULT Tower::Init()
 	m_Energy = AddComponent<TowerEnergy>();
 	m_LifeGauge = new Gauge();
 	m_LifeGauge->Init();
-	m_LifeGauge->SetOffset({0, 150, 0});
+	m_LifeGauge->SetOffset({ 0, 150, 0 });
 	material = new TFbxMaterial();
-	return S_OK;
 }
 
 void Tower::Uninit()

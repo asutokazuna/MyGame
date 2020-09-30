@@ -1,23 +1,28 @@
-/**
+ï»¿/**
  * @file Core.h
- * @brief ƒQ[ƒ€‚ÌŸ”s‚ğŒˆ‚ß‚éŠjƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX
+ * @brief ã‚²ãƒ¼ãƒ ã®å‹æ•—ã‚’æ±ºã‚ã‚‹æ ¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹
  */
 #include "Core.h"
 #include "Object3D.h"
 #include "CoreCollision.h"
 #include "collision.h"
 #include "CoreState.h"
-#include "SceneGame.h"
 
-HRESULT Core::Init()
+ /**
+  * @brief åˆæœŸåŒ–å‡¦ç†
+  * @return ãªã—
+  */
+void Core::Awake()
 {
 	AddComponent<Object3D>()->SetModel(MODEL_CORE);
 	m_Collision = AddComponent<CoreCollision>();
 	m_State = AddComponent<CoreState>();
-
-	return E_NOTIMPL;
 }
 
+/**
+ * @brief ç¾åœ¨HPã®å–å¾—
+ * @return ç¾åœ¨ã®HP
+ */
 int Core::GetLife()
 {
 	return m_State->GetLife();

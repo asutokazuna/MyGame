@@ -105,9 +105,9 @@ public:
 	bool CompareTag(int objTag);
 
 	/**
- * @breif コンポーネントの取得
- * @return クラスのコンポーネント
- */
+	 * @breif コンポーネントの取得
+	 * @return クラスのコンポーネント
+	 */
 	template<class T>
 	T* GetComponent()
 	{
@@ -131,7 +131,6 @@ public:
 		buff->m_Parent = this;
 		m_ComponentList.push_back(buff);
 		buff->Awake();
-		buff->Init();
 		return buff;
 	}
 };

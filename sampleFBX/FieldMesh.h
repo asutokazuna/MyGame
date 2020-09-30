@@ -1,27 +1,27 @@
-/**
+ï»¿/**
  * @file FieldMesh
- * @brief ’n–Ê‚ÌƒƒbƒVƒ…ƒNƒ‰ƒX
+ * @brief åœ°é¢ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Mesh.h"
 
 /**
  * @class FieldMesh
- * @brief °‚ÌƒƒbƒVƒ…
+ * @brief åºŠã®ãƒ¡ãƒƒã‚·ãƒ¥
  */
 class FieldMesh :public Mesh
 {
 public:
 
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
-	HRESULT Init();
+	void Awake();
 
 	/**
-	 * @brief •`‰æ
-	 * @return ‚È‚µ
+	 * @brief æç”»
+	 * @return ãªã—
 	 */
 	void Draw();
 };

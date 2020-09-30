@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file PlayerMissile
- * @brief ƒvƒŒƒCƒ„[ƒ~ƒTƒCƒ‹ƒNƒ‰ƒX
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒŸã‚µã‚¤ãƒ«ã‚¯ãƒ©ã‚¹
  */
 #include "PlayerMissile.h"
 #include "Missile.h"
@@ -23,6 +23,7 @@ HRESULT PlayerMissile::Init()
 	tag = Collision::COL_MISSILE;
 	Missile::Init();
 	m_col->SetTag(Collision::COL_MISSILE);
+	m_col->SetActive(false);
 	return S_OK;
 }
 
