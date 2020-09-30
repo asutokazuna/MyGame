@@ -16,6 +16,7 @@ public:
 public:
 	TowerManager();
 	~TowerManager();
+	void Awake();
 	HRESULT Init();
 	void Uninit();
 	void Update();

@@ -1,15 +1,19 @@
-/**
+ï»¿/**
  * @file TextureData.cpp
- * @brief ƒeƒNƒXƒ`ƒƒƒf[ƒ^ŠÇ—ƒNƒ‰ƒX
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #include "TextureData.h"
 #include "Texture.h"
 #include "Graphics.h"
 
-#define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define	TEXTURE_NAME_FIELD		L"data/texture/field000.jpg"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	TEXTURE_NAME_PressSpace	L"data/texture/Press_Space.png"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	TEXTURE_NAME_shooting	L"data/texture/shooting.png"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	TEXTURE_NAME_WIN		L"data/texture/win.png"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	TEXTURE_NAME_LOSE		L"data/texture/Lose.png"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
 /**
- * @brief ƒeƒNƒXƒ`ƒƒƒe[ƒuƒ‹\‘¢‘Ì
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ†ãƒ¼ãƒ–ãƒ«æ§‹é€ ä½“
  */
 struct TEXTURE_TABLE
 {
@@ -18,34 +22,38 @@ struct TEXTURE_TABLE
 };
 
 /**
- * @brief ƒeƒNƒXƒ`ƒƒ‚Ìƒe[ƒuƒ‹
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ†ãƒ¼ãƒ–ãƒ«
  */
 static TEXTURE_TABLE m_table[TEXTURE_MAX] = {
-	{TEXTURE_FILENAME, TEXTURE_FIELD},
+	{ TEXTURE_NAME_FIELD, TEXTURE_FIELD},
+	{ TEXTURE_NAME_PressSpace, TEXTURE_PRESSENTER },
+	{ TEXTURE_NAME_shooting, TEXTURE_TITLE_ROGO},
+	{ TEXTURE_NAME_WIN, TEXTURE_WIN},
+	{ TEXTURE_NAME_LOSE, TEXTURE_LOSE},
 };
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void TextureData::InitInstance()
 {
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 	ID3D11ShaderResourceView* worktexture;
 
-	for (int i = 0; i < sizeof(m_table); i++)
+	for (int i = 0; i < _countof(m_table); i++)
 	{
-		CreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			m_table[i].fileName,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-			&worktexture);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+		CreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			m_table[i].fileName,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+			&worktexture);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 		m_data.Set(m_table[i].kind, worktexture);
 	}
 }
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void TextureData::Init()
 {
@@ -53,9 +61,9 @@ void TextureData::Init()
 }
 
 /**
- * @brief ƒeƒNƒXƒ`ƒƒƒf[ƒ^‚Ìæ“¾
- * @param[in] kind æ“¾‚µ‚½‚¢ƒeƒNƒXƒ`ƒƒ‚ÌID
- * @return ˆø”‚É‡‚í‚¹‚½ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ * @param[in] kind å–å¾—ã—ãŸã„ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ID
+ * @return å¼•æ•°ã«åˆã‚ã›ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
  */
 ID3D11ShaderResourceView* TextureData::GetData(int kind)
 {

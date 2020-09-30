@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Missile
- * @brief ƒ~ƒTƒCƒ‹ƒNƒ‰ƒX
+ * @brief ãƒŸã‚µã‚¤ãƒ«ã‚¯ãƒ©ã‚¹
  * @date 2020/06/19
  */
 #include "Missile.h"
@@ -9,27 +9,29 @@
 #include "collision.h"
 #include "MissileMove.h"
 
+ /**
+  * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+  */
 Missile::Missile() 
 {
 	m_col = nullptr;
 }
 
-HRESULT Missile::Init()
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
+void Missile::Awake()
 {
 	HRESULT hr = S_OK;	
 	AddComponent<Object3D>()->SetModel(MODEL_MISSILE);
 	m_Move = AddComponent<MissileMove>();
-
-	m_col->SetActive(false);
-
-	return hr;
 }
 
-void Missile::Uninit()
-{
-	GameObject::Uninit();
-}
-
+/**
+ * @brief æ›´æ–°å‡¦ç†
+ * @return ãªã—
+ */
 void Missile::Update()
 {
 	if (m_Move->m_nLife <= 0) {
@@ -56,7 +58,7 @@ void Missile::DrawAlpha()
 	GameObject::Draw();
 }
 
-// Offset‚ªƒ‚ƒfƒ‹À•W‚Å‚Ìƒ~ƒTƒCƒ‹‚ÌˆÊ’u‚ç‚µ‚¢‚æ
+// OffsetãŒãƒ¢ãƒ‡ãƒ«åº§æ¨™ã§ã®ãƒŸã‚µã‚¤ãƒ«ã®ä½ç½®ã‚‰ã—ã„ã‚ˆ
 bool Missile::Fire(Vector3* pos)
 {
 	if (m_Move->m_nStat != 0) {
@@ -65,8 +67,8 @@ bool Missile::Fire(Vector3* pos)
 
 	m_col->SetActive(true);
 	transform->position = *pos;
-	m_Move->m_nLife = 3 * 60;		// 5•b
-	m_Move->m_nStat = 1;			// ’Ç”ö’†
+	m_Move->m_nLife = 3 * 60;		// 5ç§’
+	m_Move->m_nStat = 1;			// è¿½å°¾ä¸­
 	return true;
 }
 
@@ -80,8 +82,8 @@ bool Missile::Fire(Vector3 * pos, Quaternion quat)
 	transform->position = *pos;
 	transform->quaternion = quat;
 	m_col->SetPos(*pos);
-	m_Move->m_nLife = 3 * 60;		// 5•b
-	m_Move->m_nStat = 1;			// ’Ç”ö’†
+	m_Move->m_nLife = 3 * 60;		// 5ç§’
+	m_Move->m_nStat = 1;			// è¿½å°¾ä¸­
 	return true;
 }
 

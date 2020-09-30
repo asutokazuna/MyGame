@@ -1,54 +1,23 @@
-/**
+ï»¿/**
  * @file TitleUI
- * @brief ƒ^ƒCƒgƒ‹‚ÌUIƒƒbƒVƒ…ƒNƒ‰ƒX
+ * @brief ã‚¿ã‚¤ãƒˆãƒ«ã®UIãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹
  */
 #include "TitleUI.h"
 #include "UIMesh.h"
+#include "TextureData.h"
 
-#define	TEXTURE_PressSpace	L"data/texture/Press_Space.png"	// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_shooting	L"data/texture/shooting.png"	// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-
-TitleUI::TitleUI()
-{
-}
-
-TitleUI::~TitleUI()
-{
-}
-
-HRESULT TitleUI::Init()
+/**
+ * @breif åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
+void TitleUI::Awake()
 {
 	m_RogoMesh = new GameObject();
-	m_RogoMesh->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0)->SetTexture(TEXTURE_shooting);
+	SetChild(m_RogoMesh);
 	m_StartMesh = new GameObject();
-	m_StartMesh->AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos( 0,-200,0 )->SetTexture(TEXTURE_PressSpace);
-	GameObject::Init();
-
-	return E_NOTIMPL;
+	SetChild(m_StartMesh);
+	m_RogoMesh->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0)->SetTexture(TextureData::GetData(TEXTURE_TITLE_ROGO));
+	m_StartMesh->AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0)->SetTexture(TextureData::GetData(TEXTURE_PRESSENTER));
 }
-
-void TitleUI::Uninit()
-{
-	m_StartMesh->Uninit();
-	m_RogoMesh->Uninit();
-	GameObject::Uninit();
-	delete m_StartMesh;
-	delete m_RogoMesh;
-}
-
-void TitleUI::Update()
-{
-	m_RogoMesh->Update();
-	m_StartMesh->Update();
-	GameObject::Update();
-}
-
-void TitleUI::Draw()
-{
-	m_RogoMesh->Draw();
-	m_StartMesh->Draw();
-	GameObject::Draw();
-}
-
 
 // EOF

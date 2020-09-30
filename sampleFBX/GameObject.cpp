@@ -18,11 +18,23 @@ GameObject::GameObject() {
 GameObject::~GameObject() {
 	for (auto com : m_ComponentList)
 		delete com;
+}
 
-	//for (auto child : m_ChildList) {
-	//	delete child;
-	//}
+/**
+ * @brief 初期化処理
+ * @return　なし
+ */
+HRESULT GameObject::Init()
+{
+	auto buff = m_ComponentList;
+	for (auto com : buff)
+		com->Init();
 
+	for (auto& child : m_ChildList) {
+		child->Init();
+	}
+
+	return S_OK;
 }
 
 /**
@@ -91,10 +103,8 @@ void GameObject::DrawAlpha()
  {
 	 std::unique_ptr<GameObject> buff(child);
 
-	 buff->Init();
+	 buff->Awake();
 	 m_ChildList.push_back(std::move(buff));
-	 //child->Init();
-	 //m_ChildList.push_back(child);
  }
 
  /**

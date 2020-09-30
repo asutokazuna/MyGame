@@ -1,23 +1,19 @@
-/**
+ï»¿/**
  * @file Enemy
- * @brief ƒGƒlƒ~[ƒNƒ‰ƒX
+ * @brief ã‚¨ãƒãƒŸãƒ¼ã‚¯ãƒ©ã‚¹
  * @date 2020/06/19
  */
 #include "Enemy.h"
-#include "CPlayer.h"
-#include "input.h"
 #include "Object3D.h"
 #include "ModelData.h"
 #include "EnemyCtrl.h"
 #include "EnemyMissile.h"
 
- //*****************************************************************************
- // ƒ}ƒNƒ’è‹`
- //*****************************************************************************
-#define PATH_ENEMY		"data/model/X_wing.fbx"
-#define SPEED			(5.0f)
-
-HRESULT Enemy::Init()
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
+void Enemy::Awake()
 {
 	HRESULT hr = S_OK;	
 
@@ -25,29 +21,14 @@ HRESULT Enemy::Init()
 
 	AddComponent<Object3D>()->SetModel(MODEL_ENEMY);
 	AddComponent<EnemyCtrl>();
-	m_Missile->Init();
-
-	return hr;
+	SetChild(m_Missile);
 }
 
-void Enemy::Uninit()
-{
-	m_Missile->Uninit();
-	delete m_Missile;
-	GameObject::Uninit();
-}
-
-void Enemy::Update()
-{
-	//m_Missile->Fire(&transform->position, transform->quaternion);
-	m_Missile->Update();
-	GameObject::Update();
-}
-
-void Enemy::Draw()
-{
-	m_Missile->Draw();
-	GameObject::Draw();
-}
+//void Enemy::Update()
+//{
+//	//m_Missile->Fire(&transform->position, transform->quaternion);
+//	m_Missile->Update();
+//	GameObject::Update();
+//}
 
 // EOF

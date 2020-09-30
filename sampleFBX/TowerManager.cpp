@@ -22,6 +22,14 @@ TowerManager::~TowerManager()
 	delete[] m_Tower;
 }
 
+void TowerManager::Awake()
+{
+	for (int i = 0; i < MAX_TOWER; i++)
+	{
+		m_Tower[i].Awake();
+	}
+}
+
 HRESULT TowerManager::Init()
 {
 	for (int i = 0; i < MAX_TOWER; i++) 

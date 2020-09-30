@@ -1,19 +1,17 @@
-/**
+ï»¿/**
  * @file Field.cpp
- * @brief ’n–ÊƒNƒ‰ƒX
+ * @brief åœ°é¢ã‚¯ãƒ©ã‚¹
  */
 #include "Field.h"
 #include "FieldMesh.h"
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
-HRESULT Field::Init()
+void Field::Awake()
 {
 	m_Mesh = AddComponent<FieldMesh>();
-
-	return S_OK;
 }
 
  //EOF

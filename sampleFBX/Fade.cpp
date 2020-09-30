@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Fade
- * @brief ƒtƒF[ƒhƒNƒ‰ƒX
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¯ãƒ©ã‚¹
  */
 #include "Fade.h"
 #include "UIMesh.h"
@@ -11,14 +11,13 @@
 static Mesh* UI;
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void Fade::InitInst()
 {
 	m_Mesh = new GameObject();
 
-	m_Mesh->Init();
 	UI = m_Mesh->AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH, SCREEN_HEIGHT, 1)->ChangeColor(0, 0, 0, 1)
 		->ChangePos(0,0,-1);
 
@@ -28,8 +27,8 @@ void Fade::InitInst()
 }
 
 /**
- * @brief I—¹
- * @return ‚È‚µ
+ * @brief çµ‚äº†
+ * @return ãªã—
  */
 void Fade::UninitInst()
 {
@@ -37,8 +36,8 @@ void Fade::UninitInst()
 }
 
 /**
- * @brief XV
- * @return ‚È‚µ
+ * @brief æ›´æ–°
+ * @return ãªã—
  */
 void Fade::UpdateInst()
 {
@@ -70,8 +69,8 @@ void Fade::UpdateInst()
 }
 
 /**
- * @brief •`‰æ
- * @return ‚È‚µ
+ * @brief æç”»
+ * @return ãªã—
  */
 void Fade::DrawInst()
 {
@@ -90,8 +89,8 @@ void Fade::DrawInst()
 }
 
 /**
- * @brief ƒtƒF[ƒh’†‚©”»’è‚·‚é
- * @return ƒtƒF[ƒh’†‚È‚çtrue
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹åˆ¤å®šã™ã‚‹
+ * @return ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ãªã‚‰true
  */
 bool Fade::IsFadeInst()
 {
@@ -99,8 +98,8 @@ bool Fade::IsFadeInst()
 }
 
 /**
- * @brief ƒtƒF[ƒhˆ—
- * @return ‚È‚µ
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰å‡¦ç†
+ * @return ãªã—
  */
 void Fade::SetState(FADE_STATE state)
 {
@@ -116,8 +115,8 @@ void Fade::SetState(FADE_STATE state)
 }
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void Fade::Init()
 {
@@ -125,8 +124,8 @@ void Fade::Init()
 }
 
 /**
- * @brief I—¹
- * @return ‚È‚µ
+ * @brief çµ‚äº†
+ * @return ãªã—
  */
 void Fade::Uninit()
 {
@@ -134,8 +133,8 @@ void Fade::Uninit()
 }
 
 /**
- * @brief XV
- * @return ‚È‚µ
+ * @brief æ›´æ–°
+ * @return ãªã—
  */
 void Fade::Update()
 {
@@ -143,8 +142,8 @@ void Fade::Update()
 }
 
 /**
- * @brief •`‰æ
- * @return ‚È‚µ
+ * @brief æç”»
+ * @return ãªã—
  */
 void Fade::Draw()
 {
@@ -152,8 +151,8 @@ void Fade::Draw()
 }
 
 /**
- * @brief ƒtƒF[ƒh’†‚©”»’è‚·‚é
- * @return ƒtƒF[ƒh’†‚È‚çtrue
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹åˆ¤å®šã™ã‚‹
+ * @return ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ãªã‚‰true
  */
 bool Fade::IsFade()
 {
@@ -161,8 +160,8 @@ bool Fade::IsFade()
 }
 
 /**
- * @brief ƒtƒF[ƒhƒCƒ“
- * @return ‚È‚µ
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+ * @return ãªã—
  */
 void Fade::FadeIn()
 {
@@ -170,8 +169,8 @@ void Fade::FadeIn()
 }
 
 /**
- * @brief ƒtƒF[ƒhƒAƒEƒg
- * @return ‚È‚µ
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+ * @return ãªã—
  */
 void Fade::FadeOut()
 {

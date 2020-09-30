@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Mesh
- * @brief ƒƒbƒVƒ…ƒNƒ‰ƒX
+ * @brief ãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Component.h"
@@ -8,12 +8,12 @@
 
 class Transform;
 
-// ’¸“_ƒtƒH[ƒ}ƒbƒg( ’¸“_À•W[3D] / –@üƒxƒNƒgƒ‹ / ”½ËŒõ / ƒeƒNƒXƒ`ƒƒÀ•W )
+// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ( é ‚ç‚¹åº§æ¨™[3D] / æ³•ç·šãƒ™ã‚¯ãƒˆãƒ« / åå°„å…‰ / ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ )
 typedef struct {
-	XMFLOAT3 vtx;		// ’¸“_À•W
-	XMFLOAT3 nor;		// –@üƒxƒNƒgƒ‹
-	XMFLOAT4 diffuse;	// ŠgU”½ËŒõ
-	XMFLOAT2 tex;		// ƒeƒNƒXƒ`ƒƒÀ•W
+	XMFLOAT3 vtx;		// é ‚ç‚¹åº§æ¨™
+	XMFLOAT3 nor;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	XMFLOAT4 diffuse;	// æ‹¡æ•£åå°„å…‰
+	XMFLOAT2 tex;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 } VERTEX_3D;
 
 class Mesh: public Component
@@ -53,13 +53,23 @@ protected:
 	Transform* m_TexTransform;
 	ID3D11ShaderResourceView* m_pTexture;
 
-	ID3D11Buffer*			m_pConstantBuffer[2];	// ’è”ƒoƒbƒtƒ@
+	ID3D11Buffer*			m_pConstantBuffer[2];	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
 public:
 	Mesh();
 	~Mesh();
-	virtual HRESULT Init();
+
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
+	 */
+	virtual void Awake();
 	virtual void Uninit();
 	virtual void Update();
+
+	/**
+	 * @brief æç”»å‡¦ç†
+	 * @return ãªã—
+	 */
 	virtual void Draw();
 
 public:
@@ -74,8 +84,7 @@ public:
 	Mesh* ChangePos(float x, float y, float z);
 	Mesh* ChangeUV(XMFLOAT2 uv);
 	Mesh* ChangeUV(float u, float v);
-	Mesh* SetTexture(const char* filename);
-	Mesh* SetTexture(const wchar_t* filename);
+	Mesh* SetTexture(ID3D11ShaderResourceView* texture);
 };
 
 // EOF

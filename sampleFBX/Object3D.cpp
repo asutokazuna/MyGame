@@ -34,22 +34,6 @@ HRESULT Object3D::Init()
 }
 
 /**
- * @breif 終了
- * @return なし
- */
-void Object3D::Uninit()
-{
-}
-
-/**
- * @breif 更新
- * @return なし
- */
-void Object3D::Update()
-{
-}
-
-/**
  * @breif 描画
  * @return なし
  */

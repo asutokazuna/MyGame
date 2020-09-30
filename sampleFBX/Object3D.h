@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Object3D.h
- * @brief 3DƒIƒuƒWƒFƒNƒg‚Ì•\¦—p
+ * @brief 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¡¨ç¤ºç”¨
  */
 #pragma once
 #include "Component.h"
@@ -13,67 +13,55 @@
 class Object3D:public Component
 {
 private:
-	Transform*	m_Transform;	// À•W
-	CFbxLight	m_light;	//!< ŒõŒ¹î•ñ
-	XMFLOAT4X4 m_world;		//!< ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	Transform*	m_Transform;	// åº§æ¨™
+	CFbxLight	m_light;	//!< å…‰æºæƒ…å ±
+	XMFLOAT4X4 m_world;		//!< ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 
 	int m_ModelIndex;
 	CFbxModel* m_Model;
 	TFbxMaterial material;
 public:
 	/**
-	 * @breif ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @breif ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	Object3D();
 
 	/**
-	 * @breif ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @breif åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	HRESULT Init();
 
 	/**
-	 * @breif I—¹
-	 * @return ‚È‚µ
-	 */
-	void Uninit();
-
-	/**
-	 * @breif XV
-	 * @return ‚È‚µ
-	 */
-	void Update();
-
-	/**
-	 * @breif •`‰æ
-	 * @return ‚È‚µ
+	 * @breif æç”»
+	 * @return ãªã—
 	 */
 	void Draw();
 
 	/**
-	 * @breif •`‰æ
-	 * @return ‚È‚µ
+	 * @breif æç”»
+	 * @return ãªã—
 	 */
 	void DrawAlpha();
 
 	/**
-	 * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚Ìí—Ş‚ğİ’è
-	 * @param	kind	•\¦‚·‚éƒ‚ƒfƒ‹‚Ì¯•Êq
-	 * @retrun À‘Ì
+	 * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡ã‚’è¨­å®š
+	 * @param	kind	è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è­˜åˆ¥å­
+	 * @retrun å®Ÿä½“
 	 */
 	Object3D& SetModel(int kind);
 
 	/**
-	 * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚Ìí—Ş‚ğİ’è
-	 * @param	kind	•\¦‚·‚éƒ‚ƒfƒ‹‚Ì¯•Êq
-	 * @retrun À‘Ì
+	 * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡ã‚’è¨­å®š
+	 * @param	kind	è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è­˜åˆ¥å­
+	 * @retrun å®Ÿä½“
 	 */
 	Object3D& SetModel(ModelKind kind);
 
 	/**
-	 * @brief •\¦‚·‚éƒ‚ƒfƒ‹‚ÌF‚ğİ’è
-	 * @param	mat	•\¦‚·‚éF
-	 * @retrun À‘Ì
+	 * @brief è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®è‰²ã‚’è¨­å®š
+	 * @param	mat	è¡¨ç¤ºã™ã‚‹è‰²
+	 * @retrun å®Ÿä½“
 	 */
 	void SetMaterial(TFbxMaterial& color);
 };

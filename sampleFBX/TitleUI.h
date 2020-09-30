@@ -1,23 +1,29 @@
-/**
+﻿/**
  * @file TitleUI
- * @brief �^�C�g����UI�N���X
+ * @brief タイトルのUIクラス
  */
 #pragma once
 #include "GameObject.h"
 
+// 前方宣言
 class UIMesh;
+
+/**
+ * @class TitleUI
+ * @brief タイトルに出てくるUI
+ */
 class TitleUI :public GameObject
 {
 private:
-	GameObject* m_RogoMesh;
-	GameObject* m_StartMesh;
+	GameObject* m_RogoMesh;		//!< タイトルロゴ
+	GameObject* m_StartMesh;	//!< スタートボタン
+
 public:
-	TitleUI();
-	~TitleUI();
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	/**
+	 * @breif 初期化処理
+	 * @return なし
+	 */
+	void Awake();
 };
 
 // EOF

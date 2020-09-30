@@ -1,54 +1,58 @@
-/**
+ï»¿/**
  * @file TextureData.cpp
- * @brief ƒeƒNƒXƒ`ƒƒƒf[ƒ^ŠÇ—ƒNƒ‰ƒX
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Singleton.h"
 #include "Data.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 struct ID3D11ShaderResourceView;
 
 /**
  * @enum TEXTURE_KIND
- * @brief ƒeƒNƒXƒ`ƒƒ‚Ì¯•Ê”Ô†
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è­˜åˆ¥ç•ªå·
  */
 enum TEXTURE_KIND 
 {
 	TEXTURE_FIELD,
-
+	TEXTURE_PRESSENTER,
+	TEXTURE_TITLE_ROGO,
+	TEXTURE_WIN,
+	TEXTURE_LOSE,
+	
 	TEXTURE_MAX
 };
 
 /**
  * @class TextureData
- * @brief ƒeƒNƒXƒ`ƒƒƒf[ƒ^ŠÇ—ƒNƒ‰ƒX
+ * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 class TextureData :public Singleton<TextureData>
 {
 public:
-	friend class Singleton<TextureData>;	//!< ƒVƒ“ƒOƒ‹ƒgƒ“
+	friend class Singleton<TextureData>;	//!< ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 
 private:
-	Data<ID3D11ShaderResourceView> m_data;	//!< ƒf[ƒ^
+	DXData<ID3D11ShaderResourceView> m_data;	//!< ãƒ‡ãƒ¼ã‚¿
 
 public:
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	void InitInstance();
 
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	static void Init();
 
 	/**
-	 * @brief ƒeƒNƒXƒ`ƒƒƒf[ƒ^‚Ìæ“¾
-	 * @param[in] kind æ“¾‚µ‚½‚¢ƒeƒNƒXƒ`ƒƒ‚ÌID
-	 * @return ˆø”‚É‡‚í‚¹‚½ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+	 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+	 * @param[in] kind å–å¾—ã—ãŸã„ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ID
+	 * @return å¼•æ•°ã«åˆã‚ã›ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
 	 */
 	static ID3D11ShaderResourceView* GetData(int kind);
 };

@@ -1,50 +1,33 @@
-/**
+ï»¿/**
  * @file CPlayer
- * @brief ƒvƒŒƒCƒ„[ƒNƒ‰ƒX
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹
  * @date 2020/06/19
  */
 #pragma once
 #include "Box.h"
 #include "GameObject.h"
-#include <memory>
 #include <list>
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class PlayerMissile;
 class Collision;
 
 /**
  * @class CPlayer
- * @brief ƒvƒŒƒCƒ„[‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 class CPlayer: public GameObject
 {
 private:
-	XMFLOAT3 m_vCenter;		//!< ‹«ŠEƒ{ƒbƒNƒX’†SÀ•W
-	XMFLOAT3 m_vBBox;		//!< ‹«ŠEƒ{ƒbƒNƒXƒTƒCƒY
-	CBox m_box;				//!< ‹«ŠEƒ{ƒbƒNƒX
-private:
-	std::list<PlayerMissile*> m_Missile;	//!< ƒ~ƒTƒCƒ‹
-	Collision* m_col;						//!< ƒRƒ‰ƒCƒ_[
+	std::list<PlayerMissile*> m_Missile;	//!< ãƒŸã‚µã‚¤ãƒ«
+	Collision* m_col;						//!< ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
-
-	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
-	 */
-	HRESULT Init();
-
-	/**
-	 * @brief XVˆ—
-	 * @return ‚È‚µ
-	 */
-	void Update();
 };
 
 // EOF

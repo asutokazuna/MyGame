@@ -51,10 +51,16 @@ public:
 	~GameObject() override;
 
 	/**
+	 * @brief 初期化処理
+	 * @return　なし
+	 */
+	HRESULT Init() override;
+
+	/**
 	 * @brief 更新処理
 	 * @return  なし
 	 */
-	void Update();
+	void Update() override;
 
 	/**
 	 * @brief 更新処理
@@ -99,9 +105,9 @@ public:
 	bool CompareTag(int objTag);
 
 	/**
- * @breif コンポーネントの取得
- * @return クラスのコンポーネント
- */
+	 * @breif コンポーネントの取得
+	 * @return クラスのコンポーネント
+	 */
 	template<class T>
 	T* GetComponent()
 	{
@@ -125,7 +131,6 @@ public:
 		buff->m_Parent = this;
 		m_ComponentList.push_back(buff);
 		buff->Awake();
-		buff->Init();
 		return buff;
 	}
 };

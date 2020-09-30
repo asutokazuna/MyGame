@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file FieldMesh
- * @brief ’n–Ê‚ÌƒƒbƒVƒ…ƒNƒ‰ƒX
+ * @brief åœ°é¢ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹
  */
 #include "FieldMesh.h"
 #include "Texture.h"
@@ -9,41 +9,41 @@
 #include "GameObject.h"
 #include "CCamera.h"
 
-#define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
-HRESULT FieldMesh::Init()
+void FieldMesh::Awake()
 {
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 
-	Mesh::Init();
+	Mesh::Awake();
 
 	int nNumBlockH = 15, nNumBlockV = 15;
 	float fSizeBlockH = 80, fSizeBlockV = 80;
 	//m_transform = &m_Parent->GetTransform();
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	hr = CreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&m_pTexture);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	hr = CreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		TEXTURE_FILENAME,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+		&m_pTexture);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	static Transform trans;
 	m_TexTransform = &trans;
 
-	// ’¸“_”‚Ìİ’è
+	// é ‚ç‚¹æ•°ã®è¨­å®š
 	this->m_nNumVertex = (nNumBlockH + 1) * (nNumBlockV + 1);
 
-	// ƒCƒ“ƒfƒbƒNƒX”‚Ìİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã®è¨­å®š
 	this->m_nNumIndex = (nNumBlockH + 1) * 2 * nNumBlockV + (nNumBlockV - 1) * 2;
 
-	// ˆê“I‚È’¸“_”z—ñ‚Ìì¬
+	// ä¸€æ™‚çš„ãªé ‚ç‚¹é…åˆ—ã®ä½œæˆ
 	VERTEX_3D* pVertexWk = new VERTEX_3D[this->m_nNumVertex];
 
-	// ’¸“_”z—ñ‚Ì’†g‚ğ–„‚ß‚é
+	// é ‚ç‚¹é…åˆ—ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D* pVtx = pVertexWk;
 #if 0
 	const float texSizeX = 1.0f / nNumBlockH;
@@ -57,33 +57,33 @@ HRESULT FieldMesh::Init()
 		const float ANGLE = XM_2PI / nNumBlockH;
 
 		for (int nCntVtxX = 0; nCntVtxX < nNumBlockH + 1; ++nCntVtxX) {
-			// ’¸“_À•W‚Ìİ’è
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].vtx.x = -(nNumBlockH / 2.0f) * fSizeBlockH + nCntVtxX * fSizeBlockH;
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].vtx.y = 0.0f;
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].vtx.z = (nNumBlockV / 2.0f) * fSizeBlockV - nCntVtxZ * fSizeBlockV;
 
-			// –@ü‚Ìİ’è
+			// æ³•ç·šã®è¨­å®š
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].nor = XMFLOAT3(0.0f, 1.0, 0.0f);
 
-			// ”½ËŒõ‚Ìİ’è
+			// åå°„å…‰ã®è¨­å®š
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 
-			// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].tex.x = texSizeX * nCntVtxX;
 			pVtx[nCntVtxZ * (nNumBlockH + 1) + nCntVtxX].tex.y = texSizeZ * nCntVtxZ;
 		}
 	}
 
-	// ˆê“I‚ÈƒCƒ“ƒfƒbƒNƒX”z—ñ¶¬
+	// ä¸€æ™‚çš„ãªã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ç”Ÿæˆ
 	int* pIndexWk = new int[this->m_nNumIndex];
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	int* pIdx = pIndexWk;
 
 	int nCntIdx = 0;
 	for (int nCntVtxZ = 0; nCntVtxZ < nNumBlockV; ++nCntVtxZ) {
 		if (nCntVtxZ > 0) {
-			// k‘Şƒ|ƒŠƒSƒ“‚Ì‚½‚ß‚Ìƒ_ƒu‚è‚Ìİ’è
+			// ç¸®é€€ãƒãƒªã‚´ãƒ³ã®ãŸã‚ã®ãƒ€ãƒ–ã‚Šã®è¨­å®š
 			pIdx[nCntIdx] = (nCntVtxZ + 1) * (nNumBlockH + 1);
 			nCntIdx++;
 		}
@@ -96,7 +96,7 @@ HRESULT FieldMesh::Init()
 		}
 
 		if (nCntVtxZ < nNumBlockV - 1) {
-			// k‘Şƒ|ƒŠƒSƒ“‚Ì‚½‚ß‚Ìƒ_ƒu‚è‚Ìİ’è
+			// ç¸®é€€ãƒãƒªã‚´ãƒ³ã®ãŸã‚ã®ãƒ€ãƒ–ã‚Šã®è¨­å®š
 			pIdx[nCntIdx] = nCntVtxZ * (nNumBlockH + 1) + nNumBlockH;
 			nCntIdx++;
 		}
@@ -104,16 +104,14 @@ HRESULT FieldMesh::Init()
 
 	hr = Mesh::MakeMeshVertex(pVertexWk, pIndexWk);
 
-	// ˆê”z—ñ‚Ì‰ğ•ú
+	// ä¸€æ™‚é…åˆ—ã®è§£æ”¾
 	delete[] pIndexWk;
 	delete[] pVertexWk;
-
-	return E_NOTIMPL;
 }
 
 /**
- * @brief •`‰æ
- * @return ‚È‚µ
+ * @brief æç”»
+ * @return ãªã—
  */
 void FieldMesh::Draw()
 {

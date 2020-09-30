@@ -1,12 +1,12 @@
-/**
+ï»¿/**
  * @file MyMath.h
- * @brief ŒvZŠÇ—ƒNƒ‰ƒX
+ * @brief è¨ˆç®—ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include <DirectXMath.h>
 
  /**
-  * @brief ƒNƒH[ƒ^ƒjƒIƒ“
+  * @brief ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
   */
 struct Quaternion
 {
@@ -16,9 +16,13 @@ struct Quaternion
 	float z;
 };
 
+/**
+ * @brief 3æ¬¡å…ƒç”¨
+ */
 struct Vector3
 {
 	float x, y, z;
+	Vector3() = default;
 	Vector3 operator+ (const Vector3 num) {
 		Vector3 value;
 		value.x = x + num.x;
@@ -26,21 +30,21 @@ struct Vector3
 		value.z = z + num.z;
 		return value;
 	}
-	Vector3& operator- (const Vector3 num) {
+	Vector3 operator- (const Vector3 num) {
 		Vector3 value;
 		value.x = x - num.x;
 		value.y = y - num.y;
 		value.z = z - num.z;
 		return value;
 	}
-	Vector3& operator* (const Vector3 num) {
+	Vector3 operator* (const Vector3 num) {
 		Vector3 value;
 		value.x = x * num.x;
 		value.y = y * num.y;
 		value.z = z * num.z;
 		return value;
 	}
-	Vector3& operator/ (const Vector3 num) {
+	Vector3 operator/ (const Vector3 num) {
 		Vector3 value;
 		value.x = x / num.x;
 		value.y = y / num.y;
@@ -140,6 +144,9 @@ struct Vector3
 
 class Transform;
 
+/**
+ * @brief è‡ªä½œã®è¨ˆç®—ã‚¯ãƒ©ã‚¹
+ */
 class MyMath
 {
 public:
@@ -148,11 +155,11 @@ public:
 	static Quaternion AnglexQuaternion(Quaternion quat, Vector3 axis, float radius);
 
 	/**
-	 * @brief   ƒNƒH[ƒ^ƒjƒIƒ“‚É‚æ‚é‰ñ“]
-	 * @param   axis    ‰ñ“]‚³‚¹‚½‚¢²
-	 * @param   pos     ‰ñ“]‚³‚¹‚éƒIƒuƒWƒFƒNƒg‚ÌÀ•W
-	 * @param   radius  ‰ñ“]‚³‚¹‚éŠp“x
-	 * @return  ‰ñ“]Œã‚ÌÀ•W
+	 * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«ã‚ˆã‚‹å›è»¢
+	 * @param   axis    å›è»¢ã•ã›ãŸã„è»¸
+	 * @param   pos     å›è»¢ã•ã›ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åº§æ¨™
+	 * @param   radius  å›è»¢ã•ã›ã‚‹è§’åº¦
+	 * @return  å›è»¢å¾Œã®åº§æ¨™
 	 */
 	static Vector3 RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radius);
 

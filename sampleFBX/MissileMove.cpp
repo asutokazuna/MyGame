@@ -1,12 +1,12 @@
-/**
+ï»¿/**
  * @file MissileMove
- * @brief ƒ~ƒTƒCƒ‹‚Ì“®‚«ƒNƒ‰ƒX
+ * @brief ãƒŸã‚µã‚¤ãƒ«ã®å‹•ãã‚¯ãƒ©ã‚¹
  */
 #include "MissileMove.h"
 #include "GameObject.h"
 
 //*****************************************************************************
-// ’è”’è‹`
+// å®šæ•°å®šç¾©
 //*****************************************************************************
 #define SPEED			(6.0f)
 
@@ -14,10 +14,10 @@ MissileMove::MissileMove() :m_nStat(0), m_nLife(0)
 {
 }
 
-MissileMove::~MissileMove()
-{
-}
-
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
 HRESULT MissileMove::Init()
 {
 	m_nLife = 0;
@@ -31,11 +31,11 @@ HRESULT MissileMove::Init()
 
 void MissileMove::Update()
 {
-	// –¢g—p
+	// æœªä½¿ç”¨
 	if (m_nStat == 0) {
 		return;
 	}
-	// ’Ç”ö’†(m_nStat == 1)
+	// è¿½å°¾ä¸­(m_nStat == 1)
 	--m_nLife;
 	if (m_nLife <= 0) {
 		m_nStat = 0;

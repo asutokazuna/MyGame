@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Billboard
- * @brief ƒrƒ‹ƒ{[ƒhƒNƒ‰ƒX
+ * @brief ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰ã‚¯ãƒ©ã‚¹
  */
 #include "Billboard.h"
 #include "Texture.h"
@@ -14,32 +14,36 @@
 #include "Light.h"
 
  //*****************************************************************************
- // ƒVƒF[ƒ_‚É“n‚·’l
+ // ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™å€¤
 struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ(“]’us—ñ)
-	XMMATRIX	mW;			// ƒ[ƒ‹ƒhs—ñ(“]’us—ñ)
-	XMMATRIX	mTex;		// ƒeƒNƒXƒ`ƒƒs—ñ(“]’us—ñ)
+	XMMATRIX	mWVP;		// ãƒ¯ãƒ¼ãƒ«ãƒ‰Ã—ãƒ“ãƒ¥ãƒ¼Ã—å°„å½±è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMMATRIX	mW;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMMATRIX	mTex;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
 };
 struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// ‹“_À•W
-	// ŒõŒ¹
-	XMVECTOR	vLightDir;	// ŒõŒ¹•ûŒü
-	XMVECTOR	vLa;		// ŒõŒ¹F(ƒAƒ“ƒrƒGƒ“ƒg)
-	XMVECTOR	vLd;		// ŒõŒ¹F(ƒfƒBƒtƒ…[ƒY)
-	XMVECTOR	vLs;		// ŒõŒ¹F(ƒXƒyƒLƒ…ƒ‰)
-	// ƒ}ƒeƒŠƒAƒ‹
-	XMVECTOR	vAmbient;	// ƒAƒ“ƒrƒGƒ“ƒgF(+ƒeƒNƒXƒ`ƒƒ—L–³)
-	XMVECTOR	vDiffuse;	// ƒfƒBƒtƒ…[ƒYF
-	XMVECTOR	vSpecular;	// ƒXƒyƒLƒ…ƒ‰F(+ƒXƒyƒLƒ…ƒ‰‹­“x)
-	XMVECTOR	vEmissive;	// ƒGƒ~ƒbƒVƒuF
+	XMVECTOR	vEye;		// è¦–ç‚¹åº§æ¨™
+	// å…‰æº
+	XMVECTOR	vLightDir;	// å…‰æºæ–¹å‘
+	XMVECTOR	vLa;		// å…‰æºè‰²(ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ)
+	XMVECTOR	vLd;		// å…‰æºè‰²(ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º)
+	XMVECTOR	vLs;		// å…‰æºè‰²(ã‚¹ãƒšã‚­ãƒ¥ãƒ©)
+	// ãƒãƒ†ãƒªã‚¢ãƒ«
+	XMVECTOR	vAmbient;	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²(+ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰ç„¡)
+	XMVECTOR	vDiffuse;	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	XMVECTOR	vSpecular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²(+ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·åº¦)
+	XMVECTOR	vEmissive;	// ã‚¨ãƒŸãƒƒã‚·ãƒ–è‰²
 };
 
-HRESULT Billboard::Init()
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @returnã€€ãªã—
+ */
+void Billboard::Awake()
 {	
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 
-	Mesh::Init();
+	Mesh::Awake();
 	
 	int nNumBlockH = 8, nNumBlockV = 8;
 	float fSizeBlockH = 80, fSizeBlockV = 80;
@@ -48,64 +52,66 @@ HRESULT Billboard::Init()
 	static Transform trans;
 	m_TexTransform = &trans;
 
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_”z—ñ‚ğ¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹é…åˆ—ã‚’ç”Ÿæˆ
 	m_nNumVertex = 4;
 	VERTEX_3D* pVertexWk = new VERTEX_3D[m_nNumVertex];
 
-	// ’¸“_”z—ñ‚Ì’†g‚ğ–„‚ß‚é
+	// é ‚ç‚¹é…åˆ—ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D* pVtx = pVertexWk;
 
-	// ’¸“_À•W‚Ìİ’è
+	// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 	pVtx[0].vtx = XMFLOAT3(-1.0f / 2, 1.0f / 2, 0.0f);
 	pVtx[1].vtx = XMFLOAT3(1.0f / 2, 1.0f / 2, 0.0f);
 	pVtx[2].vtx = XMFLOAT3(-1.0f / 2, -1.0f / 2, 0.0f);
 	pVtx[3].vtx = XMFLOAT3(1.0f / 2, -1.0f / 2, 0.0f);
 
-	// –@ü‚Ìİ’è
+	// æ³•ç·šã®è¨­å®š
 	pVtx[0].nor = XMFLOAT3(0.0f, 0.0f, -1.0f);
 	pVtx[1].nor = XMFLOAT3(0.0f, 0.0f, -1.0f);
 	pVtx[2].nor = XMFLOAT3(0.0f, 0.0f, -1.0f);
 	pVtx[3].nor = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
-	// ”½ËŒõ‚Ìİ’è
+	// åå°„å…‰ã®è¨­å®š
 	pVtx[0].diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	pVtx[1].diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	pVtx[2].diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	pVtx[3].diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 	pVtx[0].tex = XMFLOAT2(0.0f, 0.0f);
 	pVtx[1].tex = XMFLOAT2(1.0f, 0.0f);
 	pVtx[2].tex = XMFLOAT2(0.0f, 1.0f);
 	pVtx[3].tex = XMFLOAT2(1.0f, 1.0f);
 
-	// ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğ¶¬
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’ç”Ÿæˆ
 	m_nNumIndex = 4;
 	int* pIndexWk = new int[m_nNumIndex];
 
-	// ƒCƒ“ƒfƒbƒNƒX”z—ñ‚Ì’†g‚ğ–„‚ß‚é
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	pIndexWk[0] = 0;
 	pIndexWk[1] = 1;
 	pIndexWk[2] = 2;
 	pIndexWk[3] = 3;
 
-	// ’¸“_ƒoƒbƒtƒ@¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	hr = MakeMeshVertex(pVertexWk, pIndexWk);
 
-	// ˆê”z—ñ‚Ì‰ğ•ú
+	// ä¸€æ™‚é…åˆ—ã®è§£æ”¾
 	delete[] pIndexWk;
 	delete[] pVertexWk;
-
-	return E_NOTIMPL;
 }
 
+/**
+ * @brief æç”»å‡¦ç†
+ * @return ãªã—
+ */
 void Billboard::Draw()
 {
 	//CGraphics::SetZWrite(false);
 	m_Proj = CCamera::Get()->GetProj();
 	m_View = CCamera::Get()->GetView();
 
-	// ‘O–ÊƒJƒŠƒ“ƒO (FBX‚Í•\— ‚ª”½“]‚·‚é‚½‚ß)
+	// å‰é¢ã‚«ãƒªãƒ³ã‚° (FBXã¯è¡¨è£ãŒåè»¢ã™ã‚‹ãŸã‚)
 	CGraphics::SetCullMode(CULLMODE_NONE);
 	CGraphics::SetZWrite(true);
 	CGraphics::SetBlendState(BS_NONE);
@@ -115,17 +121,17 @@ void Billboard::Draw()
 	ID3D11InputLayout* il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX);
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
-	// ‚ ‚Æ‚Å‚±‚±‚àƒ‰ƒbƒsƒ“ƒO‚·‚é
-	// ƒVƒF[ƒ_İ’è
+	// ã‚ã¨ã§ã“ã“ã‚‚ãƒ©ãƒƒãƒ”ãƒ³ã‚°ã™ã‚‹
+	// ã‚·ã‚§ãƒ¼ãƒ€è¨­å®š
 	pDeviceContext->VSSetShader(vs, nullptr, 0);
 	pDeviceContext->PSSetShader(ps, nullptr, 0);
 	pDeviceContext->IASetInputLayout(il);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
 	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒZƒbƒg
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
@@ -165,7 +171,7 @@ void Billboard::Draw()
 	mtxWorld = XMMatrixMultiply(mtxScale, mtxWorld);
 
 	XMMATRIX
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	mtxTranslate = XMMatrixTranslation(m_transform->position.x, m_transform->position.y, m_transform->position.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
@@ -195,9 +201,9 @@ void Billboard::Draw()
 	pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
 
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ğƒZƒbƒg
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0‚È‚çOŠpŒ`ƒXƒgƒŠƒbƒv
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0ãªã‚‰ä¸‰è§’å½¢ã‚¹ãƒˆãƒªãƒƒãƒ—
 		D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
 		D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
 		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
@@ -206,9 +212,9 @@ void Billboard::Draw()
 	};
 	pDeviceContext->IASetPrimitiveTopology(pt[m_primitiveType]);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDeviceContext->DrawIndexed(m_nNumIndex, 0, 0);
-	// ‘O–ÊƒJƒŠƒ“ƒO (FBX‚Í•\— ‚ª”½“]‚·‚é‚½‚ß)
+	// å‰é¢ã‚«ãƒªãƒ³ã‚° (FBXã¯è¡¨è£ãŒåè»¢ã™ã‚‹ãŸã‚)
 	CGraphics::SetCullMode(CULLMODE_CW);
 
 	CGraphics::SetZWrite(true);

@@ -27,11 +27,11 @@ void SceneGame::Awake()
 	m_pCTPCamera = new CTPCamera();
 	m_BCamera = new CBulletTime();
 
-	m_pPlayer = ObjectManager::Create<CPlayer>("Player");
-	m_pEnemy = ObjectManager::Create<Enemy>("Enemy");
-	m_Field = ObjectManager::Create<Field>("Field");
-	m_Tower = ObjectManager::Create<TowerManager>("TowerManager");
-	m_Core = ObjectManager::Create<CorePlayer>("CorePlayer");
+	m_pPlayer	= ObjectManager::Create<CPlayer>("Player");
+	m_pEnemy	= ObjectManager::Create<Enemy>("Enemy");
+	m_Field		= ObjectManager::Create<Field>("Field");
+	m_Tower		= ObjectManager::Create<TowerManager>("TowerManager");
+	m_Core		= ObjectManager::Create<CorePlayer>("CorePlayer");
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
 }
 

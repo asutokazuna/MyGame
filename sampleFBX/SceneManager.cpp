@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "ModelData.h"
 #include "Graphics.h"
-#include "CTPCamera.h"
 #include "ShaderData.h"
 #include "Light.h"
 #include "SceneTitle.h"
@@ -17,6 +16,7 @@
 #include "CSky.h"
 #include "CCamera.h"
 #include "ObjectManager.h"
+#include "TextureData.h"
 
 CScene* SceneManager::m_nowScene = nullptr;
 int SceneManager::m_SceneID = 0;
@@ -37,6 +37,7 @@ void SceneManager::Init()
 {
 	ShaderData::Init();
 	ModelData::Init();
+	TextureData::Init();
 
 	// 全オブジェクト初期化
 	m_pCamera = new CCamera();

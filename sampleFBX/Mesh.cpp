@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Mesh
- * @brief ƒƒbƒVƒ…ƒNƒ‰ƒX
+ * @brief ãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹
  */
 #include "Mesh.h"
 #include "ShaderData.h"
@@ -13,24 +13,24 @@
 #include "Texture.h"
 
  //*****************************************************************************
- // ƒVƒF[ƒ_‚É“n‚·’l
+ // ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™å€¤
 struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ(“]’us—ñ)
-	XMMATRIX	mW;			// ƒ[ƒ‹ƒhs—ñ(“]’us—ñ)
-	XMMATRIX	mTex;		// ƒeƒNƒXƒ`ƒƒs—ñ(“]’us—ñ)
+	XMMATRIX	mWVP;		// ãƒ¯ãƒ¼ãƒ«ãƒ‰Ã—ãƒ“ãƒ¥ãƒ¼Ã—å°„å½±è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMMATRIX	mW;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMMATRIX	mTex;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
 };
 struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// ‹“_À•W
-	// ŒõŒ¹
-	XMVECTOR	vLightDir;	// ŒõŒ¹•ûŒü
-	XMVECTOR	vLa;		// ŒõŒ¹F(ƒAƒ“ƒrƒGƒ“ƒg)
-	XMVECTOR	vLd;		// ŒõŒ¹F(ƒfƒBƒtƒ…[ƒY)
-	XMVECTOR	vLs;		// ŒõŒ¹F(ƒXƒyƒLƒ…ƒ‰)
-	// ƒ}ƒeƒŠƒAƒ‹
-	XMVECTOR	vAmbient;	// ƒAƒ“ƒrƒGƒ“ƒgF(+ƒeƒNƒXƒ`ƒƒ—L–³)
-	XMVECTOR	vDiffuse;	// ƒfƒBƒtƒ…[ƒYF
-	XMVECTOR	vSpecular;	// ƒXƒyƒLƒ…ƒ‰F(+ƒXƒyƒLƒ…ƒ‰‹­“x)
-	XMVECTOR	vEmissive;	// ƒGƒ~ƒbƒVƒuF
+	XMVECTOR	vEye;		// è¦–ç‚¹åº§æ¨™
+	// å…‰æº
+	XMVECTOR	vLightDir;	// å…‰æºæ–¹å‘
+	XMVECTOR	vLa;		// å…‰æºè‰²(ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ)
+	XMVECTOR	vLd;		// å…‰æºè‰²(ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º)
+	XMVECTOR	vLs;		// å…‰æºè‰²(ã‚¹ãƒšã‚­ãƒ¥ãƒ©)
+	// ãƒãƒ†ãƒªã‚¢ãƒ«
+	XMVECTOR	vAmbient;	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²(+ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰ç„¡)
+	XMVECTOR	vDiffuse;	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	XMVECTOR	vSpecular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²(+ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·åº¦)
+	XMVECTOR	vEmissive;	// ã‚¨ãƒŸãƒƒã‚·ãƒ–è‰²
 };
 
 #define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
@@ -51,7 +51,7 @@ Mesh::Mesh()
 	m_pTexture = nullptr;
 
 	m_material = new MATERIAL();
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šúİ’è
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸè¨­å®š
 	m_material->Diffuse = M_DIFFUSE;
 	m_material->Ambient = M_AMBIENT;
 	m_material->Specular = M_SPECULAR;
@@ -64,11 +64,15 @@ Mesh::~Mesh()
 	delete m_material;
 }
 
-HRESULT Mesh::Init()
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
+void Mesh::Awake()
 {
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = CGraphics::GetDevice();
-	// ’è”ƒoƒbƒtƒ@¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DEFAULT;
@@ -76,14 +80,12 @@ HRESULT Mesh::Init()
 	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bd.CPUAccessFlags = 0;
 	hr = pDevice->CreateBuffer(&bd, nullptr, &m_pConstantBuffer[0]);
-	if (FAILED(hr)) return hr;
+	if (FAILED(hr)) return;
 	bd.ByteWidth = sizeof(SHADER_GLOBAL2);
 	hr = pDevice->CreateBuffer(&bd, nullptr, &m_pConstantBuffer[1]);
-	if (FAILED(hr)) return hr;
+	if (FAILED(hr)) return;
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
-
-	return S_OK;
 }
 
 void Mesh::Uninit()
@@ -100,6 +102,10 @@ void Mesh::Update()
 {
 }
 
+/**
+ * @brief æç”»å‡¦ç†
+ * @return ãªã—
+ */
 void Mesh::Draw()
 {	
 	CGraphics::SetCullMode(CULLMODE_NONE);
@@ -111,16 +117,16 @@ void Mesh::Draw()
 	ID3D11InputLayout* il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX);
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
-	// ƒVƒF[ƒ_İ’è
+	// ã‚·ã‚§ãƒ¼ãƒ€è¨­å®š
 	pDeviceContext->VSSetShader(vs, nullptr, 0);
 	pDeviceContext->PSSetShader(ps, nullptr, 0);
 	pDeviceContext->IASetInputLayout(il);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
 	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒZƒbƒg
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
@@ -141,7 +147,7 @@ void Mesh::Draw()
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
-	// ‚Æ‚è‚ ‚¦‚¸ƒ‰ƒCƒg–³‚µ
+	// ã¨ã‚Šã‚ãˆãšãƒ©ã‚¤ãƒˆç„¡ã—
 	cb2.vLightDir = XMVectorSet(0,0,0, 0.f);
 	cb2.vLa = XMLoadFloat4(&light->m_ambient);
 	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
@@ -156,9 +162,9 @@ void Mesh::Draw()
 	pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
 
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ğƒZƒbƒg
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0‚È‚çOŠpŒ`ƒXƒgƒŠƒbƒv
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0ãªã‚‰ä¸‰è§’å½¢ã‚¹ãƒˆãƒªãƒƒãƒ—
 		D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
 		D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
 		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
@@ -167,7 +173,7 @@ void Mesh::Draw()
 	};
 	pDeviceContext->IASetPrimitiveTopology(pt[m_primitiveType]);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDeviceContext->DrawIndexed(m_nNumIndex, 0, 0);
 }
 
@@ -271,7 +277,7 @@ Mesh* Mesh::ChangePos(XMFLOAT3 pos)
 	return this;
 }
 
-Mesh * Mesh::ChangePos(float x, float y, float z)
+Mesh* Mesh::ChangePos(float x, float y, float z)
 {
 	if (m_transform == nullptr) {
 		return this;
@@ -308,27 +314,10 @@ Mesh * Mesh::ChangeUV(float u, float v)
 	return this;
 }
 
-Mesh * Mesh::SetTexture(const char* filename)
+Mesh* Mesh::SetTexture(ID3D11ShaderResourceView* texture)
 {
-	ID3D11Device *pDevice = CGraphics::GetDevice();
+	m_pTexture = texture;
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	CreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		filename,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&m_pTexture);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
-	return this;
-}
-
-Mesh * Mesh::SetTexture(const wchar_t* filename)
-{
-	ID3D11Device *pDevice = CGraphics::GetDevice();
-
-	HRESULT hr =
-
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	CreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		filename,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&m_pTexture);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
 	return this;
 }
 

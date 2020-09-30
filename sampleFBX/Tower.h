@@ -1,16 +1,21 @@
-/**
+﻿/**
  * @file Tower
- * @brief Tower�N���X
+ * @brief Towerクラス
  */
 #pragma once
 #include "GameObject.h"
 
+// 前方宣言
 class Object3D;
 class TowerEnergy;
 struct TFbxMaterial;
 class TowerCollision;
 class Gauge;
 
+/**
+ * @class Tower
+ * @brief タワー
+ */
 class Tower :public GameObject
 {
 private:
@@ -21,7 +26,13 @@ private:
 	Gauge*	m_LifeGauge;
 public:
 	TowerEnergy* m_Energy;
-	HRESULT Init();
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	void Awake();
+
 	void Uninit();
 	void Update();
 	void Draw();
