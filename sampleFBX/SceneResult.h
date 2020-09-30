@@ -5,6 +5,7 @@
 #pragma once
 #include "Scene.h"
 
+// 前方宣言
 class GameObject;
 
 /**
@@ -23,7 +24,7 @@ public:
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	HRESULT Init();
+	void Awake();
 
 	/**
 	 * @brief 更新処理

@@ -6,7 +6,8 @@
 #include "Mesh.h"
 
 /**
- *
+ * @class UIMesh
+ * @brief UIに出すメッシュ
  */
 class UIMesh :public Mesh
 {

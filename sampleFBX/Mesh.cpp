@@ -277,7 +277,7 @@ Mesh* Mesh::ChangePos(XMFLOAT3 pos)
 	return this;
 }
 
-Mesh * Mesh::ChangePos(float x, float y, float z)
+Mesh* Mesh::ChangePos(float x, float y, float z)
 {
 	if (m_transform == nullptr) {
 		return this;
@@ -314,27 +314,10 @@ Mesh * Mesh::ChangeUV(float u, float v)
 	return this;
 }
 
-Mesh * Mesh::SetTexture(const char* filename)
+Mesh* Mesh::SetTexture(ID3D11ShaderResourceView* texture)
 {
-	ID3D11Device *pDevice = CGraphics::GetDevice();
+	m_pTexture = texture;
 
-	// テクスチャの読み込み
-	CreateTextureFromFile(pDevice,					// デバイスへのポインタ
-		filename,		// ファイルの名前
-		&m_pTexture);	// 読み込むメモリー
-	return this;
-}
-
-Mesh * Mesh::SetTexture(const wchar_t* filename)
-{
-	ID3D11Device *pDevice = CGraphics::GetDevice();
-
-	HRESULT hr =
-
-	// テクスチャの読み込み
-	CreateTextureFromFile(pDevice,					// デバイスへのポインタ
-		filename,		// ファイルの名前
-		&m_pTexture);	// 読み込むメモリー
 	return this;
 }
 

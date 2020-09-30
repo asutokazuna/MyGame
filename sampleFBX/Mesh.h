@@ -84,8 +84,7 @@ public:
 	Mesh* ChangePos(float x, float y, float z);
 	Mesh* ChangeUV(XMFLOAT2 uv);
 	Mesh* ChangeUV(float u, float v);
-	Mesh* SetTexture(const char* filename);
-	Mesh* SetTexture(const wchar_t* filename);
+	Mesh* SetTexture(ID3D11ShaderResourceView* texture);
 };
 
 // EOF

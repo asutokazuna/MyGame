@@ -5,6 +5,7 @@
 #pragma once
 #include "Singleton.h"
 
+// 前方宣言
 class CScene;
 class CCamera;
 class CSky;
