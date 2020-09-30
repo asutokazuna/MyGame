@@ -26,6 +26,23 @@ GameObject::~GameObject() {
 }
 
 /**
+ * @brief 初期化処理
+ * @return　なし
+ */
+HRESULT GameObject::Init()
+{
+	auto buff = m_ComponentList;
+	for (auto com : buff)
+		com->Init();
+
+	for (auto& child : m_ChildList) {
+		child->Init();
+	}
+
+	return S_OK;
+}
+
+/**
  * @brief 更新処理
  * @return  なし
  */

@@ -202,8 +202,10 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="PlayerCollision.cpp" />
+    <ClCompile Include="PlayerCtrl.cpp" />
     <ClCompile Include="PlayerMissile.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -271,9 +273,11 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PlayerCollision.h" />
+    <ClInclude Include="PlayerCtrl.h" />
     <ClInclude Include="PlayerMissile.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManager.h" />

@@ -7,15 +7,33 @@
 #include "input.h"
 #include "MyMath.h"
 #include "Transform.h"
+#include "Rigidbody.h"
 
+/**
+ * @def 
+ */
+#define GRAVITY (0.98f)
+
+static Rigidbody *rb;
+
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT PlayerMove::Init()
 {
 	m_Transform = &m_Parent->GetTransform();
 	m_Transform->position.z = -500;
 
+	rb = m_Parent->GetComponent<Rigidbody>();
+
 	return S_OK;
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void PlayerMove::Update()
 {
 	float speed = 0;
@@ -34,6 +52,9 @@ void PlayerMove::Update()
 	}
 
 	m_Transform->position += m_Transform->GetForward() * speed;
+	if (CInput::GetKeyTrigger(VK_SPACE)) {
+		rb->AddForce({ 0,15,0 });
+	}
 }
 
 // EOF

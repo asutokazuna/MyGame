@@ -12,11 +12,10 @@
  * @brief 初期化処理
  * @return なし
  */
-HRESULT SceneTitle::Init()
+void SceneTitle::Awake()
 {
 	m_UI = ObjectManager::Create<TitleUI>("TitleUI");
 
-	return E_NOTIMPL;
 }
 
 /**

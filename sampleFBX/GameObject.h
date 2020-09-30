@@ -51,10 +51,16 @@ public:
 	~GameObject() override;
 
 	/**
+	 * @brief 初期化処理
+	 * @return　なし
+	 */
+	HRESULT Init() override;
+
+	/**
 	 * @brief 更新処理
 	 * @return  なし
 	 */
-	void Update();
+	void Update() override;
 
 	/**
 	 * @brief 更新処理
