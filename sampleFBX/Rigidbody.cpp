@@ -17,6 +17,7 @@ float Rigidbody::gravity = 0.98f;
 HRESULT Rigidbody::Init()
 {
 	parentTrans = &m_Parent->GetTransform();
+	oldPosY = parentTrans->position.y;
 
 	force = Vector3();
 	subforce = Vector3();
@@ -30,26 +31,25 @@ HRESULT Rigidbody::Init()
  */
 void Rigidbody::Update()
 {
-	force.y = -gravity;
+	//if (oldPosY == parentTrans->position.y) {
+	//	force.y = 0;
+	//}
+	oldPosY = parentTrans->position.y;
 	parentTrans->position += force;
-	force += subforce;
 
 	if (parentTrans->position.y < 0) {
 		force.y = 0;
-		parentTrans->position.y = 0;
 	}
 	if (force.x < RESIST && force.x > -RESIST) {
 		force.x = 0;
 		subforce.x = 0;
 	}
-	if (force.y < RESIST && force.y > -RESIST) {
-		force.y = 0;
-		//subforce.y = 0;
-	}
 	if (force.z < RESIST && force.z > -RESIST) {
 		force.z = 0;
 		subforce.z = 0;
 	}
+
+	force += subforce;
 }
 
 /**
@@ -64,7 +64,7 @@ void Rigidbody::AddForce(Vector3 force)
 		subforce.x = this->force.x / this->force.x;
 	}
 	if (this->force.y != 0) {
-		subforce.y = this->force.y / this->force.y;
+		subforce.y = gravity;
 	}
 	if (this->force.z != 0) {
 		subforce.z = this->force.z / this->force.z;

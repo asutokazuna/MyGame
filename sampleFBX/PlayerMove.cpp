@@ -23,7 +23,6 @@ static Rigidbody *rb;
 HRESULT PlayerMove::Init()
 {
 	m_Transform = &m_Parent->GetTransform();
-	m_Transform->position.z = -500;
 
 	rb = m_Parent->GetComponent<Rigidbody>();
 
@@ -54,6 +53,9 @@ void PlayerMove::Update()
 	m_Transform->position += m_Transform->GetForward() * speed;
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		rb->AddForce({ 0,15,0 });
+	}
+	if (m_Transform->position.y < 0) {
+		m_Transform->position.y = 0;
 	}
 }
 

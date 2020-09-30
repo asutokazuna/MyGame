@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "ModelData.h"
 #include "Graphics.h"
-#include "CTPCamera.h"
 #include "ShaderData.h"
 #include "Light.h"
 #include "SceneTitle.h"

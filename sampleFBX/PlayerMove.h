@@ -6,6 +6,11 @@
 #include "Component.h"
 
 class Transform;
+
+/**
+ * @class PlayerMove
+ * @brief プレイヤーの移動
+ */
 class PlayerMove: public Component
 {
 private:

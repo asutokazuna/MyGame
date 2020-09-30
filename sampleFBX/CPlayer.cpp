@@ -27,6 +27,7 @@ void CPlayer::Awake()
 		m_Missile.push_back(temp);
 		SetChild(temp);
 	}
+	transform->position.z = -500;
 
 	AddComponent<Object3D>()->SetModel(MODEL_PLAYER);
 	AddComponent<PlayerMove>();

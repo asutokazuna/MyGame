@@ -20,6 +20,7 @@ private:
 	Vector3 force;		//!< 力
 	Vector3 subforce;		//!< 力
 	Transform* parentTrans;		//!< 親のトランスフォーム
+	float oldPosY;
 public:
 	/**
 	 * @brief 初期化処理

@@ -6,7 +6,6 @@
 #pragma once
 #include "Box.h"
 #include "GameObject.h"
-#include <memory>
 #include <list>
 
 // 前方宣言
@@ -19,10 +18,6 @@ class Collision;
  */
 class CPlayer: public GameObject
 {
-private:
-	XMFLOAT3 m_vCenter;		//!< 境界ボックス中心座標
-	XMFLOAT3 m_vBBox;		//!< 境界ボックスサイズ
-	CBox m_box;				//!< 境界ボックス
 private:
 	std::list<PlayerMissile*> m_Missile;	//!< ミサイル
 	Collision* m_col;						//!< コライダー
