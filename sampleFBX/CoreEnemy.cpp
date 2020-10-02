@@ -10,10 +10,9 @@
 HRESULT CoreEnemy::Init()
 {
 	Core::Init();
+	tag = OBJ_TAG_CORE_ENEMY;
 
 	transform->position.z = CORE_POS_Z;
-	m_Collision->SetTag(Collision::COL_CORE_ENEMY);
-	m_Collision->SetTarget(Collision::COL_MISSILE);
 
 	return E_NOTIMPL;
 }

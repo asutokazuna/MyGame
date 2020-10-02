@@ -4,6 +4,8 @@
  */
 #include "collision.h"
 #include "GameObject.h"
+#include "ModelData.h"
+#include "MyMath.h"
 
 std::unordered_map<int, Collision*> Collision::m_List;
 static bool m_isViewCol = true;
@@ -19,6 +21,8 @@ Collision::Collision()
 	num++;
 	m_isActive = true;
 	m_tag = 0;
+	m_offsetPos = Vector3();
+	m_offsetSize = Vector3(1,1,1);
 }
 
 /**
@@ -35,10 +39,10 @@ Collision::~Collision()
  */
 HRESULT Collision::Init()
 {
-	//pos = m_Parent->GetTransform().position;
-	//size = m_Parent->GetTransform().scale;
-	//m_tag = 0;
-	//m_isActive = true;
+	m_transform = &m_Parent->GetTransform();
+	m_tag = m_Parent->GetTag();
+	Vector3& pos = m_transform->position;
+	Vector3 size = m_offsetSize * m_transform->scale;
 
 #ifdef _DEBUG
 	XMFLOAT3 halfsize(size.x, size.y, size.z);
@@ -74,7 +78,7 @@ void Collision::Uninit()
  */
 void Collision::Update()
 {
-	pos = m_Parent->GetTransform().position;
+	Vector3& pos = m_transform->position;
 #ifdef _DEBUG
 	XMFLOAT4X4 mtx = m_box.GetWorld();
 	mtx._41 = pos.x;
@@ -147,8 +151,11 @@ void Collision::Check()
 				continue;
 			}
 
-			if (CheckBox(col->second->pos, col->second->size, othor->second->pos, othor->second->size)) {
-				col->second->OnCollisionEnter((othor->second->m_Parent));
+			Vector3 size = col->second->m_transform->scale *  col->second->m_offsetSize;
+			Vector3 othorsize = othor->second->m_transform->scale *  othor->second->m_offsetSize;
+
+			if (CheckBox(col->second->m_transform->position, size, othor->second->m_transform->position, othorsize)) {
+				col->second->m_Parent->OnCollisionEnter((othor->second->m_Parent));
 			}
 		}
 	}
@@ -160,7 +167,7 @@ void Collision::Check()
  */
 Collision * Collision::SetPos(Vector3 position)
 {
-	pos = position;
+	m_offsetPos = position;
 	return this;
 }
 
@@ -170,7 +177,18 @@ Collision * Collision::SetPos(Vector3 position)
  */
 Collision * Collision::SetSize(Vector3 Size)
 {
-	size = Size;
+	m_offsetSize = Size;
+	return this;
+}
+/**
+ * @breif ƒ‚ƒfƒ‹‚Ìí—Şİ’è
+	 * @param[in] kind ƒ‚ƒfƒ‹‚Ìí—Ş
+ * @return À‘Ì
+ */
+Collision * Collision::SetModelKind(int modelkind)
+{
+	m_offsetSize =  ModelData::GetSize(modelkind);
+
 	return this;
 }
 

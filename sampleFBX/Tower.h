@@ -9,7 +9,7 @@
 class Object3D;
 class TowerEnergy;
 struct TFbxMaterial;
-class TowerCollision;
+class Collision;
 class Gauge;
 
 /**
@@ -22,7 +22,7 @@ private:
 	Object3D* m_Object3D;
 	XMFLOAT3 color;
 	TFbxMaterial* material;
-	TowerCollision* m_collision;
+	Collision* m_collision;
 	Gauge*	m_LifeGauge;
 public:
 	TowerEnergy* m_Energy;

@@ -8,30 +8,29 @@
 #include "MissileMove.h"
 
 HRESULT TowerCollision::Init()
-{
+{/*
 	m_tag = COL_TOWER;
 	size = { 45,45,45 };
-	pos = m_Parent->GetTransform().position;
+	pos = m_Parent->GetTransform().position;*/
 	Collision::Init();
 
 	return E_NOTIMPL;
 }
-
+/**
+ * @brief 当たり判定
+ * @param[in] 当たったオブジェクト
+ * @return なし
+ */
 void TowerCollision::OnCollisionEnter(GameObject* othor)
 {
-	if (othor->CompareTag(COL_MISSILE)) {
+	if (othor->CompareTag(OBJ_TAG_PLAYERMISSILE)) {
 		m_Parent->GetComponent<TowerEnergy>()->AddEnergy(1);
 		othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
-	if (othor->CompareTag(COL_MISSILE_ENEMY)) {
+	if (othor->CompareTag(OBJ_TAG_ENEMYMISSILE)) {
 		m_Parent->GetComponent<TowerEnergy>()->AddEnergy(-1);
 		othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
-}
-
-void TowerCollision::UpdatePos()
-{
-	pos = m_Parent->GetTransform().position;
 }
 
 // EOF

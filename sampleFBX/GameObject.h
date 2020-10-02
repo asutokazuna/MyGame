@@ -105,6 +105,14 @@ public:
 	bool CompareTag(int objTag);
 
 	/**
+	 * @brief タグの取得
+	 * @return タグのID
+	 */
+	int GetTag() {
+		return tag;
+	}
+
+	/**
 	 * @breif コンポーネントの取得
 	 * @return クラスのコンポーネント
 	 */

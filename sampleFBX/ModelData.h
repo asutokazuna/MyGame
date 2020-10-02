@@ -8,7 +8,11 @@
 #include <memory>
 #include "Data.h"
 #include "Singleton.h"
+#include "MyMath.h"
 
+/**
+ * @enum モデルの種類
+ */
 enum ModelKind
 {
 	MODEL_SKY,
@@ -57,6 +61,13 @@ public:
 	 * @return 引数に合わせたモデルデータ
 	 */
 	static CFbxModel* GetData(ModelKind kind);
+
+	/**
+	 * @brief モデルの大きさの取得
+	 * @param[in] kind モデルの種類
+	 * @return モデルサイズ
+	 */
+	static Vector3 GetSize(int kind);
 };
 
 // EOF

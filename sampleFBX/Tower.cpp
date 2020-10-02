@@ -16,16 +16,24 @@
   */
 void Tower::Awake()
 {
+	tag = OBJ_TAG_TOWER;
+
 	m_Object3D = &AddComponent<Object3D>()->SetModel(MODEL_TOWER);
 	transform->scale = 0.5f;
-	m_collision = AddComponent<TowerCollision>();
+	m_collision = AddComponent<Collision>();
 	m_Energy = AddComponent<TowerEnergy>();
 	m_LifeGauge = new Gauge();
 	m_LifeGauge->Init();
 	m_LifeGauge->SetOffset({ 0, 150, 0 });
 	material = new TFbxMaterial();
+
+	m_collision->SetModelKind(MODEL_TOWER);
 }
 
+/**
+ * @brief 終了処理
+ * @return なし
+ */
 void Tower::Uninit()
 {
 	m_LifeGauge->Uninit();
@@ -34,6 +42,10 @@ void Tower::Uninit()
 	delete material;
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void Tower::Update()
 {
 	m_LifeGauge->SetTransform(*transform);
@@ -43,6 +55,10 @@ void Tower::Update()
 	GameObject::Update();
 }
 
+/**
+ * @brief 描画処理
+ * @return なし
+ */
 void Tower::Draw()
 {
 	m_LifeGauge->Draw();
@@ -75,7 +91,6 @@ void Tower::ChangeColor()
 Tower* Tower::SetPos(Vector3 pos)
 {
 	transform->position = pos;
-	m_collision->UpdatePos();
 
 	return this;
 }

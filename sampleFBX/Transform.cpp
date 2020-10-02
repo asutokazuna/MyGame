@@ -71,6 +71,7 @@ Transform& Transform::AngleAxis(AxisKind kind, float rad)
 {
 	Vector3 axis = { 1,0,0 };
 
+	// Ž²‚ðŒˆ‚ß‚é
 	switch (kind)
 	{
 	case Transform::AXIS_X:

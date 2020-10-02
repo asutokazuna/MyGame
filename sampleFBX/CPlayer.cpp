@@ -22,18 +22,22 @@
  */
 void CPlayer::Awake()
 {
+	transform->position.z = -500;
+	tag = OBJ_TAG_PLAYER;
+
+	AddComponent<PlayerMove>();
+	AddComponent<Rigidbody>();
+	AddComponent<Object3D>()->SetModel(MODEL_PLAYER);
+	m_col = AddComponent<Collision>();
+	m_col->SetModelKind(MODEL_PLAYER);
+
 	for (int i = 0; i < MAX_MISSILE; i++) {
 		PlayerMissile* temp = new PlayerMissile();
 		m_Missile.push_back(temp);
 		SetChild(temp);
 	}
-	transform->position.z = -500;
 
-	AddComponent<Object3D>()->SetModel(MODEL_PLAYER);
-	AddComponent<PlayerMove>();
-	m_col = AddComponent<PlayerCollision>();
 	AddComponent<PlayerCtrl>()->InitParam(m_Missile);
-	AddComponent<Rigidbody>();
 }
 
 // EOF

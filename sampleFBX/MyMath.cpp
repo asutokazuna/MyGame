@@ -168,19 +168,19 @@ Quaternion CalcQuaternion(Quaternion left, Quaternion right)
  * @param   radius  âÒì]Ç≥ÇπÇÈäpìx
  * @return  âÒì]å„ÇÃç¿ïW
  */
-Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radius)
+Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radian)
 {
 	Quaternion  complexNumber, complexConjugateNumber;
 	Quaternion  posQuaternion = { 0, pos.x, pos.y, pos.z };
 	Vector3     resultPosition;
 
 	if (axis.x == 0 && axis.y == 0 && axis.z == 0 ||
-		radius == 0) {
+		radian == 0) {
 		return pos;
 	}
 
-	complexNumber = MakeQuaternion(axis, radius);
-	complexConjugateNumber = MakeQuaternion(axis, -radius);
+	complexNumber = MakeQuaternion(axis, radian);
+	complexConjugateNumber = MakeQuaternion(axis, -radian);
 
 	posQuaternion = CalcQuaternion(complexNumber, posQuaternion);
 	posQuaternion = CalcQuaternion(posQuaternion, complexConjugateNumber);

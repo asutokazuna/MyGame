@@ -14,8 +14,6 @@
  */
 #define GRAVITY (0.98f)
 
-static Rigidbody *rb;
-
 /**
  * @brief 初期化処理
  * @return なし

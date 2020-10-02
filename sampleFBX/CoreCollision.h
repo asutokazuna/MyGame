@@ -11,9 +11,7 @@ protected:
 	int m_ColTarget;
 public:
 	CoreCollision();
-	HRESULT Init();
 	void Check(Collision* tag);
-	void SetTarget(int colTag);
 };
 
 // EOF

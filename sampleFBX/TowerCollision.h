@@ -12,7 +12,6 @@ class TowerCollision :public Collision
 public:
 	HRESULT Init();
 	virtual void OnCollisionEnter(GameObject* othor);
-	void UpdatePos();
 };
 
 // EOF

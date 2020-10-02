@@ -8,6 +8,9 @@
 #include "MyMath.h"
 #include "Box.h"
 
+// 前方宣言
+class Transform;
+
 /**
  * @class Collision
  * @brief コライダー
@@ -22,23 +25,11 @@ private:
 #endif
 
 protected:
-	Vector3 pos;	//!< 座標
-	Vector3 size;	//!< 大きさ
+	Transform* m_transform;	//!< 親のトランスフォーム
+	Vector3 m_offsetPos;		//!< 親からのオフセット
+	Vector3 m_offsetSize;		//!< 親からのオフセット
 	int id;			//!< ユニークID
 	int m_tag;		//!< 識別タグ
-
-public:
-	enum COL_TAG
-	{
-		COL_PLAYER,
-		COL_ENEMY,
-		COL_MISSILE,
-		COL_MISSILE_ENEMY,
-		COL_TOWER,
-		COL_CORE_PLAYER,
-		COL_CORE_ENEMY,
-		COL_MAX
-	};
 
 public:
 	/**
@@ -98,6 +89,13 @@ public:
 	 * @return 実体
 	 */
 	Collision* SetSize(Vector3);
+
+	/**
+	 * @breif モデルの種類設定
+	 * @param[in] kind モデルの種類
+	 * @return 実体
+	 */
+	Collision* SetModelKind(int);
 
 	/**
 	 * @breif タグの取得

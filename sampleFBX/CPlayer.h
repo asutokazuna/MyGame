@@ -4,7 +4,6 @@
  * @date 2020/06/19
  */
 #pragma once
-#include "Box.h"
 #include "GameObject.h"
 #include <list>
 

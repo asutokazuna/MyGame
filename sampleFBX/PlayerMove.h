@@ -5,7 +5,9 @@
 #pragma once
 #include "Component.h"
 
+// 前方宣言
 class Transform;
+class Rigidbody;
 
 /**
  * @class PlayerMove
@@ -15,6 +17,7 @@ class PlayerMove: public Component
 {
 private:
 	Transform* m_Transform;
+	Rigidbody* rb;
 public:
 
 	/**

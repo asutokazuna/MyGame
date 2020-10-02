@@ -23,6 +23,11 @@ struct Vector3
 {
 	float x, y, z;
 	Vector3() = default;
+	Vector3(float x, float y, float z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 	Vector3 operator+ (const Vector3 num) {
 		Vector3 value;
 		value.x = x + num.x;

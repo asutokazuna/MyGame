@@ -12,9 +12,6 @@ HRESULT CorePlayer::Init()
 	Core::Init();
 
 	transform->position.z = CORE_POS_Z;
-	m_Collision->SetTag(Collision::COL_CORE_PLAYER);
-	m_Collision->SetTarget(Collision::COL_MISSILE_ENEMY);
-
 	return E_NOTIMPL;
 }
 

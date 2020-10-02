@@ -10,7 +10,8 @@ HRESULT EnemyMissile::Init()
 {
 	m_col = AddComponent<MissileCollision>();
 	Missile::Init();
-	m_col->SetTag(Collision::COL_MISSILE_ENEMY);
+	tag = OBJ_TAG_ENEMYMISSILE;
+	//m_col->SetTag(Collision::COL_MISSILE_ENEMY);
 	m_col->SetActive(false);
 	return S_OK;
 }

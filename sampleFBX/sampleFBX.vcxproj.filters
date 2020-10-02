@@ -85,6 +85,9 @@
     <Filter Include="ヘッダー ファイル\Game\Camera">
       <UniqueIdentifier>{9a9446a2-3f3c-4016-a9a0-9f60cc327e5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\99_share\Data">
+      <UniqueIdentifier>{58882a8b-61a3-47dc-b653-c908593b52ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,9 +153,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
-    <ClCompile Include="ModelData.cpp">
-      <Filter>ソース ファイル\99_share</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
@@ -216,9 +216,6 @@
     <ClCompile Include="FieldMesh.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderData.cpp">
-      <Filter>ソース ファイル\99_share</Filter>
-    </ClCompile>
     <ClCompile Include="Tower.cpp">
       <Filter>ソース ファイル\Game\Tower</Filter>
     </ClCompile>
@@ -273,14 +270,20 @@
     <ClCompile Include="PlayerCtrl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TextureData.cpp">
-      <Filter>ソース ファイル\99_share</Filter>
-    </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
       <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderData.cpp">
+      <Filter>ソース ファイル\99_share\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureData.cpp">
+      <Filter>ソース ファイル\99_share\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelData.cpp">
+      <Filter>ソース ファイル\99_share\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

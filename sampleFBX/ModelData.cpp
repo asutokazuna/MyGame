@@ -80,4 +80,19 @@ CFbxModel * ModelData::GetData(ModelKind kind)
 	return ModelData::GetInstance().m_data.Get(kind);
 }
 
+/**
+ * @brief モデルの大きさの取得
+ * @param[in] kind モデルの種類
+ * @return モデルサイズ
+ */
+Vector3 ModelData::GetSize(int kind)
+{
+	Vector3 size;
+	size.x = ModelData::GetInstance().m_data.Get(kind)->GetBBox().x * 100;
+	size.y = ModelData::GetInstance().m_data.Get(kind)->GetBBox().y * 100;
+	size.z = ModelData::GetInstance().m_data.Get(kind)->GetBBox().z * 100;
+
+	return size;
+}
+
 // EOF

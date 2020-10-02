@@ -90,7 +90,7 @@ bool TowerManager::IsAttackPlayerCore()
 		}
 	}
 	if (cnt >= 2) {
-		m_isAttack = Collision::COL_CORE_PLAYER;
+		//m_isAttack = Collision::COL_CORE_PLAYER;
 		return true;
 	}
 
@@ -107,7 +107,7 @@ bool TowerManager::IsAttackEnemyCpre()
 		}
 	}
 	if (cnt >= 2) {
-		m_isAttack = Collision::COL_CORE_ENEMY;
+		//m_isAttack = Collision::COL_CORE_ENEMY;
 		return true;
 	}
 	return false;

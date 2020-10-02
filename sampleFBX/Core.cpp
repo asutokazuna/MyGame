@@ -17,6 +17,7 @@ void Core::Awake()
 	AddComponent<Object3D>()->SetModel(MODEL_CORE);
 	m_Collision = AddComponent<CoreCollision>();
 	m_State = AddComponent<CoreState>();
+	m_Collision->SetModelKind(MODEL_CORE);
 }
 
 /**

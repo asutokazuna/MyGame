@@ -8,38 +8,14 @@
 
 static bool hit = false;
 
-void PlayerCollision::Check(Collision * othor)
-{
-	if (othor->GetTag() == COL_MISSILE) {
-		//size.x = 1;
-		hit = true;
-		return;
-	}
-	hit = false;
-}
-
-HRESULT PlayerCollision::Init()
-{
-	m_tag = COL_PLAYER;
-	size = { 25,25,25};
-	pos = m_Parent->GetTransform().position;
-
-	Collision::Init();
-
-	return S_OK;
-}
-
-void PlayerCollision::Update()
-{
-	pos = m_Parent->GetTransform().position;
-	Collision::Update();
-}
-
 void PlayerCollision::Draw()
 {
 #ifdef _DEBUG
 	ImGui::Begin("PlayerCollision");
 	ImGui::Checkbox("hit", &hit);
+	ImGui::SliderFloat("x", &m_transform->scale.x, 1, 500);
+	ImGui::SliderFloat("y", &m_transform->scale.y, 1, 500);
+	ImGui::SliderFloat("z", &m_transform->scale.z, 1, 500);
 	ImGui::End();
 	Collision::Draw();
 #endif

@@ -8,9 +8,6 @@
 class PlayerCollision :public Collision
 {
 public:
-	virtual void Check(Collision* othor);
-	HRESULT Init();
-	void Update();
 	void Draw();
 };
 
