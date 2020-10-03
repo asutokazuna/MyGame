@@ -4,68 +4,63 @@
  */
 #include "Gauge.h"
 #include "Billboard.h"
-#include "TowerEnergy.h"
 
-
-Gauge::Gauge():m_Max(ENERGY_MAX / (float)2),m_Min(0),m_Value(20),m_offset(),m_transform()
+/**
+ * @brief コンストラクタ
+ */
+Gauge::Gauge():m_Max(1),m_Min(0), m_Value(nullptr),m_offset(),m_transform(), m_myColor(), m_EnemyColor()
 {
 }
 
-HRESULT Gauge::Init()
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
+void Gauge::Awake()
 {
 	m_bar = new GameObject();
 	m_frame = new GameObject();
+	SetChild(m_bar);
+	SetChild(m_frame);
 	m_frame->AddComponent<Billboard>()->ChangeSize(50, 50, 50)->ChangeColor(1, 1, 1);
 	barmesh = m_bar->AddComponent<Billboard>()->ChangeSize(0, 50, 50)->ChangeColor(1, 0, 0);
-
-	return E_NOTIMPL;
 }
 
-void Gauge::Uninit()
-{
-	m_bar->Uninit();
-	m_frame->Uninit();
-	delete m_frame;
-	delete m_bar;
-	GameObject::Uninit();
-}
-
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void Gauge::Update()
 {
-	m_bar->GetTransform().position = m_transform.position + m_offset;
-	m_frame->GetTransform().position = m_transform.position + m_offset;
-	float sizeY = (m_Value -20) / m_Max;
+	m_bar->GetTransform().position = m_transform->position + m_offset;
+	m_frame->GetTransform().position = m_transform->position + m_offset;
+	float sizeY = (*m_Value - (m_Max / 2)) / (m_Max / 2);
+	Vector3 color = Vector3();
+	if (sizeY > 0) {
+		color = m_myColor;
+	}
+	else {
+		color = m_EnemyColor;
+	}
 	sizeY = abs(sizeY);
-	XMFLOAT3 color = XMFLOAT3();
-	if (m_Value > ENERGY_MAX / (float)2) {
-		color = XMFLOAT3(0, 1, 0);
-	}
-	else if (m_Value < ENERGY_MAX / (float)2) {
-		color = XMFLOAT3(1, 0, 0);
-	}
 	barmesh->ChangeSize(50 * sizeY, 50, 50)->ChangeColor(color);
 	GameObject::Update();
 }
 
-void Gauge::Draw()
-{
-	m_bar->Draw();
-	m_frame->Draw();
-	GameObject::Draw();
-}
-
-void Gauge::SetParam(float max, float min)
+void Gauge::SetParam(float max, float min, Vector3 myColor, Vector3 enemyColor)
 {
 	m_Max = max;
 	m_Min = min;
+	m_myColor = myColor;
+	m_EnemyColor = enemyColor;
 }
 
-void Gauge::SetValue(float value)
+void Gauge::SetValue(int& value)
 {
-	m_Value = value;
+	m_Value = &value;
 }
 
-void Gauge::SetTransform(Transform & trans)
+void Gauge::SetTransform(Transform * trans)
 {
 	m_transform = trans;
 }
@@ -74,3 +69,5 @@ void Gauge::SetOffset(Vector3 value)
 {
 	m_offset = value;
 }
+
+// EOF

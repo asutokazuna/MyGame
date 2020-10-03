@@ -8,9 +8,9 @@
 // 前方宣言
 class Object3D;
 class TowerEnergy;
-struct TFbxMaterial;
 class Collision;
 class Gauge;
+class TowerCtrl;
 
 /**
  * @class Tower
@@ -21,9 +21,10 @@ class Tower :public GameObject
 private:
 	Object3D* m_Object3D;
 	XMFLOAT3 color;
-	TFbxMaterial* material;
 	Collision* m_collision;
 	Gauge*	m_LifeGauge;
+	TowerCtrl* m_ctrl;
+
 public:
 	TowerEnergy* m_Energy;
 
@@ -33,11 +34,11 @@ public:
 	 */
 	void Awake();
 
-	void Uninit();
-	void Update();
-	void Draw();
-	void ChangeColor();
-	Tower* SetPos(Vector3 pos);
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	HRESULT Init();
 };
 
 // EOF

@@ -4,27 +4,32 @@
  */
 #pragma once
 #include "GameObject.h"
+#include <list>
 
+// 前方宣言
 class Tower;
 
+/**
+ * @class TowerManager
+ * @brief タワーの管理クラス
+ */
 class TowerManager: public GameObject
 {
 private:
-	Tower* m_Tower;
-public:
-	static int m_isAttack;
-public:
-	TowerManager();
-	~TowerManager();
-	void Awake();
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
-	void DrawAlpha();
+	std::list<Tower*> m_Tower;		//!< タワー
 
-	bool IsAttackPlayerCore();
-	bool IsAttackEnemyCpre();
+public:
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	void Awake();
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	HRESULT Init();
 };
 
 // EOF

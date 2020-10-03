@@ -57,6 +57,12 @@ public:
 	HRESULT Init() override;
 
 	/**
+	 * @brief 終了処理
+	 * @return　なし
+	 */
+	void Uninit();
+
+	/**
 	 * @brief 更新処理
 	 * @return  なし
 	 */

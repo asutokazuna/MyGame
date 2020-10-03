@@ -5,10 +5,10 @@
 #include "Tower.h"
 #include "Object3D.h"
 #include "ModelData.h"
-#include "TowerCollision.h"
 #include "TowerEnergy.h"
-#include "FbxModel.h"
 #include "Gauge.h"
+#include "TowerCtrl.h"
+#include "collision.h"
 
  /**
   * @brief 初期化処理
@@ -23,76 +23,27 @@ void Tower::Awake()
 	m_collision = AddComponent<Collision>();
 	m_Energy = AddComponent<TowerEnergy>();
 	m_LifeGauge = new Gauge();
-	m_LifeGauge->Init();
+	m_ctrl = AddComponent<TowerCtrl>();
+	SetChild(m_LifeGauge);
 	m_LifeGauge->SetOffset({ 0, 150, 0 });
-	material = new TFbxMaterial();
+	Vector3 blue = Vector3(0, 0, 1);
+	Vector3 red = Vector3(1, 0, 0);
+	m_LifeGauge->SetParam(ENERGY_MAX, 0, blue, red);
 
 	m_collision->SetModelKind(MODEL_TOWER);
 }
 
 /**
- * @brief 終了処理
+ * @brief 初期化処理
  * @return なし
  */
-void Tower::Uninit()
+HRESULT Tower::Init()
 {
-	m_LifeGauge->Uninit();
-	delete m_LifeGauge;
-	GameObject::Uninit();
-	delete material;
-}
+	m_LifeGauge->SetTransform(transform);
+	m_LifeGauge->SetValue(m_Energy->GetEnergy());
+	GameObject::Init();
 
-/**
- * @brief 更新処理
- * @return なし
- */
-void Tower::Update()
-{
-	m_LifeGauge->SetTransform(*transform);
-	m_LifeGauge->Update();
-	float value = (float)m_Energy->GetEnergy();
-	m_LifeGauge->SetValue(value);
-	GameObject::Update();
-}
-
-/**
- * @brief 描画処理
- * @return なし
- */
-void Tower::Draw()
-{
-	m_LifeGauge->Draw();
-	ChangeColor();
-	GameObject::Draw();
-}
-
-void Tower::ChangeColor()
-{
-	if (m_Energy->GetEnergy() >= ENERGY_MAX) {
-		color = XMFLOAT3(0, 1, 0);
-	}
-	else if (m_Energy->GetEnergy() <= 0) {
-		color = XMFLOAT3(1, 0, 0);
-	}
-	else{
-		color = XMFLOAT3(1, 1, 1);
-	}
-	material->Kd.x = color.x;
-	material->Kd.y = color.y;
-	material->Kd.z = color.z;
-	material->Ke.x = 0.1f;
-	material->Ke.y = 0.1f;
-	material->Ke.z = 0.1f;
-	material->Ka.w = 1.0f;
-	material->Ks.w = 1.0f;
-	m_Object3D->SetMaterial(*material);
-}
-
-Tower* Tower::SetPos(Vector3 pos)
-{
-	transform->position = pos;
-
-	return this;
+	return E_NOTIMPL;
 }
 
 // EOF

@@ -95,7 +95,6 @@ void Mesh::Uninit()
 	}
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
-	SAFE_RELEASE(m_pTexture);
 }
 
 void Mesh::Update()
@@ -205,6 +204,15 @@ HRESULT Mesh::MakeMeshVertex(VERTEX_3D vertexWk[], int indexWk[])
 }
 
 Mesh* Mesh::ChangeColor(XMFLOAT3 color)
+{
+	m_material->Diffuse.x = color.x;
+	m_material->Diffuse.y = color.y;
+	m_material->Diffuse.z = color.z;
+
+	return this;
+}
+
+Mesh* Mesh::ChangeColor(Vector3 color)
 {
 	m_material->Diffuse.x = color.x;
 	m_material->Diffuse.y = color.y;

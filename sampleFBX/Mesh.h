@@ -5,6 +5,7 @@
 #pragma once
 #include "Component.h"
 #include <d3d11.h>
+#include "MyMath.h"
 
 class Transform;
 
@@ -75,6 +76,7 @@ public:
 public:
 	HRESULT MakeMeshVertex(VERTEX_3D vertexWk[], int indexWk[]);
 	Mesh* ChangeColor(XMFLOAT3 color);
+	Mesh * ChangeColor(Vector3 color);
 	Mesh* ChangeColor(float r,float g, float b);
 	Mesh* ChangeColor(XMFLOAT4 color);
 	Mesh* ChangeColor(float r, float g, float b, float a);

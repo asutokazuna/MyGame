@@ -38,6 +38,21 @@ HRESULT GameObject::Init()
 }
 
 /**
+ * @brief 終了処理
+ * @return　なし
+ */
+void GameObject::Uninit()
+{
+	auto buff = m_ComponentList;
+	for (auto com : buff)
+		com->Uninit();
+
+	for (auto& child : m_ChildList) {
+		child->Uninit();
+	}
+}
+
+/**
  * @brief 更新処理
  * @return  なし
  */

@@ -285,6 +285,9 @@
     <ClCompile Include="ModelData.cpp">
       <Filter>ソース ファイル\99_share\Data</Filter>
     </ClCompile>
+    <ClCompile Include="TowerCtrl.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerCtrl.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

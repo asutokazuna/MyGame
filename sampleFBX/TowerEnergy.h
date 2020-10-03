@@ -17,23 +17,41 @@ class GameObject;
  */
 class TowerEnergy :public Component
 {
-public:
-	enum ENERGY_TYPE
-	{
-		ENERGY_PLAYER,
-		ENERGY_ENEMY
-	};
-
 private:
 	int m_Energy;
 	int id;
 
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	TowerEnergy();
-	void Draw();
-	void AddEnergy(int num);
-	int GetEnergy();
-	virtual void OnCollisionEnter(GameObject* othor);
 
+	/**
+	 * @brief 描画処理
+	 * @return なし
+	 */
+	void Draw();
+
+	/**
+	 * @brief エネルギーの増加
+	 * @param num 増加させる値
+	 * @return なし
+	 */
+	void AddEnergy(int num);
+
+	/**
+	 * @brief エネルギーの取得
+	 * @return 現在のエネルギー
+	 */
+	int& GetEnergy();
+
+	/**
+	 * @brief 当たり判定
+	 * @param[in] 当たったオブジェクト
+	 * @return なし
+	 */
+	void OnCollisionEnter(GameObject* othor);
 };
 
+// EOF

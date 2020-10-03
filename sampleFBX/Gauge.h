@@ -4,32 +4,52 @@
  */
 #pragma once
 #include "GameObject.h"
+#include "MyMath.h"
 
+// 前方宣言
 class Mesh;
 
+/**
+ * @class Gauge
+ * @brief ゲージ
+ */
 class Gauge :public GameObject
 {
 private:
 	float m_Min;
 	float m_Max;
-	float m_Value;
+	int* m_Value;
 
 	GameObject* m_bar;
 	GameObject* m_frame;
-	Transform m_transform;
+	Transform* m_transform;
 
 	Mesh* barmesh;
-public:
+	Vector3 m_myColor;
+	Vector3 m_EnemyColor;
 	Vector3 m_offset;
-	Gauge();
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
+public:
 
-	void SetParam(float max, float min);
-	void SetValue(float value);
-	void SetTransform(Transform& trans);
+	/**
+	 * @brief コンストラクタ
+	 */
+	Gauge();
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	void Awake();
+
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
+	void Update();
+
+	void SetParam(float max, float min, Vector3 myColor, Vector3 enemyColor);
+	void SetValue(int& value);
+	void SetTransform(Transform* trans);
 	void SetOffset(Vector3 value);
 };
 

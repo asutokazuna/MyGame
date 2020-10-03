@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "MissileMove.h"
 
-static int num = 0;
+static int num = 0;		//!< デバッグ用
 
 /**
  * @brief コンストラクタ
@@ -55,7 +55,7 @@ void TowerEnergy::AddEnergy(int num)
  * @brief エネルギーの取得
  * @return 現在のエネルギー
  */
-int TowerEnergy::GetEnergy()
+int& TowerEnergy::GetEnergy()
 {
 	return m_Energy;
 }
@@ -76,4 +76,5 @@ void TowerEnergy::OnCollisionEnter(GameObject* othor)
 		othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
 }
+
 // EOF
