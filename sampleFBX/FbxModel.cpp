@@ -1,4 +1,4 @@
-// FBXƒtƒ@ƒCƒ‹“Ç/•\¦ (FbxModel.cpp)
+ï»¿// FBXãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼/è¡¨ç¤º (FbxModel.cpp)
 #include "FbxModel.h"
 #include "Texture.h"
 #include "Shader.h"
@@ -15,26 +15,26 @@
 
 using namespace DirectX;
 
-// ƒVƒF[ƒ_‚É“n‚·’l
+// ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™å€¤
 struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ(“]’us—ñ)
-	XMMATRIX	mW;			// ƒ[ƒ‹ƒhs—ñ(“]’us—ñ)
-	XMVECTOR	vEye;		// ‹“_À•W
-	XMVECTOR	vLightDir;	// ŒõŒ¹•ûŒü
-	XMVECTOR	vLa;		// ŒõŒ¹F(ƒAƒ“ƒrƒGƒ“ƒg)
-	XMVECTOR	vLd;		// ŒõŒ¹F(ƒfƒBƒtƒ…[ƒY)
-	XMVECTOR	vLs;		// ŒõŒ¹F(ƒXƒyƒLƒ…ƒ‰)
+	XMMATRIX	mWVP;		// ãƒ¯ãƒ¼ãƒ«ãƒ‰Ã—ãƒ“ãƒ¥ãƒ¼Ã—å°„å½±è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMMATRIX	mW;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+	XMVECTOR	vEye;		// è¦–ç‚¹åº§æ¨™
+	XMVECTOR	vLightDir;	// å…‰æºæ–¹å‘
+	XMVECTOR	vLa;		// å…‰æºè‰²(ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ)
+	XMVECTOR	vLd;		// å…‰æºè‰²(ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º)
+	XMVECTOR	vLs;		// å…‰æºè‰²(ã‚¹ãƒšã‚­ãƒ¥ãƒ©)
 };
 
-// ƒ}ƒeƒŠƒAƒ‹ (ƒVƒF[ƒ_—p)
+// ãƒãƒ†ãƒªã‚¢ãƒ« (ã‚·ã‚§ãƒ¼ãƒ€ç”¨)
 struct SHADER_MATERIAL {
-	XMVECTOR	vAmbient;	// ƒAƒ“ƒrƒGƒ“ƒgF
-	XMVECTOR	vDiffuse;	// ƒfƒBƒtƒ…[ƒYF
-	XMVECTOR	vSpecular;	// ƒXƒyƒLƒ…ƒ‰F
-	XMVECTOR	vEmissive;	// ƒGƒ~ƒbƒVƒuF
+	XMVECTOR	vAmbient;	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²
+	XMVECTOR	vDiffuse;	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	XMVECTOR	vSpecular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²
+	XMVECTOR	vEmissive;	// ã‚¨ãƒŸãƒƒã‚·ãƒ–è‰²
 };
 
-// ƒVƒF[ƒ_‚É“n‚·ƒ{[ƒ“s—ñ”z—ñ
+// ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™ãƒœãƒ¼ãƒ³è¡Œåˆ—é…åˆ—
 struct SHADER_BONE {
 	XMMATRIX mBone[MAX_BONE_MATRIX];
 	SHADER_BONE()
@@ -46,7 +46,7 @@ struct SHADER_BONE {
 };
 
 //---------------------------------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------------------------------------
 CFbxMesh::CFbxMesh()
 {
@@ -76,17 +76,17 @@ CFbxMesh::CFbxMesh()
 	m_dwNumMaterial = 0;
 	m_nNumSkin = 0;
 	m_pBoneTable = nullptr;
-	// «’Ç‰Á
+	// â†“è¿½åŠ 
 	m_pVertex = nullptr;
 	m_ppIndex = nullptr;
 }
 
 //---------------------------------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------------------------------------
 CFbxMesh::~CFbxMesh()
 {
-	// «’Ç‰Á
+	// â†“è¿½åŠ 
 	SAFE_DELETE_ARRAY(m_pVertex);
 	if (m_ppIndex) {
 		for (DWORD i = 0; i < m_dwNumMaterial; ++i) {
@@ -105,20 +105,20 @@ CFbxMesh::~CFbxMesh()
 }
 
 //---------------------------------------------------------------------------------------
-// ƒƒbƒVƒ…¶¬
+// ãƒ¡ãƒƒã‚·ãƒ¥ç”Ÿæˆ
 //---------------------------------------------------------------------------------------
 HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 {
 	HRESULT hr = S_OK;
-	// –‘O‚Éƒ|ƒŠƒSƒ“”A’¸“_”AƒeƒNƒXƒ`ƒƒÀ•W”‚ğ’²‚×‚é
+	// äº‹å‰ã«ãƒãƒªã‚´ãƒ³æ•°ã€é ‚ç‚¹æ•°ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æ•°ã‚’èª¿ã¹ã‚‹
 	m_dwNumFace = pFbxMesh->GetPolygonCount();
 	m_dwNumVert = pFbxMesh->GetControlPointsCount();
 	m_dwNumUV = pFbxMesh->GetTextureUVCount();
 	if (m_dwNumFace == 0 || m_dwNumVert == 0)
 		return hr;
-	// ˆê“I‚Èƒƒ‚ƒŠŠm•Û (’¸“_ƒoƒbƒtƒ@‚ÆƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@)
+	// ä¸€æ™‚çš„ãªãƒ¡ãƒ¢ãƒªç¢ºä¿ (é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡)
 	TFbxVertex* pvVB = new TFbxVertex[(m_dwNumVert < m_dwNumUV) ? m_dwNumUV : m_dwNumVert];
-	// ƒ|ƒŠƒSƒ“‚²‚Æ‚É’¸“_“Ç‚İ‚İA–@ü“Ç‚İ‚İAUV“Ç‚İ‚İ
+	// ãƒãƒªã‚´ãƒ³ã”ã¨ã«é ‚ç‚¹èª­ã¿è¾¼ã¿ã€æ³•ç·šèª­ã¿è¾¼ã¿ã€UVèª­ã¿è¾¼ã¿
 	FbxVector4 Normal, Coord;
 	int iStartIndex, iIndex0, iIndex1, iIndex2;
 	int* piIndex;
@@ -138,18 +138,18 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 	}
 	bool bPolygonVertex = (m_dwNumUV && eMapMode == FbxLayerElement::eByPolygonVertex);
 	for (DWORD i = 0; i < m_dwNumFace; ++i) {
-		if (m_dwNumVert < m_dwNumUV) {	// UV”‚Ì‚Ù‚¤‚ª‘½‚¢ê‡‚Í–{—ˆ‚Ì(’¸“_ƒx[ƒX)ƒCƒ“ƒfƒbƒNƒX‚ğ—˜—p‚µ‚È‚¢BUVƒCƒ“ƒfƒbƒNƒX‚ğŠî€‚É‚·‚é
+		if (m_dwNumVert < m_dwNumUV) {	// UVæ•°ã®ã»ã†ãŒå¤šã„å ´åˆã¯æœ¬æ¥ã®(é ‚ç‚¹ãƒ™ãƒ¼ã‚¹)ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆ©ç”¨ã—ãªã„ã€‚UVã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åŸºæº–ã«ã™ã‚‹
 			iIndex0 = pFbxMesh->GetTextureUVIndex(i, 0);
 			iIndex1 = pFbxMesh->GetTextureUVIndex(i, 1);
 			iIndex2 = pFbxMesh->GetTextureUVIndex(i, 2);
 		} else {
 			iStartIndex = pFbxMesh->GetPolygonVertexIndex(i);
-			piIndex = pFbxMesh->GetPolygonVertices();	//i’¸“_ƒCƒ“ƒfƒbƒNƒXj“Ç‚İ‚İ
+			piIndex = pFbxMesh->GetPolygonVertices();	//ï¼ˆé ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼‰èª­ã¿è¾¼ã¿
 			iIndex0 = piIndex[iStartIndex + 0];
 			iIndex1 = piIndex[iStartIndex + 1];
 			iIndex2 = piIndex[iStartIndex + 2];
 		}
-		// ’¸“_
+		// é ‚ç‚¹
 		index = pFbxMesh->GetPolygonVertex(i, 0);
 		Coord = pFbxMesh->GetControlPointAt(index);
 		pvVB[iIndex0].vPos.x = static_cast<float>(-Coord[0]);
@@ -167,7 +167,7 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		pvVB[iIndex2].vPos.x = static_cast<float>(-Coord[0]);
 		pvVB[iIndex2].vPos.y = static_cast<float>(Coord[1]);
 		pvVB[iIndex2].vPos.z = static_cast<float>(Coord[2]);
-		// –@ü
+		// æ³•ç·š
 		pFbxMesh->GetPolygonVertexNormal(i, 0, Normal);
 		pvVB[iIndex0].vNorm.x = static_cast<float>(-Normal[0]);
 		pvVB[iIndex0].vNorm.y = static_cast<float>(Normal[1]);
@@ -182,9 +182,9 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		pvVB[iIndex2].vNorm.x = static_cast<float>(-Normal[0]);
 		pvVB[iIndex2].vNorm.y = static_cast<float>(Normal[1]);
 		pvVB[iIndex2].vNorm.z = static_cast<float>(Normal[2]);
-		// ƒeƒNƒXƒ`ƒƒÀ•W
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 		if (bPolygonVertex) {
-			// UVƒ}ƒbƒsƒ“ƒOƒ‚[ƒh‚ªByPolygonVertex‚Ì
+			// UVãƒãƒƒãƒ”ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãŒByPolygonVertexã®æ™‚
 			UVindex = pFbxMesh->GetTextureUVIndex(i, 0);
 			v2 = pUVDirect->GetAt(UVindex);
 			pvVB[iIndex0].vTex.x = static_cast<float>(v2[0]);
@@ -202,9 +202,9 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		}
 	}
 
-	// ƒeƒNƒXƒ`ƒƒÀ•W
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 	if (m_dwNumUV && eMapMode == FbxLayerElement::eByControlPoint) {
-		// UVƒ}ƒbƒsƒ“ƒOƒ‚[ƒh‚ªByControlPoint‚Ì
+		// UVãƒãƒƒãƒ”ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãŒByControlPointã®æ™‚
 		for (DWORD k = 0; k < m_dwNumUV; ++k) {
 			if (eRefMode == FbxLayerElement::eIndexToDirect) {
 				index = pUVIndex->GetAt(k);
@@ -217,11 +217,11 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		}
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+	// ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 	FbxNode* pNode = pFbxMesh->GetNode();
 	m_dwNumMaterial = pNode->GetMaterialCount();
 	m_pMaterial = new TFbxMaterial[m_dwNumMaterial];
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì”‚¾‚¯ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğì¬
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æ•°ã ã‘ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
 	m_ppIndexBuffer = new ID3D11Buffer*[m_dwNumMaterial];
 	ZeroMemory(m_ppIndexBuffer, sizeof(ID3D11Buffer*) * m_dwNumMaterial);
 	m_ppIndex = new int*[m_dwNumMaterial];
@@ -234,14 +234,14 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		strcpy_s(name, _MAX_PATH, pMaterial->GetName());
 		if (pMaterial->GetClassId().Is(FbxSurfacePhong::ClassId)) {
 			FbxSurfacePhong* pPhong = (FbxSurfacePhong*)pMaterial;
-			// ŠÂ‹«Œõ
+			// ç’°å¢ƒå…‰
 			Color = pPhong->Ambient.Get();
 			Factor = pPhong->AmbientFactor.Get();
 			m_pMaterial[i].Ka.x = static_cast<float>(Color[0] * Factor);
 			m_pMaterial[i].Ka.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Ka.z = static_cast<float>(Color[2] * Factor);
-			m_pMaterial[i].Ka.w = 0.0f;	// ƒeƒNƒXƒ`ƒƒ–³
-			// ŠgU”½ËŒõ
+			m_pMaterial[i].Ka.w = 0.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç„¡
+			// æ‹¡æ•£åå°„å…‰
 			Color = pPhong->Diffuse.Get();
 			Factor = pPhong->DiffuseFactor.Get();
 			Alpha = pPhong->TransparentColor.Get();
@@ -250,7 +250,7 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 			m_pMaterial[i].Kd.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Kd.z = static_cast<float>(Color[2] * Factor);
 			m_pMaterial[i].Kd.w = static_cast<float>(1.0 - Alpha[0] * AlphaFactor);
-			// ‹¾–Ê”½ËŒõ
+			// é¡é¢åå°„å…‰
 			Color = pPhong->Specular.Get();
 			Factor = pPhong->SpecularFactor.Get();
 			AlphaFactor = pPhong->Shininess.Get();
@@ -258,22 +258,22 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 			m_pMaterial[i].Ks.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Ks.z = static_cast<float>(Color[2] * Factor);
 			m_pMaterial[i].Ks.w = static_cast<float>(AlphaFactor);
-			// ”­ŒõF
+			// ç™ºå…‰è‰²
 			Color = pPhong->Emissive.Get();
 			m_pMaterial[i].Ke.x = static_cast<float>(Color[0] * Factor);
 			m_pMaterial[i].Ke.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Ke.z = static_cast<float>(Color[2] * Factor);
-			m_pMaterial[i].Ka.w = 0.0f;	// ƒeƒNƒXƒ`ƒƒ–³
+			m_pMaterial[i].Ka.w = 0.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç„¡
 		} else if (pMaterial->GetClassId().Is(FbxSurfaceLambert::ClassId)) {
 			FbxSurfaceLambert* pLambert = (FbxSurfaceLambert*)pMaterial;
-			// ŠÂ‹«Œõ
+			// ç’°å¢ƒå…‰
 			Color = pLambert->Ambient.Get();
 			Factor = pLambert->AmbientFactor.Get();
 			m_pMaterial[i].Ka.x = static_cast<float>(Color[0] * Factor);
 			m_pMaterial[i].Ka.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Ka.z = static_cast<float>(Color[2] * Factor);
-			m_pMaterial[i].Ka.w = 0.0f;	// ƒeƒNƒXƒ`ƒƒ–³
-			// ŠgU”½ËŒõ
+			m_pMaterial[i].Ka.w = 0.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç„¡
+			// æ‹¡æ•£åå°„å…‰
 			Color = pLambert->Diffuse.Get();
 			Factor = pLambert->DiffuseFactor.Get();
 			Alpha = pLambert->TransparentColor.Get();
@@ -282,15 +282,15 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 			m_pMaterial[i].Kd.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Kd.z = static_cast<float>(Color[2] * Factor);
 			m_pMaterial[i].Kd.w = static_cast<float>(1.0 - Alpha[0] * AlphaFactor);
-			// ”­ŒõF
+			// ç™ºå…‰è‰²
 			Color = pLambert->Emissive.Get();
 			Factor = pLambert->EmissiveFactor.Get();
 			m_pMaterial[i].Ke.x = static_cast<float>(Color[0] * Factor);
 			m_pMaterial[i].Ke.y = static_cast<float>(Color[1] * Factor);
 			m_pMaterial[i].Ke.z = static_cast<float>(Color[2] * Factor);
-			m_pMaterial[i].Ka.w = 0.0f;	// ƒeƒNƒXƒ`ƒƒ–³
+			m_pMaterial[i].Ka.w = 0.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç„¡
 		}
-		// ƒfƒBƒtƒ…[ƒY ƒeƒNƒXƒ`ƒƒ (1–‡‚Ì‚İ)
+		// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º ãƒ†ã‚¯ã‚¹ãƒãƒ£ (1æšã®ã¿)
 		FbxProperty lProperty;
 		lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
 		int lTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
@@ -302,10 +302,10 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 			if (!lFileTexture)
 				continue;
 			FbxUTF8ToAnsi(lFileTexture->GetRelativeFileName(), pszFName, &uFName);
-			break;	// æ“ª‚Ì1‚Â‚¾‚¯“Ç‚İ‚Ş
+			break;	// å…ˆé ­ã®1ã¤ã ã‘èª­ã¿è¾¼ã‚€
 		}
 		if (pszFName) {
-			// ƒeƒNƒXƒ`ƒƒì¬
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ä½œæˆ
 			hr = CreateTextureFromFile(m_pDevice, pszFName, &m_pMaterial[i].pTexture);
 			FbxFree(pszFName);
 			pszFName = nullptr;
@@ -321,7 +321,7 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 					strcat_s(fname, _countof(fname), ext);
 					hr = CreateTextureFromFile(m_pDevice, fname, &m_pMaterial[i].pTexture);
 					if (FAILED(hr)) {
-						MessageBoxA(0, "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ¸”s", fname, MB_OK);
+						MessageBoxA(0, "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿å¤±æ•—", fname, MB_OK);
 						delete[] pvVB;
 						return hr;
 					}
@@ -331,9 +331,9 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 					pszFName = nullptr;
 				}
 			}
-			m_pMaterial[i].Ka.w = 1.0f;	// ƒeƒNƒXƒ`ƒƒ—L
+			m_pMaterial[i].Ka.w = 1.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰
 		}
-		// ƒGƒ~ƒbƒVƒu ƒeƒNƒXƒ`ƒƒ (1–‡‚Ì‚İ)
+		// ã‚¨ãƒŸãƒƒã‚·ãƒ– ãƒ†ã‚¯ã‚¹ãƒãƒ£ (1æšã®ã¿)
 		lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sEmissive);
 		lTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
 		for (int j = 0; j < lTextureCount; ++j) {
@@ -341,10 +341,10 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 			if (!lFileTexture)
 				continue;
 			FbxUTF8ToAnsi(lFileTexture->GetRelativeFileName(), pszFName, &uFName);
-			break;	// æ“ª‚Ì1‚Â‚¾‚¯“Ç‚İ‚Ş
+			break;	// å…ˆé ­ã®1ã¤ã ã‘èª­ã¿è¾¼ã‚€
 		}
 		if (pszFName) {
-			// ƒeƒNƒXƒ`ƒƒì¬
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ä½œæˆ
 			hr = CreateTextureFromFile(m_pDevice, pszFName, &m_pMaterial[i].pTexEmmisive);
 			FbxFree(pszFName);
 			pszFName = nullptr;
@@ -360,7 +360,7 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 					strcat_s(fname, _countof(fname), ext);
 					hr = CreateTextureFromFile(m_pDevice, fname, &m_pMaterial[i].pTexEmmisive);
 					if (FAILED(hr)) {
-						MessageBoxA(0, "ƒGƒ~ƒbƒVƒu ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ¸”s", fname, MB_OK);
+						MessageBoxA(0, "ã‚¨ãƒŸãƒƒã‚·ãƒ– ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿å¤±æ•—", fname, MB_OK);
 						delete[] pvVB;
 						return hr;
 					}
@@ -370,13 +370,13 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 					pszFName = nullptr;
 				}
 			}
-			m_pMaterial[i].Ke.w = 1.0f;	// ƒeƒNƒXƒ`ƒƒ—L
+			m_pMaterial[i].Ke.w = 1.0f;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰
 		}
-		// ƒ}ƒeƒŠƒAƒ‹‚Ì”‚¾‚¯ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğì¬
-		int* pIndex = new int[m_dwNumFace * 3];	// ‚Æ‚è‚ ‚¦‚¸AƒƒbƒVƒ…“à‚Ìƒ|ƒŠƒSƒ“”‚Åƒƒ‚ƒŠŠm•Û (ŒÂX‚Ìƒ|ƒŠƒSƒ“ƒOƒ‹[ƒv‚Í‚©‚È‚ç‚¸‚±‚êˆÈ‰º‚É‚È‚é)
-		int iCount = 0;							// ‚»‚Ìƒ}ƒeƒŠƒAƒ‹‚Å‚ ‚éƒCƒ“ƒfƒbƒNƒX”z—ñ“à‚ÌŠJnƒCƒ“ƒfƒbƒNƒX‚ğ’²‚×‚é@‚³‚ç‚ÉƒCƒ“ƒfƒbƒNƒX‚ÌŒÂ”‚à’²‚×‚é
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æ•°ã ã‘ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
+		int* pIndex = new int[m_dwNumFace * 3];	// ã¨ã‚Šã‚ãˆãšã€ãƒ¡ãƒƒã‚·ãƒ¥å†…ã®ãƒãƒªã‚´ãƒ³æ•°ã§ãƒ¡ãƒ¢ãƒªç¢ºä¿ (å€‹ã€…ã®ãƒãƒªã‚´ãƒ³ã‚°ãƒ«ãƒ¼ãƒ—ã¯ã‹ãªã‚‰ãšã“ã‚Œä»¥ä¸‹ã«ãªã‚‹)
+		int iCount = 0;							// ãã®ãƒãƒ†ãƒªã‚¢ãƒ«ã§ã‚ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—å†…ã®é–‹å§‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’èª¿ã¹ã‚‹ã€€ã•ã‚‰ã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å€‹æ•°ã‚‚èª¿ã¹ã‚‹
 		for (DWORD k = 0; k < m_dwNumFace; ++k) {
-			FbxLayerElementMaterial* mat = pFbxMesh->GetLayer(0)->GetMaterials();	// ƒŒƒCƒ„[‚ª1–‡‚¾‚¯‚ğ‘z’è
+			FbxLayerElementMaterial* mat = pFbxMesh->GetLayer(0)->GetMaterials();	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ1æšã ã‘ã‚’æƒ³å®š
 			int matId = mat->GetIndexArray().GetAt(k);
 			if (matId == i) {
 				if (m_dwNumVert < m_dwNumUV) {
@@ -393,17 +393,17 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		}
 		if (iCount > 0) {
 			CreateIndexBuffer(iCount * sizeof(int), pIndex, &m_ppIndexBuffer[i]);
-			// «’Ç‰Á
+			// â†“è¿½åŠ 
 			m_ppIndex[i] = new int[iCount];
 			for (int j = 0; j < iCount; ++j) {
 				m_ppIndex[i][j] = pIndex[j];
 			}
 		}
-		m_pMaterial[i].dwNumFace = iCount / 3;	// ‚»‚Ìƒ}ƒeƒŠƒAƒ‹“à‚Ìƒ|ƒŠƒSƒ“”		
+		m_pMaterial[i].dwNumFace = iCount / 3;	// ãã®ãƒãƒ†ãƒªã‚¢ãƒ«å†…ã®ãƒãƒªã‚´ãƒ³æ•°		
 		delete[] pIndex;
 	}
 
-	// ’¸“_‚©‚çƒ|ƒŠƒSƒ“‚ğ‹tˆø‚«‚·‚é‚½‚ß‚Ì‹tˆø‚«ƒe[ƒuƒ‹‚ğì‚é 
+	// é ‚ç‚¹ã‹ã‚‰ãƒãƒªã‚´ãƒ³ã‚’é€†å¼•ãã™ã‚‹ãŸã‚ã®é€†å¼•ããƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œã‚‹ 
 	TPolyTable* PolyTable = new TPolyTable[m_dwNumVert];
 	for (DWORD k = 0; k < m_dwNumFace; ++k) {
 		for (int m = 0; m < 3; ++m) {
@@ -419,10 +419,10 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 		}
 	}
 
-	// ƒXƒLƒ“î•ñ (ƒWƒ‡ƒCƒ“ƒgAƒEƒFƒCƒg) “Ç‚İ‚İ
+	// ã‚¹ã‚­ãƒ³æƒ…å ± (ã‚¸ãƒ§ã‚¤ãƒ³ãƒˆã€ã‚¦ã‚§ã‚¤ãƒˆ) èª­ã¿è¾¼ã¿
 	ReadSkinInfo(pFbxMesh, pvVB, PolyTable);
 
-	// ’¸“_ƒoƒbƒtƒ@ì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	if (m_dwNumVert < m_dwNumUV) m_dwNumVert = m_dwNumUV;
 	CD3D11_BUFFER_DESC bd(sizeof(TFbxVertex) * m_dwNumVert, D3D11_BIND_VERTEX_BUFFER);
 	D3D11_SUBRESOURCE_DATA sd;
@@ -430,14 +430,14 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 	sd.pSysMem = pvVB;
 	hr = m_pDevice->CreateBuffer(&bd, &sd, &m_pVertexBuffer);
 
-	// ƒ[ƒNíœ
+	// ãƒ¯ãƒ¼ã‚¯å‰Šé™¤
 	delete[] PolyTable;
-	//delete[] pvVB;	íœ
+	//delete[] pvVB;	å‰Šé™¤
 
-	// «’Ç‰Á
+	// â†“è¿½åŠ 
 	m_pVertex = pvVB;
 
-	// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ ƒ{[ƒ“—p ì¬
+	// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ ãƒœãƒ¼ãƒ³ç”¨ ä½œæˆ
 	D3D11_BUFFER_DESC cb;
 	ZeroMemory(&cb, sizeof(cb));
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -451,7 +451,7 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@¶¬
+// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 //---------------------------------------------------------------------------------------
 HRESULT CFbxMesh::CreateIndexBuffer(DWORD dwSize, int* pIndex, ID3D11Buffer** ppIndexBuffer)
 {
@@ -465,11 +465,11 @@ HRESULT CFbxMesh::CreateIndexBuffer(DWORD dwSize, int* pIndex, ID3D11Buffer** pp
 }
 
 //---------------------------------------------------------------------------------------
-// ƒƒbƒVƒ…•`‰æ
+// ãƒ¡ãƒƒã‚·ãƒ¥æç”»
 //---------------------------------------------------------------------------------------
 void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 {
-	// ’è”—ÌˆæXV
+	// å®šæ•°é ˜åŸŸæ›´æ–°
 	D3D11_MAPPED_SUBRESOURCE pData;
 	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer0, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
 		SHADER_GLOBAL sg;
@@ -490,25 +490,25 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
 	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg (’¸“_ƒoƒbƒtƒ@‚Í1‚Â)
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ (é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¯1ã¤)
 	UINT stride = sizeof(TFbxVertex);
 	UINT offset = 0;
 	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ğƒZƒbƒg
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 	m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì”‚¾‚¯•`‰æ
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æ•°ã ã‘æç”»
 	for (DWORD i = 0; i < m_dwNumMaterial; ++i) {
-		// g—p‚³‚ê‚Ä‚¢‚È‚¢ƒ}ƒeƒŠƒAƒ‹‘Îô
+		// ä½¿ç”¨ã•ã‚Œã¦ã„ãªã„ãƒãƒ†ãƒªã‚¢ãƒ«å¯¾ç­–
 		if (m_pMaterial[i].dwNumFace == 0) {
 			continue;
 		}
-		// ƒ†[ƒU’è‹`ƒ}ƒeƒŠƒAƒ‹
+		// ãƒ¦ãƒ¼ã‚¶å®šç¾©ãƒãƒ†ãƒªã‚¢ãƒ«
 		TFbxMaterial* pMaterial = &m_pMaterial[i];
 		if (m_pMateUsr)
 			pMaterial = m_pMateUsr;
-		// “§–¾“x‚É‚æ‚é•`‰æ
+		// é€æ˜åº¦ã«ã‚ˆã‚‹æç”»
 		switch (byOpacity) {
 		case eOpacityOnly:
 			if (pMaterial->Kd.w < 1.0f) continue;
@@ -519,12 +519,12 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 		default:
 			break;
 		}
-		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒZƒbƒg
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 		stride = sizeof(int);
 		offset = 0;
 		m_pDeviceContext->IASetIndexBuffer(m_ppIndexBuffer[i], DXGI_FORMAT_R32_UINT, 0);
 
-		// ƒ}ƒeƒŠƒAƒ‹‚ÌŠe—v‘f‚ğƒVƒF[ƒ_‚É“n‚·
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®å„è¦ç´ ã‚’ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™
 		D3D11_MAPPED_SUBRESOURCE pData;
 		if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer1, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
 			SHADER_MATERIAL sg;
@@ -537,7 +537,7 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 		}
 		m_pDeviceContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
 		m_pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
-		// ƒeƒNƒXƒ`ƒƒ‚ğƒVƒF[ƒ_‚É“n‚·
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™
 		m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampleLinear);
 		if (m_pMaterial[i].pTexture || m_pMaterial[i].pTexEmmisive) {
 			if (m_pMaterial[i].pTexture)
@@ -545,20 +545,20 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 			if (m_pMaterial[i].pTexEmmisive)
 				m_pDeviceContext->PSSetShaderResources(1, 1, &m_pMaterial[i].pTexEmmisive);
 		}
-		// ƒ{[ƒ“‚ğƒVƒF[ƒ_‚É“n‚·
+		// ãƒœãƒ¼ãƒ³ã‚’ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™
 		m_pDeviceContext->VSSetConstantBuffers(2, 1, &m_pConstantBufferBone);
 		m_pDeviceContext->PSSetConstantBuffers(2, 1, &m_pConstantBufferBone);
-		// •`‰æ
+		// æç”»
 		m_pDeviceContext->DrawIndexed(m_pMaterial[i].dwNumFace * 3, 0, 0);
 	}
 }
 
 //---------------------------------------------------------------------------------------
-// FBX‚©‚çƒXƒLƒ“ŠÖ˜A‚Ìî•ñ‚ğ“Ç‚İo‚·@
+// FBXã‹ã‚‰ã‚¹ã‚­ãƒ³é–¢é€£ã®æƒ…å ±ã‚’èª­ã¿å‡ºã™ã€€
 //---------------------------------------------------------------------------------------
 HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* PolyTable)
 {
-	// ’¸“_‚²‚Æ‚Ìƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒXA’¸“_‚²‚Æ‚Ìƒ{[ƒ“ƒEƒFƒCƒgAƒoƒCƒ“ƒhs—ñAƒ|[ƒYs—ñ ‚Ì4€–Ú‚ğ’Šo
+	// é ‚ç‚¹ã”ã¨ã®ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€é ‚ç‚¹ã”ã¨ã®ãƒœãƒ¼ãƒ³ã‚¦ã‚§ã‚¤ãƒˆã€ãƒã‚¤ãƒ³ãƒ‰è¡Œåˆ—ã€ãƒãƒ¼ã‚ºè¡Œåˆ— ã®4é …ç›®ã‚’æŠ½å‡º
 	int nSkinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
 	if (nSkinCount <= 0) return S_OK;
 	m_pBoneTable = new TSkinInfo[nSkinCount];
@@ -566,28 +566,28 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 	int offset = 0;
 	for (int nSkin = 0; nSkin < nSkinCount; ++nSkin) {
 		TSkinInfo& bt = m_pBoneTable[nSkin];
-		// ƒfƒtƒH[ƒ}æ“¾
+		// ãƒ‡ãƒ•ã‚©ãƒ¼ãƒå–å¾—
 		FbxDeformer* pDeformer = pFbxMesh->GetDeformer(nSkin);
 		if (!pDeformer) {
 			continue;
 		}
 		FbxSkin* pSkinInfo = static_cast<FbxSkin*>(pDeformer);
 
-		// ƒ{[ƒ“æ“¾
+		// ãƒœãƒ¼ãƒ³å–å¾—
 		int nNumBone = pSkinInfo->GetClusterCount();
 		bt.ppCluster = new FbxCluster*[nNumBone];
 		for (int i = 0; i < nNumBone; ++i) {
 			bt.ppCluster[i] = pSkinInfo->GetCluster(i);
 		}
 
-		// ’Êí‚Ìê‡ (’¸“_”†UV”@pvVB‚ª’¸“_ƒCƒ“ƒfƒbƒNƒX ƒx[ƒX‚Ìê‡)
+		// é€šå¸¸ã®å ´åˆ (é ‚ç‚¹æ•°â‰§UVæ•°ã€€pvVBãŒé ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ ãƒ™ãƒ¼ã‚¹ã®å ´åˆ)
 		if (m_dwNumVert >= m_dwNumUV) {
-			// ‚»‚ê‚¼‚ê‚Ìƒ{[ƒ“‚É‰e‹¿‚ğó‚¯‚é’¸“_‚ğ’²‚×‚é@‚»‚±‚©‚ç‹t‚ÉA’¸“_ƒx[ƒX‚Åƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒXEd‚İ‚ğ®“Ú‚·‚é
+			// ãã‚Œãã‚Œã®ãƒœãƒ¼ãƒ³ã«å½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹ã‚’èª¿ã¹ã‚‹ã€€ãã“ã‹ã‚‰é€†ã«ã€é ‚ç‚¹ãƒ™ãƒ¼ã‚¹ã§ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ»é‡ã¿ã‚’æ•´é “ã™ã‚‹
 			for (int i = 0; i < nNumBone; ++i) {
-				int nNumIndex = bt.ppCluster[i]->GetControlPointIndicesCount();//‚±‚Ìƒ{[ƒ“‚É‰e‹¿‚ğó‚¯‚é’¸“_”
+				int nNumIndex = bt.ppCluster[i]->GetControlPointIndicesCount();//ã“ã®ãƒœãƒ¼ãƒ³ã«å½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹æ•°
 				int* piIndex = bt.ppCluster[i]->GetControlPointIndices();
 				double* pdWeight = bt.ppCluster[i]->GetControlPointWeights();
-				// ’¸“_‘¤‚©‚çƒCƒ“ƒfƒbƒNƒX‚ğ‚½‚Ç‚Á‚ÄA’¸“_ƒTƒCƒh‚Å®—‚·‚é
+				// é ‚ç‚¹å´ã‹ã‚‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ãŸã©ã£ã¦ã€é ‚ç‚¹ã‚µã‚¤ãƒ‰ã§æ•´ç†ã™ã‚‹
 				for (int k = 0; k < nNumIndex; ++k) {
 					int m;
 					for (m = 0; m < 4; ++m) {
@@ -598,8 +598,8 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 							break;
 						}
 					}
-					if (m < 4) continue;	// İ’èÏ‚È‚çƒXƒLƒbƒv
-					for (m = 0; m < 4; ++m) {	// 5–{ˆÈã‚Ìê‡‚ÍAd‚İ‚Ì‘å‚«‚¢‡‚É4–{‚Éi‚é
+					if (m < 4) continue;	// è¨­å®šæ¸ˆãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
+					for (m = 0; m < 4; ++m) {	// 5æœ¬ä»¥ä¸Šã®å ´åˆã¯ã€é‡ã¿ã®å¤§ãã„é †ã«4æœ¬ã«çµã‚‹
 						if (pdWeight[k] > pvVB[piIndex[k]].fBoneWeight[m]) {
 							for (int n = 4 - 1; n > m; --n) {
 								pvVB[piIndex[k]].uBoneIndex[n] = pvVB[piIndex[k]].uBoneIndex[n - 1];
@@ -613,19 +613,19 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 				}
 			}
 		} else {
-			// UVƒCƒ“ƒfƒbƒNƒXƒx[ƒX‚Ìê‡ (’¸“_”<UV”)
+			// UVã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ™ãƒ¼ã‚¹ã®å ´åˆ (é ‚ç‚¹æ•°<UVæ•°)
 			int PolyIndex = 0;
 			int UVIndex = 0;
-			// ‚»‚ê‚¼‚ê‚Ìƒ{[ƒ“‚É‰e‹¿‚ğó‚¯‚é’¸“_‚ğ’²‚×‚é@‚»‚±‚©‚ç‹t‚ÉA’¸“_ƒx[ƒX‚Åƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒXEd‚İ‚ğ®“Ú‚·‚é
+			// ãã‚Œãã‚Œã®ãƒœãƒ¼ãƒ³ã«å½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹ã‚’èª¿ã¹ã‚‹ã€€ãã“ã‹ã‚‰é€†ã«ã€é ‚ç‚¹ãƒ™ãƒ¼ã‚¹ã§ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ»é‡ã¿ã‚’æ•´é “ã™ã‚‹
 			for (int i = 0; i < nNumBone; ++i) {
-				int nNumIndex = bt.ppCluster[i]->GetControlPointIndicesCount();//‚±‚Ìƒ{[ƒ“‚É‰e‹¿‚ğó‚¯‚é’¸“_”
+				int nNumIndex = bt.ppCluster[i]->GetControlPointIndicesCount();//ã“ã®ãƒœãƒ¼ãƒ³ã«å½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹æ•°
 				int* piIndex = bt.ppCluster[i]->GetControlPointIndices();
 				double* pdWeight = bt.ppCluster[i]->GetControlPointWeights();
-				// ’¸“_‘¤‚©‚çƒCƒ“ƒfƒbƒNƒX‚ğ‚½‚Ç‚Á‚ÄA’¸“_ƒTƒCƒh‚Å®—‚·‚é
+				// é ‚ç‚¹å´ã‹ã‚‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ãŸã©ã£ã¦ã€é ‚ç‚¹ã‚µã‚¤ãƒ‰ã§æ•´ç†ã™ã‚‹
 				for (int k = 0; k < nNumIndex; ++k) {
-					// ‚»‚Ì’¸“_‚ğŠÜ‚ñ‚Å‚¢‚éƒ|ƒŠƒSƒ“‚·‚×‚Ä‚ÉA‚±‚Ìƒ{[ƒ“‚ÆƒEƒFƒCƒg‚ğ“K—p
+					// ãã®é ‚ç‚¹ã‚’å«ã‚“ã§ã„ã‚‹ãƒãƒªã‚´ãƒ³ã™ã¹ã¦ã«ã€ã“ã®ãƒœãƒ¼ãƒ³ã¨ã‚¦ã‚§ã‚¤ãƒˆã‚’é©ç”¨
 					for (int p = 0; p < PolyTable[piIndex[k]].nNumRef; ++p) {
-						// ’¸“_¨‘®‚·ƒ|ƒŠƒSƒ“¨‚»‚Ìƒ|ƒŠƒSƒ“‚ÌUVƒCƒ“ƒfƒbƒNƒX ‚Æ‹tˆø‚«
+						// é ‚ç‚¹â†’å±ã™ãƒãƒªã‚´ãƒ³â†’ãã®ãƒãƒªã‚´ãƒ³ã®UVã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ ã¨é€†å¼•ã
 						PolyIndex = PolyTable[piIndex[k]].nPolyIndex[p];
 						UVIndex = pFbxMesh->GetTextureUVIndex(PolyIndex, PolyTable[piIndex[k]].nIndex123[p], FbxLayerElement::eTextureDiffuse);
 						int m;
@@ -637,8 +637,8 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 								break;
 							}
 						}
-						if (m < 4) continue;	// İ’èÏ‚È‚çƒXƒLƒbƒv
-						for (m = 0; m < 4; ++m) {	// 5–{ˆÈã‚Ìê‡‚ÍAd‚İ‚Ì‘å‚«‚¢‡‚É4–{‚Éi‚é
+						if (m < 4) continue;	// è¨­å®šæ¸ˆãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
+						for (m = 0; m < 4; ++m) {	// 5æœ¬ä»¥ä¸Šã®å ´åˆã¯ã€é‡ã¿ã®å¤§ãã„é †ã«4æœ¬ã«çµã‚‹
 							if (pdWeight[k] > pvVB[UVIndex].fBoneWeight[m]) {
 								for (int n = 4 - 1; n > m; --n) {
 									pvVB[UVIndex].uBoneIndex[n] = pvVB[UVIndex].uBoneIndex[n - 1];
@@ -654,7 +654,7 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 			}
 		}
 
-		// ƒ{[ƒ“‚ğ¶¬
+		// ãƒœãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 		bt.nNumBone = nNumBone;
 		bt.pBoneArray = new TBone[nNumBone];
 		XMFLOAT4X4 m(
@@ -680,7 +680,7 @@ HRESULT CFbxMesh::ReadSkinInfo(FbxMesh* pFbxMesh, TFbxVertex* pvVB, TPolyTable* 
 }
 
 //---------------------------------------------------------------------------------------
-// ƒ{[ƒ“‚ğŸ‚Ìƒ|[ƒYˆÊ’u‚ÉƒZƒbƒg‚·‚é
+// ãƒœãƒ¼ãƒ³ã‚’æ¬¡ã®ãƒãƒ¼ã‚ºä½ç½®ã«ã‚»ãƒƒãƒˆã™ã‚‹
 //---------------------------------------------------------------------------------------
 void CFbxMesh::SetNewPoseMatrices(int nFrame)
 {
@@ -692,7 +692,7 @@ void CFbxMesh::SetNewPoseMatrices(int nFrame)
 		 0, 0, 1, 0,
 		 0, 0, 0, 1);
 	FbxTime time;
-	time.SetTime(0, 0, 0, nFrame, 0, 0, FbxTime::eFrames60);	// 60ƒtƒŒ[ƒ€/•b ‚Æ„’è Œµ–§‚É‚Íó‹µ‚²‚Æ‚É’²‚×‚é•K—v‚ ‚è
+	time.SetTime(0, 0, 0, nFrame, 0, 0, FbxTime::eFrames60);	// 60ãƒ•ãƒ¬ãƒ¼ãƒ /ç§’ ã¨æ¨å®š å³å¯†ã«ã¯çŠ¶æ³ã”ã¨ã«èª¿ã¹ã‚‹å¿…è¦ã‚ã‚Š
 	for (int nSkinIndex = 0; nSkinIndex < m_nNumSkin; ++nSkinIndex) {
 		TSkinInfo& bt = m_pBoneTable[nSkinIndex];
 		for (int i = 0; i < bt.nNumBone; ++i) {
@@ -703,10 +703,10 @@ void CFbxMesh::SetNewPoseMatrices(int nFrame)
 				}
 			}
 			XMStoreFloat4x4(&bt.pBoneArray[i].mNewPose,
-				XMLoadFloat4x4(&bt.pBoneArray[i].mNewPose) * XMLoadFloat4x4(&m));//FBX‰EèÀ•WŒn‚È‚Ì‚Å‚˜‚ª‹t@•â³‚·‚é	
+				XMLoadFloat4x4(&bt.pBoneArray[i].mNewPose) * XMLoadFloat4x4(&m));//FBXå³æ‰‹åº§æ¨™ç³»ãªã®ã§ï½˜ãŒé€†ã€€è£œæ­£ã™ã‚‹	
 		}
 	}
-	// ƒtƒŒ[ƒ€‚ği‚ß‚½‚±‚Æ‚É‚æ‚è•Ï‰»‚µ‚½ƒ|[ƒYiƒ{[ƒ“‚Ìs—ñj‚ğƒVƒF[ƒ_[‚É“n‚·
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’é€²ã‚ãŸã“ã¨ã«ã‚ˆã‚Šå¤‰åŒ–ã—ãŸãƒãƒ¼ã‚ºï¼ˆãƒœãƒ¼ãƒ³ã®è¡Œåˆ—ï¼‰ã‚’ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™
 	D3D11_MAPPED_SUBRESOURCE pData;
 	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBufferBone, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
 		SHADER_BONE sg;
@@ -727,20 +727,20 @@ void CFbxMesh::SetNewPoseMatrices(int nFrame)
 }
 
 //---------------------------------------------------------------------------------------
-// Ÿ(Œ»İ)‚Ìƒ|[ƒYs—ñ‚ğ•Ô‚·
+// æ¬¡(ç¾åœ¨)ã®ãƒãƒ¼ã‚ºè¡Œåˆ—ã‚’è¿”ã™
 //---------------------------------------------------------------------------------------
 XMFLOAT4X4 CFbxMesh::GetCurrentPoseMatrix(int nSkin, int nIndex)
 {
 	XMMATRIX inv;
-	inv = XMMatrixInverse(0, XMLoadFloat4x4(&m_pBoneTable[nSkin].pBoneArray[nIndex].mBindPose));	// FBX‚ÌƒoƒCƒ“ƒhƒ|[ƒY‚Í‰Šúp¨iâ‘ÎÀ•Wj
+	inv = XMMatrixInverse(0, XMLoadFloat4x4(&m_pBoneTable[nSkin].pBoneArray[nIndex].mBindPose));	// FBXã®ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºã¯åˆæœŸå§¿å‹¢ï¼ˆçµ¶å¯¾åº§æ¨™ï¼‰
 	XMFLOAT4X4 ret;
-	XMStoreFloat4x4(&ret, inv * XMLoadFloat4x4(&m_pBoneTable[nSkin].pBoneArray[nIndex].mNewPose));	// ƒoƒCƒ“ƒhƒ|[ƒY‚Ì‹ts—ñ‚ÆƒtƒŒ[ƒ€p¨s—ñ‚ğ‚©‚¯‚éB‚È‚¨AƒoƒCƒ“ƒhƒ|[ƒY©‘Ì‚ªŠù‚É‹ts—ñ‚Å‚ ‚é‚Æ‚·‚él‚¦‚à‚ ‚éBiFBX‚Ìê‡‚Íˆá‚¤‚ªj
+	XMStoreFloat4x4(&ret, inv * XMLoadFloat4x4(&m_pBoneTable[nSkin].pBoneArray[nIndex].mNewPose));	// ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºã®é€†è¡Œåˆ—ã¨ãƒ•ãƒ¬ãƒ¼ãƒ å§¿å‹¢è¡Œåˆ—ã‚’ã‹ã‘ã‚‹ã€‚ãªãŠã€ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºè‡ªä½“ãŒæ—¢ã«é€†è¡Œåˆ—ã§ã‚ã‚‹ã¨ã™ã‚‹è€ƒãˆã‚‚ã‚ã‚‹ã€‚ï¼ˆFBXã®å ´åˆã¯é•ã†ãŒï¼‰
 	return ret;
 }
 
-// «’Ç‰Á2
+// â†“è¿½åŠ 2
 //---------------------------------------------------------------------------------------
-// q‚ÌƒƒbƒVƒ…‚àŠÜ‚ß‚½’¸“_”‚ğæ“¾
+// å­ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚‚å«ã‚ãŸé ‚ç‚¹æ•°ã‚’å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxMesh::GetVertexCount()
 {
@@ -752,7 +752,7 @@ int CFbxMesh::GetVertexCount()
 }
 
 //---------------------------------------------------------------------------------------
-// q‚ÌƒƒbƒVƒ…‚àŠÜ‚ß‚½’¸“_”z—ñ‚ğæ“¾
+// å­ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚‚å«ã‚ãŸé ‚ç‚¹é…åˆ—ã‚’å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxMesh::GetVertex(TFbxVertex* pVertex, int nCount)
 {
@@ -774,7 +774,7 @@ int CFbxMesh::GetVertex(TFbxVertex* pVertex, int nCount)
 }
 
 //---------------------------------------------------------------------------------------
-// q‚ÌƒƒbƒVƒ…‚àŠÜ‚ß‚½ƒCƒ“ƒfƒbƒNƒX”‚ğæ“¾
+// å­ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚‚å«ã‚ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã‚’å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxMesh::GetIndexCount()
 {
@@ -789,7 +789,7 @@ int CFbxMesh::GetIndexCount()
 }
 
 //---------------------------------------------------------------------------------------
-// q‚ÌƒƒbƒVƒ…‚àŠÜ‚ß‚½ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğæ“¾
+// å­ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚‚å«ã‚ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxMesh::GetIndex(int* pIndex, int nCount, int& nTop)
 {
@@ -814,10 +814,10 @@ int CFbxMesh::GetIndex(int* pIndex, int nCount, int& nTop)
 	}
 	return nCopy;
 }
-// ª’Ç‰Á2
+// â†‘è¿½åŠ 2
 
 //---------------------------------------------------------------------------------------
-// ’¸“_À•WÅ¬’lÅ‘å’læ“¾
+// é ‚ç‚¹åº§æ¨™æœ€å°å€¤æœ€å¤§å€¤å–å¾—
 //---------------------------------------------------------------------------------------
 void CFbxMesh::CalcBoundingBox(XMFLOAT3& vMin, XMFLOAT3& vMax)
 {
@@ -843,7 +843,7 @@ void CFbxMesh::CalcBoundingBox(XMFLOAT3& vMin, XMFLOAT3& vMax)
 }
 
 //---------------------------------------------------------------------------------------
-// ’†SÀ•W‚©‚ç‚ÌÅ’·‹——£æ“¾
+// ä¸­å¿ƒåº§æ¨™ã‹ã‚‰ã®æœ€é•·è·é›¢å–å¾—
 //---------------------------------------------------------------------------------------
 void CFbxMesh::CalcBoundingSphere(XMFLOAT3& vCenter, float& fRadius)
 {
@@ -863,7 +863,7 @@ void CFbxMesh::CalcBoundingSphere(XMFLOAT3& vCenter, float& fRadius)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------------------------------------
 CFbxModel::CFbxModel()
 {
@@ -892,7 +892,7 @@ CFbxModel::CFbxModel()
 }
 
 //---------------------------------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------------------------------------
 CFbxModel::~CFbxModel()
 {
@@ -902,7 +902,7 @@ CFbxModel::~CFbxModel()
 }
 
 //---------------------------------------------------------------------------------------
-// ŠK‘wƒƒbƒVƒ…“Ç‚İ‚İ
+// éšå±¤ãƒ¡ãƒƒã‚·ãƒ¥èª­ã¿è¾¼ã¿
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::LoadRecursive(FbxNode* pNode, CFbxMesh* pFBXMesh)
 {
@@ -920,17 +920,17 @@ HRESULT CFbxModel::LoadRecursive(FbxNode* pNode, CFbxMesh* pFBXMesh)
 		FbxNodeAttribute::EType type = pAttr->GetAttributeType();
 		switch (type) {
 		case FbxNodeAttribute::eMesh:
-			// ƒƒbƒVƒ…ì¬
+			// ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆ
 			hr = pFBXMesh->CreateFromFBX(pNode->GetMesh());
 			if (FAILED(hr)) {
-				MessageBoxW(0, L"ƒƒbƒVƒ…¶¬ƒGƒ‰[", L"CFbxMesh::CreateFromFBX", MB_OK);
+				MessageBoxW(0, L"ãƒ¡ãƒƒã‚·ãƒ¥ç”Ÿæˆã‚¨ãƒ©ãƒ¼", L"CFbxMesh::CreateFromFBX", MB_OK);
 				return hr;
 			}
 			break;
 		}
 	}
 
-	// q‚ª‚¢‚½‚çAq‚ÅÄ‹A
+	// å­ãŒã„ãŸã‚‰ã€å­ã§å†å¸°
 	int iNumChild = pNode->GetChildCount();
 	pFBXMesh->m_dwNumChild = iNumChild;
 	if (iNumChild > 0) {
@@ -952,7 +952,7 @@ HRESULT CFbxModel::LoadRecursive(FbxNode* pNode, CFbxMesh* pFBXMesh)
 }
 
 //---------------------------------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LPCSTR pszFileName)
 {
@@ -961,11 +961,11 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 
 	HRESULT hr = InitShader();
 	if (FAILED(hr)) {
-		MessageBoxW(0, L"ƒƒbƒVƒ…—pƒVƒF[ƒ_ì¬¸”s", nullptr, MB_OK);
+		MessageBoxW(0, L"ãƒ¡ãƒƒã‚·ãƒ¥ç”¨ã‚·ã‚§ãƒ¼ãƒ€ä½œæˆå¤±æ•—", nullptr, MB_OK);
 		return hr;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ—pƒTƒ“ƒvƒ‰ì¬
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ã‚µãƒ³ãƒ—ãƒ©ä½œæˆ
 	CD3D11_DEFAULT def;
 	CD3D11_SAMPLER_DESC sd(def);
 	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -973,7 +973,7 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 	hr = m_pDevice->CreateSamplerState(&sd, &m_pSampleLinear);
 	if (FAILED(hr)) {
-		MessageBoxW(0, L"ƒeƒNƒXƒ`ƒƒ—pƒTƒ“ƒvƒ‰ì¬¸”s", nullptr, MB_OK);
+		MessageBoxW(0, L"ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ã‚µãƒ³ãƒ—ãƒ©ä½œæˆå¤±æ•—", nullptr, MB_OK);
 		return hr;
 	}
 
@@ -983,7 +983,7 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 	hr = CreateFromFBX(pszFName);
 	if (pszFName) FbxFree(pszFName);
 	if (FAILED(hr)) {
-		MessageBoxW(0, L"ƒƒbƒVƒ…ì¬¸”s", nullptr, MB_OK);
+		MessageBoxW(0, L"ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆå¤±æ•—", nullptr, MB_OK);
 		return hr;
 	}
 
@@ -991,19 +991,19 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 }
 
 //---------------------------------------------------------------------------------------
-// ƒVƒF[ƒ_“Ç‚İ‚İ
+// ã‚·ã‚§ãƒ¼ãƒ€èª­ã¿è¾¼ã¿
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::InitShader()
 {
-	// ƒVƒF[ƒ_“Ç‚İ‚İ
+	// ã‚·ã‚§ãƒ¼ãƒ€èª­ã¿è¾¼ã¿
 	HRESULT hr = LoadShader("FbxModelVertex", "FbxModelPixel",
 		&m_pVertexShader, &m_pVertexLayout, &m_pPixelShader);
 	if (FAILED(hr)) {
-		MessageBoxW(0, L"hlsl“Ç‚İ‚İ¸”s", nullptr, MB_OK);
+		MessageBoxW(0, L"hlslèª­ã¿è¾¼ã¿å¤±æ•—", nullptr, MB_OK);
 		return hr;
 	}
 
-	// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ì¬ •ÏŠ·s—ñ“n‚µ—p
+	// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ä½œæˆ å¤‰æ›è¡Œåˆ—æ¸¡ã—ç”¨
 	D3D11_BUFFER_DESC cb;
 	ZeroMemory(&cb, sizeof(cb));
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -1016,7 +1016,7 @@ HRESULT CFbxModel::InitShader()
 		return hr;
 	}
 
-	// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ì¬ ƒ}ƒeƒŠƒAƒ‹“n‚µ—p
+	// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ä½œæˆ ãƒãƒ†ãƒªã‚¢ãƒ«æ¸¡ã—ç”¨
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	cb.ByteWidth = sizeof(SHADER_MATERIAL);
 	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -1028,7 +1028,7 @@ HRESULT CFbxModel::InitShader()
 }
 
 //---------------------------------------------------------------------------------------
-// FBX‰Šú‰»
+// FBXåˆæœŸåŒ–
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::InitFBX(LPCSTR szFileName)
 {
@@ -1038,14 +1038,14 @@ HRESULT CFbxModel::InitFBX(LPCSTR szFileName)
 	m_pScene = FbxScene::Create(m_pSdkManager, "MyScene");
 	m_pImporter->Import(m_pScene);
 
-	// DirectXŒn
+	// DirectXç³»
 	//FbxAxisSystem::DirectX.ConvertScene(m_pScene);
 
-	// OŠpŒ`‰»
+	// ä¸‰è§’å½¢åŒ–
 	FbxGeometryConverter lGeomConverter(m_pSdkManager);
 	lGeomConverter.Triangulate(m_pScene, true);
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
 	m_pScene->FillAnimStackNameArray(m_strAnimStackName);
 	if (m_strAnimStackName.GetCount() > 0) {
 		SetAnimStack(0);
@@ -1055,23 +1055,23 @@ HRESULT CFbxModel::InitFBX(LPCSTR szFileName)
 }
 
 //---------------------------------------------------------------------------------------
-// FBX‚©‚çƒƒbƒVƒ…‚ğì¬
+// FBXã‹ã‚‰ãƒ¡ãƒƒã‚·ãƒ¥ã‚’ä½œæˆ
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::CreateFromFBX(LPCSTR szFileName)
 {
-	// FBXƒ[ƒ_‰Šú‰»
+	// FBXãƒ­ãƒ¼ãƒ€åˆæœŸåŒ–
 	HRESULT hr = InitFBX(szFileName);
 	if (FAILED(hr)) {
-		MessageBoxW(0, L"FBXƒ[ƒ_‰Šú‰»¸”s", nullptr, MB_OK);
+		MessageBoxW(0, L"FBXãƒ­ãƒ¼ãƒ€åˆæœŸåŒ–å¤±æ•—", nullptr, MB_OK);
 		return hr;
 	}
 
 	char szDir[_MAX_DIR];
 	char szCurrentDir[_MAX_PATH];
-	// ƒtƒHƒ‹ƒ_–¼‚ğ’Šo
+	// ãƒ•ã‚©ãƒ«ãƒ€åã‚’æŠ½å‡º
 	_splitpath_s(szFileName, nullptr, 0, szDir, _countof(szDir),
 		nullptr, 0, nullptr, 0);
-	// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğ•ÏX
+	// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å¤‰æ›´
 	if (szDir[0]) {
 		GetCurrentDirectoryA(_MAX_PATH, szCurrentDir);
 		SetCurrentDirectoryA(szDir);
@@ -1081,7 +1081,7 @@ HRESULT CFbxModel::CreateFromFBX(LPCSTR szFileName)
 	m_pRootMesh = new CFbxMesh;
 	hr = LoadRecursive(pNode, m_pRootMesh);
 
-	// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğŒ³‚É–ß‚·
+	// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å…ƒã«æˆ»ã™
 	if (szDir[0])
 		SetCurrentDirectoryA(szCurrentDir);
 
@@ -1089,24 +1089,24 @@ HRESULT CFbxModel::CreateFromFBX(LPCSTR szFileName)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒŒƒ“ƒ_ƒŠƒ“ƒO
+// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°
 //---------------------------------------------------------------------------------------
 void CFbxModel::Render(XMFLOAT4X4& mWorld, XMFLOAT4X4& mView, XMFLOAT4X4& mProj, EByOpacity byOpacity)
 {
 	m_mWorld = mWorld;
 	m_mView = mView;
 	m_mProj = mProj;
-	// g—p‚·‚éƒVƒF[ƒ_[‚Ì“o˜^	
+	// ä½¿ç”¨ã™ã‚‹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ç™»éŒ²	
 	m_pDeviceContext->VSSetShader(m_pVertexShader, nullptr, 0);
 	m_pDeviceContext->PSSetShader(m_pPixelShader, nullptr, 0);
-	// ’¸“_ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg‚ğƒZƒbƒg
+	// é ‚ç‚¹ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
 
 	RecursiveRender(m_pRootMesh, byOpacity);
 }
 
 //---------------------------------------------------------------------------------------
-// ƒƒbƒVƒ…•`‰æ
+// ãƒ¡ãƒƒã‚·ãƒ¥æç”»
 //---------------------------------------------------------------------------------------
 void CFbxModel::RenderMesh(CFbxMesh* pMesh, EByOpacity byOpacity)
 {
@@ -1119,16 +1119,16 @@ void CFbxModel::RenderMesh(CFbxMesh* pMesh, EByOpacity byOpacity)
 }
 
 //---------------------------------------------------------------------------------------
-// ŠK‘wƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
+// éšå±¤ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
 //---------------------------------------------------------------------------------------
 void CFbxModel::RecursiveRender(CFbxMesh* pMesh, EByOpacity byOpacity)
 {
-	// ‚»‚ÌuŠÔ‚ÌA©•ª‚Ìp¨s—ñ‚ğ“¾‚é
+	// ãã®ç¬é–“ã®ã€è‡ªåˆ†ã®å§¿å‹¢è¡Œåˆ—ã‚’å¾—ã‚‹
 	FbxTime time;
-	time.SetTime(0, 0, 0, m_nAnimFrame, 0, 0, FbxTime::eFrames60);//‚»‚ÌƒtƒŒ[ƒ€‚É‘Î‚·‚éŠÔ
+	time.SetTime(0, 0, 0, m_nAnimFrame, 0, 0, FbxTime::eFrames60);//ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã«å¯¾ã™ã‚‹æ™‚é–“
 	FbxAMatrix mCurrent = pMesh->m_pFBXNode->EvaluateGlobalTransform(time);
 
-	// s—ñƒRƒs[ (DirectX © FBX)
+	// è¡Œåˆ—ã‚³ãƒ”ãƒ¼ (DirectX â† FBX)
 	for (int x = 0; x < 4; ++x) {
 		for (int y = 0; y < 4; ++y) {
 			pMesh->m_mFBXOrientation(y, x) =
@@ -1136,7 +1136,7 @@ void CFbxModel::RecursiveRender(CFbxMesh* pMesh, EByOpacity byOpacity)
 		}
 	}
 
-	// e‚Ìp¨s—ñ‚Æ‡¬
+	// è¦ªã®å§¿å‹¢è¡Œåˆ—ã¨åˆæˆ
 	pMesh->m_mParentOrientation = m_mWorld;
 	XMStoreFloat4x4(&pMesh->m_mFinalWorld,
 		XMLoadFloat4x4(&pMesh->m_mFBXOrientation) * XMLoadFloat4x4(&pMesh->m_mParentOrientation));
@@ -1147,7 +1147,7 @@ void CFbxModel::RecursiveRender(CFbxMesh* pMesh, EByOpacity byOpacity)
 }
 
 //---------------------------------------------------------------------------------------
-// ‘SƒƒbƒVƒ…”jŠü
+// å…¨ãƒ¡ãƒƒã‚·ãƒ¥ç ´æ£„
 //---------------------------------------------------------------------------------------
 void CFbxModel::DestroyMesh(CFbxMesh* pMesh)
 {
@@ -1160,7 +1160,7 @@ void CFbxModel::DestroyMesh(CFbxMesh* pMesh)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒAƒjƒ[ƒVƒ‡ƒ“ ƒtƒŒ[ƒ€XV
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetAnimFrame(int nFrame)
 {
@@ -1169,7 +1169,7 @@ void CFbxModel::SetAnimFrame(int nFrame)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒAƒjƒ[ƒVƒ‡ƒ“ ƒtƒŒ[ƒ€XV
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetNewPoseMatrices(CFbxMesh* pMesh, int nFrame)
 {
@@ -1181,7 +1181,7 @@ void CFbxModel::SetNewPoseMatrices(CFbxMesh* pMesh, int nFrame)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒAƒjƒ[ƒVƒ‡ƒ“ ƒtƒŒ[ƒ€”æ“¾
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ãƒ¬ãƒ¼ãƒ æ•°å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetMaxAnimFrame()
 {
@@ -1189,7 +1189,7 @@ int CFbxModel::GetMaxAnimFrame()
 }
 
 //---------------------------------------------------------------------------------------
-// ƒAƒjƒ[ƒVƒ‡ƒ“”æ“¾
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ•°å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetMaxAnimStack()
 {
@@ -1197,7 +1197,7 @@ int CFbxModel::GetMaxAnimStack()
 }
 
 //---------------------------------------------------------------------------------------
-// ƒAƒjƒ[ƒVƒ‡ƒ“ØŠ·
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡æ›
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetAnimStack(int nAnimStack)
 {
@@ -1213,7 +1213,7 @@ void CFbxModel::SetAnimStack(int nAnimStack)
 }
 
 //---------------------------------------------------------------------------------------
-// ŒõŒ¹İ’è
+// å…‰æºè¨­å®š
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetLight(CFbxLight& light)
 {
@@ -1221,7 +1221,7 @@ void CFbxModel::SetLight(CFbxLight& light)
 }
 
 //---------------------------------------------------------------------------------------
-// ‹“_À•Wİ’è
+// è¦–ç‚¹åº§æ¨™è¨­å®š
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetCamera(DirectX::XMFLOAT3& vCamera)
 {
@@ -1229,7 +1229,7 @@ void CFbxModel::SetCamera(DirectX::XMFLOAT3& vCamera)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒ}ƒeƒŠƒAƒ‹İ’è
+// ãƒãƒ†ãƒªã‚¢ãƒ«è¨­å®š
 //---------------------------------------------------------------------------------------
 void CFbxModel::SetMaterial(TFbxMaterial* pMaterial)
 {
@@ -1241,9 +1241,9 @@ void CFbxModel::SetMaterial(TFbxMaterial* pMaterial)
 	}
 }
 
-// «’Ç‰Á2
+// â†“è¿½åŠ 2
 //---------------------------------------------------------------------------------------
-// ’¸“_”æ“¾
+// é ‚ç‚¹æ•°å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetVertexCount()
 {
@@ -1254,7 +1254,7 @@ int CFbxModel::GetVertexCount()
 }
 
 //---------------------------------------------------------------------------------------
-// ’¸“_”z—ñæ“¾
+// é ‚ç‚¹é…åˆ—å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetVertex(TFbxVertex* pVertex, int nCount)
 {
@@ -1265,7 +1265,7 @@ int CFbxModel::GetVertex(TFbxVertex* pVertex, int nCount)
 }
 
 //---------------------------------------------------------------------------------------
-// ƒCƒ“ƒfƒbƒNƒX”‚Ìæ“¾
+// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã®å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetIndexCount()
 {
@@ -1276,7 +1276,7 @@ int CFbxModel::GetIndexCount()
 }
 
 //---------------------------------------------------------------------------------------
-// ƒCƒ“ƒfƒbƒNƒX”z—ñ‚Ìæ“¾
+// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã®å–å¾—
 //---------------------------------------------------------------------------------------
 int CFbxModel::GetIndex(int* pIndex, int nCount)
 {
@@ -1307,7 +1307,7 @@ void CFbxModel::CalcBoundingSphere()
 }
 
 //---------------------------------------------------------------------------------------
-// ‹«ŠEƒ{ƒbƒNƒX(‹«ŠE‹…)’†SÀ•Wæ“¾
+// å¢ƒç•Œãƒœãƒƒã‚¯ã‚¹(å¢ƒç•Œçƒ)ä¸­å¿ƒåº§æ¨™å–å¾—
 //---------------------------------------------------------------------------------------
 XMFLOAT3& CFbxModel::GetCenter()
 {
@@ -1318,7 +1318,7 @@ XMFLOAT3& CFbxModel::GetCenter()
 }
 
 //---------------------------------------------------------------------------------------
-// ‹«ŠEƒ{ƒbƒNƒX@ƒTƒCƒY(c‰¡‰œs‚«‚Ì”¼•ª)æ“¾
+// å¢ƒç•Œãƒœãƒƒã‚¯ã‚¹ã€€ã‚µã‚¤ã‚º(ç¸¦æ¨ªå¥¥è¡Œãã®åŠåˆ†)å–å¾—
 //---------------------------------------------------------------------------------------
 XMFLOAT3& CFbxModel::GetBBox()
 {
@@ -1329,7 +1329,7 @@ XMFLOAT3& CFbxModel::GetBBox()
 }
 
 //---------------------------------------------------------------------------------------
-// ‹«ŠE‹…”¼Œaæ“¾
+// å¢ƒç•ŒçƒåŠå¾„å–å¾—
 //---------------------------------------------------------------------------------------
 float CFbxModel::GetRadius()
 {

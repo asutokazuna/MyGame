@@ -16,8 +16,9 @@ class Rigidbody;
 class PlayerMove: public Component
 {
 private:
-	Transform* m_Transform;
+	Transform* m_Transform;		//!< 座標
 	Rigidbody* rb;
+	POINT angle;			//!< 回転角度
 public:
 
 	/**
@@ -31,6 +32,18 @@ public:
 	 * @return なし
 	 */
 	void Update();
+
+	/**
+	 * @brief 高速移動
+	 *@return なし
+	 */
+	void FullDrive();
+
+	/**
+	 * @brief 視点移動
+	 * @return なし
+	 */
+	void Rotate();
 };
 
 // EOF

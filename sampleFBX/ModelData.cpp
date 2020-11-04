@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file ModelData
- * @brief ƒ‚ƒfƒ‹ƒf[ƒ^ƒNƒ‰ƒX
+ * @brief ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚¯ãƒ©ã‚¹
  */
 #include "ModelData.h"
 #include "Graphics.h"
@@ -10,7 +10,7 @@
 #define PATH_MODELPLAYER	"data/model/cube.fbx"
 #define PATH_MODELENEMY		"data/model/eagle.fbx"
 #define PATH_MISSILE		"data/model/bullet.fbx"
-#define PATH_TOWER			"data/model/tower.fbx"
+#define PATH_TOWER			"data/model/cube3.fbx"
 #define PATH_CORE			"data/model/core.fbx"
 
 struct MODEL_TABLE
@@ -29,8 +29,8 @@ MODEL_TABLE m_table[MODEL_MAX] = {
 };
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void ModelData::Initinstance()
 {
@@ -40,7 +40,7 @@ void ModelData::Initinstance()
 
 	m_light = *Light::Get();
 
-	// FBXƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	// FBXãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	for (int i = 0; i < MODEL_MAX; i++)
 	{
 		CFbxModel* temp = new CFbxModel();
@@ -57,8 +57,8 @@ void ModelData::UninitInstance()
 }
 
 /**
- * @brief ‰Šú‰»
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @return ãªã—
  */
 void ModelData::Init()
 {
@@ -71,9 +71,9 @@ void ModelData::Uninit()
 }
 
 /**
- * @brief ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìæ“¾
- * @param[in] kind æ“¾‚µ‚½‚¢ƒeƒNƒXƒ`ƒƒ‚ÌID
- * @return ˆø”‚É‡‚í‚¹‚½ƒ‚ƒfƒ‹ƒf[ƒ^
+ * @brief ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ * @param[in] kind å–å¾—ã—ãŸã„ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ID
+ * @return å¼•æ•°ã«åˆã‚ã›ãŸãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿
  */
 CFbxModel * ModelData::GetData(ModelKind kind)
 {
@@ -81,9 +81,9 @@ CFbxModel * ModelData::GetData(ModelKind kind)
 }
 
 /**
- * @brief ƒ‚ƒfƒ‹‚Ì‘å‚«‚³‚Ìæ“¾
- * @param[in] kind ƒ‚ƒfƒ‹‚Ìí—Ş
- * @return ƒ‚ƒfƒ‹ƒTƒCƒY
+ * @brief ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•ã®å–å¾—
+ * @param[in] kind ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡
+ * @return ãƒ¢ãƒ‡ãƒ«ã‚µã‚¤ã‚º
  */
 Vector3 ModelData::GetSize(int kind)
 {

@@ -1,11 +1,11 @@
-/**
+ï»¿/**
  * @file Transform.h
- * @brief À•WŠÇ—ƒNƒ‰ƒX
+ * @brief åº§æ¨™ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #include "Transform.h"
 
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Transform::Transform()
 {
@@ -22,8 +22,8 @@ Transform::Transform()
 }
 
 /**
- * @brief À•W‚Ìæ“¾
- * @return À•W
+ * @brief åº§æ¨™ã®å–å¾—
+ * @return åº§æ¨™
  */
 Vector3 Transform::GetPosition() 
 {
@@ -31,8 +31,8 @@ Vector3 Transform::GetPosition()
 }
 
 /**
- * @brief ‰ñ“]‚Ìæ“¾
- * @return ‰ñ“]
+ * @brief å›è»¢ã®å–å¾—
+ * @return å›è»¢
  */
 Vector3 Transform::GetRotation()
 {
@@ -40,8 +40,8 @@ Vector3 Transform::GetRotation()
 }
 
 /**
- * @brief ‘å‚«‚³‚Ìæ“¾
- * @return ‘å‚«‚³
+ * @brief å¤§ãã•ã®å–å¾—
+ * @return å¤§ãã•
  */
 Vector3 Transform::GetScale()
 {
@@ -49,8 +49,8 @@ Vector3 Transform::GetScale()
 }
 
 /**
- * @brief ‘O•ûŒü‚Ìæ“¾
- * @return ‘O•ûŒü
+ * @brief å‰æ–¹å‘ã®å–å¾—
+ * @return å‰æ–¹å‘
  */
 Vector3 Transform::GetForward()
 {
@@ -62,16 +62,29 @@ Vector3 Transform::GetForward()
 }
 
 /**
- * @brief ‰ñ“]‚³‚¹‚é
- * @param[in]	kind ‰ñ“]‚³‚¹‚é²
- * @param[in]	rad	‰ñ“]‚³‚¹‚éŠp“x(ƒ‰ƒWƒAƒ“)
- * @return À‘Ì
+ * @brief å³æ–¹å‘ã®å–å¾—
+ * @return å³æ–¹å‘
+ */
+Vector3 Transform::GetRight()
+{
+	Vector3 right = { 1,0,0 };
+
+	right = MyMath::PosxQuaternion(right, quaternion);
+
+	return right;
+}
+
+/**
+ * @brief å›è»¢ã•ã›ã‚‹
+ * @param[in]	kind å›è»¢ã•ã›ã‚‹è»¸
+ * @param[in]	rad	å›è»¢ã•ã›ã‚‹è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)
+ * @return å®Ÿä½“
  */
 Transform& Transform::AngleAxis(AxisKind kind, float rad)
 {
 	Vector3 axis = { 1,0,0 };
 
-	// ²‚ğŒˆ‚ß‚é
+	// è»¸ã‚’æ±ºã‚ã‚‹
 	switch (kind)
 	{
 	case Transform::AXIS_X:

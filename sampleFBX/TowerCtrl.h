@@ -1,16 +1,16 @@
-/**
+ï»¿/**
  * @file TowerCtrl
- * @brief TowerCtrlƒNƒ‰ƒX
+ * @brief TowerCtrlã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Component.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 struct TFbxMaterial;
 
 /**
  * @class TowerCtrl
- * @brief ƒ^ƒ[‚Ìƒpƒ‰ƒ[ƒ^[ŠÇ—ƒNƒ‰ƒX
+ * @brief ã‚¿ãƒ¯ãƒ¼ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 class TowerCtrl: public Component
 {
@@ -19,16 +19,20 @@ private:
 
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
 
 	/**
-	 * @brief I—¹ˆ—
-	 * @return ‚È‚µ
+	 * @brief çµ‚äº†å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Uninit();
+
+	void Update();
+
+	//void ChangeColor();
 
 };
 

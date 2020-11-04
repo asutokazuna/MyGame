@@ -5,10 +5,11 @@
 #include "Tower.h"
 #include "Object3D.h"
 #include "ModelData.h"
+#include "TowerCollision.h"
 #include "TowerEnergy.h"
+#include "FbxModel.h"
 #include "Gauge.h"
 #include "TowerCtrl.h"
-#include "collision.h"
 
  /**
   * @brief 初期化処理
@@ -19,8 +20,8 @@ void Tower::Awake()
 	tag = OBJ_TAG_TOWER;
 
 	m_Object3D = &AddComponent<Object3D>()->SetModel(MODEL_TOWER);
-	transform->scale = 0.5f;
-	m_collision = AddComponent<Collision>();
+	transform->scale = 100;
+	//m_collision = AddComponent<Collision>();
 	m_Energy = AddComponent<TowerEnergy>();
 	m_LifeGauge = new Gauge();
 	m_ctrl = AddComponent<TowerCtrl>();
@@ -30,7 +31,7 @@ void Tower::Awake()
 	Vector3 red = Vector3(1, 0, 0);
 	m_LifeGauge->SetParam(ENERGY_MAX, 0, blue, red);
 
-	m_collision->SetModelKind(MODEL_TOWER);
+	//m_collision->SetModelKind(MODEL_TOWER);
 }
 
 /**

@@ -13,6 +13,11 @@
  * @def 
  */
 #define GRAVITY (0.98f)
+#define FD_POWER (3.0f) 
+#define WAIT_TIME (1 * 60)
+
+static int mousePosX;
+static int mousePosY;
 
 /**
  * @brief 初期化処理
@@ -23,6 +28,8 @@ HRESULT PlayerMove::Init()
 	m_Transform = &m_Parent->GetTransform();
 
 	rb = m_Parent->GetComponent<Rigidbody>();
+	mousePosX = CInput::GetMousePosition()->x;
+	mousePosY = CInput::GetMousePosition()->y;
 
 	return S_OK;
 }
@@ -33,28 +40,81 @@ HRESULT PlayerMove::Init()
  */
 void PlayerMove::Update()
 {
-	float speed = 0;
+	Vector3 speed = Vector3();
 
-	if (CInput::GetKeyPress(VK_D)) {
-		m_Transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(1));
-	}
+	Rotate();
+
 	if (CInput::GetKeyPress(VK_A)) {
-		m_Transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(-1));
+		speed.x = -1.5f;
+	}
+	if (CInput::GetKeyPress(VK_D)) {
+		speed.x = 1.5f;
 	}
 	if (CInput::GetKeyPress(VK_W)) {
-		speed = 1.5f;
+		speed.z = 1.5f;
 	}
 	if (CInput::GetKeyPress(VK_S)) {
-		speed = -1.2f;
+		speed.z = -1.2f;
 	}
 
-	m_Transform->position += m_Transform->GetForward() * speed;
-	if (CInput::GetKeyTrigger(VK_SPACE)) {
-		rb->AddForce({ 0,15,0 });
+	FullDrive();
+
+	// 座標更新
+	m_Transform->position += m_Transform->GetForward() * speed + m_Transform->GetRight() * speed;
+
+	// Ctrl
+	if (CInput::GetKeyTrigger(VK_CONTROL)) {
+		rb->AddForce({ 0,15,0 });		// ジャンプ
 	}
+
+	// 床との当たり判定
 	if (m_Transform->position.y < 0) {
 		m_Transform->position.y = 0;
 	}
+}
+
+/**
+ * @brief 高速移動
+ *@return なし
+ */
+void PlayerMove::FullDrive()
+{
+	static int waitTime = 0;
+
+	// SPACE
+	if (CInput::GetKeyPress(VK_SPACE)) {
+		waitTime++;
+	}
+	else {
+		waitTime = 0;
+		return;
+	}
+
+	if(waitTime < WAIT_TIME) {
+		return;
+	}
+
+	m_Transform->position += m_Transform->GetForward() * FD_POWER;
+}
+
+/**
+ * @brief 視点移動
+ * @return なし
+ */
+void PlayerMove::Rotate()
+{
+	POINT mousePos = *CInput::GetMousePosition();
+
+	angle.x = mousePos.x - mousePosX;
+	angle.y = mousePos.y - mousePosY;
+
+	mousePosX = mousePos.x;
+	mousePosY = mousePos.y;
+
+	m_Transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(angle.x));
+	
+	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian(angle.y));
+	
 }
 
 // EOF

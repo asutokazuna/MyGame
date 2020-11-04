@@ -21,7 +21,7 @@ public:
 
 private:
 	std::unordered_map<std::string, std::unique_ptr<Object>> m_ObjList;
-	std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやる
+	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやる
 
 public:
 
