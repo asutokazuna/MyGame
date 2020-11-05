@@ -24,7 +24,7 @@ public:
 	/**
 	 * @brief コンストラクタ
 	 */
-	//Object();
+	Object();
 
 	/**
 	 * @brief デストラクタ

@@ -40,7 +40,7 @@ HRESULT PlayerMove::Init()
  */
 void PlayerMove::Update()
 {
-	Vector3 speed = Vector3();
+	Vector3 speed = Vector3(0,0,0);
 
 	Rotate();
 
@@ -60,7 +60,7 @@ void PlayerMove::Update()
 	FullDrive();
 
 	// 座標更新
-	m_Transform->position += m_Transform->GetForward() * speed + m_Transform->GetRight() * speed;
+	m_Transform->position += m_Transform->GetForward() * speed.z + m_Transform->GetRight() * speed.x;
 
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
@@ -111,7 +111,7 @@ void PlayerMove::Rotate()
 	mousePosX = mousePos.x;
 	mousePosY = mousePos.y;
 
-	m_Transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(angle.x));
+	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian(angle.x));
 	
 	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian(angle.y));
 	

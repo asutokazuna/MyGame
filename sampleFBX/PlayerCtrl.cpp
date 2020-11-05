@@ -6,18 +6,16 @@
 #include "input.h"
 #include "Transform.h"
 #include "GameObject.h"
-#include "PlayerMissile.h"
+#include "Weapon.h"
+#include "WeaponCtrl.h"
 
 /**
  * @brief 初期化処理
  * @return なし
  */
-HRESULT PlayerCtrl::InitParam(std::list<PlayerMissile*>& missile)
+void PlayerCtrl::Awake()
 {
-	m_Missile = missile;
-	m_ParentTrans = &m_Parent->GetTransform();
-
-	return E_NOTIMPL;
+	m_Weapon = m_Parent->GetChild<Weapon>();
 }
 
 /**
@@ -27,14 +25,8 @@ HRESULT PlayerCtrl::InitParam(std::list<PlayerMissile*>& missile)
 void PlayerCtrl::Update()
 {	 
 	//ミサイル発射
-	if (CInput::GetKeyTrigger(VK_L)) {
-		for (auto m : m_Missile) {
-			bool flg = false;
-			flg = m->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
-			if (flg == true) {
-				break;
-			}
-		}
+	if (CInput::GetKeyPress(VK_L)) {
+		m_Weapon->GetComponent<WeaponCtrl>()->Shot();
 	}
 }
 

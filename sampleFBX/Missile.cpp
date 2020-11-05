@@ -26,6 +26,8 @@ void Missile::Awake()
 	HRESULT hr = S_OK;	
 	AddComponent<Object3D>()->SetModel(MODEL_MISSILE);
 	m_Move = AddComponent<MissileMove>();
+	m_col = AddComponent<Collision>();
+	m_col->SetActive(false);
 }
 
 /**
@@ -67,6 +69,7 @@ bool Missile::Fire(Vector3* pos)
 
 	m_col->SetActive(true);
 	transform->position = *pos;
+	m_col->SetPos(*pos);
 	m_Move->m_nLife = 3 * 60;		// 5秒
 	m_Move->m_nStat = 1;			// 追尾中
 	return true;

@@ -6,10 +6,12 @@
 #pragma once
 #include "GameObject.h"
 #include <list>
+#include <memory>
 
 // 前方宣言
 class PlayerMissile;
 class Collision;
+class Weapon;
 
 /**
  * @class CPlayer
@@ -18,7 +20,7 @@ class Collision;
 class CPlayer: public GameObject
 {
 private:
-	std::list<PlayerMissile*> m_Missile;	//!< ミサイル
+	Weapon* m_Weapon;
 	Collision* m_col;						//!< コライダー
 
 public:

@@ -1,24 +1,29 @@
-/**
+ï»¿/**
  * @file PlayerMissile
- * @brief ƒvƒŒƒCƒ„[ƒ~ƒTƒCƒ‹ƒNƒ‰ƒX
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒŸã‚µã‚¤ãƒ«ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Missile.h"
 #include "Enemy.h"
 
+// å‰æ–¹å®£è¨€
 class CExplosion;
 class Transform;
 
 /**
  * @class PlayerMissile
- * @brief ƒvƒŒƒCƒ„[‚Ìƒ~ƒTƒCƒ‹
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒŸã‚µã‚¤ãƒ«
  */
 class PlayerMissile: public Missile
 {
 private:
 
 public:
-	HRESULT Init();
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
+	 */
+	void Awake();
 
 };
 

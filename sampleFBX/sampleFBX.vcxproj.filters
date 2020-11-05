@@ -88,6 +88,9 @@
     <Filter Include="ソース ファイル\99_share\Data">
       <UniqueIdentifier>{58882a8b-61a3-47dc-b653-c908593b52ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\Weapon">
+      <UniqueIdentifier>{6526827e-066c-4c69-8b58-2452828318ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -219,9 +222,6 @@
     <ClCompile Include="Tower.cpp">
       <Filter>ソース ファイル\Game\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="TowerCollision.cpp">
-      <Filter>ソース ファイル\Game\Tower</Filter>
-    </ClCompile>
     <ClCompile Include="TowerEnergy.cpp">
       <Filter>ソース ファイル\Game\Tower</Filter>
     </ClCompile>
@@ -273,9 +273,6 @@
     <ClCompile Include="Rigidbody.cpp">
       <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectManager.cpp">
-      <Filter>ヘッダー ファイル\99_share</Filter>
-    </ClCompile>
     <ClCompile Include="ShaderData.cpp">
       <Filter>ソース ファイル\99_share\Data</Filter>
     </ClCompile>
@@ -287,6 +284,15 @@
     </ClCompile>
     <ClCompile Include="TowerCtrl.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>ソース ファイル\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponCtrl.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,9 +443,6 @@
     <ClInclude Include="TowerEnergy.h">
       <Filter>ヘッダー ファイル\Game\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="TowerCollision.h">
-      <Filter>ヘッダー ファイル\Game\Tower</Filter>
-    </ClInclude>
     <ClInclude Include="MissileCollision.h">
       <Filter>ヘッダー ファイル\Game\Missile</Filter>
     </ClInclude>
@@ -504,6 +507,12 @@
       <Filter>ヘッダー ファイル\99_share</Filter>
     </ClInclude>
     <ClInclude Include="TowerCtrl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponCtrl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -32,6 +32,7 @@ class GameObject :public Object
 protected:
 	Transform	*transform;			//!< トランスフォーム
 	int			tag;				//!< オブジェクト識別用タグ
+	GameObject* parent;
 
 public:
 	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
@@ -119,6 +120,14 @@ public:
 	}
 
 	/**
+	 * @brief タグのセット
+	 * @return なし
+	 */
+	void SetTag(int tag) {
+		this->tag = tag;
+	}
+
+	/**
 	 * @breif コンポーネントの取得
 	 * @return クラスのコンポーネント
 	 */
@@ -147,6 +156,23 @@ public:
 		buff->Awake();
 		return buff;
 	}
+
+	/**
+	 * @breif コンポーネントの取得
+	 * @return クラスのコンポーネント
+	 */
+	template<class T>
+	T* GetChild()
+	{
+		for (auto& child : m_ChildList)
+		{
+			T* buff = dynamic_cast<T*>(child.get());
+			if (buff != nullptr)
+				return buff;
+		}
+		return nullptr;
+	}
+
 };
 
 // EOF

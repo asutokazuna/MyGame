@@ -5,10 +5,11 @@
 #pragma once
 #include "Component.h"
 #include <list>
+#include <memory>
 
  // 前方宣言
-class PlayerMissile;
 class Transform;
+class Weapon;
 
 /**
  * @class PlayerCtrl
@@ -17,16 +18,15 @@ class Transform;
 class PlayerCtrl: public Component
 {
 private:
-	std::list<PlayerMissile*> m_Missile;	//!< ミサイル
+	Weapon* m_Weapon;
 	Transform* m_ParentTrans;				//!< 親の座標など
 
 public:
-
 	/**
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	HRESULT InitParam(std::list<PlayerMissile*>& missile);
+	void Awake();
 
 	/**
 	 * @brief 更新処理

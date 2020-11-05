@@ -217,12 +217,13 @@
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TitleUI.cpp" />
     <ClCompile Include="Tower.cpp" />
-    <ClCompile Include="TowerCollision.cpp" />
     <ClCompile Include="TowerCtrl.cpp" />
     <ClCompile Include="TowerEnergy.cpp" />
     <ClCompile Include="TowerManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIMesh.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponCtrl.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -291,12 +292,13 @@
     <ClInclude Include="TextureData.h" />
     <ClInclude Include="TitleUI.h" />
     <ClInclude Include="Tower.h" />
-    <ClInclude Include="TowerCollision.h" />
     <ClInclude Include="TowerCtrl.h" />
     <ClInclude Include="TowerEnergy.h" />
     <ClInclude Include="TowerManager.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIMesh.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponCtrl.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

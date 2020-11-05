@@ -12,18 +12,17 @@
 #include "MissileCollision.h"
 
 
-HRESULT PlayerMissile::Init()
+void PlayerMissile::Awake()
 {
+	tag = OBJ_TAG_PLAYERMISSILE;
+	Missile::Awake();
+
 	{
-		m_col = AddComponent<MissileCollision>();
+		m_col = AddComponent<Collision>();
 		m_col->SetSize({ 20,20,20 })->SetPos(transform->position)
 			->SetActive(false);
+		m_col->SetModelKind(MODEL_MISSILE);
 	}
-	tag = OBJ_TAG_PLAYERMISSILE;
-	Missile::Init();
-	m_col->SetActive(false);
-	m_col->SetModelKind(MODEL_MISSILE);
-	return S_OK;
 }
 
 // EOF
