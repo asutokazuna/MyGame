@@ -44,6 +44,12 @@ public:
 	 * @return なし
 	 */
 	void Rotate();
+
+	/**
+	 * @brief 当たり判定処理
+	 * @return なし
+	 */
+	void OnCollisionEnter(GameObject* gameObbj);
 };
 
 // EOF

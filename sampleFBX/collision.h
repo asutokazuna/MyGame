@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Collision
- * @brief “–‚½‚è”»’èƒNƒ‰ƒX
+ * @brief å½“ãŸã‚Šåˆ¤å®šã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "Component.h"
@@ -8,117 +8,135 @@
 #include "MyMath.h"
 #include "Box.h"
 
-// ‘O•ûéŒ¾
+/**
+ * å½“ãŸã‚Šåˆ¤å®šç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè­˜åˆ¥ã‚¿ã‚°
+ */
+enum GameObjectTag
+{
+	OBJ_TAG_NONE,
+	OBJ_TAG_PLAYER,
+	OBJ_TAG_PLAYERMISSILE,
+	OBJ_TAG_ENEMY,
+	OBJ_TAG_ENEMYMISSILE,
+	OBJ_TAG_TOWER,
+	OBJ_TAG_CORE_PLAYER,
+	OBJ_TAG_CORE_ENEMY,
+	OBJ_TAG_FIELD,
+
+	OBJ_TAG_MAX
+};
+
+// å‰æ–¹å®£è¨€
 class Transform;
 
 /**
  * @class Collision
- * @brief ƒRƒ‰ƒCƒ_[
+ * @brief ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
  */
 class Collision :public Component
 {
 private:
-	static std::unordered_map<int, Collision*> m_List;	//!< ƒRƒ‰ƒCƒ_[ƒŠƒXƒg
+	static std::unordered_map<int, Collision*> m_List;	//!< ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒªã‚¹ãƒˆ
 
 #ifdef _DEBUG
-	CBox m_box;	//!< “–‚½‚è”»’è‚ÌƒTƒCƒYƒfƒoƒbƒO—p
+	CBox m_box;	//!< å½“ãŸã‚Šåˆ¤å®šã®ã‚µã‚¤ã‚ºãƒ‡ãƒãƒƒã‚°ç”¨
 #endif
 
 protected:
-	Transform* m_transform;	//!< e‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
-	Vector3 m_offsetPos;		//!< e‚©‚ç‚ÌƒIƒtƒZƒbƒg
-	Vector3 m_offsetSize;		//!< e‚©‚ç‚ÌƒIƒtƒZƒbƒg
-	int id;			//!< ƒ†ƒj[ƒNID
-	int m_tag;		//!< ¯•Êƒ^ƒO
+	Transform* m_transform;	//!< è¦ªã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
+	Vector3 m_offsetPos;		//!< è¦ªã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	Vector3 m_offsetSize;		//!< è¦ªã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	int id;			//!< ãƒ¦ãƒ‹ãƒ¼ã‚¯ID
+	int m_tag;		//!< è­˜åˆ¥ã‚¿ã‚°
 
 public:
 	/**
-	 * @breif ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @breif ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	Collision();
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	~Collision();
 
 	/**
-	 * @breif ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @breif åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	HRESULT Init();
 
 	/**
-	 * @breif I—¹
-	 * @return ‚È‚µ
+	 * @breif çµ‚äº†
+	 * @return ãªã—
 	 */
 	virtual void Uninit();
 
 	/**
-	 * @breif XV
-	 * @return ‚È‚µ
+	 * @breif æ›´æ–°
+	 * @return ãªã—
 	 */
 	virtual void Update();
 
 	/**
-	 * @breif •`‰æ
-	 * @return ‚È‚µ
+	 * @breif æç”»
+	 * @return ãªã—
 	 */
 	virtual void Draw();
 
 	/**
-	 * @breif •`‰æ
-	 * @return ‚È‚µ
+	 * @breif æç”»
+	 * @return ãªã—
 	 */
 	virtual void DrawAlpha();
 
 	/**
-	 * @breif ƒ^ƒO‚Ìİ’è
-	 * @return ‚È‚µ
+	 * @breif ã‚¿ã‚°ã®è¨­å®š
+	 * @return ãªã—
 	 */
 	virtual void SetTag(int tag);
 	
 	/**
-	 * @breif À•W‚Ìİ’è
-	 * @return À‘Ì
+	 * @breif åº§æ¨™ã®è¨­å®š
+	 * @return å®Ÿä½“
 	 */
 	Collision* SetPos(Vector3);
 
 	/**
-	 * @breif ‘å‚«‚³‚Ìİ’è
-	 * @return À‘Ì
+	 * @breif å¤§ãã•ã®è¨­å®š
+	 * @return å®Ÿä½“
 	 */
 	Collision* SetSize(Vector3);
 
 	/**
-	 * @breif ƒ‚ƒfƒ‹‚Ìí—Şİ’è
-	 * @param[in] kind ƒ‚ƒfƒ‹‚Ìí—Ş
-	 * @return À‘Ì
+	 * @breif ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡è¨­å®š
+	 * @param[in] kind ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡
+	 * @return å®Ÿä½“
 	 */
 	Collision* SetModelKind(int);
 
 	/**
-	 * @breif ƒ^ƒO‚Ìæ“¾
-	 * @return ƒ^ƒO‚Ì”’l
+	 * @breif ã‚¿ã‚°ã®å–å¾—
+	 * @return ã‚¿ã‚°ã®æ•°å€¤
 	 */
 	int GetTag();
 
 public :
 	/**
-	 * @breif ƒŠƒXƒg‚É‚ ‚é‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ª“–‚½‚Á‚Ä‚¢‚é‚©”»’è‚·‚é
-	 * @return ‚È‚µ
+	 * @breif ãƒªã‚¹ãƒˆã«ã‚ã‚‹å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå½“ãŸã£ã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
+	 * @return ãªã—
 	 */
 	static void Check();
 
 	/**
-	 * @breif ƒoƒEƒ“ƒfƒBƒ“ƒOƒ{ƒbƒNƒX‚Å‚Ì“–‚½‚è”»’è‚Ì”äŠr
-	 * @return “–‚½‚Á‚Ä‚¢‚ê‚Îtrue
+	 * @breif ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ãƒœãƒƒã‚¯ã‚¹ã§ã®å½“ãŸã‚Šåˆ¤å®šã®æ¯”è¼ƒ
+	 * @return å½“ãŸã£ã¦ã„ã‚Œã°true
 	 */
 	static bool CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize);
 
 	/**
-	 * @breif “–‚½‚è”»’è‚ÌƒŠƒXƒg‚Ì‰Šú‰»
-	 * @return ‚È‚µ
+	 * @breif å½“ãŸã‚Šåˆ¤å®šã®ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	static void Clear();
 };

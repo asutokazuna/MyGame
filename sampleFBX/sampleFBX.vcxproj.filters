@@ -267,9 +267,6 @@
     <ClCompile Include="EnemyMissile.cpp">
       <Filter>ソース ファイル\Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
       <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
@@ -282,17 +279,20 @@
     <ClCompile Include="ModelData.cpp">
       <Filter>ソース ファイル\99_share\Data</Filter>
     </ClCompile>
-    <ClCompile Include="TowerCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>ソース ファイル\Game\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>ソース ファイル\99_share</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCtrl.cpp">
+      <Filter>ソース ファイル\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerCtrl.cpp">
+      <Filter>ソース ファイル\Game\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponCtrl.cpp">
+      <Filter>ソース ファイル\Game\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

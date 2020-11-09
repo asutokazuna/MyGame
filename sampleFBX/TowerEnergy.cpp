@@ -1,17 +1,18 @@
-/**
+ï»¿/**
  * @file TowerEnergy
- * @brief TowerEnergyƒNƒ‰ƒX
+ * @brief TowerEnergyã‚¯ãƒ©ã‚¹
  */
 #define _CRT_SECURE_NO_WARNINGS
 #include "TowerEnergy.h"
 #include "ImGui/imgui.h"
 #include "GameObject.h"
 #include "MissileMove.h"
+#include "collision.h"
 
-static int num = 0;		//!< ƒfƒoƒbƒO—p
+static int num = 0;		//!< ãƒ‡ãƒãƒƒã‚°ç”¨
 
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 TowerEnergy::TowerEnergy()
 {
@@ -21,8 +22,8 @@ TowerEnergy::TowerEnergy()
 }
 
 /**
- * @brief •`‰æˆ—
- * @return ‚È‚µ
+ * @brief æç”»å‡¦ç†
+ * @return ãªã—
  */
 void TowerEnergy::Draw()
 {
@@ -36,9 +37,9 @@ void TowerEnergy::Draw()
 }
 
 /**
- * @brief ƒGƒlƒ‹ƒM[‚Ì‘‰Á
- * @param num ‘‰Á‚³‚¹‚é’l
- * @return ‚È‚µ
+ * @brief ã‚¨ãƒãƒ«ã‚®ãƒ¼ã®å¢—åŠ 
+ * @param num å¢—åŠ ã•ã›ã‚‹å€¤
+ * @return ãªã—
  */
 void TowerEnergy::AddEnergy(int num)
 {
@@ -52,8 +53,8 @@ void TowerEnergy::AddEnergy(int num)
 }
 
 /**
- * @brief ƒGƒlƒ‹ƒM[‚ÌŽæ“¾
- * @return Œ»Ý‚ÌƒGƒlƒ‹ƒM[
+ * @brief ã‚¨ãƒãƒ«ã‚®ãƒ¼ã®å–å¾—
+ * @return ç¾åœ¨ã®ã‚¨ãƒãƒ«ã‚®ãƒ¼
  */
 int& TowerEnergy::GetEnergy()
 {
@@ -61,9 +62,9 @@ int& TowerEnergy::GetEnergy()
 }
 
 /**
- * @brief “–‚½‚è”»’è
- * @param[in] “–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg
- * @return ‚È‚µ
+ * @brief å½“ãŸã‚Šåˆ¤å®š
+ * @param[in] å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ * @return ãªã—
  */
 void TowerEnergy::OnCollisionEnter(GameObject* othor)
 {

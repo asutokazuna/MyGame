@@ -5,6 +5,7 @@
 #include "Rigidbody.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "collision.h"
 
 #define RESIST (1)
 
@@ -18,6 +19,7 @@ HRESULT Rigidbody::Init()
 {
 	parentTrans = &m_Parent->GetTransform();
 	oldPosY = parentTrans->position.y;
+	m_col = m_Parent->GetComponent<Collision>();
 
 	force = Vector3();
 	subforce = Vector3();
@@ -37,9 +39,7 @@ void Rigidbody::Update()
 	oldPosY = parentTrans->position.y;
 	parentTrans->position += force;
 
-	if (parentTrans->position.y < 0) {
-		force.y = 0;
-	}
+	force.y -= gravity;
 	if (force.x < RESIST && force.x > -RESIST) {
 		force.x = 0;
 		subforce.x = 0;

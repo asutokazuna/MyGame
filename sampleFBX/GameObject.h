@@ -9,20 +9,6 @@
 #include "Transform.h"
 #include "Object.h"
 
-enum GameObjectTag 
-{
-	OBJ_TAG_NONE,
-	OBJ_TAG_PLAYER,
-	OBJ_TAG_PLAYERMISSILE,
-	OBJ_TAG_ENEMY,
-	OBJ_TAG_ENEMYMISSILE,
-	OBJ_TAG_TOWER,
-	OBJ_TAG_CORE_PLAYER,
-	OBJ_TAG_CORE_ENEMY,
-
-	OBJ_TAG_MAX
-};
-
 /**
  * @class GameObject
  * @brief ゲームオブジェクト

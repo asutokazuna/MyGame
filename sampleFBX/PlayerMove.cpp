@@ -8,6 +8,7 @@
 #include "MyMath.h"
 #include "Transform.h"
 #include "Rigidbody.h"
+#include "collision.h"
 
 /**
  * @def 
@@ -27,7 +28,7 @@ HRESULT PlayerMove::Init()
 {
 	m_Transform = &m_Parent->GetTransform();
 
-	rb = m_Parent->GetComponent<Rigidbody>();
+	//rb = m_Parent->GetComponent<Rigidbody>();
 	mousePosX = CInput::GetMousePosition()->x;
 	mousePosY = CInput::GetMousePosition()->y;
 
@@ -65,11 +66,6 @@ void PlayerMove::Update()
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
 		rb->AddForce({ 0,15,0 });		// ジャンプ
-	}
-
-	// 床との当たり判定
-	if (m_Transform->position.y < 0) {
-		m_Transform->position.y = 0;
 	}
 }
 
@@ -115,6 +111,18 @@ void PlayerMove::Rotate()
 	
 	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian(angle.y));
 	
+}
+
+/**
+ * @brief 当たり判定処理
+ * @return なし
+ */
+void PlayerMove::OnCollisionEnter(GameObject* gameObbj)
+{
+	if (gameObbj->CompareTag(OBJ_TAG_FIELD))
+	{
+		m_Transform->position.y = gameObbj->GetTransform().position.y;// +m_Transform->scale.y;
+	}
 }
 
 // EOF

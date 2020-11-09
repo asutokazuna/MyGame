@@ -7,6 +7,7 @@
 #include "MyMath.h"
 
 class Transform;
+class Collision;
 
 /**
  * @class Rigidbody
@@ -21,6 +22,7 @@ private:
 	Vector3 subforce;		//!< 力
 	Transform* parentTrans;		//!< 親のトランスフォーム
 	float oldPosY;
+	Collision* m_col;
 public:
 	/**
 	 * @brief 初期化処理
@@ -40,6 +42,7 @@ public:
 	 * @return なし
 	 */
 	void AddForce(Vector3 force);
+
 };
 
 // EOF

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Collision
- * @brief “–‚½‚è”»’èƒNƒ‰ƒX
+ * @brief å½“ãŸã‚Šåˆ¤å®šã‚¯ãƒ©ã‚¹
  */
 #include "collision.h"
 #include "GameObject.h"
@@ -11,7 +11,7 @@ std::unordered_map<int, Collision*> Collision::m_List;
 static bool m_isViewCol = true;
 
 /**
- * @breif ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @breif ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Collision::Collision()
 {
@@ -26,7 +26,7 @@ Collision::Collision()
 }
 
 /**
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
+ * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Collision::~Collision()
 {
@@ -34,14 +34,14 @@ Collision::~Collision()
 }
 
 /**
- * @breif ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @breif åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 HRESULT Collision::Init()
 {
 	m_transform = &m_Parent->GetTransform();
 	m_tag = m_Parent->GetTag();
-	Vector3& pos = m_transform->position;
+	Vector3 pos = m_transform->position + m_offsetPos;
 	Vector3 size = m_offsetSize * m_transform->scale;
 
 #ifdef _DEBUG
@@ -62,8 +62,8 @@ HRESULT Collision::Init()
 }
 
 /**
- * @breif I—¹
- * @return ‚È‚µ
+ * @breif çµ‚äº†
+ * @return ãªã—
  */
 void Collision::Uninit()
 {
@@ -73,12 +73,13 @@ void Collision::Uninit()
 }
 
 /**
- * @breif XV
- * @return ‚È‚µ
+ * @breif æ›´æ–°
+ * @return ãªã—
  */
 void Collision::Update()
 {
 	Vector3& pos = m_transform->position;
+	pos += m_offsetPos;
 #ifdef _DEBUG
 	XMFLOAT4X4 mtx = m_box.GetWorld();
 	mtx._41 = pos.x;
@@ -89,8 +90,8 @@ void Collision::Update()
 }
 
 /**
- * @breif •`‰æ
- * @return ‚È‚µ
+ * @breif æç”»
+ * @return ãªã—
  */
 void Collision::Draw()
 {
@@ -115,8 +116,8 @@ void Collision::Draw()
 }
 
 /**
- * @breif •`‰æ
- * @return ‚È‚µ
+ * @breif æç”»
+ * @return ãªã—
  */
 void Collision::DrawAlpha()
 {
@@ -127,8 +128,8 @@ void Collision::DrawAlpha()
 }
 
 /**
- * @breif ƒ^ƒO‚Ìİ’è
- * @return ‚È‚µ
+ * @breif ã‚¿ã‚°ã®è¨­å®š
+ * @return ãªã—
  */
 void Collision::SetTag(int tag)
 {
@@ -136,8 +137,8 @@ void Collision::SetTag(int tag)
 }
 
 /**
- * @breif ƒŠƒXƒg‚É‚ ‚é‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ª“–‚½‚Á‚Ä‚¢‚é‚©”»’è‚·‚é
- * @return ‚È‚µ
+ * @breif ãƒªã‚¹ãƒˆã«ã‚ã‚‹å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå½“ãŸã£ã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
+ * @return ãªã—
  */
 void Collision::Check()
 {
@@ -162,8 +163,8 @@ void Collision::Check()
 }
 
 /**
- * @breif À•W‚Ìİ’è
- * @return À‘Ì
+ * @breif åº§æ¨™ã®è¨­å®š
+ * @return å®Ÿä½“
  */
 Collision * Collision::SetPos(Vector3 position)
 {
@@ -172,8 +173,8 @@ Collision * Collision::SetPos(Vector3 position)
 }
 
 /**
- * @breif ‘å‚«‚³‚Ìİ’è
- * @return À‘Ì
+ * @breif å¤§ãã•ã®è¨­å®š
+ * @return å®Ÿä½“
  */
 Collision * Collision::SetSize(Vector3 Size)
 {
@@ -181,9 +182,9 @@ Collision * Collision::SetSize(Vector3 Size)
 	return this;
 }
 /**
- * @breif ƒ‚ƒfƒ‹‚Ìí—Şİ’è
-	 * @param[in] kind ƒ‚ƒfƒ‹‚Ìí—Ş
- * @return À‘Ì
+ * @breif ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡è¨­å®š
+	 * @param[in] kind ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡
+ * @return å®Ÿä½“
  */
 Collision * Collision::SetModelKind(int modelkind)
 {
@@ -193,8 +194,8 @@ Collision * Collision::SetModelKind(int modelkind)
 }
 
 /**
- * @breif ƒ^ƒO‚Ìæ“¾
- * @return ƒ^ƒO‚Ì”’l
+ * @breif ã‚¿ã‚°ã®å–å¾—
+ * @return ã‚¿ã‚°ã®æ•°å€¤
  */
 int Collision::GetTag()
 {
@@ -202,8 +203,8 @@ int Collision::GetTag()
 }
 
 /**
- * @breif ƒoƒEƒ“ƒfƒBƒ“ƒOƒ{ƒbƒNƒX‚Å‚Ì“–‚½‚è”»’è‚Ì”äŠr
- * @return “–‚½‚Á‚Ä‚¢‚ê‚Îtrue
+ * @breif ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ãƒœãƒƒã‚¯ã‚¹ã§ã®å½“ãŸã‚Šåˆ¤å®šã®æ¯”è¼ƒ
+ * @return å½“ãŸã£ã¦ã„ã‚Œã°true
  */
 bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize)
 {
@@ -231,8 +232,8 @@ bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vect
 }
 
 /**
- * @breif “–‚½‚è”»’è‚ÌƒŠƒXƒg‚Ì‰Šú‰»
- * @return ‚È‚µ
+ * @breif å½“ãŸã‚Šåˆ¤å®šã®ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
+ * @return ãªã—
  */
 void Collision::Clear()
 {
