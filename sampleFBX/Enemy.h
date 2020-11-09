@@ -8,7 +8,7 @@
 #include "GameObject.h"
 
 // 前方宣言
-class EnemyMissile;
+class Weapon;
 
 /**
  * @class Enemy
@@ -17,7 +17,8 @@ class EnemyMissile;
 class Enemy: public GameObject
 {
 private:
-	EnemyMissile* m_Missile;
+	Weapon* m_Weapon;
+
 public:
 
 	/**

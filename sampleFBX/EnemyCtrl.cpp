@@ -1,24 +1,23 @@
-/**
+ï»¿/**
  * @file EnemyCtrl
- * @brief “G‚Ì“®‚«ƒNƒ‰ƒX
+ * @brief æ•µã®å‹•ãã‚¯ãƒ©ã‚¹
  */
 #include "EnemyCtrl.h"
 #include "GameObject.h"
+#include "Weapon.h"
+#include "WeaponCtrl.h"
 
-EnemyCtrl::EnemyCtrl()
-{
-}
-
-EnemyCtrl::~EnemyCtrl()
-{
-}
-
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
+ */
 HRESULT EnemyCtrl::Init()
 {
 	m_transform = &m_Parent->GetTransform();
 	m_transform->position.z = 500;
 	m_transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(180));
 
+	m_Weapon = m_Parent->GetChild<Weapon>();
 
 	return E_NOTIMPL;
 }
@@ -26,6 +25,15 @@ HRESULT EnemyCtrl::Init()
 void EnemyCtrl::Update()
 {
 	//m_transform->position += m_transform->GetForward();
+
+	static int time = 0;
+	time++;
+
+	if (time >= 60)
+	{
+		time = 0;
+		m_Weapon->GetComponent<WeaponCtrl>()->Shot();
+	}
 }
 
 // EOF

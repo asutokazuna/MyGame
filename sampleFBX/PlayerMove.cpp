@@ -65,7 +65,7 @@ void PlayerMove::Update()
 
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
-		rb->AddForce({ 0,15,0 });		// ジャンプ
+		//rb->AddForce({ 0,15,0 });		// ジャンプ
 	}
 }
 
@@ -121,7 +121,7 @@ void PlayerMove::OnCollisionEnter(GameObject* gameObbj)
 {
 	if (gameObbj->CompareTag(OBJ_TAG_FIELD))
 	{
-		m_Transform->position.y = gameObbj->GetTransform().position.y;// +m_Transform->scale.y;
+		//->position.y = gameObbj->GetTransform().position.y;// +m_Transform->scale.y;
 	}
 }
 
