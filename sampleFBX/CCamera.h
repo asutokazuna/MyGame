@@ -36,7 +36,7 @@ public:
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	virtual HRESULT Init();
+	virtual void Awake();
 
 	/**
 	 * @brief 終了処理

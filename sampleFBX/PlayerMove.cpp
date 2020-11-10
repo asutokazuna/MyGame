@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "Rigidbody.h"
 #include "collision.h"
+#include "ObjectManager.h"
 
 /**
  * @def 
@@ -59,9 +60,13 @@ void PlayerMove::Update()
 	}
 
 	FullDrive();
+	GameObject* Enemy = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_ENEMY);
+
 
 	// 座標更新
 	m_Transform->position += m_Transform->GetForward() * speed.z + m_Transform->GetRight() * speed.x;
+
+	m_Transform->quaternion = MyMath::LookAt(m_Transform->position, Enemy->GetTransform().position);
 
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
@@ -107,9 +112,9 @@ void PlayerMove::Rotate()
 	mousePosX = mousePos.x;
 	mousePosY = mousePos.y;
 
-	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian(angle.x));
+	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian((float)angle.x));
 	
-	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian(angle.y));
+	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)angle.y));
 	
 }
 

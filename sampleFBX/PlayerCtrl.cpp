@@ -23,7 +23,7 @@ void PlayerCtrl::Awake()
  * @return なし
  */
 void PlayerCtrl::Update()
-{	 
+{
 	//ミサイル発射
 	if (CInput::GetKeyPress(VK_L)) {
 		m_Weapon->GetComponent<WeaponCtrl>()->Shot();

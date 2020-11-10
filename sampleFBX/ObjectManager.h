@@ -45,9 +45,9 @@ public:
 	 * @retrun オブジェクトのポインタ
 	 */
 	template <class T>
-	static T* FindObject(std::string name)
+	T* FindObject(std::string name)
 	{
-		return dynamic_cast<T*>(ObjectManager::GetInstance().m_ObjList[name].get());
+		return dynamic_cast<T*>(m_ObjList[name].get());
 	}
 
 	/**
@@ -63,32 +63,38 @@ public:
 	 * @brief 初期化処理
 	 * @return　なし
 	 */
-	static void Awake();
+	void Awake();
 
 	/**
 	 * @brief 初期化処理
 	 * @return　なし
 	 */
-	static HRESULT Init();
+	HRESULT Init();
 
 	/**
 	 * @brief 終了処理
 	 * @return　なし
 	 */
-	static void Uninit();
+	void Uninit();
 
 	/**
 	 * @brief 更新処理
 	 * @return　なし
 	 */
-	static void Update();
+	void Update();
 	
 	/**
 	 * @brief 描画処理
 	 * @return　なし
 	 */
-	static void Draw();
-
+	void Draw();
+	
+	/**
+	 * @brief オブジェクトの取得
+	 * @param[in] tag 取得したいオブジェクトのタグ
+	 * @retrun オブジェクトのポインタ
+	 */
+	GameObject* FindWithTag(int tag);
 };
 
 // EOF

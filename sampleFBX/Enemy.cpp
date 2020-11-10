@@ -17,12 +17,13 @@
 void Enemy::Awake()
 {
 	HRESULT hr = S_OK;	
+	tag = OBJ_TAG_ENEMY;
 
 	AddComponent<Object3D>()->SetModel(MODEL_ENEMY);
 	AddComponent<EnemyCtrl>();
 
 	m_Weapon = new Weapon(20);
-	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
+	m_Weapon->SetTag(OBJ_TAG_ENEMYMISSILE);
 	SetChild(m_Weapon);
 }
 

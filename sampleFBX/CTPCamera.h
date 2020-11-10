@@ -19,7 +19,7 @@ public:
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	HRESULT Init();
+	void Awake();
 	void Uninit();
 	void Update();
 };

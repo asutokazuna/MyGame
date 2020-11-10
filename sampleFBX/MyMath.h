@@ -173,7 +173,28 @@ public:
 	static Vector3 PosxQuaternion(Vector3 pos , Quaternion quat);
 
 	static float AngleToRadian(float angle);
+	
+	/**
+	 * @brief 対象方向へ向くクォータニオンを求める
+	 * @return 対象方向への回転クォータニオン
+	 */
+	static Quaternion LookAt(Vector3 myPos, Vector3 targetPos);
 
+	/**
+	 * @brief 内積を求める
+	 */
+	static float Dot(Vector3 vec1, Vector3 vec2);
+
+	/**
+	 * @brief 外積を求める
+	 */
+	static Vector3 Cross(Vector3 myPos, Vector3 targetPos);
+
+	/**
+	 * @brief 単位ベクトルへ変換
+	 * @return なし
+	 */
+	static void Normalize(Vector3 &vec);
 };
 
 // EOF
