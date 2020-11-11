@@ -20,8 +20,8 @@ class Weapon;
 class CPlayer: public GameObject
 {
 private:
-	Weapon* m_Weapon;
-	Collision* m_col;						//!< コライダー
+	Weapon* m_Weapon;		//!< 武器
+	Collision* m_col;		//!< コライダー
 
 public:
 	/**

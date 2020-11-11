@@ -10,7 +10,7 @@
  */
 void ObjectManager::Awake()
 {
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
+	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Awake();
 	}
@@ -22,7 +22,7 @@ void ObjectManager::Awake()
  */
  HRESULT ObjectManager::Init()
 {
-	 auto& buff = ObjectManager::GetInstance().m_ObjList;
+	 auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Init();
 	}
@@ -36,7 +36,7 @@ void ObjectManager::Awake()
  */
 void ObjectManager::Uninit()
 {
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
+	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Uninit();
 	}
@@ -48,7 +48,7 @@ void ObjectManager::Uninit()
  */
 void ObjectManager::Update()
 {
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
+	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Update();
 	}
@@ -63,7 +63,7 @@ void ObjectManager::Update()
  */
 void ObjectManager::Draw()
 {
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
+	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Draw();
 	}
@@ -71,5 +71,21 @@ void ObjectManager::Draw()
 		obj.second.get()->DrawAlpha();
 	}
 }
+
+ GameObject* ObjectManager::FindWithTag(int tag)
+ {
+	 GameObject* resultObj = nullptr;
+	 GameObject* work;
+
+	 auto& buff = m_ObjList;
+	 for (auto& obj : buff) {
+		 work = dynamic_cast<GameObject*>(obj.second.get());
+		 if (work->GetTag() == tag)
+		 {
+			 resultObj = work;
+		 }
+	 }
+	 return resultObj;
+ }
 
 // EOF

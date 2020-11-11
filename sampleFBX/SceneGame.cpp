@@ -25,7 +25,9 @@ bool SceneGame::m_isVictory = true;
 void SceneGame::Awake()
 {
 	m_pCTPCamera = new CTPCamera();
+	m_pCTPCamera->Awake();
 	m_BCamera = new CBulletTime();
+	m_BCamera->Awake();
 
 	m_pPlayer	= ObjectManager::Create<CPlayer>("Player");
 	m_pEnemy	= ObjectManager::Create<Enemy>("Enemy");

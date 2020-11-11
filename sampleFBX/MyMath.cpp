@@ -1,23 +1,23 @@
-/**
+ï»¿/**
  * @file MyMath.cpp
- * @brief ŒvZŠÇ—ƒNƒ‰ƒX
+ * @brief è¨ˆç®—ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #include "MyMath.h"
 #include "Transform.h"
 
  /**
-  * @brief   ƒNƒH[ƒ^ƒjƒIƒ“ì¬
-  * @param   axis    ‰ñ“]‚³‚¹‚é²
-  * @param   radian  ‰ñ“]‚³‚¹‚éŠp“x(ƒ‰ƒWƒAƒ“)
-  * @return  ì¬‚µ‚½ƒNƒH[ƒ^ƒjƒIƒ“
+  * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ä½œæˆ
+  * @param   axis    å›è»¢ã•ã›ã‚‹è»¸
+  * @param   radian  å›è»¢ã•ã›ã‚‹è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)
+  * @return  ä½œæˆã—ãŸã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
   */
 Quaternion MakeQuaternion(Vector3 axis, float radian);
 
  /**
-  * @brief   ƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠ|‚¯Z
-  * @param   left    ŒvZ‚Ì¶‚Ì€
-  * @param   right   ŒvZ‚Ì‰E‚Ì€
-  * @return  ŒvZ‚µ‚½ƒNƒH[ƒ^ƒjƒIƒ“
+  * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®æ›ã‘ç®—
+  * @param   left    è¨ˆç®—ã®å·¦ã®é …
+  * @param   right   è¨ˆç®—ã®å³ã®é …
+  * @return  è¨ˆç®—ã—ãŸã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
   */
 Quaternion CalcQuaternion(Quaternion left, Quaternion right);
 
@@ -25,7 +25,7 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 {
 	DirectX::XMFLOAT4X4 mtx = XMFLOAT4X4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
-	if (&transform == nullptr) {// QÆ“n‚µ‚¾‚©‚ç‰½‚Æ‚©o—ˆ‚é‚Í‚¸
+	if (&transform == nullptr) {// å‚ç…§æ¸¡ã—ã ã‹ã‚‰ä½•ã¨ã‹å‡ºæ¥ã‚‹ã¯ãš
 		return mtx;
 	}
 
@@ -74,6 +74,10 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 	return mtx;
 }
 
+/**
+ * @brief ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è§’åº¦ã§å›è»¢
+ * @return å›è»¢å¾Œã®ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+ */
 Quaternion MyMath::AnglexQuaternion(Quaternion quat, Vector3 axis, float radian)
 {
 	Quaternion result;
@@ -91,23 +95,23 @@ Quaternion MyMath::AnglexQuaternion(Quaternion quat, Vector3 axis, float radian)
 }
 
 /**
- * @brief   ƒNƒH[ƒ^ƒjƒIƒ“ì¬
- * @param   axis    ‰ñ“]‚³‚¹‚é²
- * @param   radian  ‰ñ“]‚³‚¹‚éŠp“x(ƒ‰ƒWƒAƒ“)
- * @return  ì¬‚µ‚½ƒNƒH[ƒ^ƒjƒIƒ“
+ * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ä½œæˆ
+ * @param   axis    å›è»¢ã•ã›ã‚‹è»¸
+ * @param   radian  å›è»¢ã•ã›ã‚‹è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)
+ * @return  ä½œæˆã—ãŸã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
  */
 Quaternion MakeQuaternion(Vector3 axis, float radian)
 {
-	Quaternion quaternion;      //!< ì¬‚·‚éƒNƒH[ƒ^ƒjƒIƒ“
-	float halfSin, halfCos;      //!< “®‚©‚·Šp“x‚Ì”¼•ª‚Ìsin,cos
+	Quaternion quaternion;      //!< ä½œæˆã™ã‚‹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+	float halfSin, halfCos;      //!< å‹•ã‹ã™è§’åº¦ã®åŠåˆ†ã®sin,cos
 	float normal;
 
-	quaternion = { 0,0,0,0 };
-	// ‰ñ“]²‚Ì’·‚³‚ğ‹‚ß‚é
+	quaternion = { 1,0,0,0 };
+	// å›è»¢è»¸ã®é•·ã•ã‚’æ±‚ã‚ã‚‹
 	normal = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
 	if (normal <= 0.0f) return quaternion;
 
-	// •ûŒüƒxƒNƒgƒ‹‚Öi’PˆÊƒxƒNƒgƒ‹F’·‚³‚Í1j
+	// æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã¸ï¼ˆå˜ä½ãƒ™ã‚¯ãƒˆãƒ«ï¼šé•·ã•ã¯1ï¼‰
 	normal = 1.0f / sqrtf(normal);
 	axis = axis * normal;
 
@@ -124,10 +128,10 @@ Quaternion MakeQuaternion(Vector3 axis, float radian)
 }
 
 /**
- * @brief   ƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠ|‚¯Z
- * @param   left    ŒvZ‚Ì¶‚Ì€
- * @param   right   ŒvZ‚Ì‰E‚Ì€
- * @return  ŒvZ‚µ‚½ƒNƒH[ƒ^ƒjƒIƒ“
+ * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®æ›ã‘ç®—
+ * @param   left    è¨ˆç®—ã®å·¦ã®é …
+ * @param   right   è¨ˆç®—ã®å³ã®é …
+ * @return  è¨ˆç®—ã—ãŸã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
  */
 Quaternion CalcQuaternion(Quaternion left, Quaternion right)
 {
@@ -162,11 +166,11 @@ Quaternion CalcQuaternion(Quaternion left, Quaternion right)
 }
 
 /**
- * @brief   ƒNƒH[ƒ^ƒjƒIƒ“‚É‚æ‚é‰ñ“]
- * @param   axis    ‰ñ“]‚³‚¹‚½‚¢²
- * @param   pos     ‰ñ“]‚³‚¹‚éƒIƒuƒWƒFƒNƒg‚ÌÀ•W
- * @param   radius  ‰ñ“]‚³‚¹‚éŠp“x
- * @return  ‰ñ“]Œã‚ÌÀ•W
+ * @brief   ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«ã‚ˆã‚‹å›è»¢
+ * @param   axis    å›è»¢ã•ã›ãŸã„è»¸
+ * @param   pos     å›è»¢ã•ã›ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åº§æ¨™
+ * @param   radius  å›è»¢ã•ã›ã‚‹è§’åº¦
+ * @return  å›è»¢å¾Œã®åº§æ¨™
  */
 Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radian)
 {
@@ -192,6 +196,10 @@ Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radian
 	return resultPosition;
 }
 
+/**
+ * @brief ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã§å›è»¢
+ * @return å›è»¢å¾Œã®ãƒ™ã‚¯ãƒˆãƒ«
+ */
 Vector3 MyMath::Vector3xQuaternion(Vector3 vec, Quaternion quat)
 {
 	Quaternion vecQuat = { 0, vec.x, vec.y ,vec.z };
@@ -200,6 +208,10 @@ Vector3 MyMath::Vector3xQuaternion(Vector3 vec, Quaternion quat)
 	return { vecQuat.x, vecQuat.y, vecQuat.z };
 }
 
+/**
+ * @brief åº§æ¨™ã‚’ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã§å›è»¢
+ * @return å›è»¢å¾Œã®åº§æ¨™
+ */
 Vector3 MyMath::PosxQuaternion(Vector3 pos, Quaternion quat)
 {
 	Quaternion vecQuat = { 0, pos.x, pos.y ,pos.z };
@@ -212,6 +224,10 @@ Vector3 MyMath::PosxQuaternion(Vector3 pos, Quaternion quat)
 	return { vecQuat.x, vecQuat.y, vecQuat.z };
 }
 
+/**
+ * @brief åº¦æ•°ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«å¤‰æ›
+ * @return ãƒ©ã‚¸ã‚¢ãƒ³
+ */
 float MyMath::AngleToRadian(float angle)
 {
 	float radian = 0.f;
@@ -219,6 +235,68 @@ float MyMath::AngleToRadian(float angle)
 	radian = angle / 180 * 3.14f;
 
 	return radian;
+}
+
+/**
+ * @brief å¯¾è±¡æ–¹å‘ã¸å‘ãã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’æ±‚ã‚ã‚‹
+ * @return å¯¾è±¡æ–¹å‘ã¸ã®å›è»¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+ */
+Quaternion MyMath::LookAt(Vector3 myPos, Vector3 targetPos)
+{
+	Quaternion result;
+	Vector3 target = targetPos - myPos;
+	Vector3 forward = Vector3(0, 0, 1);
+	Vector3 axis = Vector3(1, 0, 0);
+	float dot = 0;
+	float radian = 0;
+
+	Normalize(target);
+	dot = Dot(forward, target);
+	radian = acosf(dot);
+	axis = Cross(forward, target);
+
+	result = MakeQuaternion(axis, radian);
+
+	return result;
+}
+
+/**
+ * @brief å†…ç©ã‚’æ±‚ã‚ã‚‹
+ */
+float MyMath::Dot(Vector3 vec1, Vector3 vec2)
+{
+	float result = 0;
+
+	result = vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
+
+	return result;
+}
+
+/**
+ * @brief å¤–ç©ã‚’æ±‚ã‚ã‚‹
+ */
+Vector3 MyMath::Cross(Vector3 myPos, Vector3 targetPos)
+{
+	Vector3 cross = Vector3();
+
+	cross.x = myPos.y * targetPos.z - myPos.z * targetPos.y;
+	cross.y = myPos.z * targetPos.x - myPos.x * targetPos.z;
+	cross.z = myPos.x * targetPos.y - myPos.y * targetPos.x;
+
+	return cross;
+}
+
+/**
+ * @brief å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã¸å¤‰æ›
+ * @return ãªã—
+ */
+void MyMath::Normalize(Vector3 &vec)
+{
+	float scalar = 1;
+
+	scalar = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+
+	vec /= scalar;
 }
 
 // EOF

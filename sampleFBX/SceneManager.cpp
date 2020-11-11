@@ -42,6 +42,7 @@ void SceneManager::Init()
 	// 全オブジェクト初期化
 	m_pCamera = new CCamera();
 	CCamera::Set(m_pCamera);
+	m_pCamera->Awake();
 	m_pCamera->Init();
 
 	m_pSky = new CSky();
@@ -50,10 +51,10 @@ void SceneManager::Init()
 
 	m_nowScene = new SceneGame();
 	m_nowScene->Awake();
-	ObjectManager::Awake();
+	ObjectManager::GetInstance().Awake();
 
 	m_nowScene->Init();
-	ObjectManager::Init();
+	ObjectManager::GetInstance().Init();
 }
 
 /**
@@ -62,7 +63,7 @@ void SceneManager::Init()
  */
 void SceneManager::Uninit()
 {
-	ObjectManager::Uninit();
+	ObjectManager::GetInstance().Uninit();
 
 	if(m_nowScene)
 	m_nowScene->Uninit();
@@ -99,7 +100,7 @@ void SceneManager::Update()
 		return;
 	}
 
-	ObjectManager::Update();
+	ObjectManager::GetInstance().Update();
 	m_nowScene->Update();
 	CCamera::Get()->Update();
 
@@ -116,7 +117,7 @@ void SceneManager::Draw()
 	CCamera::Get()->Draw();
 	m_nowScene->Draw();
 
-	ObjectManager::Draw();
+	ObjectManager::GetInstance().Draw();
 	Fade::Draw();
 }
 
@@ -127,6 +128,7 @@ void SceneManager::Draw()
 void SceneManager::SetDefCamera()
 {
 	CCamera::Set(m_pCamera);
+	m_pCamera->Awake();
 	m_pCamera->Init();
 }
 
@@ -142,7 +144,7 @@ void SceneManager::Change()
 
 	m_SceneID = m_NextSceneID;
 
-	ObjectManager::Uninit();
+	ObjectManager::GetInstance().Uninit();
 	m_nowScene->Uninit();
 	delete m_nowScene;
 	ObjectManager::Clear();
@@ -164,11 +166,11 @@ void SceneManager::Change()
 	}
 	SetDefCamera();
 	m_nowScene->Awake();
-	ObjectManager::Awake();
+	ObjectManager::GetInstance().Awake();
 
 	m_nowScene->Init();
 
-	ObjectManager::Init();
+	ObjectManager::GetInstance().Init();
 	Fade::FadeIn();
 }
 

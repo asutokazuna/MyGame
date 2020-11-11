@@ -225,9 +225,6 @@
     <ClCompile Include="TowerEnergy.cpp">
       <Filter>ソース ファイル\Game\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="MissileCollision.cpp">
-      <Filter>ソース ファイル\Game\Missile</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerCollision.cpp">
       <Filter>ソース ファイル\Game\Player</Filter>
     </ClCompile>
@@ -293,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="WeaponCtrl.cpp">
       <Filter>ソース ファイル\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleCamera.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -443,9 +443,6 @@
     <ClInclude Include="TowerEnergy.h">
       <Filter>ヘッダー ファイル\Game\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="MissileCollision.h">
-      <Filter>ヘッダー ファイル\Game\Missile</Filter>
-    </ClInclude>
     <ClInclude Include="Missile.h">
       <Filter>ヘッダー ファイル\Game\Missile</Filter>
     </ClInclude>
@@ -513,6 +510,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="WeaponCtrl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

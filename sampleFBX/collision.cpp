@@ -78,8 +78,7 @@ void Collision::Uninit()
  */
 void Collision::Update()
 {
-	Vector3& pos = m_transform->position;
-	pos += m_offsetPos;
+	Vector3 pos = m_transform->position + m_offsetPos;
 #ifdef _DEBUG
 	XMFLOAT4X4 mtx = m_box.GetWorld();
 	mtx._41 = pos.x;
