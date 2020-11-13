@@ -6,6 +6,8 @@
 #include "Component.h"
 #include "MyMath.h"
 
+class Tween;
+
 /**
  * @class Transform
  * @brief 座標管理クラス
@@ -25,10 +27,21 @@ public:
 	Quaternion quaternion;
 
 public:
+	Tween* Do;
+
 	/**
 	 * @brief コンストラクタ
 	 */
 	Transform();
+	/**
+	* @brief コンストラクタ
+	*/
+	Transform(const Transform &trans);
+
+	/**
+	 * @brrief デストラクタ
+	 */
+	~Transform();
 
 	/**
 	 * @brief 座標の取得

@@ -33,4 +33,20 @@ void WeaponCtrl::Shot()
 	}
 }
 
+/**
+ * @brief 玉の発射
+ * @return なし
+ */
+void WeaponCtrl::Shot(Quaternion quat)
+{
+	for (auto m : m_BulletList) {
+		bool flg = false;
+		flg = m->Fire(&m_ParentTrans->position, quat);
+		if (flg == true) {
+			break;
+		}
+	}
+}
+
+
 // EOF

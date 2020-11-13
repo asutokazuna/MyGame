@@ -7,7 +7,7 @@
 /**
  * @brief コンストラクタ
  */
-GameObject::GameObject() {
+GameObject::GameObject() : parent(nullptr){
 	transform = AddComponent<Transform>();
 	tag = 0;
 }

@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "Component.h"
+#include "MyMath.h"
 
 // 前方宣言
 class Missile;
@@ -32,12 +33,18 @@ public:
 	 * @return なし
 	 */
 	void Shot();
+	
+	/**
+	 * @brief 玉の発射
+	 * @return なし
+	 */
+	void Shot(Quaternion quat);
 
 	/**
 	 * @brief 玉の発射
 	 * @return なし
 	 */
-	void Shot(Transform* target);
+	//void Shot(Transform* target);
 };
 
 // EOF

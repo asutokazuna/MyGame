@@ -66,8 +66,6 @@ void PlayerMove::Update()
 	// 座標更新
 	m_Transform->position += m_Transform->GetForward() * speed.z + m_Transform->GetRight() * speed.x;
 
-	m_Transform->quaternion = MyMath::LookAt(m_Transform->position, Enemy->GetTransform().position);
-
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
 		//rb->AddForce({ 0,15,0 });		// ジャンプ

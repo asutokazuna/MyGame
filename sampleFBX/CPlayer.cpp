@@ -10,6 +10,9 @@
 #include "PlayerCtrl.h"
 #include "Rigidbody.h"
 #include "Weapon.h"
+#include "Geometry.h"
+#include "PlayerShotDir.h"
+#include "GameObject.h"
 
 /**
  * @brief 初期化処理
@@ -29,6 +32,12 @@ void CPlayer::Awake()
 	m_Weapon = new Weapon(20);
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	SetChild(m_Weapon);
+
+	m_ShotCol = new Cube();
+	m_ShotCol->GetTransform().scale = (Vector3(150, 250, 1200));
+	m_ShotCol->AddComponent<PlayerShotDir>();
+	m_ShotCol->AddComponent<Collision>();
+	SetChild(m_ShotCol);
 
 	AddComponent<PlayerCtrl>();
 }

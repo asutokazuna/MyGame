@@ -3,12 +3,15 @@
  * @brief 座標管理クラス
  */
 #include "Transform.h"
+#include "Tween.h"
 
 /**
  * @brief コンストラクタ
  */
 Transform::Transform()
 {
+	Do = new Tween();
+
 	position = { 0,0,0 };
 	rotation = { 0,0,0 };
 	scale = { 1,1,1 };
@@ -19,6 +22,28 @@ Transform::Transform()
 	axisY = { 0,1,0 };
 	axisZ = { 0,0,1 };
 	quaternion = { 1,0,0,0 };
+}
+
+Transform::Transform(const Transform & trans)
+{
+
+	Do = new Tween();
+	*Do = *trans.Do;
+	position = trans.position;
+	rotation = trans.rotation;
+	scale = trans.scale;
+	localPosition = trans.localPosition;
+	localRotation = trans.localRotation;
+	localScale = trans.localScale;
+	axisX = trans.axisX;
+	axisY = trans.axisY;
+	axisZ = trans.axisZ;
+	quaternion = trans.quaternion;
+}
+
+Transform::~Transform()
+{
+	delete Do;
 }
 
 /**

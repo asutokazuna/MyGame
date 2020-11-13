@@ -16,7 +16,7 @@
 class GameObject :public Object
 {
 protected:
-	Transform	*transform;			//!< トランスフォーム
+	Transform* transform;			//!< トランスフォーム
 	int			tag;				//!< オブジェクト識別用タグ
 	GameObject* parent;
 
@@ -79,6 +79,13 @@ public:
 	 */
 	void SetChild(GameObject* child);
 
+	/**
+	 * @brief 親の取得
+	 * @return 親オブジェクト
+	 */
+	GameObject* GetParent() {
+		return parent;
+	}
 	/**
 	 * @brief トランスフォームの取得
 	 * @return トランスフォーム

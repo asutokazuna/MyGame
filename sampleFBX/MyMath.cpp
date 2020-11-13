@@ -299,4 +299,14 @@ void MyMath::Normalize(Vector3 &vec)
 	vec /= scalar;
 }
 
+/**
+ * @brief 線形補間
+ */
+Vector3 Lerp(Vector3 start, Vector3 end, float t)
+{
+	Vector3 result = Vector3();
+
+	return start + (end - start) * t;
+}
+
 // EOF

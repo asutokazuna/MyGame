@@ -183,6 +183,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Gauge.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="PlayerCtrl.cpp" />
     <ClCompile Include="PlayerMissile.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="PlayerShotDir.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -221,6 +223,7 @@
     <ClCompile Include="TowerEnergy.cpp" />
     <ClCompile Include="TowerManager.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Tween.cpp" />
     <ClCompile Include="UIMesh.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponCtrl.cpp" />
@@ -254,6 +257,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Gauge.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
@@ -278,6 +282,7 @@
     <ClInclude Include="PlayerCtrl.h" />
     <ClInclude Include="PlayerMissile.h" />
     <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="PlayerShotDir.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
@@ -296,6 +301,7 @@
     <ClInclude Include="TowerEnergy.h" />
     <ClInclude Include="TowerManager.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Tween.h" />
     <ClInclude Include="UIMesh.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponCtrl.h" />

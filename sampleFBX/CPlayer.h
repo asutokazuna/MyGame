@@ -12,6 +12,7 @@
 class PlayerMissile;
 class Collision;
 class Weapon;
+class Cube;
 
 /**
  * @class CPlayer
@@ -22,6 +23,7 @@ class CPlayer: public GameObject
 private:
 	Weapon* m_Weapon;		//!< 武器
 	Collision* m_col;		//!< コライダー
+	Cube* m_ShotCol;		//!< カーソルの当たり判定
 
 public:
 	/**
