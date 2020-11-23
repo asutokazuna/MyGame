@@ -176,6 +176,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
     <ClCompile Include="EnemyMissile.cpp" />
+    <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="FbxModel.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TitleUI.cpp" />
@@ -250,6 +252,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCtrl.h" />
     <ClInclude Include="EnemyMissile.h" />
+    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="FbxModel.h" />
     <ClInclude Include="Field.h" />
@@ -293,6 +296,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureData.h" />
     <ClInclude Include="TitleUI.h" />

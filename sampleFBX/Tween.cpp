@@ -1,12 +1,19 @@
 ﻿#include "Tween.h"
+#include "Transform.h"
 
+std::vector<Tween> Tween::m_List;
 
-
-void* Tween::Domove()
+void Tween::Update()
 {
-	return this;
+	for (auto list : m_List)
+	{
+		//list
+	}
 }
 
-Tween::Tween()
+Tween* Tween::Move(Transform& obj, Vector3 startPos, Vector3 endPos, float time)
 {
+
+
+	return this;
 }
