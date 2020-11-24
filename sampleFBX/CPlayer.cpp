@@ -13,6 +13,7 @@
 #include "Geometry.h"
 #include "PlayerShotDir.h"
 #include "GameObject.h"
+#include "PlayerState.h"
 
 /**
  * @brief 初期化処理
@@ -40,6 +41,7 @@ void CPlayer::Awake()
 	SetChild(m_ShotCol);
 
 	AddComponent<PlayerCtrl>();
+	AddComponent<PlayerStateMachine>();
 }
 
 // EOF

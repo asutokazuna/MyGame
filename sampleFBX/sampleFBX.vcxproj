@@ -208,6 +208,7 @@
     <ClCompile Include="PlayerMissile.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerShotDir.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="PlayerMissile.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerShotDir.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />

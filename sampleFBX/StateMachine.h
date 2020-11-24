@@ -107,7 +107,7 @@ public:
 		}
 
 		m_state = m_stateList[nextID];
-		m_state->Awake();
+		m_state->Init();
 	}
 
 	/**
@@ -126,7 +126,7 @@ public:
 			return;
 		}
 
-		if (m_stateList[state->GetID()] == nullptr) {
+		if (m_stateList[state->GetID()] != nullptr) {
 			return;
 		}
 		m_stateList[state->GetID()] = state;

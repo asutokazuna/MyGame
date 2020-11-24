@@ -33,6 +33,7 @@ public:
 	 * @return なし
 	 */
 	void Update();
+	void Attak();
 };
 
 // EOF

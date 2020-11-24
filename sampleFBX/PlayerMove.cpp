@@ -10,6 +10,7 @@
 #include "Rigidbody.h"
 #include "collision.h"
 #include "ObjectManager.h"
+#include "ImGui/imgui.h"
 
 /**
  * @def 
@@ -28,6 +29,8 @@ static int mousePosY;
 HRESULT PlayerMove::Init()
 {
 	m_Transform = &m_Parent->GetTransform();
+	m_move = Vector3();
+	m_isDelay = false;
 
 	//rb = m_Parent->GetComponent<Rigidbody>();
 	mousePosX = CInput::GetMousePosition()->x;
@@ -42,29 +45,14 @@ HRESULT PlayerMove::Init()
  */
 void PlayerMove::Update()
 {
-	Vector3 speed = Vector3(0,0,0);
+	if (m_delayTime > 0) {
+		m_delayTime--;
+		return;
+	}
+	m_move = Vector3();
 
 	Rotate();
 
-	if (CInput::GetKeyPress(VK_A)) {
-		speed.x = -1.5f;
-	}
-	if (CInput::GetKeyPress(VK_D)) {
-		speed.x = 1.5f;
-	}
-	if (CInput::GetKeyPress(VK_W)) {
-		speed.z = 1.5f;
-	}
-	if (CInput::GetKeyPress(VK_S)) {
-		speed.z = -1.2f;
-	}
-
-	FullDrive();
-	GameObject* Enemy = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_ENEMY);
-
-
-	// 座標更新
-	m_Transform->position += m_Transform->GetForward() * speed.z + m_Transform->GetRight() * speed.x;
 
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
@@ -72,28 +60,21 @@ void PlayerMove::Update()
 	}
 }
 
-/**
- * @brief 高速移動
- *@return なし
- */
-void PlayerMove::FullDrive()
+void PlayerMove::LateUpdate()
 {
-	static int waitTime = 0;
+	// 座標更新
+	m_Transform->position += m_Transform->GetForward() * m_move.z + m_Transform->GetRight() * m_move.x;
+}
 
-	// SPACE
-	if (CInput::GetKeyPress(VK_SPACE)) {
-		waitTime++;
-	}
-	else {
-		waitTime = 0;
-		return;
-	}
-
-	if(waitTime < WAIT_TIME) {
-		return;
-	}
-
-	m_Transform->position += m_Transform->GetForward() * FD_POWER;
+void PlayerMove::Draw()
+{
+#ifdef _DEBUG
+	ImGui::Begin("PlayerMove");
+	ImGui::SliderFloat("m_move x", &m_move.x, -1000.0f, 500.0f);
+	ImGui::SliderFloat("m_move y", &m_move.y, -1000.0f, 500.0f);
+	ImGui::SliderFloat("m_move z", &m_move.z, -1000.0f, 500.0f);
+	ImGui::End();
+#endif
 }
 
 /**
@@ -114,6 +95,43 @@ void PlayerMove::Rotate()
 	
 	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)angle.y));
 	
+}
+
+/**
+* @brief 高速移動
+*@return なし
+*/
+void PlayerMove::FullDrive()
+{
+	m_isDelay = true;
+	m_delayTime = WAIT_TIME;
+
+	m_move += m_Transform->GetForward() * FD_POWER;
+}
+
+void PlayerMove::Avoid()
+{
+	m_delayTime = 20;
+
+	m_Transform->position += m_Transform->GetRight() * 10;
+}
+
+/**
+ * @brief 移動量のセット
+ * @return なし
+ */
+void PlayerMove::SetMove(Vector3 move)
+{
+	m_move = move;
+}
+
+/**
+ * @brief 移動量の加算
+ * @return なし
+ */
+void PlayerMove::AddMove(Vector3 move)
+{
+	m_move = m_move + move;
 }
 
 /**

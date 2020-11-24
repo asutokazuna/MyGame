@@ -4,12 +4,18 @@
  */
 #include "EnemyState.h"
 
+/**
+ * @struct 待機
+ */
 struct IDOL : public State<EnemyState>
 {
 	EnemyStateMachine& m_machine;
 	IDOL(EnemyStateMachine &machine) :State<EnemyState>(EnemyState::E_ENEMY_IDOL), m_machine(machine) {}
 };
 
+/**
+ * @struct 移動
+ */
 struct MOVE : public State<EnemyState>
 {
 	EnemyStateMachine& m_machine;
