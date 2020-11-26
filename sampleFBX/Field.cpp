@@ -14,7 +14,7 @@ void Field::Awake()
 {
 	tag = OBJ_TAG_FIELD;
 	m_Mesh = AddComponent<FieldMesh>();
-	AddComponent<Collision>()->SetSize({ 15 * 80, 1, 15 * 80 })->SetPos({0,0,0});
+	//AddComponent<Collision>()->SetSize({ 15 * 80, 1, 15 * 80 })->SetPos({0,0,0});
 }
 
  //EOF

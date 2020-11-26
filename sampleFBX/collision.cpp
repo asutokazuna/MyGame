@@ -45,7 +45,7 @@ HRESULT Collision::Init()
 	Vector3 size = m_offsetSize * m_transform->scale;
 
 #ifdef _DEBUG
-	XMFLOAT3 halfsize(size.x, size.y, size.z);
+	XMFLOAT3 halfsize(1,1,1);
 	//XMFLOAT3 halfsize(50, 50, 50);
 	m_box.Init(&halfsize);
 	XMFLOAT4X4 mtx = m_box.GetWorld();
@@ -80,10 +80,17 @@ void Collision::Update()
 {
 	Vector3 pos = m_transform->position + m_offsetPos;
 #ifdef _DEBUG
-	XMFLOAT4X4 mtx = m_box.GetWorld();
-	mtx._41 = pos.x;
-	mtx._42 = pos.y;
-	mtx._43 = pos.z;
+
+	Vector3 size = m_offsetSize * m_transform->scale;
+	Transform trans = *m_transform;
+	trans.position = pos;
+	trans.scale = size;
+	XMFLOAT4X4 mtx;// = m_box.GetWorld();
+	//mtx._41 = pos.x;
+	//mtx._42 = pos.y;
+	//mtx._43 = pos.z;
+	//m_box.SetWorld(mtx);
+	mtx = MyMath::StoreXMFloat4x4(trans);
 	m_box.SetWorld(mtx);
 #endif
 }
@@ -181,8 +188,8 @@ Collision * Collision::SetSize(Vector3 Size)
 	return this;
 }
 /**
- * @breif モデルの種類設定
-	 * @param[in] kind モデルの種類
+ * @breif モデルの種類設定 半分の大きさをセット
+ * @param[in] kind モデルの種類
  * @return 実体
  */
 Collision * Collision::SetModelKind(int modelkind)
@@ -228,6 +235,62 @@ bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vect
 		Az - Ad <= Bz + Bd &&
 		Bz - Bd <= Az + Ad;
 	return isHit;
+}
+
+bool Collision::OBB(Transform myObj, Transform othorObj)
+{
+
+	return false;
+}
+
+/**
+ * @brief OBBの当たり判定
+ * @param[in] myPos			自分の座標
+ * @param[in] myVector		自分の座標軸
+ * @param[in] myScale		自分の半分のサイズ
+ * @param[in] othorPos		相手の座標
+ * @param[in] othorVector	相手の座標軸
+ * @param[in] othorScale	相手の半分のサイズ
+ * @return 当たっていればtrue
+ */
+bool OBB(Vector3 myPos, Vector3 myVector, Vector3 myScale, Vector3 othorPos, Vector3 othorVector, Vector3 othorScale)
+{
+	Vector3 distance = othorPos - myPos;
+
+	Vector3 vec[6];
+	vec[0] = myVector.x;
+	vec[1] = myVector.y;
+	vec[2] = myVector.z;
+	vec[3] = othorVector.x;
+	vec[4] = othorVector.y;
+	vec[5] = othorVector.z;
+
+	// 各軸方向の半分の大きさを求める
+	Vector3 Length[6];
+	Length[0] = vec[0] * myScale.x;
+	Length[1] = vec[1] * myScale.y;
+	Length[2] = vec[2] * myScale.z;
+	Length[3] = vec[3] * othorScale.x;
+	Length[4] = vec[4] * othorScale.y;
+	Length[5] = vec[5] * othorScale.z;
+
+	float totalLength, distVec;
+
+	for (int i = 0; i < 6; i++)
+	{
+		totalLength = 0.0f;
+		for (int j = 0; j < 6; j++)
+		{
+			totalLength += MyMath::Dot(vec[i], Length[j]);
+		}
+		distVec = MyMath::Dot(vec[i], distance);
+
+		if (fabsf(totalLength) < fabsf(distVec)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**

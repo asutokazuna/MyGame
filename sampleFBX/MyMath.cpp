@@ -19,7 +19,7 @@ Quaternion MakeQuaternion(Vector3 axis, float radian);
   * @param   right   計算の右の項
   * @return  計算したクォータニオン
   */
-Quaternion CalcQuaternion(Quaternion left, Quaternion right);
+Quaternion CalcQuaternion(const Quaternion& left, const Quaternion& right);
 
 DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 {
@@ -133,7 +133,7 @@ Quaternion MakeQuaternion(Vector3 axis, float radian)
  * @param   right   計算の右の項
  * @return  計算したクォータニオン
  */
-Quaternion CalcQuaternion(Quaternion left, Quaternion right)
+Quaternion CalcQuaternion(const Quaternion& left, const Quaternion& right)
 {
 	Quaternion quaternion;
 	float   num1, num2, num3, num4;
@@ -172,7 +172,7 @@ Quaternion CalcQuaternion(Quaternion left, Quaternion right)
  * @param   radius  回転させる角度
  * @return  回転後の座標
  */
-Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radian)
+Vector3 MyMath::RotateQuaternionPosition(const Vector3& axis, const Vector3& pos,const float& radian)
 {
 	Quaternion  complexNumber, complexConjugateNumber;
 	Quaternion  posQuaternion = { 0, pos.x, pos.y, pos.z };
@@ -200,7 +200,7 @@ Vector3 MyMath::RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radian
  * @brief ベクトルをクォータニオンで回転
  * @return 回転後のベクトル
  */
-Vector3 MyMath::Vector3xQuaternion(Vector3 vec, Quaternion quat)
+Vector3 MyMath::Vector3xQuaternion(const Vector3& vec, const Quaternion& quat)
 {
 	Quaternion vecQuat = { 0, vec.x, vec.y ,vec.z };
 	vecQuat = CalcQuaternion(vecQuat, quat);
@@ -212,7 +212,7 @@ Vector3 MyMath::Vector3xQuaternion(Vector3 vec, Quaternion quat)
  * @brief 座標をクォーテーションで回転
  * @return 回転後の座標
  */
-Vector3 MyMath::PosxQuaternion(Vector3 pos, Quaternion quat)
+Vector3 MyMath::PosxQuaternion(const Vector3& pos, Quaternion quat)
 {
 	Quaternion vecQuat = { 0, pos.x, pos.y ,pos.z };
 	vecQuat = CalcQuaternion(quat, vecQuat);
@@ -228,7 +228,7 @@ Vector3 MyMath::PosxQuaternion(Vector3 pos, Quaternion quat)
  * @brief 度数をラジアンに変換
  * @return ラジアン
  */
-float MyMath::AngleToRadian(float angle)
+float MyMath::AngleToRadian(const float& angle)
 {
 	float radian = 0.f;
 
@@ -241,7 +241,7 @@ float MyMath::AngleToRadian(float angle)
  * @brief 対象方向へ向くクォータニオンを求める
  * @return 対象方向への回転クォータニオン
  */
-Quaternion MyMath::LookAt(Vector3 myPos, Vector3 targetPos)
+Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos)
 {
 	Quaternion result;
 	Vector3 target = targetPos - myPos;
@@ -263,7 +263,7 @@ Quaternion MyMath::LookAt(Vector3 myPos, Vector3 targetPos)
 /**
  * @brief 内積を求める
  */
-float MyMath::Dot(Vector3 vec1, Vector3 vec2)
+float MyMath::Dot(const Vector3& vec1,const Vector3& vec2)
 {
 	float result = 0;
 
@@ -275,7 +275,7 @@ float MyMath::Dot(Vector3 vec1, Vector3 vec2)
 /**
  * @brief 外積を求める
  */
-Vector3 MyMath::Cross(Vector3 myPos, Vector3 targetPos)
+Vector3 MyMath::Cross(const Vector3& myPos,const Vector3& targetPos)
 {
 	Vector3 cross = Vector3();
 
@@ -302,11 +302,21 @@ void MyMath::Normalize(Vector3 &vec)
 /**
  * @brief 線形補間
  */
-Vector3 Lerp(Vector3 start, Vector3 end, float t)
+Vector3 Lerp(const Vector3 start,const Vector3 end,const float& t)
 {
-	Vector3 result = Vector3();
-
+	float x = end.x - start.x;
 	return start + (end - start) * t;
+}
+
+Vector3 MyMath::Abs(const Vector3& value)
+{
+	Vector3	result = value;
+
+	result.x = fabsf(result.x);
+	result.y = fabsf(result.y);
+	result.z = fabsf(result.z);
+
+	return result;
 }
 
 // EOF

@@ -45,7 +45,7 @@ private:
 protected:
 	Transform* m_transform;	//!< 親のトランスフォーム
 	Vector3 m_offsetPos;		//!< 親からのオフセット
-	Vector3 m_offsetSize;		//!< 親からのオフセット
+	Vector3 m_offsetSize;		//!< モデルの半分の大きさ
 	int id;			//!< ユニークID
 	int m_tag;		//!< 識別タグ
 
@@ -133,6 +133,8 @@ public :
 	 * @return 当たっていればtrue
 	 */
 	static bool CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize);
+
+	bool OBB(Transform myObj, Transform othorObj);
 
 	/**
 	 * @breif 当たり判定のリストの初期化

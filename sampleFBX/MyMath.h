@@ -145,6 +145,21 @@ struct Vector3
 		z = num;
 		return *this;
 	}
+	
+	Vector3 operator+ (const Vector3 num) const{
+		Vector3 value;
+		value.x = x + num.x;
+		value.y = y + num.y;
+		value.z = z + num.z;
+		return value;
+	}
+	Vector3 operator- (const Vector3 num) const{
+		Vector3 value;
+		value.x = x - num.x;
+		value.y = y - num.y;
+		value.z = z - num.z;
+		return value;
+	}
 };
 
 class Transform;
@@ -166,35 +181,48 @@ public:
 	 * @param   radius  回転させる角度
 	 * @return  回転後の座標
 	 */
-	static Vector3 RotateQuaternionPosition(Vector3 axis, Vector3 pos, float radius);
+	static Vector3 RotateQuaternionPosition(const Vector3& axis, const Vector3& pos, const float& radian);
+	
+	/**
+	 * @brief ベクトルをクォータニオンで回転
+	 * @return 回転後のベクトル
+	 */
+	static Vector3 Vector3xQuaternion(const Vector3& vec, const Quaternion& quat);
 
-	static Vector3 Vector3xQuaternion(Vector3 vec, Quaternion quat);
+	/**
+	 * @brief 座標をクォーテーションで回転
+	 * @return 回転後の座標
+	 */
+	static Vector3 PosxQuaternion(const Vector3& pos, Quaternion quat);
 
-	static Vector3 PosxQuaternion(Vector3 pos , Quaternion quat);
-
-	static float AngleToRadian(float angle);
+	/**
+	 * @brief 度数をラジアンに変換
+	 * @return ラジアン
+	 */
+	static float AngleToRadian(const float& angle);
 	
 	/**
 	 * @brief 対象方向へ向くクォータニオンを求める
 	 * @return 対象方向への回転クォータニオン
 	 */
-	static Quaternion LookAt(Vector3 myPos, Vector3 targetPos);
+	static Quaternion LookAt(const Vector3& myPos, const Vector3& targetPos);
 
 	/**
 	 * @brief 内積を求める
 	 */
-	static float Dot(Vector3 vec1, Vector3 vec2);
+	static float Dot(const Vector3& vec1, const Vector3& vec2);
 
 	/**
 	 * @brief 外積を求める
 	 */
-	static Vector3 Cross(Vector3 myPos, Vector3 targetPos);
+	static Vector3 Cross(const Vector3& myPos, const Vector3& targetPos);
 
 	/**
 	 * @brief 単位ベクトルへ変換
 	 * @return なし
 	 */
 	static void Normalize(Vector3 &vec);
+	static Vector3 Abs(const Vector3 & value);
 };
 
 // EOF

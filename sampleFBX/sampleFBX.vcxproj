@@ -173,6 +173,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSky.cpp" />
     <ClCompile Include="CTPCamera.cpp" />
+    <ClCompile Include="DebugBox.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
     <ClCompile Include="EnemyMissile.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="CSky.h" />
     <ClInclude Include="CTPCamera.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="DebugBox.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCtrl.h" />
     <ClInclude Include="EnemyMissile.h" />
