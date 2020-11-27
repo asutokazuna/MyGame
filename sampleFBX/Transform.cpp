@@ -44,6 +44,7 @@ Transform::Transform(const Transform & trans)
 Transform::~Transform()
 {
 	delete Do;
+	Do = nullptr;
 }
 
 /**

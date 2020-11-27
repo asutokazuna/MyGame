@@ -162,6 +162,8 @@
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BulletTime.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="CameraStateMachine.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CFPCamera.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -218,7 +220,6 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TitleUI.cpp" />
@@ -238,6 +239,8 @@
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BulletTime.h" />
+    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="CameraStateMachine.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CFPCamera.h" />
     <ClInclude Include="collision.h" />

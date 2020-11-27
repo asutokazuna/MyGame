@@ -160,6 +160,20 @@ struct Vector3
 		value.z = z - num.z;
 		return value;
 	}
+	Vector3 operator* (const Vector3 num) const{
+		Vector3 value;
+		value.x = x * num.x;
+		value.y = y * num.y;
+		value.z = z * num.z;
+		return value;
+	}
+	Vector3 operator/ (const Vector3 num) const{
+		Vector3 value;
+		value.x = x / num.x;
+		value.y = y / num.y;
+		value.z = z / num.z;
+		return value;
+	}
 };
 
 class Transform;

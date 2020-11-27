@@ -246,7 +246,7 @@ Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos)
 	Quaternion result;
 	Vector3 target = targetPos - myPos;
 	Vector3 forward = Vector3(0, 0, 1);
-	Vector3 axis = Vector3(1, 0, 0);
+	Vector3 axis = Vector3(0, 1, 0);
 	float dot = 0;
 	float radian = 0;
 

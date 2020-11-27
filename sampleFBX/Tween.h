@@ -17,17 +17,21 @@ class Transform;
 class Tween
 {
 protected:
-	Vector3 m_startPos;
-	Vector3 m_endPos;
+	//Vector3 m_startPos;
+	//Vector3 m_endPos;
 	float	m_Threshold;
-	std::function<void(int)> m_easeFunc;
-
-	static std::vector<Tween> m_List;
-
-	void CallBacK(const std::function<void()> &callback);
+	//std::function<void(int)> m_easeFunc;
+	//
+	//static std::vector<Tween> m_List;
+	//
+	//void CallBacK(const std::function<void()> &callback);
 public:
-	static void Update();
-
-	Tween* Move(Transform& obj, Vector3 startPos, Vector3 endPos, float time);
+	Tween() {
+		m_Threshold = 0;
+	}
+	//static void Update();
+	//
+	//Tween* Move(Transform& obj, Vector3 startPos, Vector3 endPos, float time);
 };
 
+// EOF

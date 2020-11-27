@@ -15,6 +15,7 @@ class PlayerShotDir:public Component
 private:
 	GameObject* m_target;		//!< 当たっている敵
 	Transform* m_ParentTrans;
+	Transform* m_PlayerTrans;
 
 public:
 	/**
@@ -34,6 +35,8 @@ public:
 	 * @return　なし
 	 */
 	void Update();
+
+	void Draw();
 
 	/**
 	 * @brief 当たっている敵の取得

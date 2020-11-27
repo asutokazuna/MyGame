@@ -35,7 +35,6 @@ void CPlayer::Awake()
 	SetChild(m_Weapon);
 
 	m_ShotCol = new Cube();
-	m_ShotCol->GetTransform().scale = (Vector3(150, 250, 1200));
 	m_ShotCol->AddComponent<PlayerShotDir>();
 	m_ShotCol->AddComponent<Collision>();
 	SetChild(m_ShotCol);

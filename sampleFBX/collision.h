@@ -134,7 +134,9 @@ public :
 	 */
 	static bool CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize);
 
-	bool OBB(Transform myObj, Transform othorObj);
+	static bool CheckOBB(const Transform& myObj, const Transform& othorObj);
+
+	static Vector3 GetSize(const Transform& trans);
 
 	/**
 	 * @breif 当たり判定のリストの初期化
