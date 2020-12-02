@@ -3,96 +3,38 @@
  * @brief メッシュクラス
  */
 #include "Mesh.h"
-#include "ShaderData.h"
 #include "Graphics.h"
-#include "MyMath.h"
-#include "CCamera.h"
-#include "Light.h"
-#include "FbxModel.h"
-#include "Shader.h"
-#include "Texture.h"
-
- //*****************************************************************************
- // シェーダに渡す値
-struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
-	XMMATRIX	mW;			// ワールド行列(転置行列)
-	XMMATRIX	mTex;		// テクスチャ行列(転置行列)
-};
-struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// 視点座標
-	// 光源
-	XMVECTOR	vLightDir;	// 光源方向
-	XMVECTOR	vLa;		// 光源色(アンビエント)
-	XMVECTOR	vLd;		// 光源色(ディフューズ)
-	XMVECTOR	vLs;		// 光源色(スペキュラ)
-	// マテリアル
-	XMVECTOR	vAmbient;	// アンビエント色(+テクスチャ有無)
-	XMVECTOR	vDiffuse;	// ディフューズ色
-	XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
-	XMVECTOR	vEmissive;	// エミッシブ色
-};
-
-#define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-#define M_SPECULAR		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-#define M_AMBIENT		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-#define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,0.0f)
+#include "Transform.h"
+#include "ShaderInfo.h"
+#include "DefaultShaderInfo.h"
 
 Mesh::Mesh()
 {
 	m_transform = nullptr;
 	m_material = nullptr;
+	m_shader = nullptr;
 	m_pVertexBuffer = nullptr;
 	m_pIndexBuffer = nullptr;
 	m_nNumVertex = 0;
 	m_nNumIndex = 0;
 	m_primitiveType = PT_UNDEFINED;
-	m_TexTransform = nullptr;
-	m_pTexture = nullptr;
-
-	m_material = new MATERIAL();
-	// マテリアルの初期設定
-	m_material->Diffuse = M_DIFFUSE;
-	m_material->Ambient = M_AMBIENT;
-	m_material->Specular = M_SPECULAR;
-	m_material->Power = 0.0f;
-	m_material->Emissive = M_EMISSIVE;
+	m_deffault = new DefaultShaderInfo();
 }
 
 Mesh::~Mesh()
 {
 	delete m_material;
+	delete m_deffault;
 }
 
-/**
- * @brief 初期化処理
- * @return なし
- */
 void Mesh::Awake()
 {
-	HRESULT hr = S_OK;
-	ID3D11Device* pDevice = CGraphics::GetDevice();
-	// 定数バッファ生成
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(SHADER_GLOBAL);
-	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	bd.CPUAccessFlags = 0;
-	hr = pDevice->CreateBuffer(&bd, nullptr, &m_pConstantBuffer[0]);
-	if (FAILED(hr)) return;
-	bd.ByteWidth = sizeof(SHADER_GLOBAL2);
-	hr = pDevice->CreateBuffer(&bd, nullptr, &m_pConstantBuffer[1]);
-	if (FAILED(hr)) return;
-	m_View = CCamera::Get()->GetView();
-	m_Proj = CCamera::Get()->GetProj();
+	m_deffault->Awake();
+	m_deffault->Init();
 }
 
 void Mesh::Uninit()
 {
-	for (int i = 0; i < _countof(m_pConstantBuffer); ++i) {
-		SAFE_RELEASE(m_pConstantBuffer[i]);
-	}
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 }
@@ -111,15 +53,6 @@ void Mesh::Draw()
 	CGraphics::SetZWrite(true);
 	CGraphics::SetBlendState(BS_ALPHABLEND);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
-	ID3D11VertexShader* vs = ShaderData::GetVertexShader(ShaderData::VS_KIND::VS_VERTEX);
-	ID3D11PixelShader* ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL);
-	ID3D11InputLayout* il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX);
-	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
-
-	// シェーダ設定
-	pDeviceContext->VSSetShader(vs, nullptr, 0);
-	pDeviceContext->PSSetShader(ps, nullptr, 0);
-	pDeviceContext->IASetInputLayout(il);
 
 	// 頂点バッファをセット
 	UINT stride = sizeof(VERTEX_3D);
@@ -127,40 +60,10 @@ void Mesh::Draw()
 	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	// インデックスバッファをセット
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
-	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
 	
-	XMFLOAT4X4 f4x4World, f4x4TexWorld;
-	f4x4World = MyMath::StoreXMFloat4x4(*m_transform);
-
-	f4x4TexWorld = MyMath::StoreXMFloat4x4(*m_TexTransform);
-	SHADER_GLOBAL cb;
-	XMMATRIX mtxWorld = XMLoadFloat4x4(&f4x4World);
-	cb.mWVP = XMMatrixTranspose(mtxWorld *
-		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
-	cb.mW = XMMatrixTranspose(mtxWorld);
-	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
-	pDeviceContext->UpdateSubresource(m_pConstantBuffer[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer[0]);
-	SHADER_GLOBAL2 cb2;
-	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
-	CFbxLight* light = Light::Get();
-	// とりあえずライト無し
-	cb2.vLightDir = XMVectorSet(0,0,0, 0.f);
-	cb2.vLa = XMLoadFloat4(&light->m_ambient);
-	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
-	cb2.vLs = XMLoadFloat4(&light->m_specular);
-	MATERIAL* pMaterial = m_material;
-	if (!pMaterial) pMaterial = m_material;
-	cb2.vDiffuse = XMLoadFloat4(&pMaterial->Diffuse);
-	cb2.vAmbient = XMVectorSet(pMaterial->Ambient.x, pMaterial->Ambient.y, pMaterial->Ambient.z,
-		(m_pTexture != nullptr) ? 1.f : 0.f);
-	cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
-	cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
-	pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
-	pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
-
+	if (m_shader == nullptr) {
+		m_deffault->Draw();
+	}
 	// プリミティブ形状をセット
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0なら三角形ストリップ
@@ -205,6 +108,9 @@ HRESULT Mesh::MakeMeshVertex(VERTEX_3D vertexWk[], int indexWk[])
 
 Mesh* Mesh::ChangeColor(XMFLOAT3 color)
 {
+	if (m_material == nullptr) {
+		return this;
+	}
 	m_material->Diffuse.x = color.x;
 	m_material->Diffuse.y = color.y;
 	m_material->Diffuse.z = color.z;
@@ -214,6 +120,9 @@ Mesh* Mesh::ChangeColor(XMFLOAT3 color)
 
 Mesh* Mesh::ChangeColor(Vector3 color)
 {
+	if (m_material == nullptr) {
+		return this;
+	}
 	m_material->Diffuse.x = color.x;
 	m_material->Diffuse.y = color.y;
 	m_material->Diffuse.z = color.z;
@@ -223,6 +132,9 @@ Mesh* Mesh::ChangeColor(Vector3 color)
 
 Mesh * Mesh::ChangeColor(float r, float g, float b)
 {
+	if (m_material == nullptr) {
+		return this;
+	}
 	m_material->Diffuse.x = r;
 	m_material->Diffuse.y = g;
 	m_material->Diffuse.z = b;
@@ -232,6 +144,9 @@ Mesh * Mesh::ChangeColor(float r, float g, float b)
 
 Mesh* Mesh::ChangeColor(XMFLOAT4 color)
 {
+	if (m_material == nullptr) {
+		return this;
+	}
 	m_material->Diffuse = color;
 
 	return this;
@@ -239,6 +154,9 @@ Mesh* Mesh::ChangeColor(XMFLOAT4 color)
 
 Mesh * Mesh::ChangeColor(float r, float g, float b, float a)
 {
+	if (m_material == nullptr) {
+		return this;
+	}
 	m_material->Diffuse.x = r;
 	m_material->Diffuse.y = g;
 	m_material->Diffuse.z = b;
@@ -298,35 +216,9 @@ Mesh* Mesh::ChangePos(float x, float y, float z)
 	return this;
 }
 
-Mesh* Mesh::ChangeUV(XMFLOAT2 uv)
+void Mesh::SetShader(ShaderInfo& shader)
 {
-	if (m_TexTransform == nullptr) {
-		return this;
-	}
-
-	m_TexTransform->position.x = uv.x;
-	m_TexTransform->position.y = uv.y;
-
-	return this;
-}
-
-Mesh * Mesh::ChangeUV(float u, float v)
-{
-	if (m_TexTransform == nullptr) {
-		return this;
-	}
-
-	m_TexTransform->position.x = u;
-	m_TexTransform->position.y = v;
-
-	return this;
-}
-
-Mesh* Mesh::SetTexture(ID3D11ShaderResourceView* texture)
-{
-	m_pTexture = texture;
-
-	return this;
+	m_shader = &shader;
 }
 
 // EOF

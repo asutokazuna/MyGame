@@ -18,6 +18,8 @@ public:
 	 */
 	void Awake();
 
+	HRESULT Init();
+
 	/**
 	 * @brief 描画処理
 	 * @return なし

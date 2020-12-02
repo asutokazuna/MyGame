@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Component.h
- * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒIƒuƒWƒFƒNƒg
+ * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #pragma once
 #include "Object.h"
@@ -9,26 +9,26 @@ class GameObject;
 
 /**
  *@class Component
- * ƒRƒ“ƒ|[ƒlƒ“ƒgƒNƒ‰ƒX
+ * ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¯ãƒ©ã‚¹
  */
 class Component : public Object
 {
 public:
-	GameObject *m_Parent;	//!< eƒIƒuƒWƒFƒNƒg
+	GameObject *m_Parent;	//!< è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
-	Component(){}
+	Component():m_Parent(nullptr){}
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	virtual ~Component(){}
 	
 	/**
-	 * @brief “–‚½‚è”»’èˆ—
-	 * @return ‚È‚µ
+	 * @brief å½“ãŸã‚Šåˆ¤å®šå‡¦ç†
+	 * @return ãªã—
 	 */
 	virtual void OnCollisionEnter(GameObject* gameObbj){}
 

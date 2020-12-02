@@ -6,6 +6,7 @@
 #include "Graphics.h"
 #include "Texture.h"
 #include "GameObject.h"
+#include "DefaultShaderInfo.h"
  
  /**
   * @brief 初期化処理
@@ -70,16 +71,35 @@ void UIMesh::Awake()
 	delete[] pVertexWk;
 }
 
+HRESULT UIMesh::Init()
+{
+	XMFLOAT4X4 view, proj;
+
+	XMStoreFloat4x4(&view, XMMatrixLookAtLH(XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f),
+		XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
+	XMStoreFloat4x4(&proj,
+		XMMatrixOrthographicLH(SCREEN_WIDTH, SCREEN_HEIGHT, 1.0f, 100.0f));
+	m_deffault->SetView(view);
+	m_deffault->SetProj(proj);
+
+	if (m_shader != nullptr) {
+		m_shader->SetFloat("View",view);
+		m_shader->SetFloat("Proj",proj);
+	}
+	return S_OK;
+}
+
 /**
  * @brief 描画処理
  * @return なし
  */
 void UIMesh::Draw()
 {
-	XMStoreFloat4x4(&m_View, XMMatrixLookAtLH(XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f),
-		XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
-	XMStoreFloat4x4(&m_Proj,
-		XMMatrixOrthographicLH(SCREEN_WIDTH, SCREEN_HEIGHT, 1.0f, 100.0f));
+
+	if (m_shader != nullptr) {
+		//m_shader->SetView(view);
+		//m_shader->SetProj(proj);
+	}
 
 	Mesh::Draw();
 }

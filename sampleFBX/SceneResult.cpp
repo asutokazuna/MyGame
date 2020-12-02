@@ -18,14 +18,14 @@
 void SceneResult::Awake()
 {
 	m_Press = ObjectManager::Create<GameObject>("Press");
-	m_Press->AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0)->SetTexture(TextureData::GetData(TEXTURE_PRESSENTER));
+	m_Press->AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0);// ->SetTexture(TextureData::GetData(TEXTURE_PRESSENTER));
 	if (SceneGame::m_isVictory == true) {
 		m_Win = ObjectManager::Create<GameObject>("Win");
-		m_Win->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0)->SetTexture(TextureData::GetData(TEXTURE_WIN))->ChangeColor(1, 1, 0);
+		m_Win->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0);// ->SetTexture(TextureData::GetData(TEXTURE_WIN))->ChangeColor(1, 1, 0);
 	}
 	else {
 		m_Lose = ObjectManager::Create<GameObject>("Lose");
-		m_Lose->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0)->SetTexture(TextureData::GetData(TEXTURE_LOSE));
+		m_Lose->AddComponent<UIMesh>()->ChangeSize(700, 400, 1)->ChangePos(0, 100, 0);// ->SetTexture(TextureData::GetData(TEXTURE_LOSE));
 	}
 }
 

@@ -6,8 +6,11 @@
 #include "Component.h"
 #include <d3d11.h>
 #include "MyMath.h"
+#include "ShaderInfo.h"
 
 class Transform;
+class ShaderInfo;
+class DefaultShaderInfo;
 
 // 頂点フォーマット( 頂点座標[3D] / 法線ベクトル / 反射光 / テクスチャ座標 )
 typedef struct {
@@ -31,18 +34,10 @@ protected:
 		MAX_PRIMITIVETYPE
 	};
 
-	typedef struct {
-		XMFLOAT4	Diffuse;		// Diffuse color RGBA
-		XMFLOAT4	Ambient;		// Ambient color RGB
-		XMFLOAT4	Specular;		// Specular 'shininess'
-		XMFLOAT4	Emissive;		// Emissive color RGB
-		float		Power;			// Sharpness if specular highlight
-	} MATERIAL;
-
 	Transform* m_transform;
-	XMFLOAT4X4 m_View;
-	XMFLOAT4X4 m_Proj;
-	MATERIAL* m_material;
+	ShaderInfo::MATERIAL* m_material;
+	ShaderInfo* m_shader;	// シェーダー（マテリアルみたいなもの）
+	DefaultShaderInfo* m_deffault;
 
 	ID3D11Buffer* m_pVertexBuffer;
 	ID3D11Buffer* m_pIndexBuffer;
@@ -51,19 +46,16 @@ protected:
 
 	ePrimitiveType m_primitiveType;
 
-	Transform* m_TexTransform;
-	ID3D11ShaderResourceView* m_pTexture;
-
-	ID3D11Buffer*			m_pConstantBuffer[2];	// 定数バッファ
 public:
 	Mesh();
 	~Mesh();
+
+	void Awake();
 
 	/**
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	virtual void Awake();
 	virtual void Uninit();
 	virtual void Update();
 
@@ -84,9 +76,7 @@ public:
 	Mesh* ChangeSize(float x, float y, float z);
 	Mesh* ChangePos(XMFLOAT3 pos);
 	Mesh* ChangePos(float x, float y, float z);
-	Mesh* ChangeUV(XMFLOAT2 uv);
-	Mesh* ChangeUV(float u, float v);
-	Mesh* SetTexture(ID3D11ShaderResourceView* texture);
+	void SetShader(ShaderInfo& shader);
 };
 
 // EOF

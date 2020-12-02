@@ -12,27 +12,7 @@
 #include "ShaderData.h"
 #include "FbxModel.h"
 #include "Light.h"
-
- //*****************************************************************************
- // シェーダに渡す値
-struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
-	XMMATRIX	mW;			// ワールド行列(転置行列)
-	XMMATRIX	mTex;		// テクスチャ行列(転置行列)
-};
-struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// 視点座標
-	// 光源
-	XMVECTOR	vLightDir;	// 光源方向
-	XMVECTOR	vLa;		// 光源色(アンビエント)
-	XMVECTOR	vLd;		// 光源色(ディフューズ)
-	XMVECTOR	vLs;		// 光源色(スペキュラ)
-	// マテリアル
-	XMVECTOR	vAmbient;	// アンビエント色(+テクスチャ有無)
-	XMVECTOR	vDiffuse;	// ディフューズ色
-	XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
-	XMVECTOR	vEmissive;	// エミッシブ色
-};
+#include "DefaultShaderInfo.h"
 
 /**
  * @brief 初期化処理
@@ -50,7 +30,6 @@ void Billboard::Awake()
 	m_transform = &m_Parent->GetTransform();
 
 	static Transform trans;
-	m_TexTransform = &trans;
 
 	// オブジェクトの頂点配列を生成
 	m_nNumVertex = 4;
@@ -108,24 +87,12 @@ void Billboard::Awake()
 void Billboard::Draw()
 {
 	//CGraphics::SetZWrite(false);
-	m_Proj = CCamera::Get()->GetProj();
-	m_View = CCamera::Get()->GetView();
 
 	// 前面カリング (FBXは表裏が反転するため)
 	CGraphics::SetCullMode(CULLMODE_NONE);
 	CGraphics::SetZWrite(true);
 	CGraphics::SetBlendState(BS_NONE);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
-	ID3D11VertexShader* vs = ShaderData::GetVertexShader(ShaderData::VS_KIND::VS_VERTEX);
-	ID3D11PixelShader* ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL);
-	ID3D11InputLayout* il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX);
-	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
-
-	// あとでここもラッピングする
-	// シェーダ設定
-	pDeviceContext->VSSetShader(vs, nullptr, 0);
-	pDeviceContext->PSSetShader(ps, nullptr, 0);
-	pDeviceContext->IASetInputLayout(il);
 
 	// 頂点バッファをセット
 	UINT stride = sizeof(VERTEX_3D);
@@ -133,10 +100,7 @@ void Billboard::Draw()
 	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	// インデックスバッファをセット
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
-	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
-
+	m_deffault->Draw();
 	//static Transform temp;
 	//temp.scale.x = 100;
 	//temp.scale.y = 100;
@@ -161,45 +125,45 @@ void Billboard::Draw()
 
 	mtxTemp = XMLoadFloat4x4(&f4x4Temp);
 
-	f4x4TexWorld = MyMath::StoreXMFloat4x4(*m_TexTransform);
-	SHADER_GLOBAL cb;
-	XMMATRIX mtxWorld = mtxTemp;
+	//f4x4TexWorld = MyMath::StoreXMFloat4x4(*m_TexTransform);
+	//SHADER_GLOBAL cb;
+	//XMMATRIX mtxWorld = mtxTemp;
 
-	XMMATRIX
+	//XMMATRIX
 
-	mtxScale = XMMatrixScaling(m_transform->scale.x, m_transform->scale.y, m_transform->scale.z);
-	mtxWorld = XMMatrixMultiply(mtxScale, mtxWorld);
+	//mtxScale = XMMatrixScaling(m_transform->scale.x, m_transform->scale.y, m_transform->scale.z);
+	//mtxWorld = XMMatrixMultiply(mtxScale, mtxWorld);
 
-	XMMATRIX
-	// 移動を反映
-	mtxTranslate = XMMatrixTranslation(m_transform->position.x, m_transform->position.y, m_transform->position.z);
-	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+	//XMMATRIX
+	//// 移動を反映
+	//mtxTranslate = XMMatrixTranslation(m_transform->position.x, m_transform->position.y, m_transform->position.z);
+	//mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
 
-	//mtxWorld = XMMatrixMultiply(mtxWorld, mtxTemp);
+	////mtxWorld = XMMatrixMultiply(mtxWorld, mtxTemp);
 
-	cb.mWVP = XMMatrixTranspose(mtxWorld *
-		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
-	cb.mW = XMMatrixTranspose(mtxWorld);
-	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
-	pDeviceContext->UpdateSubresource(m_pConstantBuffer[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer[0]);
-	SHADER_GLOBAL2 cb2;
-	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
-	CFbxLight light = CFbxLight();
-	cb2.vLightDir = XMVectorSet(0,0,0, 0.f);
-	cb2.vLa = XMLoadFloat4(&light.m_ambient);
-	cb2.vLd = XMLoadFloat4(&light.m_diffuse);
-	cb2.vLs = XMLoadFloat4(&light.m_specular);
-	MATERIAL* pMaterial = m_material;
-	if (!pMaterial) pMaterial = m_material;
-	cb2.vDiffuse = XMLoadFloat4(&pMaterial->Diffuse);
-	cb2.vAmbient = XMVectorSet(pMaterial->Ambient.x, pMaterial->Ambient.y, pMaterial->Ambient.z,
-		(m_pTexture != nullptr) ? 1.f : 0.f);
-	cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
-	cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
-	pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
-	pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
+	//cb.mWVP = XMMatrixTranspose(mtxWorld *
+	//	XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
+	//cb.mW = XMMatrixTranspose(mtxWorld);
+	//cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
+	//pDeviceContext->UpdateSubresource(m_pConstantBuffer[0], 0, nullptr, &cb, 0, 0);
+	//pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer[0]);
+	//SHADER_GLOBAL2 cb2;
+	//cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
+	//CFbxLight light = CFbxLight();
+	//cb2.vLightDir = XMVectorSet(0,0,0, 0.f);
+	//cb2.vLa = XMLoadFloat4(&light.m_ambient);
+	//cb2.vLd = XMLoadFloat4(&light.m_diffuse);
+	//cb2.vLs = XMLoadFloat4(&light.m_specular);
+	//MATERIAL* pMaterial = m_material;
+	//if (!pMaterial) pMaterial = m_material;
+	//cb2.vDiffuse = XMLoadFloat4(&pMaterial->Diffuse);
+	//cb2.vAmbient = XMVectorSet(pMaterial->Ambient.x, pMaterial->Ambient.y, pMaterial->Ambient.z,
+	//	(m_pTexture != nullptr) ? 1.f : 0.f);
+	//cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
+	//cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
+	//pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
+	//pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
 
 	// プリミティブ形状をセット
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {

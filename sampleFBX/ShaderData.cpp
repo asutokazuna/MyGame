@@ -1,12 +1,12 @@
-/**
+ï»¿/**
  * @file ShaderData
- * @brief ƒVƒF[ƒ_[ƒf[ƒ^ƒNƒ‰ƒX
+ * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚¯ãƒ©ã‚¹
  */
 #include "ShaderData.h"
 #include "Shader.h"
 
 /**
- * @struct ƒVƒF[ƒ_[ƒf[ƒ^‚Ìƒe[ƒuƒ‹
+ * @struct ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®ãƒ†ãƒ¼ãƒ–ãƒ«
  */
 struct SHADER_TABLE {
 	int type;
@@ -14,7 +14,7 @@ struct SHADER_TABLE {
 };
 
 /**
- * @biref ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[
+ * @biref ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
  */
 SHADER_TABLE VS_Table[] = 
 {
@@ -22,7 +22,7 @@ SHADER_TABLE VS_Table[] =
 };
 
 /**
- * @biref ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+ * @biref ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
  */
 SHADER_TABLE PS_Table[] = 
 {
@@ -30,12 +30,12 @@ SHADER_TABLE PS_Table[] =
 };
 
 /**
- * @brief@ƒf[ƒ^‚Ì‰Šú‰»
- * @return ‚È‚µ
+ * @briefã€€ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
+ * @return ãªã—
  */
 void ShaderData::InitInstance()
 {
-	// ƒVƒF[ƒ_‰Šú‰»
+	// ã‚·ã‚§ãƒ¼ãƒ€åˆæœŸåŒ–
 	static const D3D11_INPUT_ELEMENT_DESC layout[] = {
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                            D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
@@ -60,8 +60,8 @@ void ShaderData::InitInstance()
 }
 
 /**
- * @biref ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @biref åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void ShaderData::Init()
 {
@@ -69,41 +69,53 @@ void ShaderData::Init()
 }
 
 /**
- * @brief I—¹ˆ—
- * @return ‚È‚µ
+ * @brief çµ‚äº†å‡¦ç†
+ * @return ãªã—
  */
 void ShaderData::Uninit()
 {
-	// ˆ—‚È‚µ
+	// å‡¦ç†ãªã—
 }
 
 /**
- * @brief ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[‚Ìæ“¾
- * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
- * @return ˆø”‚É‘Î‰‚µ‚½ƒVƒF[ƒ_[ƒf[ƒ^
+ * @brief ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+ * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+ * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
  */
 ID3D11VertexShader* ShaderData::GetVertexShader(int kind)
 {
+	if (VS_KIND::VS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
 	return ShaderData::GetInstance().m_VS.Get(kind);
 }
 
 /**
- * @brief ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ìæ“¾
- * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
- * @return ˆø”‚É‘Î‰‚µ‚½ƒVƒF[ƒ_[ƒf[ƒ^
+ * @brief ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+ * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+ * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
  */
 ID3D11PixelShader* ShaderData::GetPixelShader(int kind)
 {
+	if (PS_KIND::PS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
 	return ShaderData::GetInstance().m_PS.Get(kind);
 }
 
 /**
- * @brief ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg‚Ìæ“¾
- * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
- * @return ˆø”‚É‘Î‰‚µ‚½ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg
+ * @brief ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®å–å¾—
+ * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+ * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
  */
 ID3D11InputLayout* ShaderData::GetInputLayout(int kind)
 {
+	if (VS_KIND::VS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
 	return ShaderData::GetInstance().m_IL.Get(kind);
 }
 

@@ -176,6 +176,7 @@
     <ClCompile Include="CSky.cpp" />
     <ClCompile Include="CTPCamera.cpp" />
     <ClCompile Include="DebugBox.cpp" />
+    <ClCompile Include="DefaultShaderInfo.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
     <ClCompile Include="EnemyMissile.cpp" />
@@ -220,6 +221,7 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
+    <ClCompile Include="ShaderInfo.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TitleRogo.cpp" />
@@ -258,6 +260,7 @@
     <ClInclude Include="CTPCamera.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="DebugBox.h" />
+    <ClInclude Include="DefaultShaderInfo.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCtrl.h" />
     <ClInclude Include="EnemyMissile.h" />
@@ -305,6 +308,7 @@
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderData.h" />
+    <ClInclude Include="ShaderInfo.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />

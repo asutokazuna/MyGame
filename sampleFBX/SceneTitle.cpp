@@ -3,7 +3,6 @@
  * @brief タイトルシーンクラス
  */
 #include "SceneTitle.h"
-#include "TitleUI.h"
 #include "input.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
@@ -18,7 +17,6 @@
  */
 void SceneTitle::Awake()
 {
-	//m_UI = ObjectManager::Create<TitleUI>("TitleUI");
 	ObjectManager::Create<TitleRogo>("TitleRogo");
 	ObjectManager::Create<TitleStart>("TitleStart");
 

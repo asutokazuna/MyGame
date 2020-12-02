@@ -8,8 +8,10 @@
 #include "Graphics.h"
 #include "GameObject.h"
 #include "CCamera.h"
+#include "DefaultShaderInfo.h"
 
 #define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
+ID3D11ShaderResourceView* m_pTexture;
 
 /**
  * @brief 初期化
@@ -31,8 +33,10 @@ void FieldMesh::Awake()
 		TEXTURE_FILENAME,		// ファイルの名前
 		&m_pTexture);	// 読み込むメモリー
 
+
+	m_deffault->SetTexture(m_pTexture);
+
 	static Transform trans;
-	m_TexTransform = &trans;
 
 	// 頂点数の設定
 	this->m_nNumVertex = (nNumBlockH + 1) * (nNumBlockV + 1);
@@ -115,8 +119,6 @@ void FieldMesh::Awake()
  */
 void FieldMesh::Draw()
 {
-	m_View = CCamera::Get()->GetView();
-	m_Proj = CCamera::Get()->GetProj();
 	Mesh::Draw();
 }
 

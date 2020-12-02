@@ -5,14 +5,19 @@
 #include "TitleStart.h"
 #include "UIMesh.h"
 #include "TextureData.h"
+#include "DefaultShaderInfo.h"
+
+static DefaultShaderInfo* m_shader;
 
 void TitleStart::Awake()
 {
 	m_color = Vector3(1,1,1);
 	m_add = 0.01f;
 	m_alpha = 1;
-	m_mesh = AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0)->SetTexture(TextureData::GetData(TEXTURE_PRESSENTER));
-	SetActive(false);
+	m_shader = AddComponent<DefaultShaderInfo>();
+	m_shader->SetTexture(TEXTURE_PRESSENTER);
+	m_mesh = AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0);// ->SetTexture(TextureData::GetData(TEXTURE_PRESSENTER));
+	m_mesh->SetShader(*m_shader);
 }
 
 void TitleStart::Update()
