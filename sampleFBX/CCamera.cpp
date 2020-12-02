@@ -47,27 +47,28 @@ void CCamera::Update()
 	if (this->m_isActive == false) {
 		//return;
 	}
+	const float ratio = 0.92f;
 
 	// 始点、注視点、上方ベクトルを近づける
-	//m_vNowEye.x = m_vNowEye.x * 0.5f + m_vEye.x * 0.5f;
-	//m_vNowEye.y = m_vNowEye.y * 0.5f + m_vEye.y * 0.5f;
-	//m_vNowEye.z = m_vNowEye.z * 0.5f + m_vEye.z * 0.5f;
-	//m_vNowLook.x = m_vNowLook.x * 0.5f + m_vLook.x * 0.5f;
-	//m_vNowLook.y = m_vNowLook.y * 0.5f + m_vLook.y * 0.5f;
-	//m_vNowLook.z = m_vNowLook.z * 0.5f + m_vLook.z * 0.5f;
-	//m_vNowUp.x = m_vNowUp.x * 0.5f + m_vUp.x * 0.5f;
-	//m_vNowUp.y = m_vNowUp.y * 0.5f + m_vUp.y * 0.5f;
-	//m_vNowUp.z = m_vNowUp.z * 0.5f + m_vUp.z * 0.5f;
+	m_vNowEye.x = m_vNowEye.x   * ratio + m_vEye.x  * (1 - ratio);
+	m_vNowEye.y = m_vNowEye.y   * ratio + m_vEye.y  * (1 - ratio);
+	m_vNowEye.z = m_vNowEye.z   * ratio + m_vEye.z  * (1 - ratio);
+	m_vNowLook.x = m_vNowLook.x * ratio + m_vLook.x * (1 - ratio);
+	m_vNowLook.y = m_vNowLook.y * ratio + m_vLook.y * (1 - ratio);
+	m_vNowLook.z = m_vNowLook.z * ratio + m_vLook.z * (1 - ratio);
+	m_vNowUp.x = m_vNowUp.x     * ratio + m_vUp.x   * (1 - ratio);
+	m_vNowUp.y = m_vNowUp.y     * ratio + m_vUp.y   * (1 - ratio);
+	m_vNowUp.z = m_vNowUp.z     * ratio + m_vUp.z   * (1 - ratio);
 
-	m_vNowEye.x  = m_vEye.x;
-	m_vNowEye.y  = m_vEye.y;
-	m_vNowEye.z  = m_vEye.z;
-	m_vNowLook.x = m_vLook.x;
-	m_vNowLook.y = m_vLook.y;
-	m_vNowLook.z = m_vLook.z;
-	m_vNowUp.x   = m_vUp.x;
-	m_vNowUp.y   = m_vUp.y;
-	m_vNowUp.z   = m_vUp.z;
+	//m_vNowEye.x  = m_vEye.x;
+	//m_vNowEye.y  = m_vEye.y;
+	//m_vNowEye.z  = m_vEye.z;
+	//m_vNowLook.x = m_vLook.x;
+	//m_vNowLook.y = m_vLook.y;
+	//m_vNowLook.z = m_vLook.z;
+	//m_vNowUp.x   = m_vUp.x;
+	//m_vNowUp.y   = m_vUp.y;
+	//m_vNowUp.z   = m_vUp.z;
 	XMStoreFloat3(&m_vNowUp, XMVector3Normalize(XMLoadFloat3(&m_vNowUp)));
 	// ビュー変換更新
 	XMStoreFloat4x4(&m_View,

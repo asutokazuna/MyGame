@@ -7,6 +7,10 @@
 #include "input.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
+#include "TitleStateMachine.h"
+#include "GameObject.h"
+#include "TitleRogo.h"
+#include "TitleStart.h"
 
 /**
  * @brief 初期化処理
@@ -14,8 +18,12 @@
  */
 void SceneTitle::Awake()
 {
-	m_UI = ObjectManager::Create<TitleUI>("TitleUI");
+	//m_UI = ObjectManager::Create<TitleUI>("TitleUI");
+	ObjectManager::Create<TitleRogo>("TitleRogo");
+	ObjectManager::Create<TitleStart>("TitleStart");
 
+	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
+	m_stateMachine->AddComponent<TitleStateMachine>();
 }
 
 /**
@@ -24,6 +32,7 @@ void SceneTitle::Awake()
  */
 void SceneTitle::Update()
 {
+	m_stateMachine->GetComponent<TitleStateMachine>()->GetState();
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		SceneManager::Change(SceneManager::ESCENE::SCENE_GAME);
 		return;

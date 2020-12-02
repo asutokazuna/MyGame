@@ -55,18 +55,31 @@ public:
 	 * @return なし
 	 */
 	void Rotate();
-
+	
 	/**
 	 * @brief 移動量のセット
 	 * @return なし
 	 */
 	void SetMove(Vector3 move);
-	
+
+	/**
+	 * @brief 移動量のセット
+	 * @return なし
+	 */
+	void SetMove(Vector3 move, Quaternion quat);
+
+		
 	/**
 	 * @brief 移動量の加算
 	 * @return なし
 	 */
 	void AddMove(Vector3 move);
+	
+	/**
+	 * @brief 移動量の加算
+	 * @return なし
+	 */
+	void AddMove(Vector3 move, Quaternion quat);
 
 	/**
 	 * @brief 当たり判定処理

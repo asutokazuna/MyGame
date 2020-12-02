@@ -45,7 +45,7 @@ struct PLAYER_DEFAULT : public State<PLAYER_STATE>
 			speed += Vector3(SPEED, 0, 0);
 		}
 
-		if (CInput::GetKeyPress(VK_L)) {
+		if (CInput::GetKeyPress(VK_L) || CInput::GetMouseButton(0)) {
 			machine.m_ctrl->Attak();
 		}
 
@@ -94,7 +94,7 @@ struct PLAYER_FD : public State<PLAYER_STATE>
 			speed += Vector3(1, 0, 0);
 		}
 
-		if (CInput::GetKeyPress(VK_L)) {
+		if (CInput::GetKeyPress(VK_L) || CInput::GetMouseButton(0)) {
 			machine.m_ctrl->Attak();
 		}
 
@@ -118,9 +118,11 @@ struct PLAYER_AVOID : public State<PLAYER_STATE>
 	const int WAIT_TIME = 15;
 	int m_waitTime;
 	int dir;
+	Quaternion quat;
 
 	void Init() override
 	{
+		quat = machine.m_ParentTrans->quaternion;
 		m_waitTime = WAIT_TIME;
 		if (CInput::GetKeyPress(VK_E)) {
 			dir = 1;
@@ -134,7 +136,7 @@ struct PLAYER_AVOID : public State<PLAYER_STATE>
 	{
 		speed = Vector3(SPEED, 0, 0) * (float)dir;
 
-		machine.m_move->SetMove(speed);
+		machine.m_move->SetMove(speed, quat);
 
 		if (m_waitTime-- < 0) {
 			machine.GoToState(PLAYER_STATE::E_PLAYER_STATE_DEFAULT);
@@ -148,6 +150,7 @@ struct PLAYER_AVOID : public State<PLAYER_STATE>
  */
 void PlayerStateMachine::Awake()
 {
+	m_ParentTrans = &m_Parent->GetTransform();
 	m_move = m_Parent->GetComponent<PlayerMove>();
 	m_ctrl = m_Parent->GetComponent<PlayerCtrl>();
 	SetState();

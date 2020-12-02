@@ -222,6 +222,9 @@
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
+    <ClCompile Include="TitleRogo.cpp" />
+    <ClCompile Include="TitleStart.cpp" />
+    <ClCompile Include="TitleStateMachine.cpp" />
     <ClCompile Include="TitleUI.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerCtrl.cpp" />
@@ -306,6 +309,9 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureData.h" />
+    <ClInclude Include="TitleRogo.h" />
+    <ClInclude Include="TitleStart.h" />
+    <ClInclude Include="TitleStateMachine.h" />
     <ClInclude Include="TitleUI.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerCtrl.h" />

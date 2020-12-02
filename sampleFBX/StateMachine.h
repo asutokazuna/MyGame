@@ -87,7 +87,7 @@ public:
 	const T& GetState() const 
 	{
 		if (m_state == nullptr) {
-			return nullptr;
+			//return nullptr;
 		}
 		return m_state->GetID();
 	}

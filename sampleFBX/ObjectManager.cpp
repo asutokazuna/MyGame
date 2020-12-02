@@ -50,9 +50,15 @@ void ObjectManager::Update()
 {
 	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
+		if (obj.second.get()->GetActive() == false) {
+			continue;
+		}
 		obj.second.get()->Update();
 	}
 	for (auto& obj : buff) {
+		if (obj.second.get()->GetActive() == false) {
+			continue;
+		}
 		obj.second.get()->LateUpdate();
 	}
 }
@@ -65,9 +71,15 @@ void ObjectManager::Draw()
 {
 	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
+		if (obj.second.get()->GetActive() == false) {
+			continue;
+		}
 		obj.second.get()->Draw();
 	}
 	for (auto& obj : buff) {
+		if (obj.second.get()->GetActive() == false) {
+			continue;
+		}
 		obj.second.get()->DrawAlpha();
 	}
 }

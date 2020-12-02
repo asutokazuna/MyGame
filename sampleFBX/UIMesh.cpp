@@ -6,8 +6,6 @@
 #include "Graphics.h"
 #include "Texture.h"
 #include "GameObject.h"
-
-#define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
  
  /**
   * @brief 初期化処理
@@ -20,8 +18,6 @@ void UIMesh::Awake()
 
 	Mesh::Awake();
 
-	int nNumBlockH = 8, nNumBlockV = 8;
-	float fSizeBlockH = 80, fSizeBlockV = 80;
 	m_transform = &m_Parent->GetTransform();
 	m_transform->position.z = 1;
 	

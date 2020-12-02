@@ -23,6 +23,7 @@ enum PLAYER_STATE
 class PlayerStateMachine:public StateMachine<PLAYER_STATE>
 {
 public:
+	Transform * m_ParentTrans;
 	PlayerMove* m_move;
 	PlayerCtrl* m_ctrl;
 

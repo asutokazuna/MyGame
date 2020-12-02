@@ -6,6 +6,7 @@
 #include "Scene.h"
 
 class TitleUI;
+class GameObject;
 
 /**
  * @class SceneTitle
@@ -15,6 +16,7 @@ class SceneTitle :public CScene
 {
 private:
 	TitleUI* m_UI;
+	GameObject* m_stateMachine;
 public:
 	/**
 	 * @brief 初期化処理

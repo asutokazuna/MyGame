@@ -82,6 +82,13 @@ public:
 		m_isActive = flg;
 	}
 
+	/**
+	 * @brief フラグの取得
+	 * @return オブジェクトが有効ならtrue
+	 */
+	bool GetActive() {
+		return m_isActive;
+	}
 };
 
 // EOF

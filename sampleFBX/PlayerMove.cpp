@@ -63,7 +63,8 @@ void PlayerMove::Update()
 void PlayerMove::LateUpdate()
 {
 	// 座標更新
-	m_Transform->position += m_Transform->GetForward() * m_move.z + m_Transform->GetRight() * m_move.x;
+	//m_Transform->position += m_Transform->GetForward() * m_move.z + m_Transform->GetRight() * m_move.x;
+	m_Transform->position += m_move;
 }
 
 void PlayerMove::Draw()
@@ -122,7 +123,21 @@ void PlayerMove::Avoid()
  */
 void PlayerMove::SetMove(Vector3 move)
 {
-	m_move = move;
+	m_move = m_Transform->GetForward() * move.z + m_Transform->GetRight() * move.x;
+}
+/**
+ * @brief 移動量のセット
+ * @return なし
+ */
+void PlayerMove::SetMove(Vector3 move, Quaternion quat)
+{
+	Vector3 forward = { 0,0,1 };
+	Vector3 right = { 1,0,0 };
+
+	forward = MyMath::PosxQuaternion(forward, quat);
+	right = MyMath::PosxQuaternion(right, quat);
+
+	m_move = forward * move.z + right * move.x;
 }
 
 /**
@@ -131,7 +146,22 @@ void PlayerMove::SetMove(Vector3 move)
  */
 void PlayerMove::AddMove(Vector3 move)
 {
-	m_move = m_move + move;
+	m_move = m_move + (m_Transform->GetForward() * move.z) + (m_Transform->GetRight() * move.x);
+}
+
+/**
+ * @brief 移動量の加算
+ * @return なし
+ */
+void PlayerMove::AddMove(Vector3 move, Quaternion quat)
+{
+	Vector3 forward = { 0,0,1 };
+	Vector3 right = { 1,0,0 };
+
+	forward = MyMath::PosxQuaternion(forward, quat);
+	right = MyMath::PosxQuaternion(right, quat);
+
+	m_move = m_move + (forward * move.z) + (right * move.x);
 }
 
 /**
