@@ -9,15 +9,14 @@ public:
 private:
 	XMFLOAT4X4 m_View;
 	XMFLOAT4X4 m_Proj;
-	Transform* m_transform;
+	XMFLOAT4X4 m_world;
 	Transform* m_TexTransform;
-	MATERIAL* m_material;
 	ID3D11ShaderResourceView* m_pTexture;
 public:
 	DefaultShaderInfo();
 	~DefaultShaderInfo();
 	void Awake();
-	HRESULT Init();
+	//HRESULT Init();
 	void Uninit();
 	void Draw();
 	void SetTexture(int kind);

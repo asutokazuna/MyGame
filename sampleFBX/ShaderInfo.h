@@ -22,8 +22,10 @@ protected:
 	int m_PSMax;	// 最大数
 	ID3D11Buffer** m_VertexConstant;
 	ID3D11Buffer** m_PixelConstant;
+	MATERIAL* m_material;
 public:
 	ShaderInfo();
+	virtual ~ShaderInfo();
 	//
 	//void Uninit();
 
@@ -50,6 +52,10 @@ public:
 	virtual void SetFloat(std::string key, float value){}
 	virtual void SetFloat(std::string key, XMFLOAT4 value){}
 	virtual void SetFloat(std::string key, XMFLOAT4X4 value){}
+
+	MATERIAL& GetMaterial() {
+		return *m_material;
+	}
 };
 
 // EOF

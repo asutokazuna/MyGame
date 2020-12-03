@@ -13,11 +13,6 @@
 #define NUM_VSCONSTANT (1)
 #define NUM_PSCONSTANT (1)
 
-#define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-#define M_SPECULAR		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-#define M_AMBIENT		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-#define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,0.0f)
-
 //*****************************************************************************
 // シェーダに渡す値
 struct SHADER_GLOBAL {
@@ -39,22 +34,14 @@ struct SHADER_GLOBAL2 {
 	XMVECTOR	vEmissive;	// エミッシブ色
 };
 
-DefaultShaderInfo::DefaultShaderInfo():m_TexTransform(nullptr), m_pTexture(nullptr), m_transform(nullptr)
+DefaultShaderInfo::DefaultShaderInfo():m_TexTransform(nullptr), m_pTexture(nullptr)
 {
 	m_VertexConstant = new ID3D11Buffer*();
 	m_PixelConstant = new ID3D11Buffer*();
-	m_material = new MATERIAL();
-	// マテリアルの初期設定
-	m_material->Diffuse = M_DIFFUSE;
-	m_material->Ambient = M_AMBIENT;
-	m_material->Specular = M_SPECULAR;
-	m_material->Power = 0.0f;
-	m_material->Emissive = M_EMISSIVE;
 }
 
 DefaultShaderInfo::~DefaultShaderInfo()
 {
-	delete m_material;
 	delete m_VertexConstant;
 	delete m_PixelConstant;
 }
@@ -74,13 +61,7 @@ void DefaultShaderInfo::Awake()
 	pDevice->CreateBuffer(&bd, nullptr, m_VertexConstant);
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
-}
-
-HRESULT DefaultShaderInfo::Init()
-{
-	if(m_Parent != nullptr)
-	m_transform = &m_Parent->GetTransform();
-	return S_OK;
+	m_world = XMFLOAT4X4();
 }
 
 void DefaultShaderInfo::Uninit()
@@ -106,15 +87,12 @@ void DefaultShaderInfo::Draw()
 
 	static Transform trans;
 	trans.scale = Vector3(200, 200, 0);
-	if(m_transform == nullptr)
-	m_transform = &trans;
 
 	XMFLOAT4X4 f4x4World, f4x4TexWorld;
-	f4x4World = MyMath::StoreXMFloat4x4(*m_transform);
 
 	f4x4TexWorld = MyMath::StoreXMFloat4x4(*m_TexTransform);
 	SHADER_GLOBAL cb;
-	XMMATRIX mtxWorld = XMLoadFloat4x4(&f4x4World);
+	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_world);
 	cb.mWVP = XMMatrixTranspose(mtxWorld *
 		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
 	cb.mW = XMMatrixTranspose(mtxWorld);
@@ -168,6 +146,9 @@ void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 	}
 	else if (key == "View") {
 		m_View = value;
+	}
+	else if (key == "World") {
+		m_world = value;
 	}
 }
 

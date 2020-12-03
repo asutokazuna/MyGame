@@ -17,11 +17,11 @@ void UIMesh::Awake()
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 
-	Mesh::Awake();
-
 	m_transform = &m_Parent->GetTransform();
 	m_transform->position.z = 1;
-	
+
+	Mesh::Awake();
+
 	// オブジェクトの頂点配列を生成
 	m_nNumVertex = 4;
 	VERTEX_3D* pVertexWk = new VERTEX_3D[m_nNumVertex];
@@ -73,14 +73,17 @@ void UIMesh::Awake()
 
 HRESULT UIMesh::Init()
 {
-	XMFLOAT4X4 view, proj;
+	XMFLOAT4X4 view, proj, world;
 
 	XMStoreFloat4x4(&view, XMMatrixLookAtLH(XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f),
 		XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
 	XMStoreFloat4x4(&proj,
 		XMMatrixOrthographicLH(SCREEN_WIDTH, SCREEN_HEIGHT, 1.0f, 100.0f));
-	m_deffault->SetView(view);
-	m_deffault->SetProj(proj);
+	world = MyMath::StoreXMFloat4x4(*m_transform);
+
+	m_default->SetView(view);
+	m_default->SetProj(proj);
+	m_default->SetFloat("World", world);
 
 	if (m_shader != nullptr) {
 		m_shader->SetFloat("View",view);
@@ -95,10 +98,13 @@ HRESULT UIMesh::Init()
  */
 void UIMesh::Draw()
 {
+	XMFLOAT4X4 world;
+	world = MyMath::StoreXMFloat4x4(*m_transform);
 
 	if (m_shader != nullptr) {
 		//m_shader->SetView(view);
-		//m_shader->SetProj(proj);
+		//m_shader->SetProj(proj
+		m_shader->SetFloat("World", world);
 	}
 
 	Mesh::Draw();

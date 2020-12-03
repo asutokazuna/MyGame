@@ -37,7 +37,7 @@ protected:
 	Transform* m_transform;
 	ShaderInfo::MATERIAL* m_material;
 	ShaderInfo* m_shader;	// シェーダー（マテリアルみたいなもの）
-	DefaultShaderInfo* m_deffault;
+	DefaultShaderInfo* m_default;
 
 	ID3D11Buffer* m_pVertexBuffer;
 	ID3D11Buffer* m_pIndexBuffer;

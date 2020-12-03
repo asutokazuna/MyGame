@@ -18,19 +18,21 @@ Mesh::Mesh()
 	m_nNumVertex = 0;
 	m_nNumIndex = 0;
 	m_primitiveType = PT_UNDEFINED;
-	m_deffault = new DefaultShaderInfo();
+	m_default = new DefaultShaderInfo();
+	m_material = &m_default->GetMaterial();
 }
 
 Mesh::~Mesh()
 {
-	delete m_material;
-	delete m_deffault;
+	delete m_default;
 }
 
 void Mesh::Awake()
 {
-	m_deffault->Awake();
-	m_deffault->Init();
+	m_default->m_Parent = this->m_Parent;
+	m_default->Awake();
+	m_default->Init();
+	m_default->SetFloat("World", MyMath::StoreXMFloat4x4(*m_transform));
 }
 
 void Mesh::Uninit()
@@ -62,7 +64,7 @@ void Mesh::Draw()
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	
 	if (m_shader == nullptr) {
-		m_deffault->Draw();
+		m_default->Draw();
 	}
 	// プリミティブ形状をセット
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {

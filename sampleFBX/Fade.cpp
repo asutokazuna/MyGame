@@ -20,7 +20,7 @@ void Fade::InitInst()
 
 	UI = m_Mesh->AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH, SCREEN_HEIGHT, 1)->ChangeColor(0, 0, 0, 1)
 		->ChangePos(0,0,-1);
-
+	m_Mesh->Init();
 	m_Alpha = 0.0f;
 	m_isFade = false;
 	m_State = FADE_NONE;
@@ -32,6 +32,7 @@ void Fade::InitInst()
  */
 void Fade::UninitInst()
 {
+	m_Mesh->Uninit();
 	delete m_Mesh;
 }
 
@@ -66,6 +67,7 @@ void Fade::UpdateInst()
 			m_isFade = false;
 		}
 	}
+	m_Mesh->Update();
 }
 
 /**

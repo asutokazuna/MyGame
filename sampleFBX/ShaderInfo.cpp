@@ -1,8 +1,25 @@
 ﻿#include "ShaderInfo.h"
 #include "ShaderData.h"
 
-ShaderInfo::ShaderInfo(): m_PSKind(0),m_VSKind(0),m_VertexConstant(nullptr), m_PixelConstant(nullptr)
+#define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
+#define M_SPECULAR		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+#define M_AMBIENT		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+#define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,0.0f)
+
+ShaderInfo::ShaderInfo(): m_PSKind(0),m_VSKind(0),m_VertexConstant(nullptr), m_PixelConstant(nullptr), m_material(nullptr)
 {
+	m_material = new MATERIAL;
+	// マテリアルの初期設定
+	m_material->Diffuse = M_DIFFUSE;
+	m_material->Ambient = M_AMBIENT;
+	m_material->Specular = M_SPECULAR;
+	m_material->Power = 0.0f;
+	m_material->Emissive = M_EMISSIVE;
+}
+
+ShaderInfo::~ShaderInfo()
+{
+	delete m_material;
 }
 
 void ShaderInfo::SetShader()

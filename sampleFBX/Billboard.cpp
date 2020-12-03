@@ -23,11 +23,9 @@ void Billboard::Awake()
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 
-	Mesh::Awake();
-	
-	int nNumBlockH = 8, nNumBlockV = 8;
-	float fSizeBlockH = 80, fSizeBlockV = 80;
 	m_transform = &m_Parent->GetTransform();
+
+	Mesh::Awake();
 
 	static Transform trans;
 
@@ -86,28 +84,16 @@ void Billboard::Awake()
  */
 void Billboard::Draw()
 {
-	//CGraphics::SetZWrite(false);
-
-	// 前面カリング (FBXは表裏が反転するため)
-	CGraphics::SetCullMode(CULLMODE_NONE);
-	CGraphics::SetZWrite(true);
-	CGraphics::SetBlendState(BS_NONE);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 
-	// 頂点バッファをセット
-	UINT stride = sizeof(VERTEX_3D);
-	UINT offset = 0;
-	pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-	// インデックスバッファをセット
-	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	m_deffault->Draw();
+	//m_default->Draw();
 	//static Transform temp;
 	//temp.scale.x = 100;
 	//temp.scale.y = 100;
 	//temp.scale.z = 100;
 
-	XMFLOAT4X4 f4x4World, f4x4TexWorld, f4x4View, f4x4Temp;
-	XMMATRIX mtxTemp = XMMatrixIdentity();;
+	XMFLOAT4X4 f4x4World, f4x4View, f4x4Temp;
+	XMMATRIX mtxTemp = XMMatrixIdentity();
 	XMStoreFloat4x4(&f4x4Temp, mtxTemp);
 	f4x4World = MyMath::StoreXMFloat4x4(*m_transform);
 
@@ -125,63 +111,31 @@ void Billboard::Draw()
 
 	mtxTemp = XMLoadFloat4x4(&f4x4Temp);
 
-	//f4x4TexWorld = MyMath::StoreXMFloat4x4(*m_TexTransform);
-	//SHADER_GLOBAL cb;
-	//XMMATRIX mtxWorld = mtxTemp;
+	XMMATRIX mtxWorld = mtxTemp;
 
-	//XMMATRIX
+	XMMATRIX
 
-	//mtxScale = XMMatrixScaling(m_transform->scale.x, m_transform->scale.y, m_transform->scale.z);
-	//mtxWorld = XMMatrixMultiply(mtxScale, mtxWorld);
+	mtxScale = XMMatrixScaling(m_transform->scale.x, m_transform->scale.y, m_transform->scale.z);
+	mtxWorld = XMMatrixMultiply(mtxScale, mtxWorld);
 
-	//XMMATRIX
-	//// 移動を反映
-	//mtxTranslate = XMMatrixTranslation(m_transform->position.x, m_transform->position.y, m_transform->position.z);
-	//mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+	XMMATRIX
+	// 移動を反映
+	mtxTranslate = XMMatrixTranslation(m_transform->position.x, m_transform->position.y, m_transform->position.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
+	XMStoreFloat4x4(&f4x4World, mtxWorld);
+	XMStoreFloat4x4(&f4x4Temp, mtxWorld);
 
-	////mtxWorld = XMMatrixMultiply(mtxWorld, mtxTemp);
+	XMFLOAT4X4 view, proj, world;
 
-	//cb.mWVP = XMMatrixTranspose(mtxWorld *
-	//	XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
-	//cb.mW = XMMatrixTranspose(mtxWorld);
-	//cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
-	//pDeviceContext->UpdateSubresource(m_pConstantBuffer[0], 0, nullptr, &cb, 0, 0);
-	//pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer[0]);
-	//SHADER_GLOBAL2 cb2;
-	//cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
-	//CFbxLight light = CFbxLight();
-	//cb2.vLightDir = XMVectorSet(0,0,0, 0.f);
-	//cb2.vLa = XMLoadFloat4(&light.m_ambient);
-	//cb2.vLd = XMLoadFloat4(&light.m_diffuse);
-	//cb2.vLs = XMLoadFloat4(&light.m_specular);
-	//MATERIAL* pMaterial = m_material;
-	//if (!pMaterial) pMaterial = m_material;
-	//cb2.vDiffuse = XMLoadFloat4(&pMaterial->Diffuse);
-	//cb2.vAmbient = XMVectorSet(pMaterial->Ambient.x, pMaterial->Ambient.y, pMaterial->Ambient.z,
-	//	(m_pTexture != nullptr) ? 1.f : 0.f);
-	//cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
-	//cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
-	//pDeviceContext->UpdateSubresource(m_pConstantBuffer[1], 0, nullptr, &cb2, 0, 0);
-	//pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer[1]);
+	view = CCamera::Get()->GetView();
+	proj = CCamera::Get()->GetProj();
 
-	// プリミティブ形状をセット
-	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,	// 0なら三角形ストリップ
-		D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
-		D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
-		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
-	};
-	pDeviceContext->IASetPrimitiveTopology(pt[m_primitiveType]);
+	m_default->SetFloat("View", view);
+	m_default->SetFloat("Proj", proj);
+	m_default->SetFloat("World", f4x4World);
 
-	// ポリゴンの描画
-	pDeviceContext->DrawIndexed(m_nNumIndex, 0, 0);
-	// 前面カリング (FBXは表裏が反転するため)
-	CGraphics::SetCullMode(CULLMODE_CW);
-
-	CGraphics::SetZWrite(true);
+	Mesh::Draw();
 }
 
 // EOF

@@ -34,7 +34,7 @@ void FieldMesh::Awake()
 		&m_pTexture);	// 読み込むメモリー
 
 
-	m_deffault->SetTexture(m_pTexture);
+	m_default->SetTexture(m_pTexture);
 
 	static Transform trans;
 
