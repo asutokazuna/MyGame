@@ -1,13 +1,8 @@
-﻿#include "DefaultShaderInfo.h"
+﻿#include "ClothShaderInfo.h"
 #include "ShaderData.h"
-#include "Graphics.h"
-#include "MyMath.h"
-#include "Transform.h"
-#include "Mesh.h"
+#include "CCamera.h"
 #include "FbxModel.h"
 #include "Light.h"
-#include "CCamera.h"
-#include "GameObject.h"
 #include "TextureData.h"
 
 #define NUM_VSCONSTANT (1)
@@ -19,6 +14,7 @@ struct SHADER_GLOBAL {
 	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
 	XMMATRIX	mW;			// ワールド行列(転置行列)
 	XMMATRIX	mTex;		// テクスチャ行列(転置行列)
+	XMFLOAT4	value;
 };
 struct SHADER_GLOBAL2 {
 	XMVECTOR	vEye;		// 視点座標
@@ -34,42 +30,48 @@ struct SHADER_GLOBAL2 {
 	XMVECTOR	vEmissive;	// エミッシブ色
 };
 
-DefaultShaderInfo::DefaultShaderInfo():m_TexWorld(XMFLOAT4X4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)), m_pTexture(nullptr)
+static float g_time;
+
+ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr)
 {
-	m_VertexConstant = new ID3D11Buffer*();
+	m_VSKind = ShaderData::VS_CLOTH;
+	m_HSKind = ShaderData::HS_CLOTH;
+	m_DSKind = ShaderData::DS_CLOTH;
+	m_PSKind = ShaderData::PS_CLOTH;
+
+	m_DomainConstant = new ID3D11Buffer*();
 	m_PixelConstant = new ID3D11Buffer*();
-	m_VSKind = ShaderData::VS_VERTEX;
-	m_PSKind = ShaderData::PS_PIXEL;
+	g_time = 0;
 }
 
-DefaultShaderInfo::~DefaultShaderInfo()
+ClothShaderInfo::~ClothShaderInfo()
 {
-	delete m_VertexConstant;
+	delete m_DomainConstant;
 	delete m_PixelConstant;
 }
 
-void DefaultShaderInfo::Awake()
+void ClothShaderInfo::Awake()
 {
-	CreateConstantBuffer<SHADER_GLOBAL>(m_VertexConstant);
-	CreateConstantBuffer<SHADER_GLOBAL2>(&m_PixelConstant[0]);
+	CreateConstantBuffer<SHADER_GLOBAL>(m_DomainConstant);
+	CreateConstantBuffer<SHADER_GLOBAL2>(m_PixelConstant);
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
 }
 
-void DefaultShaderInfo::Uninit()
+void ClothShaderInfo::Uninit()
 {
 	for (int i = 0; i < NUM_VSCONSTANT; ++i) {
-		SAFE_RELEASE(m_VertexConstant[i]);
-	}	
+		SAFE_RELEASE(m_DomainConstant[i]);
+	}
 	for (int i = 0; i < NUM_PSCONSTANT; ++i) {
 		SAFE_RELEASE(m_PixelConstant[i]);
 	}
 }
 
-void DefaultShaderInfo::Draw()
+void ClothShaderInfo::Draw()
 {
-
+	g_time += 0.01f;
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
@@ -77,6 +79,7 @@ void DefaultShaderInfo::Draw()
 
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
 	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
+	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	XMFLOAT4X4 f4x4World, f4x4TexWorld;
 
@@ -87,13 +90,14 @@ void DefaultShaderInfo::Draw()
 		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
 	cb.mW = XMMatrixTranspose(mtxWorld);
 	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
-	pDeviceContext->UpdateSubresource(m_VertexConstant[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &m_VertexConstant[0]);
+	cb.value.x = g_time;
+	pDeviceContext->UpdateSubresource(m_DomainConstant[0], 0, nullptr, &cb, 0, 0);
+	pDeviceContext->DSSetConstantBuffers(0, 1, &m_DomainConstant[0]);
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
 	// とりあえずライト無し
-	cb2.vLightDir = XMVectorSet(0, 0, 0, 0.f);
+	cb2.vLightDir = XMLoadFloat3(&light->m_direction);
 	cb2.vLa = XMLoadFloat4(&light->m_ambient);
 	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
 	cb2.vLs = XMLoadFloat4(&light->m_specular);
@@ -108,28 +112,17 @@ void DefaultShaderInfo::Draw()
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
 }
 
-
-void DefaultShaderInfo::SetTexture(int kind)
+void ClothShaderInfo::SetTexture(int kind)
 {
 	m_pTexture = TextureData::GetInstance().GetData(kind);
 }
 
-void DefaultShaderInfo::SetTexture(ID3D11ShaderResourceView* texture)
+void ClothShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
 {
 	m_pTexture = texture;
 }
 
-void DefaultShaderInfo::SetView(XMFLOAT4X4 view)
-{
-	m_View = view;
-}
-
-void DefaultShaderInfo::SetProj(XMFLOAT4X4 proj)
-{
-	m_Proj = proj;
-}
-
-void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
+void ClothShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 {
 	if (key == "Proj") {
 		m_Proj = value;
@@ -141,5 +134,3 @@ void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 		m_world = value;
 	}
 }
-
-// EOF

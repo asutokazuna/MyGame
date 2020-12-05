@@ -17,11 +17,14 @@ public:
 
 protected:
 	int m_VSKind;	// 頂点シェーダの種類種
+	int m_HSKind;	// ハルシェーダの種類種
+	int m_DSKind;	// ドメインシェーダの種類種
 	int m_PSKind;	// ピクセルシェーダの種類種
 	int m_VSMax;
 	int m_PSMax;	// 最大数
 	ID3D11Buffer** m_VertexConstant;
 	ID3D11Buffer** m_PixelConstant;
+	ID3D11Buffer** m_DomainConstant;
 	MATERIAL* m_material;
 public:
 	ShaderInfo();

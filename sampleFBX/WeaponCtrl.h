@@ -5,6 +5,7 @@
 #pragma once
 #include "Component.h"
 #include "MyMath.h"
+#include <list>
 
 // 前方宣言
 class Missile;

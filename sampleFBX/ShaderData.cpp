@@ -19,6 +19,7 @@ struct SHADER_TABLE {
 SHADER_TABLE VS_Table[] = 
 {
 	{ShaderData::VS_VERTEX, "Vertex"},
+	{ShaderData::VS_CLOTH, "ClothVertex"},
 };
 
 /**
@@ -27,7 +28,24 @@ SHADER_TABLE VS_Table[] =
 SHADER_TABLE PS_Table[] = 
 {
 	{ShaderData::PS_PIXEL, "Pixel"},
+	{ShaderData::PS_CLOTH, "ClothPixel"},
 };
+/**
+ * @biref ピクセルシェーダ
+ */
+SHADER_TABLE HS_Table[] = 
+{
+	{ShaderData::HS_CLOTH, "ClothHull"},
+};
+
+/**
+ * @biref ピクセルシェーダ
+ */
+SHADER_TABLE DS_Table[] = 
+{
+	{ShaderData::DS_CLOTH, "ClothDomain"},
+};
+
 
 /**
  * @brief　データの初期化
@@ -45,6 +63,8 @@ void ShaderData::InitInstance()
 	ID3D11VertexShader* workVs;
 	ID3D11InputLayout* workIl;
 	ID3D11PixelShader* workPs;
+	ID3D11HullShader* workHs;
+	ID3D11DomainShader* workDs;
 
 	for (int i = 0; i < VS_MAX; i++)
 	{
@@ -56,6 +76,16 @@ void ShaderData::InitInstance()
 	{
 		LoadPixelShader(PS_Table[i].filename, &workPs);
 		m_PS.Set(PS_Table[i].type,workPs);
+	}
+	for (int i = 0; i < HS_MAX; i++)
+	{
+		LoadHullShader(HS_Table[i].filename, &workHs);
+		m_HS.Set(HS_Table[i].type, workHs);
+	}
+	for (int i = 0; i < DS_MAX; i++)
+	{
+		LoadDomainShader(DS_Table[i].filename, &workDs);
+		m_DS.Set(DS_Table[i].type, workDs);
 	}
 }
 
@@ -103,6 +133,24 @@ ID3D11PixelShader* ShaderData::GetPixelShader(int kind)
 		return nullptr;
 	}
 	return ShaderData::GetInstance().m_PS.Get(kind);
+}
+
+ID3D11HullShader * ShaderData::GetHullShader(int kind)
+{
+	if (HS_KIND::HS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
+	return ShaderData::GetInstance().m_HS.Get(kind);
+}
+
+ID3D11DomainShader * ShaderData::GetDomainShader(int kind)
+{
+	if (DS_KIND::DS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
+	return ShaderData::GetInstance().m_DS.Get(kind);
 }
 
 /**

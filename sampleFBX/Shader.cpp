@@ -1,4 +1,4 @@
-//#define D3DCOMPILER
+ï»¿//#define D3DCOMPILER
 
 #include <stdio.h>
 #include "Shader.h"
@@ -12,7 +12,7 @@
 #endif
 
 //---------------------------------------------------------------------------------------
-// ƒVƒF[ƒ_“Ç‚İ‚İ
+// ã‚·ã‚§ãƒ¼ãƒ€èª­ã¿è¾¼ã¿
 //---------------------------------------------------------------------------------------
 static LPCWSTR RT_SHADER = L"SHADER";
 static LPCWSTR g_pszCSODir = L"data\\shader\\";
@@ -27,7 +27,7 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 	PBYTE pbData = nullptr;
 	long lSize = 0L;
 
-	// ƒVƒF[ƒ_ƒoƒCƒiƒŠ“Ç‚İ‚İ
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒã‚¤ãƒŠãƒªèª­ã¿è¾¼ã¿
 	HINSTANCE hInst = CWindow::GetHinstance();
 	HWND hWnd = CWindow::GetMainHwnd();
 	if (IS_INTRESOURCE(pwszVSFName)) {
@@ -46,7 +46,7 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 		}
 		if (!pbData) {
 			WCHAR wszMsg[_MAX_PATH * 2];
-			swprintf_s(wszMsg, _countof(wszMsg), L"’¸“_ƒVƒF[ƒ_(ID=%d) “ÇƒGƒ‰[", (int)(ULONG_PTR)pwszVSFName);
+			swprintf_s(wszMsg, _countof(wszMsg), L"é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(ID=%d) èª­è¾¼ã‚¨ãƒ©ãƒ¼", (int)(ULONG_PTR)pwszVSFName);
 			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 			return E_FAIL;
 		}
@@ -67,13 +67,13 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 			fclose(fp);
 		} else {
 #ifdef D3DCOMPILER
-			// hlslƒtƒ@ƒCƒ‹“Ç‚İ‚İAƒuƒƒuì¬
+			// hlslãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ã€ãƒ–ãƒ­ãƒ–ä½œæˆ
 			_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszDir, wszFName, L".hlsl");
 			hr = D3DCompileFromFile(wszPath, nullptr, nullptr,
 				"main", "vs_5_0", 0, 0, &pCompiledShader, nullptr);
 			if (FAILED(hr)) {
 				WCHAR wszMsg[_MAX_PATH * 2];
-				swprintf(wszMsg, _countof(wszMsg), L"’¸“_ƒVƒF[ƒ_(%s) ƒRƒ“ƒpƒCƒ‹¸”s", pwszVSFName);
+				swprintf(wszMsg, _countof(wszMsg), L"é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(%s) ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¤±æ•—", pwszVSFName);
 				MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 				return hr;
 			}
@@ -81,13 +81,13 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 			lSize = (LONG)pCompiledShader->GetBufferSize();
 #else
 			WCHAR wszMsg[_MAX_PATH * 2];
-			swprintf(wszMsg, _countof(wszMsg), L"’¸“_ƒVƒF[ƒ_(%s) “Ç‚İ‚İƒGƒ‰[", pwszVSFName);
+			swprintf(wszMsg, _countof(wszMsg), L"é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(%s) èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼", pwszVSFName);
 			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 			return E_FAIL;
 #endif
 		}
 	}
-	// ƒuƒƒu‚©‚çƒo[ƒeƒbƒNƒXƒVƒF[ƒ_ì¬
+	// ãƒ–ãƒ­ãƒ–ã‹ã‚‰ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ä½œæˆ
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 	hr = pDevice->CreateVertexShader(pbData, lSize, nullptr, ppVertexShader);
 	if (FAILED(hr)) {
@@ -96,12 +96,12 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 		else
 			delete[] pbData;
 		WCHAR wszMsg[_MAX_PATH * 2];
-		swprintf_s(wszMsg, _countof(wszMsg), L"’¸“_ƒVƒF[ƒ_(%s) ¶¬¸”s", pwszVSFName);
+		swprintf_s(wszMsg, _countof(wszMsg), L"é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(%s) ç”Ÿæˆå¤±æ•—", pwszVSFName);
 		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 		return hr;
 	}
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ì’è‹`A¶¬
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®å®šç¾©ã€ç”Ÿæˆ
 	static const D3D11_INPUT_ELEMENT_DESC layout[] = {
 		{"POSITION",    0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                            D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL",      0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
@@ -120,7 +120,7 @@ HRESULT LoadVertexShader(LPCWSTR pwszVSFName, ID3D11VertexShader** ppVertexShade
 		else
 			delete[] pbData;
 		WCHAR wszMsg[_MAX_PATH * 2];
-		swprintf_s(wszMsg, _countof(wszMsg), L"’¸“_ƒtƒH[ƒ}ƒbƒg¶¬¸”s(%s)", pwszVSFName);
+		swprintf_s(wszMsg, _countof(wszMsg), L"é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆç”Ÿæˆå¤±æ•—(%s)", pwszVSFName);
 		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 		return hr;
 	}
@@ -142,7 +142,7 @@ HRESULT LoadPixelShader(LPCWSTR pwszPSFName, ID3D11PixelShader** ppPixelShader)
 	HINSTANCE hInst = CWindow::GetHinstance();
 	HWND hWnd = CWindow::GetMainHwnd();
 
-	// ƒVƒF[ƒ_ƒoƒCƒiƒŠ“Ç‚İ‚İ
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒã‚¤ãƒŠãƒªèª­ã¿è¾¼ã¿
 	if (IS_INTRESOURCE(pwszPSFName)) {
 		HRSRC hResInfo = FindResourceW(hInst, pwszPSFName, RT_SHADER);
 		if (hResInfo) {
@@ -159,7 +159,7 @@ HRESULT LoadPixelShader(LPCWSTR pwszPSFName, ID3D11PixelShader** ppPixelShader)
 		}
 		if (!pbData) {
 			WCHAR wszMsg[_MAX_PATH * 2];
-			swprintf_s(wszMsg, _countof(wszMsg), L"ƒsƒNƒZƒ‹ƒVƒF[ƒ_(ID=%d) “ÇƒGƒ‰[", (int)(ULONG_PTR)pwszPSFName);
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€(ID=%d) èª­è¾¼ã‚¨ãƒ©ãƒ¼", (int)(ULONG_PTR)pwszPSFName);
 			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 			return E_FAIL;
 		}
@@ -180,13 +180,13 @@ HRESULT LoadPixelShader(LPCWSTR pwszPSFName, ID3D11PixelShader** ppPixelShader)
 			fclose(fp);
 		} else {
 #ifdef D3DCOMPILER
-			// ƒuƒƒu‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_ì¬
+			// ãƒ–ãƒ­ãƒ–ã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ä½œæˆ
 			_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszDir, wszFName, L".hlsl");
 			hr = D3DCompileFromFile(wszPath, nullptr, nullptr,
 				"main", "ps_5_0", 0, 0, &pCompiledShader, nullptr);
 			if (FAILED(hr)) {
 				WCHAR wszMsg[_MAX_PATH * 2];
-				swprintf_s(wszMsg, _countof(wszMsg), L"ƒsƒNƒZƒ‹ƒVƒF[ƒ_(%s) ƒRƒ“ƒpƒCƒ‹¸”s", pwszPSFName);
+				swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¤±æ•—", pwszPSFName);
 				MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 				return hr;
 			}
@@ -194,7 +194,7 @@ HRESULT LoadPixelShader(LPCWSTR pwszPSFName, ID3D11PixelShader** ppPixelShader)
 			lSize = (LONG)pCompiledShader->GetBufferSize();
 #else
 			WCHAR wszMsg[_MAX_PATH * 2];
-			swprintf_s(wszMsg, _countof(wszMsg), L"ƒsƒNƒZƒ‹ƒVƒF[ƒ_(%s) “Ç‚İ‚İƒGƒ‰[", pwszPSFName);
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼", pwszPSFName);
 			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 			return E_FAIL;
 #endif
@@ -208,7 +208,179 @@ HRESULT LoadPixelShader(LPCWSTR pwszPSFName, ID3D11PixelShader** ppPixelShader)
 		delete[] pbData;
 	if (FAILED(hr)) {
 		WCHAR wszMsg[_MAX_PATH * 2];
-		swprintf_s(wszMsg, _countof(wszMsg), L"ƒsƒNƒZƒ‹ƒVƒF[ƒ_(%s) ¶¬¸”s", pwszPSFName);
+		swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) ç”Ÿæˆå¤±æ•—", pwszPSFName);
+		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+		return hr;
+	}
+	return hr;
+}
+
+HRESULT LoadHullShader(LPCWSTR pwszPSFName, ID3D11HullShader** ppPixelShader)
+{
+	WCHAR wszPath[_MAX_PATH], wszDrive[_MAX_DRIVE],
+		wszDir[_MAX_DIR], wszFName[_MAX_FNAME], wszCSODir[_MAX_DIR];
+	HRESULT hr = S_OK;
+	ID3DBlob* pCompiledShader = nullptr;
+	PBYTE pbData = nullptr;
+	long lSize = 0L;
+	HINSTANCE hInst = CWindow::GetHinstance();
+	HWND hWnd = CWindow::GetMainHwnd();
+
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒã‚¤ãƒŠãƒªèª­ã¿è¾¼ã¿
+	if (IS_INTRESOURCE(pwszPSFName)) {
+		HRSRC hResInfo = FindResourceW(hInst, pwszPSFName, RT_SHADER);
+		if (hResInfo) {
+			HGLOBAL hResData = LoadResource(hInst, hResInfo);
+			if (hResData) {
+				lSize = SizeofResource(hInst, hResInfo);
+				LPVOID pMem = LockResource(hResData);
+				if (pMem) {
+					pbData = new BYTE[lSize];
+					CopyMemory(pbData, pMem, lSize);
+					//UnlockResource(hResData);
+				}
+			}
+		}
+		if (!pbData) {
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€(ID=%d) èª­è¾¼ã‚¨ãƒ©ãƒ¼", (int)(ULONG_PTR)pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+		}
+	}
+	else {
+		_wsplitpath_s(pwszPSFName, wszDrive, _countof(wszDrive),
+			wszDir, _countof(wszDir), wszFName, _countof(wszFName), nullptr, 0);
+		wcscpy_s(wszCSODir, _countof(wszCSODir), wszDir);
+		wcscat_s(wszCSODir, _countof(wszCSODir), g_pszCSODir);
+		_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszCSODir, wszFName, L".cso");
+		FILE* fp = nullptr;
+		_wfopen_s(&fp, wszPath, L"rb");
+		if (fp) {
+			fseek(fp, 0L, SEEK_END);
+			lSize = ftell(fp);
+			fseek(fp, 0L, SEEK_SET);
+			pbData = new BYTE[lSize];
+			fread(pbData, lSize, 1, fp);
+			fclose(fp);
+		}
+		else {
+#ifdef D3DCOMPILER
+			// ãƒ–ãƒ­ãƒ–ã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ä½œæˆ
+			_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszDir, wszFName, L".hlsl");
+			hr = D3DCompileFromFile(wszPath, nullptr, nullptr,
+				"main", "ps_5_0", 0, 0, &pCompiledShader, nullptr);
+			if (FAILED(hr)) {
+				WCHAR wszMsg[_MAX_PATH * 2];
+				swprintf_s(wszMsg, _countof(wszMsg), L"ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¤±æ•—", pwszPSFName);
+				MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+				return hr;
+			}
+			pbData = (PBYTE)pCompiledShader->GetBufferPointer();
+			lSize = (LONG)pCompiledShader->GetBufferSize();
+#else
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼", pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+#endif
+		}
+	}
+	ID3D11Device* pDevice = CGraphics::GetDevice();
+	hr = pDevice->CreateHullShader(pbData, lSize, nullptr, ppPixelShader);
+	if (pCompiledShader)
+		pCompiledShader->Release();
+	else
+		delete[] pbData;
+	if (FAILED(hr)) {
+		WCHAR wszMsg[_MAX_PATH * 2];
+		swprintf_s(wszMsg, _countof(wszMsg), L"ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) ç”Ÿæˆå¤±æ•—", pwszPSFName);
+		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+		return hr;
+	}
+	return hr;
+}
+
+HRESULT LoadDomainShader(LPCWSTR pwszPSFName, ID3D11DomainShader** ppPixelShader)
+{
+	WCHAR wszPath[_MAX_PATH], wszDrive[_MAX_DRIVE],
+		wszDir[_MAX_DIR], wszFName[_MAX_FNAME], wszCSODir[_MAX_DIR];
+	HRESULT hr = S_OK;
+	ID3DBlob* pCompiledShader = nullptr;
+	PBYTE pbData = nullptr;
+	long lSize = 0L;
+	HINSTANCE hInst = CWindow::GetHinstance();
+	HWND hWnd = CWindow::GetMainHwnd();
+
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒã‚¤ãƒŠãƒªèª­ã¿è¾¼ã¿
+	if (IS_INTRESOURCE(pwszPSFName)) {
+		HRSRC hResInfo = FindResourceW(hInst, pwszPSFName, RT_SHADER);
+		if (hResInfo) {
+			HGLOBAL hResData = LoadResource(hInst, hResInfo);
+			if (hResData) {
+				lSize = SizeofResource(hInst, hResInfo);
+				LPVOID pMem = LockResource(hResData);
+				if (pMem) {
+					pbData = new BYTE[lSize];
+					CopyMemory(pbData, pMem, lSize);
+					//UnlockResource(hResData);
+				}
+			}
+		}
+		if (!pbData) {
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€(ID=%d) èª­è¾¼ã‚¨ãƒ©ãƒ¼", (int)(ULONG_PTR)pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+		}
+	}
+	else {
+		_wsplitpath_s(pwszPSFName, wszDrive, _countof(wszDrive),
+			wszDir, _countof(wszDir), wszFName, _countof(wszFName), nullptr, 0);
+		wcscpy_s(wszCSODir, _countof(wszCSODir), wszDir);
+		wcscat_s(wszCSODir, _countof(wszCSODir), g_pszCSODir);
+		_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszCSODir, wszFName, L".cso");
+		FILE* fp = nullptr;
+		_wfopen_s(&fp, wszPath, L"rb");
+		if (fp) {
+			fseek(fp, 0L, SEEK_END);
+			lSize = ftell(fp);
+			fseek(fp, 0L, SEEK_SET);
+			pbData = new BYTE[lSize];
+			fread(pbData, lSize, 1, fp);
+			fclose(fp);
+		}
+		else {
+#ifdef D3DCOMPILER
+			// ãƒ–ãƒ­ãƒ–ã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ä½œæˆ
+			_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszDir, wszFName, L".hlsl");
+			hr = D3DCompileFromFile(wszPath, nullptr, nullptr,
+				"main", "ps_5_0", 0, 0, &pCompiledShader, nullptr);
+			if (FAILED(hr)) {
+				WCHAR wszMsg[_MAX_PATH * 2];
+				swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€(%s) ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¤±æ•—", pwszPSFName);
+				MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+				return hr;
+			}
+			pbData = (PBYTE)pCompiledShader->GetBufferPointer();
+			lSize = (LONG)pCompiledShader->GetBufferSize();
+#else
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€(%s) èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼", pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+#endif
+		}
+	}
+	ID3D11Device* pDevice = CGraphics::GetDevice();
+	hr = pDevice->CreateDomainShader(pbData, lSize, nullptr, ppPixelShader);
+	if (pCompiledShader)
+		pCompiledShader->Release();
+	else
+		delete[] pbData;
+	if (FAILED(hr)) {
+		WCHAR wszMsg[_MAX_PATH * 2];
+		swprintf_s(wszMsg, _countof(wszMsg), L"ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€(%s) ç”Ÿæˆå¤±æ•—", pwszPSFName);
 		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
 		return hr;
 	}
@@ -220,10 +392,10 @@ HRESULT LoadShader(LPCWSTR pwszVSFName, LPCWSTR pwszPSFName,
 	ID3D11PixelShader** ppPixelShader,
 	const D3D11_INPUT_ELEMENT_DESC* pInpElemDesc, UINT uNumElem)
 {
-	// ’¸“_ƒVƒF[ƒ_“Ç‚İ‚İ
+	// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€èª­ã¿è¾¼ã¿
 	HRESULT hr = LoadVertexShader(pwszVSFName, ppVertexShader, ppVertexLayout, pInpElemDesc, uNumElem);
 	if (FAILED(hr)) return hr;
-	// ƒsƒNƒZƒ‹ƒVƒF[ƒ_“Ç‚İ‚İ
+	// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€èª­ã¿è¾¼ã¿
 	return LoadPixelShader(pwszPSFName, ppPixelShader);
 }
 
@@ -251,6 +423,30 @@ HRESULT LoadPixelShader(LPCSTR pszPSFName, ID3D11PixelShader** ppPixelShader)
 	if (nLen <= 0) return E_FAIL;
 	wszPSFName[nLen] = L'\0';
 	return LoadPixelShader(wszPSFName, ppPixelShader);
+}
+
+HRESULT LoadHullShader(LPCSTR pszPSFName, ID3D11HullShader ** ppPixelShader)
+{
+	if (IS_INTRESOURCE(pszPSFName)) {
+		return LoadHullShader((LPCWSTR)pszPSFName, ppPixelShader);
+	}
+	WCHAR wszPSFName[_MAX_PATH];
+	int nLen = MultiByteToWideChar(CP_ACP, 0, pszPSFName, lstrlenA(pszPSFName), wszPSFName, _countof(wszPSFName));
+	if (nLen <= 0) return E_FAIL;
+	wszPSFName[nLen] = L'\0';
+	return LoadHullShader(wszPSFName, ppPixelShader);
+}
+
+HRESULT LoadDomainShader(LPCSTR pszPSFName, ID3D11DomainShader ** ppPixelShader)
+{
+	if (IS_INTRESOURCE(pszPSFName)) {
+		return LoadDomainShader((LPCWSTR)pszPSFName, ppPixelShader);
+	}
+	WCHAR wszPSFName[_MAX_PATH];
+	int nLen = MultiByteToWideChar(CP_ACP, 0, pszPSFName, lstrlenA(pszPSFName), wszPSFName, _countof(wszPSFName));
+	if (nLen <= 0) return E_FAIL;
+	wszPSFName[nLen] = L'\0';
+	return LoadDomainShader(wszPSFName, ppPixelShader);
 }
 
 HRESULT LoadShader(LPCSTR pszVSFName, LPCSTR pszPSFName,

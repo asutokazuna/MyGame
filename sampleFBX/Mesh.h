@@ -30,6 +30,7 @@ protected:
 		PT_LINESTRIP,
 		PT_TRIANGLE,
 		PT_TRIANGLESTRIP,
+		PT_4CTRL,
 
 		MAX_PRIMITIVETYPE
 	};
@@ -77,6 +78,9 @@ public:
 	Mesh* ChangePos(XMFLOAT3 pos);
 	Mesh* ChangePos(float x, float y, float z);
 	void SetShader(ShaderInfo& shader);
+	void SetPrimitive(int kind) {
+		m_primitiveType = (ePrimitiveType)kind;
+	}
 };
 
 // EOF

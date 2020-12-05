@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file ShaderData
- * @brief ƒVƒF[ƒ_[ƒf[ƒ^ƒNƒ‰ƒX
+ * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include <d3d11.h>
@@ -9,75 +9,105 @@
 #include "Data.h"
 
 /**
- * @class ƒVƒF[ƒ_[ƒf[ƒ^‚ğŠi”[‚·‚éƒNƒ‰ƒX
+ * @class ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ã‚¯ãƒ©ã‚¹
  */
 class ShaderData: public Singleton<ShaderData>
 {
 public:
-	friend class Singleton<ShaderData>;		//!< ƒVƒ“ƒOƒ‹ƒgƒ“‚Å‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ì¶¬—p
+	friend class Singleton<ShaderData>;		//!< ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã§ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç”Ÿæˆç”¨
 
 private:
-	DXData<ID3D11VertexShader> m_VS;		//!< ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[
-	DXData<ID3D11PixelShader> m_PS;		//!< ƒsƒNƒZƒ‹ƒVƒF[ƒ_[
-	DXData<ID3D11InputLayout> m_IL;		//!< ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg
+	DXData<ID3D11VertexShader>	m_VS;		//!< ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	DXData<ID3D11PixelShader>	m_PS;		//!< ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	DXData<ID3D11HullShader>	m_HS;		//!< ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	DXData<ID3D11DomainShader>	m_DS;		//!< ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	DXData<ID3D11InputLayout>	m_IL;		//!< ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 
 private:
 
 	/**
-	 * @brief@ƒf[ƒ^‚Ì‰Šú‰»
-	 * @return ‚È‚µ
+	 * @briefã€€ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	void InitInstance();
 	
 public:
 	/**
-	 * @enum ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[‚Ìí—Ş
+	 * @enum ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ç¨®é¡
 	 */
 	enum VS_KIND
 	{
 		VS_VERTEX,
+		VS_CLOTH,
 		VS_MAX
 	};
 
 	/**
-	 * @enum ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ìí—Ş
+	 * @enum ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ç¨®é¡
 	 */
 	enum PS_KIND
 	{
 		PS_PIXEL,
+		PS_CLOTH,
 		PS_MAX
 	};
 
+	enum HS_KIND
+	{
+		HS_CLOTH,
+		HS_MAX
+	};
+
+	enum DS_KIND
+	{
+		DS_CLOTH,
+		DS_MAX
+	};
+
 	/**
-	 * @biref ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @biref åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	static void Init();
 
 	/**
-	 * @brief I—¹ˆ—
-	 * @return ‚È‚µ
+	 * @brief çµ‚äº†å‡¦ç†
+	 * @return ãªã—
 	 */
 	static void Uninit();
 
 	/**
-	 * @brief ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[‚Ìæ“¾
-	 * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
-	 * @return ˆø”‚É‘Î‰‚µ‚½ƒVƒF[ƒ_[ƒf[ƒ^
+	 * @brief ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+	 * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+	 * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
 	 */
 	static ID3D11VertexShader* GetVertexShader(int kind);
 
 	/**
-	 * @brief ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ìæ“¾
-	 * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
-	 * @return ˆø”‚É‘Î‰‚µ‚½ƒVƒF[ƒ_[ƒf[ƒ^
+	 * @brief ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+	 * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+	 * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
 	 */
 	static ID3D11PixelShader* GetPixelShader(int kind);
 
 	/**
-	 * @brief ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg‚Ìæ“¾
-	 * @param[in] æ“¾‚µ‚½‚¢í—Ş‚Ìenum
-	 * @return ˆø”‚É‘Î‰‚µ‚½ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg
+	 * @brief ãƒãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+	 * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+	 * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
+	 */
+	static ID3D11HullShader* GetHullShader(int kind);
+
+	/**
+	 * @brief ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å–å¾—
+	 * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+	 * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
+	 */
+	static ID3D11DomainShader* GetDomainShader(int kind);
+
+	/**
+	 * @brief ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®å–å¾—
+	 * @param[in] å–å¾—ã—ãŸã„ç¨®é¡ã®enum
+	 * @return å¼•æ•°ã«å¯¾å¿œã—ãŸã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	 */
 	static ID3D11InputLayout* GetInputLayout(int kind);
 };
