@@ -10,15 +10,17 @@
 #include "GameObject.h"
 #include "TitleRogo.h"
 #include "TitleStart.h"
-
+#include "StarParticle.h"
+#include "StarCreater.h"
 /**
  * @brief 初期化処理
  * @return なし
  */
 void SceneTitle::Awake()
 {
-	ObjectManager::Create<TitleRogo>("TitleRogo");
+	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 	ObjectManager::Create<TitleStart>("TitleStart");
+	ObjectManager::Create<TitleRogo>("TitleRogo");
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
 	m_stateMachine->AddComponent<TitleStateMachine>();

@@ -42,6 +42,7 @@ ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0
 	m_DomainConstant = new ID3D11Buffer*();
 	m_PixelConstant = new ID3D11Buffer*();
 	g_time = 0;
+	m_power = 0;
 }
 
 ClothShaderInfo::~ClothShaderInfo()
@@ -57,6 +58,7 @@ void ClothShaderInfo::Awake()
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
+	m_power = 0.1f;
 }
 
 void ClothShaderInfo::Uninit()
@@ -69,7 +71,7 @@ void ClothShaderInfo::Uninit()
 	}
 }
 
-void ClothShaderInfo::Draw()
+void ClothShaderInfo::UpdateConstant()
 {
 	g_time += 0.01f;
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
@@ -91,13 +93,15 @@ void ClothShaderInfo::Draw()
 	cb.mW = XMMatrixTranspose(mtxWorld);
 	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
 	cb.value.x = g_time;
+	cb.value.y = m_power;
 	pDeviceContext->UpdateSubresource(m_DomainConstant[0], 0, nullptr, &cb, 0, 0);
 	pDeviceContext->DSSetConstantBuffers(0, 1, &m_DomainConstant[0]);
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
 	// とりあえずライト無し
-	cb2.vLightDir = XMLoadFloat3(&light->m_direction);
+	//cb2.vLightDir = XMLoadFloat3(&light->m_direction);
+	cb2.vLightDir = XMVectorSet(0, 0, 1, 0.f);
 	cb2.vLa = XMLoadFloat4(&light->m_ambient);
 	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
 	cb2.vLs = XMLoadFloat4(&light->m_specular);
@@ -120,6 +124,13 @@ void ClothShaderInfo::SetTexture(int kind)
 void ClothShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
 {
 	m_pTexture = texture;
+}
+
+void ClothShaderInfo::SetFloat(std::string key, float value)
+{
+	if (key == "Power") {
+		m_power = value;
+	}
 }
 
 void ClothShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)

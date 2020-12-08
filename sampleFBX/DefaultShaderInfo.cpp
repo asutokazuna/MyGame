@@ -67,7 +67,7 @@ void DefaultShaderInfo::Uninit()
 	}
 }
 
-void DefaultShaderInfo::Draw()
+void DefaultShaderInfo::UpdateConstant()
 {
 
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
@@ -78,15 +78,13 @@ void DefaultShaderInfo::Draw()
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
 	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
 
-	XMFLOAT4X4 f4x4World, f4x4TexWorld;
-
-	f4x4TexWorld = m_TexWorld;
+	m_TexWorld;
 	SHADER_GLOBAL cb;
 	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_world);
 	cb.mWVP = XMMatrixTranspose(mtxWorld *
 		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
 	cb.mW = XMMatrixTranspose(mtxWorld);
-	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
+	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&m_TexWorld));
 	pDeviceContext->UpdateSubresource(m_VertexConstant[0], 0, nullptr, &cb, 0, 0);
 	pDeviceContext->VSSetConstantBuffers(0, 1, &m_VertexConstant[0]);
 	SHADER_GLOBAL2 cb2;
@@ -109,9 +107,11 @@ void DefaultShaderInfo::Draw()
 }
 
 
-void DefaultShaderInfo::SetTexture(int kind)
+DefaultShaderInfo* DefaultShaderInfo::SetTexture(int kind)
 {
 	m_pTexture = TextureData::GetInstance().GetData(kind);
+
+	return this;
 }
 
 void DefaultShaderInfo::SetTexture(ID3D11ShaderResourceView* texture)

@@ -223,6 +223,10 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderInfo.cpp" />
+    <ClCompile Include="StarColor.cpp" />
+    <ClCompile Include="StarCreater.cpp" />
+    <ClCompile Include="StarMove.cpp" />
+    <ClCompile Include="StarParticle.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TitleRogo.cpp" />
@@ -312,6 +316,10 @@
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderInfo.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="StarColor.h" />
+    <ClInclude Include="StarCreater.h" />
+    <ClInclude Include="StarMove.h" />
+    <ClInclude Include="StarParticle.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureData.h" />

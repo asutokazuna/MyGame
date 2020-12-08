@@ -51,7 +51,7 @@ void SceneManager::Init()
 
 	m_nowScene = new SceneTitle();
 	m_nowScene->Awake();
-	ObjectManager::GetInstance().Awake();
+	//ObjectManager::GetInstance().Awake();
 
 	m_nowScene->Init();
 	ObjectManager::GetInstance().Init();
@@ -166,7 +166,7 @@ void SceneManager::Change()
 	}
 	SetDefCamera();
 	m_nowScene->Awake();
-	ObjectManager::GetInstance().Awake();
+	//ObjectManager::GetInstance().Awake();
 
 	m_nowScene->Init();
 

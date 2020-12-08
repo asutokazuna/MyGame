@@ -39,47 +39,57 @@ void ShaderInfo::SetShader()
 	pDeviceContext->IASetInputLayout(il);
 
 }
-//
-//Mesh* Mesh::ChangeColor(XMFLOAT3 color)
-//{
-//	m_material->Diffuse.x = color.x;
-//	m_material->Diffuse.y = color.y;
-//	m_material->Diffuse.z = color.z;
-//
-//	return this;
-//}
-//
-//Mesh* Mesh::ChangeColor(Vector3 color)
-//{
-//	m_material->Diffuse.x = color.x;
-//	m_material->Diffuse.y = color.y;
-//	m_material->Diffuse.z = color.z;
-//
-//	return this;
-//}
-//
-//Mesh * Mesh::ChangeColor(float r, float g, float b)
-//{
-//	m_material->Diffuse.x = r;
-//	m_material->Diffuse.y = g;
-//	m_material->Diffuse.z = b;
-//
-//	return this;
-//}
-//
-//Mesh* Mesh::ChangeColor(XMFLOAT4 color)
-//{
-//	m_material->Diffuse = color;
-//
-//	return this;
-//}
-//
-//Mesh * Mesh::ChangeColor(float r, float g, float b, float a)
-//{
-//	m_material->Diffuse.x = r;
-//	m_material->Diffuse.y = g;
-//	m_material->Diffuse.z = b;
-//	m_material->Diffuse.w = a;
-//
-//	return this;
-//}
+
+ShaderInfo* ShaderInfo::ChangeColor(XMFLOAT3 color)
+{
+	m_material->Diffuse.x = color.x;
+	m_material->Diffuse.y = color.y;
+	m_material->Diffuse.z = color.z;
+
+	return this;
+}
+
+ShaderInfo* ShaderInfo::ChangeColor(Vector3 color)
+{
+	m_material->Diffuse.x = color.x;
+	m_material->Diffuse.y = color.y;
+	m_material->Diffuse.z = color.z;
+
+	return this;
+}
+
+ShaderInfo * ShaderInfo::ChangeColor(float r, float g, float b)
+{
+	m_material->Diffuse.x = r;
+	m_material->Diffuse.y = g;
+	m_material->Diffuse.z = b;
+
+	return this;
+}
+
+ShaderInfo* ShaderInfo::ChangeColor(XMFLOAT4 color)
+{
+	m_material->Diffuse = color;
+
+	return this;
+}
+
+ShaderInfo * ShaderInfo::ChangeColor(float r, float g, float b, float a)
+{
+	m_material->Diffuse.x = r;
+	m_material->Diffuse.y = g;
+	m_material->Diffuse.z = b;
+	m_material->Diffuse.w = a;
+
+	return this;
+}
+
+ShaderInfo* ShaderInfo::ChangeAlpha(float alpha)
+{
+	m_material->Diffuse.w = alpha;
+
+	return this;
+}
+
+
+// EOF

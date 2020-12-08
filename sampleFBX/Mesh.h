@@ -46,6 +46,7 @@ protected:
 	int m_nNumIndex;
 
 	ePrimitiveType m_primitiveType;
+	int m_BSKind;
 
 public:
 	Mesh();
@@ -80,6 +81,13 @@ public:
 	void SetShader(ShaderInfo& shader);
 	void SetPrimitive(int kind) {
 		m_primitiveType = (ePrimitiveType)kind;
+	}
+	void SetBlendState(int kind) {
+		m_BSKind = kind;
+	}
+
+	ShaderInfo* GetShader() {
+		return m_shader;
 	}
 };
 

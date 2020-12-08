@@ -91,6 +91,9 @@
     <Filter Include="ソース ファイル\Game\Weapon">
       <UniqueIdentifier>{6526827e-066c-4c69-8b58-2452828318ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ShaderInfo">
+      <UniqueIdentifier>{8db48562-2bdf-49a3-b27f-baa868a73e69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -291,9 +294,6 @@
     <ClCompile Include="WeaponCtrl.cpp">
       <Filter>ソース ファイル\Game\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="BattleCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -306,34 +306,49 @@
     <ClCompile Include="DebugBox.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CameraStateMachine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerShotDir.cpp">
       <Filter>ソース ファイル\Game\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>ソース ファイル\Game\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="TitleStateMachine.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleRogo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleStart.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraStateMachine.cpp">
+      <Filter>ソース ファイル\Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleCamera.cpp">
+      <Filter>ソース ファイル\Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClCompile>
     <ClCompile Include="ShaderInfo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
     <ClCompile Include="DefaultShaderInfo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
     <ClCompile Include="ClothShaderInfo.cpp">
+      <Filter>ソース ファイル\ShaderInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="StarParticle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StarMove.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StarCreater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StarColor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -600,6 +615,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ClothShaderInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StarParticle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StarMove.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StarCreater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StarColor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

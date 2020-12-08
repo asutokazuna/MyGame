@@ -36,6 +36,7 @@ public:
 		std::unique_ptr<T> work(new T());
 
 		ObjectManager::GetInstance().m_ObjList[name] = std::move(work);
+		ObjectManager::GetInstance().m_ObjList[name]->Awake();
 		return dynamic_cast<T*>(ObjectManager::GetInstance().m_ObjList[name].get());
 	}
 

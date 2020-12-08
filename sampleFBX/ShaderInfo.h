@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Graphics.h"
 #include <string>
+#include "MyMath.h"
 
 class ShaderInfo :public Component
 {
@@ -34,6 +35,8 @@ public:
 
 	//virtual void Draw() = 0;
 
+	virtual void UpdateConstant(){}
+
 	template<typename T>
 	bool CreateConstantBuffer(ID3D11Buffer** buffer)
 	{
@@ -51,6 +54,18 @@ public:
 	}
 
 	void SetShader();
+
+	ShaderInfo * ChangeColor(XMFLOAT3 color);
+
+	ShaderInfo * ChangeColor(Vector3 color);
+
+	ShaderInfo * ChangeColor(float r, float g, float b);
+
+	ShaderInfo * ChangeColor(XMFLOAT4 color);
+
+	ShaderInfo * ChangeColor(float r, float g, float b, float a);
+
+	ShaderInfo * ChangeAlpha(float alpha);
 
 	virtual void SetFloat(std::string key, float value){}
 	virtual void SetFloat(std::string key, XMFLOAT4 value){}

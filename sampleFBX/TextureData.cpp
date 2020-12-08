@@ -8,9 +8,11 @@
 
 #define	TEXTURE_NAME_FIELD		L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_PressSpace	L"data/texture/Press_Space.png"	// 読み込むテクスチャファイル名
-#define	TEXTURE_NAME_shooting	L"data/texture/shooting.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_shooting	L"data/texture/O5X9EF0.jpg"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_WIN		L"data/texture/win.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_LOSE		L"data/texture/Lose.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_STAR		L"data/texture/Star.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_EFFECT		L"data/texture/effect000.jpg"	// 読み込むテクスチャファイル名
 
 /**
  * @brief テクスチャテーブル構造体
@@ -30,6 +32,8 @@ static TEXTURE_TABLE m_table[TEXTURE_MAX] = {
 	{ TEXTURE_NAME_shooting, TEXTURE_TITLE_ROGO},
 	{ TEXTURE_NAME_WIN, TEXTURE_WIN},
 	{ TEXTURE_NAME_LOSE, TEXTURE_LOSE},
+	{ TEXTURE_NAME_STAR, TEXTURE_STAR},
+	{ TEXTURE_NAME_EFFECT, TEXTURE_EFFECT },
 };
 
 /**

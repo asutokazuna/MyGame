@@ -20,6 +20,7 @@ Mesh::Mesh()
 	m_primitiveType = PT_UNDEFINED;
 	m_default = new DefaultShaderInfo();
 	m_material = &m_default->GetMaterial();
+	m_BSKind = BS_ALPHABLEND;
 }
 
 Mesh::~Mesh()
@@ -52,8 +53,8 @@ void Mesh::Update()
 void Mesh::Draw()
 {	
 	CGraphics::SetCullMode(CULLMODE_NONE);
-	CGraphics::SetZWrite(true);
-	CGraphics::SetBlendState(BS_ALPHABLEND);
+	CGraphics::SetZWrite(false);
+	CGraphics::SetBlendState(m_BSKind);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 
 	// 頂点バッファをセット
@@ -64,7 +65,10 @@ void Mesh::Draw()
 	pDeviceContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	
 	if (m_shader == nullptr) {
-		m_default->Draw();
+		m_default->UpdateConstant();
+	}
+	else {
+		m_shader->UpdateConstant();
 	}
 	// プリミティブ形状をセット
 	static const D3D11_PRIMITIVE_TOPOLOGY pt[] = {

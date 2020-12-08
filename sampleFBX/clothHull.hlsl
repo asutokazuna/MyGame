@@ -35,9 +35,9 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 	Output.EdgeTessFactor[0] = 
 		Output.EdgeTessFactor[1] = 
 		Output.EdgeTessFactor[2] = 
-		Output.EdgeTessFactor[3] = 50;
-		Output.InsideTessFactor[0] = 50;// たとえば、代わりに動的テセレーション係数を計算できます
-		Output.InsideTessFactor[1] = 50; // たとえば、代わりに動的テセレーション係数を計算できます
+		Output.EdgeTessFactor[3] = 
+		Output.InsideTessFactor[0] = // たとえば、代わりに動的テセレーション係数を計算できます
+		Output.InsideTessFactor[1] = 20; // たとえば、代わりに動的テセレーション係数を計算できます
 
 	return Output;
 }

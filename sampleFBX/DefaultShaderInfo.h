@@ -18,8 +18,8 @@ public:
 	void Awake();
 	//HRESULT Init();
 	void Uninit();
-	void Draw();
-	void SetTexture(int kind);
+	void UpdateConstant();
+	DefaultShaderInfo* SetTexture(int kind);
 	void SetTexture(ID3D11ShaderResourceView* texture);
 	void SetView(XMFLOAT4X4 view);
 	void SetProj(XMFLOAT4X4 proj);

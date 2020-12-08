@@ -37,8 +37,10 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		Diff *= vTd.rgb;
 		Alpha *= vTd.a;
 	}
-	//clip(Alpha - 0.0001f);
+	clip(Alpha - 0.0001f);
 	if (Alpha <= 0.0f) discard;
+
+	//return float4(input.Normal,1);
 
 	if (g_vLightDir.x != 0.0f || g_vLightDir.y != 0.0f || g_vLightDir.z != 0.0f) {
 		// 光源有効
@@ -46,14 +48,22 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		float3 N = normalize(input.Normal);					// 法線ベクトル
 		float3 V = normalize(g_vEye.xyz - input.Pos4PS);	// 視点へのベクトル
 		float3 H = normalize(L + V);						// ハーフベクトル
+
+		float3 halframb =  saturate(dot(L, N))*0.5+0.5;
+
+//return float4(halframb,1);
 		Diff = g_vLa.rgb * g_vKa.rgb + g_vLd.rgb *
-			Diff * saturate(dot(L, N));						// 拡散色 + 環境色
+			Diff * halframb;						// 拡散色 + 環境色
 		float3 Spec = g_vLs.rgb * g_vKs.rgb *
 			pow(saturate(dot(N, H)), g_vKs.a);				// 鏡面反射色
-		Diff += Spec;
+		//Diff += Spec;
 	}
 
-	Diff += g_vKe.rgb;										// 発光色
+	//Diff += g_vKe.rgb;										// 発光色
 
+
+if(Diff.r >= 0.9 || Diff.g >= 0.9 || Diff.g >= 0.9){
+	//discard;
+}
 	return float4(Diff, Alpha);
 }

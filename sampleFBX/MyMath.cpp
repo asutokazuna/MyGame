@@ -54,7 +54,8 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 	//mtxScale = XMMatrixMultiply(mtxScale, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScale);
 
-	//mtxRot = XMMatrixRotationRollPitchYaw(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+	mtxRot = XMMatrixRotationRollPitchYaw(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 	mtxRot = XMMatrixMultiply(mtxRot, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
@@ -302,9 +303,8 @@ void MyMath::Normalize(Vector3 &vec)
 /**
  * @brief 線形補間
  */
-Vector3 Lerp(const Vector3 start,const Vector3 end,const float& t)
+float MyMath::Lerp(const float& start,const float& end,const float& t)
 {
-	float x = end.x - start.x;
 	return start + (end - start) * t;
 }
 
