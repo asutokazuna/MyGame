@@ -9,6 +9,8 @@ enum TITLE_STATE
 {
 	E_TITLE_STATE_INIT,
 	E_TITLE_STATE_FLY,
+	E_TITLE_STATE_WAVE,
+	E_TITLE_STATE_FADE,
 	E_TITLE_STATE_ARRIVE,
 	E_TITLE_STATE_IDOL,
 
@@ -16,6 +18,7 @@ enum TITLE_STATE
 };
 
 class TitleRogo;
+class Rogo;
 
 /**
  * @class TitleStateMachine
@@ -23,7 +26,8 @@ class TitleRogo;
 class TitleStateMachine :public StateMachine<TITLE_STATE>
 {
 public:
-	TitleRogo * m_rogo;
+	TitleRogo * m_clothRogo;
+	Rogo* m_rogo;
 
 public:
 	/**

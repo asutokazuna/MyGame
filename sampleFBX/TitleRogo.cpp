@@ -21,11 +21,12 @@ void TitleRogo::Awake()
 	m_clothshader->SetTexture(TEXTURE_TITLE_ROGO);
 	m_mesh = AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH, SCREEN_HEIGHT, 1)->ChangePos(START_POS, 0, 0);
 	m_mesh->SetPrimitive(6);
-	m_mesh->SetBlendState(BS_SUBTRACTION);
-	m_clothshader->ChangeAlpha(0.4f);
+	//m_mesh->SetBlendState(BS_SUBTRACTION);
+	//m_clothshader->ChangeAlpha(0.4f);
 	m_mesh->SetShader(*m_clothshader);
 	m_time = 0;
 	m_power = 0.1f;
+	m_fadeValue = 0;
 }
 
 void TitleRogo::Move()
@@ -53,14 +54,27 @@ bool TitleRogo::IsArrive()
 	return true;
 }
 
-void TitleRogo::MovePower()
+bool TitleRogo::MovePower()
 {
-	if (m_power < 0.0001f) {
-		return;
-	}
 	m_power -= 0.0005f;
 	m_clothshader->SetFloat("Power", m_power);
+	if (m_power < 0.0001f) {
+		return true;
+	}
+	return false;
 }
+
+bool  TitleRogo::Fade()
+{
+	m_fadeValue += 0.005;
+	m_clothshader->SetFloat("Fade", m_fadeValue);
+	if (m_fadeValue >= 1) {
+		return true;
+	}
+	return false;
+}
+
+
 
 void TitleRogo::InitParam()
 {
@@ -69,6 +83,7 @@ void TitleRogo::InitParam()
 	m_mesh->SetShader(*m_clothshader);
 	m_mesh->SetPrimitive(6);
 	m_power = 0.1f;
+	m_fadeValue = 0;
 }
 
 // EOF

@@ -10,6 +10,7 @@ private:
 	XMFLOAT4X4 m_world;
 	XMFLOAT4X4 m_TexWorld;
 	float m_power;
+	float m_fadethrosh;
 	ID3D11ShaderResourceView* m_pTexture;
 public:
 	ClothShaderInfo();

@@ -215,6 +215,7 @@
     <ClCompile Include="PlayerShotDir.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
+    <ClCompile Include="Rogo.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="Rogo.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManager.h" />

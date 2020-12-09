@@ -28,11 +28,12 @@ struct SHADER_GLOBAL2 {
 	XMVECTOR	vDiffuse;	// ディフューズ色
 	XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
 	XMVECTOR	vEmissive;	// エミッシブ色
+	XMFLOAT4	value;
 };
 
 static float g_time;
 
-ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr)
+ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0)
 {
 	m_VSKind = ShaderData::VS_CLOTH;
 	m_HSKind = ShaderData::HS_CLOTH;
@@ -105,6 +106,7 @@ void ClothShaderInfo::UpdateConstant()
 	cb2.vLa = XMLoadFloat4(&light->m_ambient);
 	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
 	cb2.vLs = XMLoadFloat4(&light->m_specular);
+	cb2.value.x = m_fadethrosh;
 	MATERIAL* pMaterial = m_material;
 	if (!pMaterial) pMaterial = m_material;
 	cb2.vDiffuse = XMLoadFloat4(&pMaterial->Diffuse);
@@ -130,6 +132,9 @@ void ClothShaderInfo::SetFloat(std::string key, float value)
 {
 	if (key == "Power") {
 		m_power = value;
+	}
+	else if (key == "Fade") {
+		m_fadethrosh = value;
 	}
 }
 

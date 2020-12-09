@@ -13,6 +13,7 @@ cbuffer global : register(b1) {
 	float4	g_vKd;			// ディフューズ色
 	float4	g_vKs;			// スペキュラ色(+スペキュラ強度)
 	float4	g_vKe;			// エミッシブ色
+	float4 value;
 };
 
 // パラメータ
@@ -39,6 +40,11 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 	clip(Alpha - 0.0001f);
 	if (Alpha <= 0.0f) discard;
+	float d = input.TexCoord.x ;
+	//return float4(d,input.TexCoord,1);
+	if(value.x > d) {
+		discard;
+	}
 
 	//return float4(input.Normal,1);
 
@@ -61,9 +67,5 @@ float4 main(VS_OUTPUT input) : SV_Target0
 
 	//Diff += g_vKe.rgb;										// 発光色
 
-
-if(Diff.r >= 0.9 || Diff.g >= 0.9 || Diff.g >= 0.9){
-	//discard;
-}
 	return float4(Diff, Alpha);
 }

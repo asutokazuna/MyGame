@@ -125,8 +125,8 @@ float _WaveAmplitude2 = 0.05f;
     //float3 objNormal = normalize(float3(dWave, dWave, -1.0f));
     //o.normal = mul((float3x3)unity_ObjectToWorld, objNormal);
 
-t3.x += value.x / 80;
-t3.y += value.x / 100;
+// t3.x += value.x / 80;
+// t3.y += value.x / 100;
 
 	Output.Position=  mul( float4( p3, 1.0f ), g_mWVP );
 	Output.Pos4PS = mul(p3, g_mWorld).xyz;

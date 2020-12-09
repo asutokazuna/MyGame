@@ -20,6 +20,7 @@ private:
 	DefaultShaderInfo* m_defaultshader;
 	float m_time;
 	float m_power;
+	float m_fadeValue;
 
 public:
 	/**
@@ -30,7 +31,9 @@ public:
 	void Move();
 	bool IsArrive();
 
-	void MovePower();
+	bool MovePower();
+
+	bool Fade();
 
 	void InitParam();
 };

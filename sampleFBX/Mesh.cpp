@@ -53,7 +53,7 @@ void Mesh::Update()
 void Mesh::Draw()
 {	
 	CGraphics::SetCullMode(CULLMODE_NONE);
-	CGraphics::SetZWrite(false);
+	CGraphics::SetZWrite(true);
 	CGraphics::SetBlendState(m_BSKind);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 
