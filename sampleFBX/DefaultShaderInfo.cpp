@@ -34,6 +34,9 @@ struct SHADER_GLOBAL2 {
 	XMVECTOR	vEmissive;	// エミッシブ色
 };
 
+/**
+ * @brief コンストラクタ
+ */
 DefaultShaderInfo::DefaultShaderInfo():m_TexWorld(XMFLOAT4X4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)), m_pTexture(nullptr)
 {
 	m_VertexConstant = new ID3D11Buffer*();
@@ -42,12 +45,19 @@ DefaultShaderInfo::DefaultShaderInfo():m_TexWorld(XMFLOAT4X4(1,0,0,0,0,1,0,0,0,0
 	m_PSKind = ShaderData::PS_PIXEL;
 }
 
+/**
+ * @brief デストラクタ
+ */
 DefaultShaderInfo::~DefaultShaderInfo()
 {
 	delete m_VertexConstant;
 	delete m_PixelConstant;
 }
-
+	
+/**
+ * @brief 初期化
+ * @retrun なし
+ */
 void DefaultShaderInfo::Awake()
 {
 	CreateConstantBuffer<SHADER_GLOBAL>(m_VertexConstant);
@@ -56,7 +66,11 @@ void DefaultShaderInfo::Awake()
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
 }
-
+	
+/**
+ * @brief 終了
+ * @retrun なし
+ */
 void DefaultShaderInfo::Uninit()
 {
 	for (int i = 0; i < NUM_VSCONSTANT; ++i) {
@@ -66,7 +80,11 @@ void DefaultShaderInfo::Uninit()
 		SAFE_RELEASE(m_PixelConstant[i]);
 	}
 }
-
+	
+/**
+ * @brief コンスタントバッファの更新
+ * @retrun なし
+ */
 void DefaultShaderInfo::UpdateConstant()
 {
 
@@ -78,7 +96,6 @@ void DefaultShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
 	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
 
-	m_TexWorld;
 	SHADER_GLOBAL cb;
 	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_world);
 	cb.mWVP = XMMatrixTranspose(mtxWorld *
@@ -106,14 +123,23 @@ void DefaultShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
 }
 
-
+/**
+ * @brief テクスチャのセット
+ * @param[in] kind テクスチャの種類のenum番号
+ * @retrun なし
+ */
 DefaultShaderInfo* DefaultShaderInfo::SetTexture(int kind)
 {
 	m_pTexture = TextureData::GetInstance().GetData(kind);
 
 	return this;
 }
-
+		
+/**
+ * @brief テクスチャのセット
+ * @param[in] texture テクスチャデータ
+ * @retrun なし
+ */
 void DefaultShaderInfo::SetTexture(ID3D11ShaderResourceView* texture)
 {
 	m_pTexture = texture;
@@ -129,6 +155,12 @@ void DefaultShaderInfo::SetProj(XMFLOAT4X4 proj)
 	m_Proj = proj;
 }
 
+/**
+ * @brief コンスタントバッファのデータをセット
+ * @param[in] key 変数の判別するキー
+ * @param[in] value セットする値
+ * @retrun なし
+ */
 void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 {
 	if (key == "Proj") {
@@ -139,6 +171,10 @@ void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 	}
 	else if (key == "World") {
 		m_world = value;
+	}
+	else if ("TexWorld")
+	{
+		m_TexWorld = value;
 	}
 }
 

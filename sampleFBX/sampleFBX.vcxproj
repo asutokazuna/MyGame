@@ -178,6 +178,8 @@
     <ClCompile Include="CTPCamera.cpp" />
     <ClCompile Include="DebugBox.cpp" />
     <ClCompile Include="DefaultShaderInfo.cpp" />
+    <ClCompile Include="DotsBG.cpp" />
+    <ClCompile Include="DotsBGMove.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
     <ClCompile Include="EnemyMissile.cpp" />
@@ -268,6 +270,8 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="DebugBox.h" />
     <ClInclude Include="DefaultShaderInfo.h" />
+    <ClInclude Include="DotsBG.h" />
+    <ClInclude Include="DotsBGMove.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCtrl.h" />
     <ClInclude Include="EnemyMissile.h" />

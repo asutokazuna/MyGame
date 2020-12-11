@@ -47,6 +47,7 @@ protected:
 
 	ePrimitiveType m_primitiveType;
 	int m_BSKind;
+	bool m_isZwerite;
 
 public:
 	Mesh();
@@ -88,6 +89,10 @@ public:
 
 	ShaderInfo* GetShader() {
 		return m_shader;
+	}
+
+	void SetZwrite(bool flg) {
+		m_isZwerite = flg;
 	}
 };
 

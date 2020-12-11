@@ -319,4 +319,17 @@ Vector3 MyMath::Abs(const Vector3& value)
 	return result;
 }
 
+/**
+ * @brief 変換
+ */
+DirectX::XMFLOAT4X4 MyMath::LoadPosisiton(Vector3 pos)
+{
+	XMFLOAT4X4 mtx = XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1);
+
+	mtx._41 = pos.x;
+	mtx._42 = pos.y;
+	mtx._43 = pos.z;
+	return mtx;
+}
+
 // EOF

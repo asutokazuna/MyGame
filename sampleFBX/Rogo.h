@@ -10,7 +10,6 @@ private:
 	DefaultShaderInfo* m_shader;
 	Mesh* m_mesh;
 public:
-	void Awake();
-};
+	void Awake();};
 
 // EOF

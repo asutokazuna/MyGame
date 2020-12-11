@@ -14,6 +14,8 @@
 #define	TEXTURE_NAME_LOSE		L"data/texture/Lose.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_STAR		L"data/texture/Star.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_EFFECT		L"data/texture/effect000.jpg"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_POLKADOTS		L"data/texture/polkadots.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_NOIZE		L"data/texture/noize.jpg"	// 読み込むテクスチャファイル名
 
 /**
  * @brief テクスチャテーブル構造体
@@ -36,6 +38,8 @@ static TEXTURE_TABLE m_table[TEXTURE_MAX] = {
 	{ TEXTURE_NAME_LOSE, TEXTURE_LOSE},
 	{ TEXTURE_NAME_STAR, TEXTURE_STAR},
 	{ TEXTURE_NAME_EFFECT, TEXTURE_EFFECT },
+	{ TEXTURE_NAME_POLKADOTS, TEXTURE_POLKADOTS },
+	{ TEXTURE_NAME_NOIZE, TEXTURE_NOIZE},
 };
 
 /**

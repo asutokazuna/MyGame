@@ -239,6 +239,7 @@ public:
 	//static Vector3 Lerp(const Vector3 start, const Vector3 end, const float & t);
 	static float Lerp(const float& start, const float& end, const float & t);
 	static Vector3 Abs(const Vector3 & value);
+	static DirectX::XMFLOAT4X4 LoadPosisiton(Vector3 pos);
 };
 
 // EOF

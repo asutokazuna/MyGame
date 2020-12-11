@@ -13,6 +13,7 @@
 #include "StarParticle.h"
 #include "StarCreater.h"
 #include "Rogo.h"
+#include "DotsBG.h"
 
 /**
  * @brief 初期化処理
@@ -20,10 +21,11 @@
  */
 void SceneTitle::Awake()
 {
-	//ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
-	ObjectManager::Create<TitleStart>("TitleStart");
 	ObjectManager::Create<TitleRogo>("TitleRogo");
+	ObjectManager::Create<TitleStart>("TitleStart");
+	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 	ObjectManager::Create<Rogo>("Rogo");
+	ObjectManager::Create<DotsBG>("DotsBG");
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
 	m_stateMachine->AddComponent<TitleStateMachine>();

@@ -21,6 +21,7 @@ private:
 	float m_time;
 	float m_power;
 	float m_fadeValue;
+	float m_endPos;
 
 public:
 	/**
@@ -28,12 +29,14 @@ public:
 	 * @return なし
 	 */
 	void Awake();
-	void Move();
+	bool Move(float startPos, float endPosX, int time);
 	bool IsArrive();
 
-	bool MovePower();
+	bool MovePower(float power);
 
-	bool Fade();
+	bool Fade(float speed);
+
+	bool FadeOUT(float speed);
 
 	void InitParam();
 };

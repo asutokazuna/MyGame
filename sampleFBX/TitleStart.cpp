@@ -30,7 +30,7 @@ void TitleStart::Update()
 		m_alpha = 0;
 		m_add *= -1;
 	}
-	//m_alpha += m_add;
+	m_alpha += m_add;
 	m_shader->ChangeColor(m_color.x, m_color.y, m_color.z, m_alpha);
 }
 

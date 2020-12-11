@@ -7,37 +7,44 @@
 #include "GameObject.h"
 #include "ShaderInfo.h"
 #include "Mesh.h"
+#include "ObjectManager.h"
 
+/** 
+ * @def
+ */
 #define MAX_ROT_SPEED (5)
-#define LIFE_TIME (60)
-
+#define LIFE_TIME (180)
+	
+/**
+ * @brief 初期化
+ * @retrun なし
+ */
 void StarMove::Awake()
 {
 	m_parentTrans = &m_Parent->GetTransform();
 	m_size = m_parentTrans->scale;
 	m_alpha = 1;
 	m_add = -0.01f;
-	m_rot = rand() % MAX_ROT_SPEED / 50.0f;
+	m_rot = (rand() % MAX_ROT_SPEED + 1) / 50.0f;
 	m_color = Vector3();
 	m_time = 0;
 }
-
+	
+/**
+ * @brief 初期化
+ * @retrun なし
+ */
 HRESULT StarMove::Init()
 {
-	float r, g, b;
-	r = rand() % 50 / 50.0f;
-	b = rand() % 50 / 50.0f;
-
-	r = 1;
-	g = 0;
-	b = 0;
-
-	m_color = Vector3(r, g, b);
-	m_backshader->ChangeColor(m_color);
+	m_rogoSize = ObjectManager::GetInstance().FindObject<GameObject>("Rogo")->GetTransform().scale;
 
 	return E_NOTIMPL;
 }
-
+	
+/**
+ * @brief 更新
+ * @retrun なし
+ */
 void StarMove::Update()
 {
 	m_time++;
@@ -64,12 +71,28 @@ void StarMove::Update()
 		m_Parent->SetActive(false);
 	}
 }
-
+	
+/**
+ * @brief 生成時処理
+ * @retrun なし
+ */
 void StarMove::Create()
 {
-	m_rot = rand() % MAX_ROT_SPEED / 50.0f;
-	int posX = rand() % 200 - 100;
-	int posY = rand() % 200 - 100;
+	m_rot = (rand() % MAX_ROT_SPEED + 1) / 120.0f;
+	int posX = rand() % 300 - 100;
+	int posY = rand() % 200 - 50;
+	if (posX % 2 == 0) {
+		posX += m_rogoSize.x / 2;
+	}
+	else {
+		posX -= m_rogoSize.x / 2;
+	}
+	if (posY % 2 == 0) {
+		posY += m_rogoSize.y / 2;
+	}
+	else {
+		posY -= m_rogoSize.y / 2;
+	}
 
 	m_parentTrans->position = Vector3(posX, posY, 0);
 	m_parentTrans->rotation = Vector3();
@@ -82,6 +105,7 @@ void StarMove::Create()
 	m_color = Vector3(r, g, b);
 	m_backshader->ChangeColor(m_color);
 	m_time = 0;
+	m_parentTrans->scale = Vector3();
 }
 
 // EOF

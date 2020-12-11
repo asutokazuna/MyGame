@@ -26,6 +26,7 @@ struct VS_OUTPUT {
 };
 
 Texture2D    g_texture : register(t0);	// テクスチャ
+Texture2D    g_noizeTex : register(t1);	// テクスチャ
 SamplerState g_sampler : register(s0);	// サンプラ
 
 float4 main(VS_OUTPUT input) : SV_Target0
@@ -40,9 +41,12 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 	clip(Alpha - 0.0001f);
 	if (Alpha <= 0.0f) discard;
-	float d = input.TexCoord.x ;
+	float d = (input.TexCoord.y * 2 - 1) * (input.TexCoord.y * 2 - 1) +(input.TexCoord.x * 2 - 1) * (input.TexCoord.x * 2 - 1);
 	//return float4(d,input.TexCoord,1);
-	if(value.x > d) {
+	float4 noizeColor = g_noizeTex.Sample(g_sampler, input.TexCoord);
+	float dissolve = (noizeColor.r * 0.3 + noizeColor.g * 0.6 + noizeColor.b * 0.1) * d;
+
+	if(value.x > dissolve) {
 		discard;
 	}
 

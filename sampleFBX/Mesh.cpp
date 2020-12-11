@@ -21,6 +21,7 @@ Mesh::Mesh()
 	m_default = new DefaultShaderInfo();
 	m_material = &m_default->GetMaterial();
 	m_BSKind = BS_ALPHABLEND;
+	m_isZwerite = true;
 }
 
 Mesh::~Mesh()
@@ -53,7 +54,7 @@ void Mesh::Update()
 void Mesh::Draw()
 {	
 	CGraphics::SetCullMode(CULLMODE_NONE);
-	CGraphics::SetZWrite(true);
+	CGraphics::SetZWrite(m_isZwerite);
 	CGraphics::SetBlendState(m_BSKind);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 

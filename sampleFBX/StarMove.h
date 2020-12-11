@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "MyMath.h"
 
+// 前方宣言
 class Transform;
 class ShaderInfo;
 
@@ -23,19 +24,41 @@ private:
 	float m_add;
 	Vector3 m_color;
 	Vector3 m_size;
+	Vector3 m_rogoSize;
 	int m_time;
 public:
-
+	/**
+	 * @brief 初期化
+	 * @retrun なし
+	 */
 	void Awake();
-
+		
+	/**
+	 * @brief 初期化
+	 * @retrun なし
+	 */
 	HRESULT Init();
-
+		
+	/**
+	 * @brief 更新
+	 * @retrun なし
+	 */
 	void Update();
+		
+	/**
+	 * @brief 生成時処理
+	 * @retrun なし
+	 */
 	void Create();
 	void SetFrontMesh() {
 
 	}
 
+	/**
+	 * @brief パーティクルの背景のシェーダーをセット
+	 * @param[in] shader セットするシェーダー
+	 * @return なし
+	 */
 	void SetBackShader(ShaderInfo* shader) {
 		m_backshader = shader;
 	}

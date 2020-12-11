@@ -33,7 +33,10 @@ struct SHADER_GLOBAL2 {
 
 static float g_time;
 
-ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0)
+/**
+ * @brief コンストラクタ
+ */
+ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
 {
 	m_VSKind = ShaderData::VS_CLOTH;
 	m_HSKind = ShaderData::HS_CLOTH;
@@ -80,8 +83,12 @@ void ClothShaderInfo::UpdateConstant()
 
 	SetShader();
 
+	ID3D11ShaderResourceView* pTex[] = {
+		m_pTexture,m_pNoizeTexture,
+	};
+	int texCount = _countof(pTex);
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
-	pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
+	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	XMFLOAT4X4 f4x4World, f4x4TexWorld;
@@ -123,6 +130,11 @@ void ClothShaderInfo::SetTexture(int kind)
 	m_pTexture = TextureData::GetInstance().GetData(kind);
 }
 
+void ClothShaderInfo::SetNoizeTexture(int kind)
+{
+	m_pNoizeTexture = TextureData::GetInstance().GetData(kind);
+}
+
 void ClothShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
 {
 	m_pTexture = texture;
@@ -150,3 +162,5 @@ void ClothShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 		m_world = value;
 	}
 }
+
+// EOF
