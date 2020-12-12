@@ -136,13 +136,13 @@ bool CGameWindow::OnIdle(long lCount)
 //---------------------------------------------------------------------------------------
 void CGameWindow::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-#if _DEBUG
+//#if _DEBUG
 	// [Esc] が押されていたら
 	if (nChar == VK_ESCAPE) {
 		// ウィンドウを閉じる
 		OnClose();
 	}
-#endif
+//#endif
 }
 
 //---------------------------------------------------------------------------------------
