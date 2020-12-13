@@ -98,6 +98,7 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 
 	void Init()
 	{
+		machine.m_clothRogo->SetActive(false);
 		loopTime = 0;
 	}
 
@@ -105,7 +106,7 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 	{
 		loopTime++;
 		if (loopTime > MAX_LOOP_TIME) {
-			machine.GoToState(E_TITLE_STATE_FADEOUT);
+			//machine.GoToState(E_TITLE_STATE_FADEOUT);
 		}
 	}
 };
@@ -171,7 +172,7 @@ void TitleStateMachine::Awake()
 	m_rogo = ObjectManager::GetInstance().FindObject<Rogo>("Rogo");
 	m_startText = ObjectManager::GetInstance().FindObject<TitleStart>("TitleStart");
 	SetState();
-	GoToState(E_TITLE_STATE_INIT);
+	GoToState(E_TITLE_STATE_IDOL);
 }
 
 /**

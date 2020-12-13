@@ -17,11 +17,12 @@ public:
 	friend class Singleton<ShaderData>;		//!< シングルトンでのインスタンスの生成用
 
 private:
-	DXData<ID3D11VertexShader>	m_VS;		//!< バーテックスシェーダー
-	DXData<ID3D11PixelShader>	m_PS;		//!< ピクセルシェーダー
-	DXData<ID3D11HullShader>	m_HS;		//!< ハルシェーダー
-	DXData<ID3D11DomainShader>	m_DS;		//!< ドメインシェーダー
-	DXData<ID3D11InputLayout>	m_IL;		//!< インプットレイアウト
+	DXData<ID3D11VertexShader>		m_VS;		//!< バーテックスシェーダー
+	DXData<ID3D11PixelShader>		m_PS;		//!< ピクセルシェーダー
+	DXData<ID3D11HullShader>		m_HS;		//!< ハルシェーダー
+	DXData<ID3D11DomainShader>		m_DS;		//!< ドメインシェーダー
+	DXData<ID3D11GeometryShader>	m_GS;		//!< ドメインシェーダー
+	DXData<ID3D11InputLayout>		m_IL;		//!< インプットレイアウト
 
 private:
 
@@ -39,6 +40,7 @@ public:
 	{
 		VS_VERTEX,
 		VS_CLOTH,
+		VS_DEFAULT,
 		VS_MAX
 	};
 
@@ -49,19 +51,37 @@ public:
 	{
 		PS_PIXEL,
 		PS_CLOTH,
+		PS_EXPLOSION,
 		PS_MAX
 	};
 
+	/**
+	 * @enum ハルシェーダーの種類
+	 */
 	enum HS_KIND
 	{
 		HS_CLOTH,
+		HS_DEFAULT,
 		HS_MAX
 	};
 
+	/**
+	 * @enum ドメインシェーダーの種類
+	 */
 	enum DS_KIND
 	{
 		DS_CLOTH,
+		DS_DEFAULT,
 		DS_MAX
+	};
+	
+	/**
+	 * @enum ジオメトリシェーダーの種類
+	 */
+	enum GS_KIND
+	{
+		GS_EXPLOSION,
+		GS_MAX
 	};
 
 	/**
@@ -103,6 +123,13 @@ public:
 	 * @return 引数に対応したシェーダーデータ
 	 */
 	static ID3D11DomainShader* GetDomainShader(int kind);
+
+	/**
+	 * @brief ジオメトリシェーダーの取得
+	 * @param[in] 取得したい種類のenum
+	 * @return 引数に対応したシェーダーデータ
+	 */
+	static ID3D11GeometryShader* GetGeometryShader(int kind);
 
 	/**
 	 * @brief インプットレイアウトの取得

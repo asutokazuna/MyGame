@@ -1,15 +1,10 @@
-﻿#include "ClothShaderInfo.h"
+﻿#include "ExplosionShaderInfo.h"
 #include "ShaderData.h"
 #include "CCamera.h"
-#include "FbxModel.h"
 #include "Light.h"
+#include "FbxModel.h"
 #include "TextureData.h"
 
-#define NUM_VSCONSTANT (1)
-#define NUM_PSCONSTANT (1)
-
-//*****************************************************************************
-// シェーダに渡す値
 struct SHADER_GLOBAL {
 	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
 	XMMATRIX	mW;			// ワールド行列(転置行列)
@@ -30,79 +25,101 @@ struct SHADER_GLOBAL2 {
 	XMVECTOR	vEmissive;	// エミッシブ色
 	XMFLOAT4	value;
 };
-
-static float g_time;
-
-/**
- * @brief コンストラクタ
- */
-ClothShaderInfo::ClothShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
+struct HULL_DATA
 {
-	m_VSKind = ShaderData::VS_CLOTH;
-	m_HSKind = ShaderData::HS_CLOTH;
-	m_DSKind = ShaderData::DS_CLOTH;
-	m_PSKind = ShaderData::PS_CLOTH;
+	XMFLOAT4 factor;
+};
 
-	m_DomainConstant = new ID3D11Buffer*();
+ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
+{
+	m_VSKind = ShaderData::VS_DEFAULT;
+	m_HSKind = ShaderData::HS_DEFAULT;
+	m_DSKind = ShaderData::DS_DEFAULT;
+	m_GSKind = ShaderData::GS_EXPLOSION;
+	m_PSKind = ShaderData::PS_EXPLOSION;
+
+	m_HullConstant = new ID3D11Buffer*();
+	m_GeometryConstant = new ID3D11Buffer*();
 	m_PixelConstant = new ID3D11Buffer*();
-	g_time = 0;
+	m_time = 0;
 	m_power = 0;
 }
 
-ClothShaderInfo::~ClothShaderInfo()
+
+ExplosionShaderInfo::~ExplosionShaderInfo()
 {
-	delete m_DomainConstant;
+	delete m_HullConstant;
+	delete m_GeometryConstant;
 	delete m_PixelConstant;
 }
 
-void ClothShaderInfo::Awake()
+void ExplosionShaderInfo::Awake()
 {
-	CreateConstantBuffer<SHADER_GLOBAL>(m_DomainConstant);
+	CreateConstantBuffer<SHADER_GLOBAL>(m_GeometryConstant);
 	CreateConstantBuffer<SHADER_GLOBAL2>(m_PixelConstant);
+	CreateConstantBuffer<HULL_DATA>(m_HullConstant);
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
 	m_power = 0.1f;
+	m_time = 0;
 }
 
-void ClothShaderInfo::Uninit()
+void ExplosionShaderInfo::Uninit()
 {
-	for (int i = 0; i < NUM_VSCONSTANT; ++i) {
-		SAFE_RELEASE(m_DomainConstant[i]);
+	for (int i = 0; i < 1; ++i) {
+		SAFE_RELEASE(m_HullConstant[i]);
 	}
-	for (int i = 0; i < NUM_PSCONSTANT; ++i) {
+	for (int i = 0; i < 1; ++i) {
 		SAFE_RELEASE(m_PixelConstant[i]);
 	}
+	for (int i = 0; i < 1; ++i) {
+		SAFE_RELEASE(m_GeometryConstant[i]);
+	}
 }
 
-void ClothShaderInfo::UpdateConstant()
+void ExplosionShaderInfo::Draw()
 {
-	//g_time += 0.01f;
+#ifdef _DEBUG
+	ImGui::Begin("Explosion");
+	ImGui::SliderFloat("Dist", &m_power, 0, 1);
+	ImGui::End();
+#endif
+}
+
+void ExplosionShaderInfo::UpdateConstant()
+{
+	m_time += 0.01f;
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
 	SetShader();
 
 	ID3D11ShaderResourceView* pTex[] = {
-		m_pTexture,m_pNoizeTexture,
+		m_pTexture,m_pNoizeTexture
 	};
 	int texCount = _countof(pTex);
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
 	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 
-	XMFLOAT4X4 f4x4World, f4x4TexWorld;
+	HULL_DATA hullcb;
+	hullcb.factor.x = 10;
+	hullcb.factor.y = 10;
+	hullcb.factor.z = 10;
+	hullcb.factor.w = 10;
+	pDeviceContext->UpdateSubresource(m_HullConstant[0], 0, nullptr, &hullcb, 0, 0);
+	pDeviceContext->HSSetConstantBuffers(0, 1, &m_HullConstant[0]);
 
-	f4x4TexWorld = m_TexWorld;
 	SHADER_GLOBAL cb;
 	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_world);
 	cb.mWVP = XMMatrixTranspose(mtxWorld *
 		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
 	cb.mW = XMMatrixTranspose(mtxWorld);
-	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&f4x4TexWorld));
-	cb.value.x = g_time;
-	cb.value.y = 0;
-	pDeviceContext->UpdateSubresource(m_DomainConstant[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->DSSetConstantBuffers(0, 1, &m_DomainConstant[0]);
+	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&m_TexWorld));
+	cb.value.x = m_time;
+	cb.value.y = m_power;
+	pDeviceContext->UpdateSubresource(m_GeometryConstant[0], 0, nullptr, &cb, 0, 0);
+	pDeviceContext->GSSetConstantBuffers(0, 1, &m_GeometryConstant[0]);
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
@@ -124,22 +141,22 @@ void ClothShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
 }
 
-void ClothShaderInfo::SetTexture(int kind)
+void ExplosionShaderInfo::SetTexture(int kind)
 {
 	m_pTexture = TextureData::GetInstance().GetData(kind);
 }
 
-void ClothShaderInfo::SetNoizeTexture(int kind)
-{
-	m_pNoizeTexture = TextureData::GetInstance().GetData(kind);
-}
-
-void ClothShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
+void ExplosionShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
 {
 	m_pTexture = texture;
 }
 
-void ClothShaderInfo::SetFloat(std::string key, float value)
+void ExplosionShaderInfo::SetNoizeTexture(int kind)
+{
+	m_pNoizeTexture = TextureData::GetInstance().GetData(kind);
+}
+
+void ExplosionShaderInfo::SetFloat(std::string key, float value)
 {
 	if (key == "Power") {
 		m_power = value;
@@ -149,7 +166,7 @@ void ClothShaderInfo::SetFloat(std::string key, float value)
 	}
 }
 
-void ClothShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
+void ExplosionShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 {
 	if (key == "Proj") {
 		m_Proj = value;
@@ -161,5 +178,3 @@ void ClothShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 		m_world = value;
 	}
 }
-
-// EOF

@@ -6,7 +6,7 @@
 #define M_AMBIENT		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
 #define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,0.0f)
 
-ShaderInfo::ShaderInfo(): m_VSKind(0), m_HSKind(-1), m_DSKind(-1),m_PSKind(0),m_VertexConstant(nullptr), m_PixelConstant(nullptr), m_material(nullptr), m_DomainConstant(nullptr)
+ShaderInfo::ShaderInfo(): m_VSKind(0), m_HSKind(-1), m_DSKind(-1), m_GSKind(-1),m_PSKind(0),m_VertexConstant(nullptr), m_PixelConstant(nullptr), m_material(nullptr), m_DomainConstant(nullptr)
 {
 	m_material = new MATERIAL;
 	// マテリアルの初期設定
@@ -27,6 +27,7 @@ void ShaderInfo::SetShader()
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11VertexShader* vs = ShaderData::GetVertexShader(m_VSKind);
 	ID3D11HullShader*	hs = ShaderData::GetHullShader(m_HSKind);
+	ID3D11GeometryShader* gs = ShaderData::GetGeometryShader(m_GSKind);
 	ID3D11DomainShader* ds = ShaderData::GetDomainShader(m_DSKind);
 	ID3D11PixelShader*	ps = ShaderData::GetPixelShader(m_PSKind);
 	ID3D11InputLayout*	il = ShaderData::GetInputLayout(m_VSKind);
@@ -35,6 +36,7 @@ void ShaderInfo::SetShader()
 	pDeviceContext->VSSetShader(vs, nullptr, 0);
 	pDeviceContext->HSSetShader(hs, nullptr, 0);
 	pDeviceContext->DSSetShader(ds, nullptr, 0);
+	pDeviceContext->GSSetShader(gs, nullptr, 0);
 	pDeviceContext->PSSetShader(ps, nullptr, 0);
 	pDeviceContext->IASetInputLayout(il);
 

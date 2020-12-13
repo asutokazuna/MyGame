@@ -20,6 +20,7 @@ SHADER_TABLE VS_Table[] =
 {
 	{ShaderData::VS_VERTEX, "Vertex"},
 	{ShaderData::VS_CLOTH, "ClothVertex"},
+	{ShaderData::VS_DEFAULT, "DefaultVS"},
 };
 
 /**
@@ -29,21 +30,32 @@ SHADER_TABLE PS_Table[] =
 {
 	{ShaderData::PS_PIXEL, "Pixel"},
 	{ShaderData::PS_CLOTH, "ClothPixel"},
+	{ShaderData::PS_EXPLOSION, "ExplosionPS"},
 };
 /**
- * @biref ピクセルシェーダ
+ * @biref ハルシェーダ
  */
 SHADER_TABLE HS_Table[] = 
 {
 	{ShaderData::HS_CLOTH, "ClothHull"},
+	{ShaderData::HS_DEFAULT, "DefaultHS"},
 };
 
 /**
- * @biref ピクセルシェーダ
+ * @biref ドメインシェーダ
  */
 SHADER_TABLE DS_Table[] = 
 {
 	{ShaderData::DS_CLOTH, "ClothDomain"},
+	{ShaderData::DS_DEFAULT, "DefaultDS"},
+};
+
+/**
+ * @biref ジオメトリシェーダ
+ */
+SHADER_TABLE GS_Table[] = 
+{
+	{ShaderData::GS_EXPLOSION, "ExplosionGS"},
 };
 
 
@@ -65,6 +77,7 @@ void ShaderData::InitInstance()
 	ID3D11PixelShader* workPs;
 	ID3D11HullShader* workHs;
 	ID3D11DomainShader* workDs;
+	ID3D11GeometryShader* workGs;
 
 	for (int i = 0; i < VS_MAX; i++)
 	{
@@ -86,6 +99,11 @@ void ShaderData::InitInstance()
 	{
 		LoadDomainShader(DS_Table[i].filename, &workDs);
 		m_DS.Set(DS_Table[i].type, workDs);
+	}
+	for (int i = 0; i < GS_MAX; i++)
+	{
+		LoadGeometryShader(GS_Table[i].filename, &workGs);
+		m_GS.Set(GS_Table[i].type, workGs);
 	}
 }
 
@@ -151,6 +169,15 @@ ID3D11DomainShader * ShaderData::GetDomainShader(int kind)
 		return nullptr;
 	}
 	return ShaderData::GetInstance().m_DS.Get(kind);
+}
+
+ID3D11GeometryShader* ShaderData::GetGeometryShader(int kind)
+{
+	if (GS_KIND::GS_MAX <= kind ||
+		kind < 0) {
+		return nullptr;
+	}
+	return ShaderData::GetInstance().m_GS.Get(kind);
 }
 
 /**

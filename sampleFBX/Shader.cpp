@@ -387,6 +387,92 @@ HRESULT LoadDomainShader(LPCWSTR pwszPSFName, ID3D11DomainShader** ppPixelShader
 	return hr;
 }
 
+HRESULT LoadGeometryShader(LPCWSTR pwszPSFName, ID3D11GeometryShader ** ppGeometryShader)
+{
+	WCHAR wszPath[_MAX_PATH], wszDrive[_MAX_DRIVE],
+		wszDir[_MAX_DIR], wszFName[_MAX_FNAME], wszCSODir[_MAX_DIR];
+	HRESULT hr = S_OK;
+	ID3DBlob* pCompiledShader = nullptr;
+	PBYTE pbData = nullptr;
+	long lSize = 0L;
+	HINSTANCE hInst = CWindow::GetHinstance();
+	HWND hWnd = CWindow::GetMainHwnd();
+
+	// シェーダバイナリ読み込み
+	if (IS_INTRESOURCE(pwszPSFName)) {
+		HRSRC hResInfo = FindResourceW(hInst, pwszPSFName, RT_SHADER);
+		if (hResInfo) {
+			HGLOBAL hResData = LoadResource(hInst, hResInfo);
+			if (hResData) {
+				lSize = SizeofResource(hInst, hResInfo);
+				LPVOID pMem = LockResource(hResData);
+				if (pMem) {
+					pbData = new BYTE[lSize];
+					CopyMemory(pbData, pMem, lSize);
+					//UnlockResource(hResData);
+				}
+			}
+		}
+		if (!pbData) {
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ジオメトリシェーダ(ID=%d) 読込エラー", (int)(ULONG_PTR)pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+		}
+	}
+	else {
+		_wsplitpath_s(pwszPSFName, wszDrive, _countof(wszDrive),
+			wszDir, _countof(wszDir), wszFName, _countof(wszFName), nullptr, 0);
+		wcscpy_s(wszCSODir, _countof(wszCSODir), wszDir);
+		wcscat_s(wszCSODir, _countof(wszCSODir), g_pszCSODir);
+		_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszCSODir, wszFName, L".cso");
+		FILE* fp = nullptr;
+		_wfopen_s(&fp, wszPath, L"rb");
+		if (fp) {
+			fseek(fp, 0L, SEEK_END);
+			lSize = ftell(fp);
+			fseek(fp, 0L, SEEK_SET);
+			pbData = new BYTE[lSize];
+			fread(pbData, lSize, 1, fp);
+			fclose(fp);
+		}
+		else {
+#ifdef D3DCOMPILER
+			// ブロブからピクセルシェーダ作成
+			_wmakepath_s(wszPath, _countof(wszPath), wszDrive, wszDir, wszFName, L".hlsl");
+			hr = D3DCompileFromFile(wszPath, nullptr, nullptr,
+				"main", "ps_5_0", 0, 0, &pCompiledShader, nullptr);
+			if (FAILED(hr)) {
+				WCHAR wszMsg[_MAX_PATH * 2];
+				swprintf_s(wszMsg, _countof(wszMsg), L"ジオメトリシェーダ(%s) コンパイル失敗", pwszPSFName);
+				MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+				return hr;
+			}
+			pbData = (PBYTE)pCompiledShader->GetBufferPointer();
+			lSize = (LONG)pCompiledShader->GetBufferSize();
+#else
+			WCHAR wszMsg[_MAX_PATH * 2];
+			swprintf_s(wszMsg, _countof(wszMsg), L"ジオメトリシェーダ(%s) 読み込みエラー", pwszPSFName);
+			MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+			return E_FAIL;
+#endif
+		}
+	}
+	ID3D11Device* pDevice = CGraphics::GetDevice();
+	hr = pDevice->CreateGeometryShader(pbData, lSize, nullptr, ppGeometryShader);
+	if (pCompiledShader)
+		pCompiledShader->Release();
+	else
+		delete[] pbData;
+	if (FAILED(hr)) {
+		WCHAR wszMsg[_MAX_PATH * 2];
+		swprintf_s(wszMsg, _countof(wszMsg), L"ジオメトリシェーダ(%s) 生成失敗", pwszPSFName);
+		MessageBoxW(hWnd, wszMsg, L"error", MB_OK);
+		return hr;
+	}
+	return hr;
+}
+
 HRESULT LoadShader(LPCWSTR pwszVSFName, LPCWSTR pwszPSFName,
 	ID3D11VertexShader** ppVertexShader, ID3D11InputLayout** ppVertexLayout,
 	ID3D11PixelShader** ppPixelShader,
@@ -447,6 +533,19 @@ HRESULT LoadDomainShader(LPCSTR pszPSFName, ID3D11DomainShader ** ppPixelShader)
 	if (nLen <= 0) return E_FAIL;
 	wszPSFName[nLen] = L'\0';
 	return LoadDomainShader(wszPSFName, ppPixelShader);
+}
+
+HRESULT LoadGeometryShader(LPCSTR pszPSFName, ID3D11GeometryShader ** ppGeometryShader)
+{
+	if (IS_INTRESOURCE(pszPSFName)) {
+		return LoadGeometryShader((LPCWSTR)pszPSFName, ppGeometryShader);
+	}
+	WCHAR wszPSFName[_MAX_PATH];
+	int nLen = MultiByteToWideChar(CP_ACP, 0, pszPSFName, lstrlenA(pszPSFName), wszPSFName, _countof(wszPSFName));
+	if (nLen <= 0) return E_FAIL;
+	wszPSFName[nLen] = L'\0';
+	return LoadGeometryShader(wszPSFName, ppGeometryShader);
+	return E_NOTIMPL;
 }
 
 HRESULT LoadShader(LPCSTR pszVSFName, LPCSTR pszPSFName,

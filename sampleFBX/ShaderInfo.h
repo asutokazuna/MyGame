@@ -20,12 +20,15 @@ protected:
 	int m_VSKind;	// 頂点シェーダの種類種
 	int m_HSKind;	// ハルシェーダの種類種
 	int m_DSKind;	// ドメインシェーダの種類種
+	int m_GSKind;	// ジオメトリシェーダの種類種
 	int m_PSKind;	// ピクセルシェーダの種類種
 	int m_VSMax;
 	int m_PSMax;	// 最大数
 	ID3D11Buffer** m_VertexConstant;
 	ID3D11Buffer** m_PixelConstant;
+	ID3D11Buffer** m_HullConstant;
 	ID3D11Buffer** m_DomainConstant;
+	ID3D11Buffer** m_GeometryConstant;
 	MATERIAL* m_material;
 public:
 	ShaderInfo();
@@ -55,17 +58,17 @@ public:
 
 	void SetShader();
 
-	ShaderInfo * ChangeColor(XMFLOAT3 color);
+	ShaderInfo* ChangeColor(XMFLOAT3 color);
 
-	ShaderInfo * ChangeColor(Vector3 color);
+	ShaderInfo* ChangeColor(Vector3 color);
 
-	ShaderInfo * ChangeColor(float r, float g, float b);
+	ShaderInfo* ChangeColor(float r, float g, float b);
 
-	ShaderInfo * ChangeColor(XMFLOAT4 color);
+	ShaderInfo* ChangeColor(XMFLOAT4 color);
 
-	ShaderInfo * ChangeColor(float r, float g, float b, float a);
+	ShaderInfo* ChangeColor(float r, float g, float b, float a);
 
-	ShaderInfo * ChangeAlpha(float alpha);
+	ShaderInfo* ChangeAlpha(float alpha);
 
 	virtual void SetFloat(std::string key, float value){}
 	virtual void SetFloat(std::string key, XMFLOAT4 value){}

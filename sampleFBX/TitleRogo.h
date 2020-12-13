@@ -8,6 +8,7 @@
 class Mesh;
 class ClothShaderInfo;
 class DefaultShaderInfo;
+class ExplosionShaderInfo;
 
 /**
  * @class TitleRogo
@@ -18,6 +19,7 @@ private:
 	Mesh* m_mesh;
 	ClothShaderInfo* m_clothshader;
 	DefaultShaderInfo* m_defaultshader;
+	ExplosionShaderInfo* m_expShader;
 	float m_time;
 	float m_power;
 	float m_fadeValue;
