@@ -233,6 +233,7 @@
     <ClCompile Include="StarParticle.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
+    <ClCompile Include="TitleCamera.cpp" />
     <ClCompile Include="TitleRogo.cpp" />
     <ClCompile Include="TitleStart.cpp" />
     <ClCompile Include="TitleStateMachine.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureData.h" />
+    <ClInclude Include="TitleCamera.h" />
     <ClInclude Include="TitleRogo.h" />
     <ClInclude Include="TitleStart.h" />
     <ClInclude Include="TitleStateMachine.h" />

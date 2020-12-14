@@ -41,6 +41,8 @@ void main(
 	//float2 dist;
 	float2 maxdist = 0;
 	float scalar = 0;
+	float2 d = float2(0,0);
+	float2 cecece = 0;
 	for(int i = 0; i < 3; i++)
 	{
 		if( scalar < abs(dot(input[i].TexCoord.x * 2 - 1, input[i].TexCoord.y * 2 - 1)))
@@ -48,8 +50,12 @@ void main(
 			scalar = abs(dot(input[i].TexCoord.x * 2 - 1, input[i].TexCoord.y * 2 - 1));
 			maxdist = input[i].TexCoord;
 		}
+		d += input[i].TexCoord;
+		cecece += input[i].TexCoord * 2 - 1;
 	}
-	
+	float2 centeruv = float2(cecece.x / 3,cecece.y/3);
+	float dotuv = dot(d.x / 3,d.y / 3);
+
 	GS_OUT output;
 	float2 pos;
 	float angle = value.y;
@@ -59,20 +65,58 @@ void main(
 	float2 start;
 	float2 ctrlpoint;
 	float  temp;
-
+float2 big;
 	for (uint i = 0; i < 3; i++)
 	{
-
-		pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
+		pos = input[i].Position;
+		//if(dotuv > value.y)
+		{
+					float t = min(dotuv, value.y);
+			float tett = min(value.y + dotuv, 1);
+			float cccc = clamp((value.y - dotuv) * 2 + tett, 0,1);
+			//big = lerp(pos,input[i].Position, tett);
+			
+					pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
 		pos.y = input[i].Position.y + -(maxdist.y * 2 - 1) * 5;
 		start = pos;
+		start.y += 0.5;
 		end = input[i].Position;
 		temp = rand(input[i].TexCoord);
-		ctrlpoint.x = (start.x + end.x) + temp;
-		ctrlpoint.y = (start.y + end.y) + temp;
+		ctrlpoint.x = (start.x +end.x) - temp;
+		ctrlpoint.y = (start.y +end.y) - temp;
 
-		pos.x = calcBezier(start.x, ctrlpoint.x, end.x,value.y);
-		pos.y = calcBezier(start.y, ctrlpoint.y, end.y,value.y);
+		big.x = calcBezier(start.x, ctrlpoint.x, end.x,value.y);
+		big.y = calcBezier(start.y, ctrlpoint.y, end.y,value.y);
+
+
+		pos.x = 0;// +  (centeruv.x * 2 - 1) * 10;
+		pos.y = 0;// + -(centeruv.y * 2 - 1) * 10;
+		start = pos;
+		start.y += 0.5;
+		end = input[i].Position;
+		temp = rand(input[i].TexCoord);
+		ctrlpoint = big;
+
+		pos.x = calcBezier(start.x, ctrlpoint.x, end.x,cccc);
+		pos.y = calcBezier(start.y, ctrlpoint.y, end.y,cccc);
+		
+
+
+
+		}
+
+		//pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
+		//pos.y = input[i].Position.y + -(maxdist.y * 2 - 1) * 5;
+		//start = pos;
+		//start.y += 0.5;
+		//end = input[i].Position;
+		//temp = rand(input[i].TexCoord);
+		//ctrlpoint.x = (start.x +end.x) - temp;
+		//ctrlpoint.y = (start.y +end.y) - temp;
+//
+		//pos.x = calcBezier(start.x, ctrlpoint.x, end.x,value.y);
+		//pos.y = calcBezier(start.y, ctrlpoint.y, end.y,value.y);
+//
 
 		// ワールド変換など
 		output.Position = mul( float4(pos,input[i].Position.z, 1.0f ), g_mWVP );

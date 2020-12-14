@@ -14,6 +14,7 @@
 #include "StarCreater.h"
 #include "Rogo.h"
 #include "DotsBG.h"
+#include "TitleCamera.h"
 
 /**
  * @brief 初期化処理
@@ -21,6 +22,7 @@
  */
 void SceneTitle::Awake()
 {
+	m_camera = ObjectManager::Create<TitleCamera>("TitleCamera");
 	ObjectManager::Create<TitleRogo>("TitleRogo");
 	ObjectManager::Create<TitleStart>("TitleStart");
 	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
@@ -29,6 +31,7 @@ void SceneTitle::Awake()
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
 	m_stateMachine->AddComponent<TitleStateMachine>();
+	CCamera::Set(m_camera);
 }
 
 /**

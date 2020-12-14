@@ -7,6 +7,7 @@
 
 class TitleUI;
 class GameObject;
+class TitleCamera;
 
 /**
  * @class SceneTitle
@@ -17,6 +18,7 @@ class SceneTitle :public CScene
 private:
 	TitleUI* m_UI;
 	GameObject* m_stateMachine;
+	TitleCamera* m_camera;
 public:
 	/**
 	 * @brief 初期化処理
