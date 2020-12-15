@@ -100,6 +100,20 @@ Vector3 Transform::GetRight()
 	return right;
 }
 
+
+/**
+* @brief 右方向の取得
+* @return 右方向
+*/
+Vector3 Transform::GetUp()
+{
+	Vector3 up = {0,1,0 };
+
+	up = MyMath::PosxQuaternion(up, quaternion);
+
+	return up;
+}
+
 /**
  * @brief 回転させる
  * @param[in]	kind 回転させる軸

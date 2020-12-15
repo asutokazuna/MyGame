@@ -9,7 +9,7 @@
 #define	TEXTURE_NAME_FIELD		L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_PressSpace	L"data/texture/Press_Space.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_shooting	L"data/texture/TitleCloth.png"	// 読み込むテクスチャファイル名
-#define	TEXTURE_NAME_ROGO		L"data/texture/TitleRogo.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_NAME_ROGO		L"data/texture/RogoBlack.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_WIN		L"data/texture/win.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_LOSE		L"data/texture/Lose.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_NAME_STAR		L"data/texture/Star.png"	// 読み込むテクスチャファイル名

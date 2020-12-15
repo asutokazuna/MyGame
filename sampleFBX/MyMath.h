@@ -186,6 +186,14 @@ class MyMath
 public:
 	static DirectX::XMFLOAT4X4 StoreXMFloat4x4(const Transform& transform);
 
+	/**
+	* @brief   クォータニオンの掛け算
+	* @param   left    計算の左の項
+	* @param   right   計算の右の項
+	* @return  計算したクォータニオン
+	*/
+	static Quaternion CalcQuaternion(const Quaternion& left, const Quaternion& right);
+
 	static Quaternion AnglexQuaternion(Quaternion quat, Vector3 axis, float radius);
 
 	/**

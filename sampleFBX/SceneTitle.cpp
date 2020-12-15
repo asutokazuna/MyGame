@@ -27,7 +27,7 @@ void SceneTitle::Awake()
 	ObjectManager::Create<TitleStart>("TitleStart");
 	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 	ObjectManager::Create<Rogo>("Rogo");
-	ObjectManager::Create<DotsBG>("DotsBG");
+	//ObjectManager::Create<DotsBG>("DotsBG");
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
 	m_stateMachine->AddComponent<TitleStateMachine>();

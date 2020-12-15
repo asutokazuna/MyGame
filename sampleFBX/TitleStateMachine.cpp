@@ -4,6 +4,7 @@
 #include "TitleRogo.h"
 #include "Rogo.h"
 #include "TitleStart.h"
+#include "StarCreater.h"
 
 #define START_POS (-SCREEN_CENTER_X - 700 * 2)
 #define END_POS (0)
@@ -115,10 +116,11 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 
 	void Update()
 	{
-		loopTime++;
-		if (loopTime > MAX_LOOP_TIME) {
-			machine.GoToState(E_TITLE_STATE_LEAVE);
-		}
+		//loopTime++;
+		//if (loopTime > MAX_LOOP_TIME) {
+		//	machine.GoToState(E_TITLE_STATE_LEAVE);
+		//}
+		machine.m_particle->GetComponent<StarCreater>()->Move();
 	}
 
 	void Uninit()

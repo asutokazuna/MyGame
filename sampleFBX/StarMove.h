@@ -25,6 +25,7 @@ private:
 	Vector3 m_color;
 	Vector3 m_size;
 	Vector3 m_rogoSize;
+	Vector3 m_move;
 	int m_time;
 public:
 	/**
@@ -50,6 +51,9 @@ public:
 	 * @retrun なし
 	 */
 	void Create();
+	void Move();
+	void Create(Vector3 pos);
+	bool IsLife();
 	void SetFrontMesh() {
 
 	}

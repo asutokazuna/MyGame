@@ -69,6 +69,8 @@ public:
 
 	Vector3 GetRight();
 
+	Vector3 GetUp();
+
 	enum AxisKind
 	{
 		AXIS_X,

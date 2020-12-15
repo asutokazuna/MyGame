@@ -67,9 +67,32 @@ void StarCreater::Create()
 		if (m_star[i].GetActive() == true) {
 			continue;
 		}
-
-		m_star[i].GetComponent<StarMove>()->Create();
+		Vector3 pos = Vector3(0,0,0);
+		pos.y = SCREEN_CENTER_Y;
+		pos.x = SCREEN_WIDTH / 10.0f * (rand() % 10) -SCREEN_CENTER_X;
+		
+		m_star[i].GetComponent<StarMove>()->Create(pos);
 		m_star[i].SetActive(true);
 		break;
 	}
 }
+
+void StarCreater::Move()
+{
+	for (int i = 0; i < MAX_STAR; i++)
+	{
+		if (m_star[i].GetActive() == false) {
+			continue;
+		}
+			m_star[i].GetComponent<StarMove>()->Move();
+
+		if (m_star[i].GetTransform().position.x > SCREEN_CENTER_X ||
+			m_star[i].GetTransform().position.x < -SCREEN_CENTER_X ||
+			m_star[i].GetTransform().position.y > SCREEN_CENTER_Y ||
+			m_star[i].GetTransform().position.y < -SCREEN_CENTER_Y) {
+			m_star[i].SetActive(false);
+		}
+	}
+}
+
+// EOF

@@ -47,29 +47,29 @@ HRESULT StarMove::Init()
  */
 void StarMove::Update()
 {
-	m_time++;
-	m_parentTrans->rotation.z += m_rot;
-	if (m_alpha >= 1) {
-		m_add = -0.01f;
-	}
-	else if (m_alpha <= 0) {
-		m_add = +0.01f;
-	}
-	m_alpha += m_add;
-	m_backshader->ChangeAlpha(0.8f);
+	//m_time++;
+	//m_parentTrans->rotation.z += m_rot;
+	//if (m_alpha >= 1) {
+	//	m_add = -0.01f;
+	//}
+	//else if (m_alpha <= 0) {
+	//	m_add = +0.01f;
+	//}
+	//m_alpha += m_add;
+	//m_backshader->ChangeAlpha(0.8f);
 
-	if (m_time < LIFE_TIME / 2)
-	{
-		m_parentTrans->scale = m_size * (((float)m_time / LIFE_TIME) * 2);
-	}
-	else if (m_time >= LIFE_TIME / 2) {
-		m_parentTrans->scale = m_size - m_size * ((( (float)m_time - LIFE_TIME / (float)2 )/ LIFE_TIME));
-	}
+	//if (m_time < LIFE_TIME / 2)
+	//{
+	//	m_parentTrans->scale = m_size * (((float)m_time / LIFE_TIME) * 2);
+	//}
+	//else if (m_time >= LIFE_TIME / 2) {
+	//	m_parentTrans->scale = m_size - m_size * ((( (float)m_time - LIFE_TIME / (float)2 )/ LIFE_TIME));
+	//}
 
 
-	if (m_time > LIFE_TIME) {
-		m_Parent->SetActive(false);
-	}
+	//if (m_time > LIFE_TIME) {
+	//	m_Parent->SetActive(false);
+	//}
 }
 	
 /**
@@ -106,6 +106,29 @@ void StarMove::Create()
 	m_backshader->ChangeColor(m_color);
 	m_time = 0;
 	m_parentTrans->scale = Vector3();
+}
+
+void StarMove::Move()
+{
+	m_parentTrans->position += m_move;
+	m_time++;
+}
+
+void StarMove::Create(Vector3 pos)
+{
+	m_parentTrans->position = pos;
+	m_move.x = (rand() % 10  - 5)/ (float)10;
+	m_move.y = -rand() % 10 / (float)10 - 0.5f;
+	m_size = (rand() % 10 -5) / (float)10;
+	m_parentTrans->scale = Vector3(200, 200, 0) * m_size;
+	float a = (rand() % 4 / (float)10) + 0.2f;
+	m_backshader->ChangeAlpha(a);
+	m_time = 0;
+}
+
+bool StarMove::IsLife()
+{
+	return m_time > 180 ? true : false;
 }
 
 // EOF

@@ -13,13 +13,6 @@
   */
 Quaternion MakeQuaternion(Vector3 axis, float radian);
 
- /**
-  * @brief   クォータニオンの掛け算
-  * @param   left    計算の左の項
-  * @param   right   計算の右の項
-  * @return  計算したクォータニオン
-  */
-Quaternion CalcQuaternion(const Quaternion& left, const Quaternion& right);
 
 DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 {
@@ -134,7 +127,7 @@ Quaternion MakeQuaternion(Vector3 axis, float radian)
  * @param   right   計算の右の項
  * @return  計算したクォータニオン
  */
-Quaternion CalcQuaternion(const Quaternion& left, const Quaternion& right)
+Quaternion MyMath::CalcQuaternion(const Quaternion& left, const Quaternion& right)
 {
 	Quaternion quaternion;
 	float   num1, num2, num3, num4;
@@ -296,6 +289,11 @@ void MyMath::Normalize(Vector3 &vec)
 	float scalar = 1;
 
 	scalar = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+
+	if (scalar == 0) {
+		vec = Vector3(0, 0, 1);
+		return;
+	}
 
 	vec /= scalar;
 }

@@ -17,6 +17,7 @@ public:
 	void Update();
 	void Draw();
 	void Create();
+	void Move();
 };
 
 // EOF

@@ -15,7 +15,7 @@ WingParticle::~WingParticle()
 void WingParticle::Awake()
 {
 	AddComponent<WingPtclMove>();
-	AddComponent<UIMesh>();
+	AddComponent<UIMesh>()->ChangeSize(100,100,1);
 	AddComponent<DefaultShaderInfo>();
 }
 
