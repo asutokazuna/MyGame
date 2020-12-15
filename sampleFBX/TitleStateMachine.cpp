@@ -5,6 +5,7 @@
 #include "Rogo.h"
 #include "TitleStart.h"
 #include "StarCreater.h"
+#include "RogoColor.h"
 
 #define START_POS (-SCREEN_CENTER_X - 700 * 2)
 #define END_POS (0)
@@ -26,6 +27,7 @@ struct TITLE_INIT : public State<TITLE_STATE>
 		machine.GoToState(E_TITLE_STATE_FLY);
 		machine.m_clothRogo->SetActive(false);
 		machine.m_particle->SetActive(false);
+		machine.m_rogoColor->SetActive(false);
 	}
 };
 
@@ -53,7 +55,7 @@ struct TITLE_FLY : public State<TITLE_STATE>
 		machine.m_rogo->Move(t);
 
 		if (t >= 1) {
-			machine.GoToState(E_TITLE_STATE_IDOL);
+			machine.GoToState(E_TITLE_STATE_FADE);
 		}
 	}
 };
@@ -81,16 +83,25 @@ struct TITLE_FADE : public State<TITLE_STATE>
 {
 	TitleStateMachine& machine;
 	TITLE_FADE(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_FADE), machine(_machine) {}
+	float t = 0;
+	int wait;
 
 	void Init()
 	{
-		machine.m_rogo->SetActive(true);
-		machine.m_startText->SetActive(true);
+		machine.m_rogoColor->SetActive(true);
+		//machine.m_startText->SetActive(true);
+		t = 0;
+		wait = 0;
 	}
 
 	void Update()
 	{
-		if (machine.m_clothRogo->Fade(0.005f)) {
+		if (++wait < 15) {
+			return;
+		}
+		machine.m_rogo->Fade(t);
+		t  += 1 / (float)120;
+		if (t >= 1) {
 			machine.GoToState(E_TITLE_STATE_IDOL);
 		}
 	}
@@ -202,6 +213,7 @@ void TitleStateMachine::Awake()
 	m_rogo = ObjectManager::GetInstance().FindObject<Rogo>("Rogo");
 	m_startText = ObjectManager::GetInstance().FindObject<TitleStart>("TitleStart");
 	m_particle = ObjectManager::GetInstance().FindObject<GameObject>("StarManager");
+	m_rogoColor = ObjectManager::GetInstance().FindObject<RogoColor>("RogoColor");
 	SetState();
 	GoToState(E_TITLE_STATE_INIT);
 }

@@ -21,6 +21,7 @@ enum TITLE_STATE
 class TitleRogo;
 class Rogo;
 class TitleStart;
+class RogoColor;
 
 /**
  * @class TitleStateMachine
@@ -32,7 +33,7 @@ public:
 	Rogo* m_rogo;
 	TitleStart* m_startText;
 	GameObject* m_particle;
-
+	RogoColor* m_rogoColor;
 public:
 	/**
 	 * @brief 初期化処理

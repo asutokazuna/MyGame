@@ -15,6 +15,7 @@
 #include "Rogo.h"
 #include "DotsBG.h"
 #include "TitleCamera.h"
+#include "RogoColor.h"
 
 /**
  * @brief 初期化処理
@@ -25,8 +26,9 @@ void SceneTitle::Awake()
 	m_camera = ObjectManager::Create<TitleCamera>("TitleCamera");
 	ObjectManager::Create<TitleRogo>("TitleRogo");
 	ObjectManager::Create<TitleStart>("TitleStart");
-	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 	ObjectManager::Create<Rogo>("Rogo");
+	ObjectManager::Create<RogoColor>("RogoColor");
+	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 	//ObjectManager::Create<DotsBG>("DotsBG");
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
