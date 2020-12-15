@@ -227,6 +227,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderInfo.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StarColor.cpp" />
     <ClCompile Include="StarCreater.cpp" />
     <ClCompile Include="StarMove.cpp" />
@@ -248,6 +249,9 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponCtrl.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WingParticle.cpp" />
+    <ClCompile Include="WingPtclCreater.cpp" />
+    <ClCompile Include="WingPtclMove.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleCamera.h" />
@@ -325,6 +329,7 @@
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderInfo.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="StarColor.h" />
     <ClInclude Include="StarCreater.h" />
     <ClInclude Include="StarMove.h" />
@@ -347,6 +352,9 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponCtrl.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WingParticle.h" />
+    <ClInclude Include="WingPtclCreater.h" />
+    <ClInclude Include="WingPtclMove.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ClothDomain.hlsl">

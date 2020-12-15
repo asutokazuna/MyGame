@@ -19,9 +19,12 @@ struct TITLE_INIT : public State<TITLE_STATE>
 	void Init()
 	{
 		machine.m_clothRogo->InitParam();
-		machine.m_rogo->SetActive(false);
+		machine.m_rogo->SetActive(true);
+		machine.m_rogo->InitParam();
 		machine.m_startText->SetActive(false);
 		machine.GoToState(E_TITLE_STATE_FLY);
+		machine.m_clothRogo->SetActive(false);
+		machine.m_particle->SetActive(false);
 	}
 };
 
@@ -33,6 +36,7 @@ struct TITLE_FLY : public State<TITLE_STATE>
 	TitleStateMachine& machine;
 	TITLE_FLY(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_FLY), machine(_machine) {}
 	int time;
+	const int  value = 180;
 
 	void Init()
 	{
@@ -42,8 +46,13 @@ struct TITLE_FLY : public State<TITLE_STATE>
 	void Update()
 	{
 		time++;
-		if (machine.m_clothRogo->Move(START_POS, END_POS, time) == true) {
-			machine.GoToState(E_TITLE_STATE_WAVE);
+
+		float t = time / (float)value;
+
+		machine.m_rogo->Move(t);
+
+		if (t >= 1) {
+			machine.GoToState(E_TITLE_STATE_IDOL);
 		}
 	}
 };
@@ -94,11 +103,13 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 	TitleStateMachine& machine;
 	TITLE_IDOL(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_IDOL), machine(_machine) {}
 	int loopTime;
-	const int MAX_LOOP_TIME = 180;
+	const int MAX_LOOP_TIME = 300;
 
 	void Init()
 	{
 		machine.m_clothRogo->SetActive(false);
+		machine.m_startText->SetActive(true);
+		machine.m_particle->SetActive(true);
 		loopTime = 0;
 	}
 
@@ -106,9 +117,16 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 	{
 		loopTime++;
 		if (loopTime > MAX_LOOP_TIME) {
-			//machine.GoToState(E_TITLE_STATE_FADEOUT);
+			machine.GoToState(E_TITLE_STATE_LEAVE);
 		}
 	}
+
+	void Uninit()
+	{
+		machine.m_startText->SetActive(false);
+		machine.m_particle->SetActive(false);
+	}
+
 };
 
 /**
@@ -145,19 +163,29 @@ struct TITLE_LEAVE : public State<TITLE_STATE>
 	TitleStateMachine& machine;
 	TITLE_LEAVE(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_LEAVE), machine(_machine) {}
 	int time;
+	const int  value = 180;
+	int ttt = 0;
 
 	void Init()
 	{
 		time = 0;
+		ttt = 0;
 	}
 
 	void Update()
 	{
 		time++;
-		machine.m_clothRogo->MovePower(0.0005f);
 
-		if (machine.m_clothRogo->Move(END_POS, -START_POS, time) == true) {
+		float t = time / (float)value;
+
+		machine.m_rogo->Fade(t);
+
+		if (t >= 1) {
+			ttt++;
+		}
+		if (ttt > 2 * 60) {
 			machine.GoToState(E_TITLE_STATE_INIT);
+
 		}
 	}
 };
@@ -171,8 +199,9 @@ void TitleStateMachine::Awake()
 	m_clothRogo = ObjectManager::GetInstance().FindObject<TitleRogo>("TitleRogo");
 	m_rogo = ObjectManager::GetInstance().FindObject<Rogo>("Rogo");
 	m_startText = ObjectManager::GetInstance().FindObject<TitleStart>("TitleStart");
+	m_particle = ObjectManager::GetInstance().FindObject<GameObject>("StarManager");
 	SetState();
-	GoToState(E_TITLE_STATE_IDOL);
+	GoToState(E_TITLE_STATE_INIT);
 }
 
 /**

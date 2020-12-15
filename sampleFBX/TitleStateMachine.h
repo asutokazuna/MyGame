@@ -31,6 +31,7 @@ public:
 	TitleRogo * m_clothRogo;
 	Rogo* m_rogo;
 	TitleStart* m_startText;
+	GameObject* m_particle;
 
 public:
 	/**

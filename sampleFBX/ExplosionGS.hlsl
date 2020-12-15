@@ -73,7 +73,7 @@ float2 big;
 		{
 					float t = min(dotuv, value.y);
 			float tett = min(value.y + dotuv, 1);
-			float cccc = clamp((value.y - dotuv) * 2 + tett, 0,1);
+			float cccc = clamp((value.y + dotuv -0.5) * 2, 0,1);
 			//big = lerp(pos,input[i].Position, tett);
 			
 					pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
@@ -105,18 +105,18 @@ float2 big;
 
 		}
 
-		//pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
-		//pos.y = input[i].Position.y + -(maxdist.y * 2 - 1) * 5;
-		//start = pos;
-		//start.y += 0.5;
-		//end = input[i].Position;
-		//temp = rand(input[i].TexCoord);
-		//ctrlpoint.x = (start.x +end.x) - temp;
-		//ctrlpoint.y = (start.y +end.y) - temp;
-//
-		//pos.x = calcBezier(start.x, ctrlpoint.x, end.x,value.y);
-		//pos.y = calcBezier(start.y, ctrlpoint.y, end.y,value.y);
-//
+// 		pos.x = input[i].Position.x +  (maxdist.x * 2 - 1) * 5;
+// 		pos.y = input[i].Position.y + -(maxdist.y * 2 - 1) * 5;
+// 		start = pos;
+// 		start.y += 0.5;
+// 		end = input[i].Position;
+// 		temp = rand(input[i].TexCoord);
+// 		ctrlpoint.x = (start.x +end.x) - temp;
+// 		ctrlpoint.y = (start.y +end.y) - temp;
+
+// 		pos.x = calcBezier(start.x, ctrlpoint.x, end.x,value.y);
+// 		pos.y = calcBezier(start.y, ctrlpoint.y, end.y,value.y);
+// //
 
 		// ワールド変換など
 		output.Position = mul( float4(pos,input[i].Position.z, 1.0f ), g_mWVP );
