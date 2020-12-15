@@ -6,6 +6,7 @@
 #include "TitleStart.h"
 #include "StarCreater.h"
 #include "RogoColor.h"
+#include "input.h"
 
 #define START_POS (-SCREEN_CENTER_X - 700 * 2)
 #define END_POS (0)
@@ -24,10 +25,15 @@ struct TITLE_INIT : public State<TITLE_STATE>
 		machine.m_rogo->SetActive(true);
 		machine.m_rogo->InitParam();
 		machine.m_startText->SetActive(false);
-		machine.GoToState(E_TITLE_STATE_FLY);
 		machine.m_clothRogo->SetActive(false);
 		machine.m_particle->SetActive(false);
 		machine.m_rogoColor->SetActive(false);
+	}
+
+	void Update()
+	{
+		if(CInput::GetKeyTrigger(VK_0))
+		machine.GoToState(E_TITLE_STATE_FLY);
 	}
 };
 

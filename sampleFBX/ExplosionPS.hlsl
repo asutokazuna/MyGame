@@ -45,9 +45,12 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	//return float4(d,input.TexCoord,1);
 	float4 noizeColor = g_noizeTex.Sample(g_sampler, input.TexCoord);
 	float dissolve = (noizeColor.r * 0.3 + noizeColor.g * 0.6 + noizeColor.b * 0.1) * d;
+	float ld = input.TexCoord.x * input.TexCoord.y;
 
-	if(value.x > dissolve) {
-		discard;
+	if(value.x > 0) {
+
+		
+	Alpha = 1 -value.x;;
 	}
 
 	//return float4(input.Normal,1);

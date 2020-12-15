@@ -30,6 +30,8 @@ struct HULL_DATA
 	XMFLOAT4 factor;
 };
 
+static float g_powwer = 0;
+
 ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
 {
 	m_VSKind = ShaderData::VS_DEFAULT;
@@ -90,7 +92,13 @@ void ExplosionShaderInfo::Draw()
 
 void ExplosionShaderInfo::UpdateConstant()
 {
-	m_time += 0.01f;
+	//if(m_power > 0.5 &&
+	//	m_power < 1)
+	////m_time += 3.14f /180 / ;
+	//else
+	//{
+	//	m_time = 0;
+	//}
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
@@ -104,10 +112,10 @@ void ExplosionShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 
 	HULL_DATA hullcb;
-	hullcb.factor.x = 10;
-	hullcb.factor.y = 10;
-	hullcb.factor.z = 10;
-	hullcb.factor.w = 10;
+	hullcb.factor.x = 20;
+	hullcb.factor.y = 20;
+	hullcb.factor.z = 20;
+	hullcb.factor.w = 20;
 	pDeviceContext->UpdateSubresource(m_HullConstant[0], 0, nullptr, &hullcb, 0, 0);
 	pDeviceContext->HSSetConstantBuffers(0, 1, &m_HullConstant[0]);
 
@@ -160,6 +168,7 @@ void ExplosionShaderInfo::SetNoizeTexture(int kind)
 void ExplosionShaderInfo::SetFloat(std::string key, float value)
 {
 	if (key == "Power") {
+		g_powwer = value;
 		m_power = value;
 	}
 	else if (key == "Fade") {
