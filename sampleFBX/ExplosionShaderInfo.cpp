@@ -30,8 +30,9 @@ struct HULL_DATA
 	XMFLOAT4 factor;
 };
 
-static float g_powwer = 0;
-
+/**
+ * @brief コンストラクタ
+ */
 ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
 {
 	m_VSKind = ShaderData::VS_DEFAULT;
@@ -47,7 +48,9 @@ ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 
 	m_power = 0;
 }
 
-
+/**
+ * @brief デストラクタ
+ */
 ExplosionShaderInfo::~ExplosionShaderInfo()
 {
 	delete m_HullConstant;
@@ -55,6 +58,10 @@ ExplosionShaderInfo::~ExplosionShaderInfo()
 	delete m_PixelConstant;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void ExplosionShaderInfo::Awake()
 {
 	CreateConstantBuffer<SHADER_GLOBAL>(m_GeometryConstant);
@@ -67,6 +74,10 @@ void ExplosionShaderInfo::Awake()
 	m_time = 0;
 }
 
+/**
+ * @brief 終了処理
+ * @return なし
+ */
 void ExplosionShaderInfo::Uninit()
 {
 	for (int i = 0; i < 1; ++i) {
@@ -80,6 +91,10 @@ void ExplosionShaderInfo::Uninit()
 	}
 }
 
+/**
+ * @brief 描画処理
+ * @return なし
+ */
 void ExplosionShaderInfo::Draw()
 {
 #ifdef _DEBUG
@@ -90,15 +105,12 @@ void ExplosionShaderInfo::Draw()
 #endif
 }
 
+/**
+ * @brief コンスタントバッファの更新
+ * @return なし
+ */
 void ExplosionShaderInfo::UpdateConstant()
 {
-	//if(m_power > 0.5 &&
-	//	m_power < 1)
-	////m_time += 3.14f /180 / ;
-	//else
-	//{
-	//	m_time = 0;
-	//}
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11SamplerState* pSamplerState = CGraphics::GetSamplerState();
 
@@ -150,25 +162,45 @@ void ExplosionShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
 }
 
+/**
+ * @brief テクスチャのセット
+ * @param[in] kind テクスチャの種類のenum番号
+ * @retrun なし
+ */
 void ExplosionShaderInfo::SetTexture(int kind)
 {
 	m_pTexture = TextureData::GetInstance().GetData(kind);
 }
 
+/**
+ * @brief テクスチャのセット
+ * @param[in] texture テクスチャデータ
+ * @retrun なし
+ */
 void ExplosionShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
 {
 	m_pTexture = texture;
 }
 
+/**
+ * @brief ノイズテクスチャのセット
+ * @param[in] kind テクスチャの種類のenum番号
+ * @retrun なし
+ */
 void ExplosionShaderInfo::SetNoizeTexture(int kind)
 {
 	m_pNoizeTexture = TextureData::GetInstance().GetData(kind);
 }
 
+/**
+ * @brief コンスタントバッファのデータをセット
+ * @param[in] key 変数の判別するキー
+ * @param[in] value セットする値
+ * @retrun なし
+ */
 void ExplosionShaderInfo::SetFloat(std::string key, float value)
 {
 	if (key == "Power") {
-		g_powwer = value;
 		m_power = value;
 	}
 	else if (key == "Fade") {
@@ -176,6 +208,12 @@ void ExplosionShaderInfo::SetFloat(std::string key, float value)
 	}
 }
 
+/**
+ * @brief コンスタントバッファのデータをセット
+ * @param[in] key 変数の判別するキー
+ * @param[in] value セットする値
+ * @retrun なし
+ */
 void ExplosionShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 {
 	if (key == "Proj") {
@@ -188,3 +226,5 @@ void ExplosionShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 		m_world = value;
 	}
 }
+
+// EOF

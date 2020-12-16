@@ -18,6 +18,7 @@ enum TITLE_STATE
 	E_TITLE_STATE_MAX,
 };
 
+// 前方宣言
 class TitleRogo;
 class Rogo;
 class TitleStart;
@@ -25,15 +26,16 @@ class RogoColor;
 
 /**
  * @class TitleStateMachine
+ * @brief タイトルの状態を管理するクラス
  */
 class TitleStateMachine :public StateMachine<TITLE_STATE>
 {
 public:
-	TitleRogo * m_clothRogo;
-	Rogo* m_rogo;
-	TitleStart* m_startText;
-	GameObject* m_particle;
-	RogoColor* m_rogoColor;
+	Rogo* m_rogo;				//!< タイトルロゴ
+	TitleStart* m_startText;	//!< push start
+	GameObject* m_particle;		//!< パーティクル
+	RogoColor* m_rogoColor;		//!< 色付きタイトルロゴ
+
 public:
 	/**
 	 * @brief 初期化処理

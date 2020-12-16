@@ -24,7 +24,7 @@ struct HS_CONSTANT_DATA_OUTPUT
 
 cbuffer globalTessFactor : register(b0)
 {
-	float4 g_Factor;
+	float4 g_Factor;	//!< x:•Ó‚Ì•ªŠ„”, y:’†‚Ì•ªŠ„”,@z w–¢Žg—p
 };
 
 HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
@@ -64,3 +64,5 @@ HS_OUT main(
 
 	return Output;
 }
+
+// EOF

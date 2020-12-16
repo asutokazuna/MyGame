@@ -1,11 +1,19 @@
-﻿#include "DefaultShaderInfo.h"
+﻿/**
+ * @file RogoColor
+ * @brief 色付きのタイトルロゴオブジェクト
+ */
+#include "DefaultShaderInfo.h"
 #include "TextureData.h"
 #include "UIMesh.h"
 #include "RogoColor.h"
 
-#define ROGO_WIDTH (723* 1.2)
-#define ROGO_HEIGHT (210* 1.2)
+#define ROGO_WIDTH (723* 1.2)		//!< ロゴの横幅
+#define ROGO_HEIGHT (210* 1.2)		//!< ロゴの縦幅
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void RogoColor::Awake()
 {
 	m_shader = AddComponent<DefaultShaderInfo>();

@@ -21,11 +21,9 @@ struct TITLE_INIT : public State<TITLE_STATE>
 
 	void Init()
 	{
-		machine.m_clothRogo->InitParam();
 		machine.m_rogo->SetActive(true);
 		machine.m_rogo->InitParam();
 		machine.m_startText->SetActive(false);
-		machine.m_clothRogo->SetActive(false);
 		machine.m_particle->SetActive(false);
 		machine.m_rogoColor->SetActive(false);
 	}
@@ -61,22 +59,6 @@ struct TITLE_FLY : public State<TITLE_STATE>
 		machine.m_rogo->Move(t);
 
 		if (t >= 1) {
-			machine.GoToState(E_TITLE_STATE_FADE);
-		}
-	}
-};
-
-/**
- * @struct 波が弱くなる
- */
-struct TITLE_WAVE : public State<TITLE_STATE>
-{
-	TitleStateMachine& machine;
-	TITLE_WAVE(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_WAVE), machine(_machine) {}
-
-	void Update()
-	{
-		if (machine.m_clothRogo->MovePower(-0.0005f)) {
 			machine.GoToState(E_TITLE_STATE_FADE);
 		}
 	}
@@ -125,7 +107,6 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 
 	void Init()
 	{
-		machine.m_clothRogo->SetActive(false);
 		machine.m_startText->SetActive(true);
 		machine.m_particle->SetActive(true);
 		loopTime = 0;
@@ -146,32 +127,6 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 		machine.m_particle->SetActive(false);
 	}
 
-};
-
-/**
- * @struct フェードアウト
- */
-struct TITLE_FADEOUT : public State<TITLE_STATE>
-{
-	TitleStateMachine& machine;
-	TITLE_FADEOUT(TitleStateMachine & _machine) : State<TITLE_STATE>(TITLE_STATE::E_TITLE_STATE_FADEOUT), machine(_machine) {}
-
-	void Init()
-	{
-		machine.m_rogo->SetActive(true);
-		machine.m_startText->SetActive(false);
-	}
-
-	void Update()
-	{
-		if (machine.m_clothRogo->FadeOUT(0.01f)) {
-			machine.GoToState(E_TITLE_STATE_LEAVE);
-		}
-	}
-	void Uninit()
-	{
-		machine.m_rogo->SetActive(false);
-	}
 };
 
 /**
@@ -215,7 +170,6 @@ struct TITLE_LEAVE : public State<TITLE_STATE>
  */
 void TitleStateMachine::Awake()
 {
-	m_clothRogo = ObjectManager::GetInstance().FindObject<TitleRogo>("TitleRogo");
 	m_rogo = ObjectManager::GetInstance().FindObject<Rogo>("Rogo");
 	m_startText = ObjectManager::GetInstance().FindObject<TitleStart>("TitleStart");
 	m_particle = ObjectManager::GetInstance().FindObject<GameObject>("StarManager");
@@ -232,10 +186,8 @@ void TitleStateMachine::SetState()
 {
 	AddState(std::make_shared<TITLE_INIT>(*this));
 	AddState(std::make_shared<TITLE_FLY>(*this));
-	AddState(std::make_shared<TITLE_WAVE>(*this));
 	AddState(std::make_shared<TITLE_FADE>(*this));
 	AddState(std::make_shared<TITLE_IDOL>(*this));
-	AddState(std::make_shared<TITLE_FADEOUT>(*this));
 	AddState(std::make_shared<TITLE_LEAVE>(*this));
 }
 

@@ -16,9 +16,9 @@ class TitleCamera;
 class SceneTitle :public CScene
 {
 private:
-	TitleUI* m_UI;
-	GameObject* m_stateMachine;
-	TitleCamera* m_camera;
+	TitleUI* m_UI;				//!< UI
+	GameObject* m_stateMachine;	//!< ステートマシン
+	TitleCamera* m_camera;		//!< カメラ
 public:
 	/**
 	 * @brief 初期化処理

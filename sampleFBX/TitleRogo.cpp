@@ -17,17 +17,17 @@
  */
 void TitleRogo::Awake()
 {
-	m_clothshader = AddComponent<ClothShaderInfo>();
-	m_clothshader->SetTexture(TEXTURE_TITLE_ROGO);
-	m_clothshader->SetNoizeTexture(TEXTURE_NOIZE);
-	m_expShader = AddComponent<ExplosionShaderInfo>();
-	m_expShader->SetTexture(TEXTURE_TITLE_ROGO);
-	m_mesh = AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH*1.6, SCREEN_HEIGHT*1.6, 1);// ->ChangePos(START_POS, 0, 0);
-	m_mesh->SetPrimitive(6);
-	//m_mesh->SetBlendState(BS_SUBTRACTION);
-	//m_clothshader->ChangeAlpha(0.4f);
-	m_mesh->SetShader(*m_clothshader);
-	//m_mesh->SetShader(*m_expShader);
+	//m_clothshader = AddComponent<ClothShaderInfo>();
+	//m_clothshader->SetTexture(TEXTURE_TITLE_ROGO);
+	//m_clothshader->SetNoizeTexture(TEXTURE_NOIZE);
+	//m_expShader = AddComponent<ExplosionShaderInfo>();
+	//m_expShader->SetTexture(TEXTURE_TITLE_ROGO);
+	//m_mesh = AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH*1.6, SCREEN_HEIGHT*1.6, 1);// ->ChangePos(START_POS, 0, 0);
+	//m_mesh->SetPrimitive(6);
+	////m_mesh->SetBlendState(BS_SUBTRACTION);
+	////m_clothshader->ChangeAlpha(0.4f);
+	//m_mesh->SetShader(*m_clothshader);
+	////m_mesh->SetShader(*m_expShader);
 	m_time = 0;
 	m_power = 0.1f;
 	m_fadeValue = 0;

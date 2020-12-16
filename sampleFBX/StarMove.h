@@ -18,13 +18,8 @@ class StarMove :public Component
 {
 private:
 	Transform * m_parentTrans;
-	float m_rot;
 	ShaderInfo* m_backshader;
-	float m_alpha;
-	float m_add;
-	Vector3 m_color;
 	Vector3 m_size;
-	Vector3 m_rogoSize;
 	Vector3 m_move;
 	int m_time;
 public:
@@ -35,28 +30,17 @@ public:
 	void Awake();
 		
 	/**
-	 * @brief 初期化
-	 * @retrun なし
-	 */
-	HRESULT Init();
-		
-	/**
-	 * @brief 更新
-	 * @retrun なし
-	 */
-	void Update();
-		
-	/**
 	 * @brief 生成時処理
 	 * @retrun なし
-	 */
-	void Create();
-	void Move();
+	 */;
 	void Create(Vector3 pos);
+	
+	/**
+	 * @brief 移動処理
+	 * @return なし
+	 */
+	void Move();
 	bool IsLife();
-	void SetFrontMesh() {
-
-	}
 
 	/**
 	 * @brief パーティクルの背景のシェーダーをセット

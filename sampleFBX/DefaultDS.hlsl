@@ -28,20 +28,20 @@ DS_OUTPUT main(
 	const OutputPatch<DS_IN, NUM_CONTROL_POINTS> patch)
 {
 	DS_OUTPUT Output;
-// 頂点座標
+	// 頂点座標
   	float3 p1 = lerp( patch[1].Position, patch[0].Position, domain.x );
   	float3 p2 = lerp( patch[3].Position, patch[2].Position, domain.x );
 	float3 p3 = lerp( p1, p2, domain.y );
-// 法線
+	// 法線
 	float3 n1 = lerp( patch[1].Normal, patch[0].Normal, domain.x );
 	float3 n2 = lerp( patch[3].Normal, patch[2].Normal, domain.x );
 	float3 n3 = lerp( n1, n2, domain.y );
 
-  // テクセル
+	// テクセル
 	float2 t1 = lerp( patch[1].TexCoord, patch[0].TexCoord, domain.x );
 	float2 t2 = lerp( patch[3].TexCoord, patch[2].TexCoord, domain.x );
 	float2 t3 = lerp( t1, t2, domain.y );
-// 色
+	// 色
 	float4 c1 = lerp( patch[1].Color, patch[0].Color, domain.x );
 	float4 c2 = lerp( patch[3].Color, patch[2].Color, domain.x );
 	float4 c3 = lerp( c1, c2, domain.y );
@@ -53,3 +53,5 @@ DS_OUTPUT main(
 
 	return Output;
 }
+
+// EOF

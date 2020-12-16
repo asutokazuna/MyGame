@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ShaderInfo.h"
 
+
 class ExplosionShaderInfo :public ShaderInfo
 {
 private:
@@ -14,7 +15,14 @@ private:
 	ID3D11ShaderResourceView* m_pTexture;	//!< テクスチャ
 	ID3D11ShaderResourceView* m_pNoizeTexture;	//!< テクスチャ
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	ExplosionShaderInfo();
+
+	/**
+	 * @brief デストラクタ
+	 */
 	~ExplosionShaderInfo();
 		
 	/**
@@ -29,6 +37,10 @@ public:
 	 */
 	void Uninit();
 
+	/**
+	 * @brief 描画処理(デバッグ用)
+	 * @return なし
+	 */
 	void Draw();
 		
 	/**
@@ -51,6 +63,11 @@ public:
 	 */
 	void SetTexture(ID3D11ShaderResourceView* texture);
 
+	/**
+	 * @brief ノイズテクスチャのセット
+	 * @param[in] kind テクスチャの種類のenum番号
+	 * @retrun なし
+	 */
 	void SetNoizeTexture(int kind);
 			
 	/**

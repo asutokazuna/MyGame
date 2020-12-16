@@ -17,6 +17,10 @@ StarCreater::~StarCreater()
 	delete[] m_star;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void StarCreater::Awake()
 {
 	for (int i = 0; i < MAX_STAR; i++)
@@ -27,6 +31,10 @@ void StarCreater::Awake()
 	m_time = 0;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT StarCreater::Init()
 {
 	for (int i = 0; i < MAX_STAR; i++)

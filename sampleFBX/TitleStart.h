@@ -5,18 +5,22 @@
 #pragma once
 #include "GameObject.h"
 
+// 前方宣言
 class Mesh;
+class DefaultShaderInfo;
 
 /**
  * @class TitleStart
+ * @brief フェードしながらスタートテキストを表示する
  */
 class TitleStart :public GameObject
 {
 private:
-	Mesh* m_mesh;
-	float m_add;
-	Vector3 m_color;
-	float m_alpha;
+	Mesh* m_mesh;		//!< メッシュ
+	float m_add;		//!< アルファ値の変化量
+	DefaultShaderInfo* m_shader;	//!< シェーダー
+	float m_alpha;		//!< アルファ値
+
 public:
 	/**
 	 * @brief 初期化処理
