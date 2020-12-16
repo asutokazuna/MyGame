@@ -13,6 +13,8 @@
 #include "Rogo.h"
 #include "TitleCamera.h"
 #include "RogoColor.h"
+#include "Sound.h"
+#include "SoundData.h"
 
 /**
  * @brief 初期化処理
@@ -29,6 +31,7 @@ void SceneTitle::Awake()
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
 	m_stateMachine->AddComponent<TitleStateMachine>();
 	CCamera::Set(m_camera);
+	CSound::Play(SOUND_LABEL_TITLE);
 }
 
 /**
@@ -41,6 +44,9 @@ void SceneTitle::Update()
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		SceneManager::Change(SceneManager::ESCENE::SCENE_GAME);
 		return;
+	}
+	if (CSound::IsPlaying(SOUND_LABEL_TITLE) == false) {
+		CSound::Play(SOUND_LABEL_TITLE);
 	}
 }
 

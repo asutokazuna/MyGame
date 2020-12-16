@@ -17,6 +17,7 @@
 #include "CCamera.h"
 #include "ObjectManager.h"
 #include "TextureData.h"
+#include "Sound.h"
 
 CScene* SceneManager::m_nowScene = nullptr;
 int SceneManager::m_SceneID = 0;
@@ -38,6 +39,7 @@ void SceneManager::Init()
 	ShaderData::Init();
 	ModelData::Init();
 	TextureData::Init();
+	CSound::Init();
 
 	// 全オブジェクト初期化
 	m_pCamera = new CCamera();
@@ -74,6 +76,7 @@ void SceneManager::Uninit()
 	if(m_pCamera)
 	m_pCamera->Uninit();
 
+	CSound::Fin();
 	Fade::Uninit();
 	ModelData::Uninit();
 	ShaderData::Uninit();
@@ -91,6 +94,7 @@ void SceneManager::Uninit()
 void SceneManager::Update()
 {
 	Fade::Update();
+	CSound::Update();
 	if (Fade::IsFade() == true) {
 		return;
 	}
