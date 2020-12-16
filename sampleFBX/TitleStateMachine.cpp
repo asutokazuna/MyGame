@@ -32,7 +32,7 @@ struct TITLE_INIT : public State<TITLE_STATE>
 
 	void Update()
 	{
-		if(CInput::GetKeyTrigger(VK_0))
+		//if(CInput::GetKeyTrigger(VK_0))
 		machine.GoToState(E_TITLE_STATE_FLY);
 	}
 };

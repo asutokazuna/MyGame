@@ -51,6 +51,7 @@ float4 main(VS_OUTPUT input) : SV_Target0
 
 		
 	Alpha = 1 -value.x;;
+	
 	}
 
 	//return float4(input.Normal,1);

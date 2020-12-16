@@ -3,8 +3,8 @@
 #include "UIMesh.h"
 #include "RogoColor.h"
 
-#define ROGO_WIDTH (723)
-#define ROGO_HEIGHT (210)
+#define ROGO_WIDTH (723* 1.2)
+#define ROGO_HEIGHT (210* 1.2)
 
 void RogoColor::Awake()
 {

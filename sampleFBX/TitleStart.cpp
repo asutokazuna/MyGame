@@ -16,7 +16,7 @@ void TitleStart::Awake()
 	m_alpha = 1;
 	m_shader = AddComponent<DefaultShaderInfo>();
 	m_shader->SetTexture(TEXTURE_PRESSENTER);
-	m_mesh = AddComponent<UIMesh>()->ChangeSize(180, 100, 1)->ChangePos(0, -200, 0);
+	m_mesh = AddComponent<UIMesh>()->ChangeSize(420, 76, 1)->ChangePos(0, -200, 0);
 	m_mesh->SetShader(*m_shader);
 }
 

@@ -68,18 +68,19 @@ float scalar;
 
 	for (uint i = 0; i < 3; i++)
 	{
-		scalar = abs(dot(input[i].TexCoord.x,input[i].TexCoord.y)) ;
 		pos = input[i].Position;
-		start = float2(scalar,scalar);
-		ctrl.x =(d.x + d.y);
+		start = float2(input[i].Position.x - d.x, input[i].Position.y-d.y)/10;
+		ctrl.x =(d.x + d.y) * 2;
 		ctrl.y = (d.x * d.y * input[i].Position.y +start)*2;
 		ctrl2.x = d.x * 2;
 		ctrl2.y = d.y * 5;
+		scalar = abs(dot(input[i].TexCoord.x,input[i].TexCoord.y)) ;
+		//scalar = input[i].TexCoord.x;
 		//start.x += d.x * 2;
 		//start.y += d.y * 3;
 
-		pos.x = calcBezier3(start.x,ctrl.x,ctrl2.x, input[i].Position.x,clamp(value.y+(1 -scalar) * 0.6,0,1));
-		pos.y = calcBezier3(start.y,ctrl.y,ctrl2.y, input[i].Position.y,clamp(value.y+(1 -scalar) * 0.6,0,1));
+		pos.x = calcBezier3(start.x,ctrl.x,ctrl2.x, input[i].Position.x,clamp(value.y+(1 -scalar) * clamp(value.y ,0,1),0,1));
+		pos.y = calcBezier3(start.y,ctrl.y,ctrl2.y, input[i].Position.y,clamp(value.y+(1 -scalar) * clamp(value.y,0,1),0,1));
 
 		pos = mul(pos,rotate);
 
