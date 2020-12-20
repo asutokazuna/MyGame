@@ -178,4 +178,21 @@ void DefaultShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 	}
 }
 
+/**
+ * @brief UVの設定
+ * @param[in] uv UV位置
+ * @param[in] scale UVサイズ
+ * @return なし
+ */
+void DefaultShaderInfo::SetUV(Vector3 uv, Vector3 scale)
+{
+	XMMATRIX mtx = XMMatrixIdentity();
+
+	mtx = XMMatrixScaling(scale.x, scale.y, scale.z);
+
+	mtx *= XMMatrixTranslation(uv.x, uv.y, uv.z);
+
+	XMStoreFloat4x4(&m_TexWorld, mtx);
+}
+
 // EOF

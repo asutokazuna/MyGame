@@ -14,6 +14,8 @@
 #include "SceneManager.h"
 #include "input.h"
 #include "ObjectManager.h"
+#include "Number.h"
+#include "RangeCursor.h"
 
 bool SceneGame::m_isGameOver = false;
 bool SceneGame::m_isVictory = true;
@@ -30,6 +32,7 @@ void SceneGame::Awake()
 	m_BCamera->Awake();
 
 	m_pPlayer	= ObjectManager::Create<CPlayer>("Player");
+	ObjectManager::Create<RangeCursor>("RangeCursor");
 	m_pEnemy	= ObjectManager::Create<Enemy>("Enemy");
 	//m_Field		= ObjectManager::Create<Field>("Field");
 	m_Tower		= ObjectManager::Create<TowerManager>("TowerManager");

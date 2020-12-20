@@ -32,6 +32,7 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 
 	mtxRot = mtxWorld = XMMatrixIdentity();
 
+	// ローカル
 	mtxScale = XMMatrixScaling(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScale);
 
@@ -39,21 +40,21 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 	mtxAxis = mtxRot;
 
+	mtxTranslate = XMMatrixTranslation(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+
 	quat = XMLoadFloat4(&f4);
 
 	mtxQuat = XMMatrixRotationQuaternion(quat);
 
+	// ワールド
 	mtxScale = XMMatrixScaling(transform.scale.x, transform.scale.y, transform.scale.z);
-	//mtxScale = XMMatrixMultiply(mtxScale, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScale);
-
 	mtxRot = XMMatrixRotationRollPitchYaw(transform.rotation.x, transform.rotation.y, transform.rotation.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 	mtxRot = XMMatrixMultiply(mtxRot, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
-	mtxTranslate = XMMatrixTranslation(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
 	//Vector3 pos= 
 	//MyMath::Vector3xQuaternion(transform.position, transform.quaternion);

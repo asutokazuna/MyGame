@@ -34,8 +34,8 @@ void PlayerShotDir::Awake()
 
 HRESULT PlayerShotDir::Init()
 {
-	//m_ParentTrans = &CCamera::Get()->GetTransform();
-	m_PlayerTrans = &m_Parent->GetParent()->GetTransform();
+	m_PlayerTrans = &CCamera::Get()->GetTransform();
+	//m_PlayerTrans = &m_Parent->GetParent()->GetTransform();
 	m_ParentTrans = &m_Parent->GetTransform();
 
 	m_ParentTrans->position = m_PlayerTrans->position;

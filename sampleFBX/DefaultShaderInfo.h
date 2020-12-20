@@ -24,6 +24,7 @@ public:
 	void SetView(XMFLOAT4X4 view);
 	void SetProj(XMFLOAT4X4 proj);
 	void SetFloat(std::string key, XMFLOAT4X4 value);
+	void SetUV(Vector3 uv, Vector3 scale = Vector3(1,1,1));
 };
 
 // EOF

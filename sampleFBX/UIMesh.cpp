@@ -102,8 +102,6 @@ void UIMesh::Draw()
 	world = MyMath::StoreXMFloat4x4(*m_transform);
 
 	if (m_shader != nullptr) {
-		//m_shader->SetView(view);
-		//m_shader->SetProj(proj
 		m_shader->SetFloat("World", world);
 	}
 
