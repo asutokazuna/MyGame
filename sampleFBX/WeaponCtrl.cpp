@@ -9,13 +9,15 @@
 
 
 /**
- * @brief 値の初期化
+ * @brief 初期化処理
  * @return なし
  */
-void WeaponCtrl::InitParam(std::list<Missile*>& missile)
+HRESULT WeaponCtrl::Init()
 {
-	m_BulletList = missile;
+	m_BulletList = m_Parent->GetChildren<Missile>();
 	m_ParentTrans = &m_Parent->GetTransform();
+
+	return E_NOTIMPL;
 }
 
 /**

@@ -24,7 +24,7 @@ void Weapon::Awake()
 		m_BulletList.push_back(temp);
 		SetChild(temp);
 	}
-	AddComponent<WeaponCtrl>()->InitParam(m_BulletList);
+	AddComponent<WeaponCtrl>();
 }
 
 // EOF

@@ -151,8 +151,8 @@ public:
 	}
 
 	/**
-	 * @breif コンポーネントの取得
-	 * @return クラスのコンポーネント
+	 * @breif 子オブジェクトの取得
+	 * @return 子オブジェクト
 	 */
 	template<class T>
 	T* GetChild()
@@ -166,6 +166,29 @@ public:
 		return nullptr;
 	}
 
+	/**
+	 * @breif 子オブジェクトの取得
+	 * @return 子オブジェクト
+	 */
+	template<class T>
+	std::list<T*> GetChildren()
+	{
+		std::list<T*> work;
+
+		for (auto& child : m_ChildList)
+		{
+			T* buff = dynamic_cast<T*>(child.get());
+			if (buff != nullptr) {
+				work.push_back(buff);
+			}
+		}
+		return work;
+	}
+
+	/**
+	 * @breif 子オブジェクトの取得
+	 * @return 子オブジェクト
+	 */
 	GameObject* GetChild(int n)
 	{
 		int cnt = 0;

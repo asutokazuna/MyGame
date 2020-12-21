@@ -24,10 +24,10 @@ private:
 public:
 
 	/**
-	 * @brief 値の初期化
+	 * @brief 初期化処理
 	 * @return なし
 	 */
-	void InitParam(std::list<Missile*>& missile);
+	HRESULT Init();
 
 	/**
 	 * @brief 玉の発射

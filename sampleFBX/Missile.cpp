@@ -23,10 +23,11 @@ Missile::Missile()
  */
 void Missile::Awake()
 {
-	HRESULT hr = S_OK;	
+	HRESULT hr = S_OK;
+	tag = parent->GetTag();
 	AddComponent<Object3D>()->SetModel(MODEL_MISSILE);
 	m_Move = AddComponent<MissileMove>();
-	m_col = AddComponent<Collision>();
+	m_col = AddComponent<Collision>()->SetModelKind(MODEL_MISSILE);
 	m_col->SetActive(false);
 }
 
@@ -57,7 +58,7 @@ void Missile::DrawAlpha()
 	if (m_Move->m_nStat == 0) {
 		return;
 	}
-	GameObject::Draw();
+	GameObject::DrawAlpha();
 }
 
 // Offsetがモデル座標でのミサイルの位置らしいよ
@@ -69,7 +70,7 @@ bool Missile::Fire(Vector3* pos)
 
 	m_col->SetActive(true);
 	transform->position = *pos;
-	m_col->SetPos(*pos);
+	//m_col->SetPos(*pos);
 	m_Move->m_nLife = 3 * 60;		// 5秒
 	m_Move->m_nStat = 1;			// 追尾中
 	return true;
@@ -84,7 +85,7 @@ bool Missile::Fire(Vector3 * pos, Quaternion quat)
 	m_col->SetActive(true);
 	transform->position = *pos;
 	transform->quaternion = quat;
-	m_col->SetPos(*pos);
+	//m_col->SetPos(*pos);
 	m_Move->m_nLife = 3 * 60;		// 5秒
 	m_Move->m_nStat = 1;			// 追尾中
 	return true;
