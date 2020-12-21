@@ -34,7 +34,7 @@ public:
 	 * @brief 更新処理
 	 * @return　なし
 	 */
-	void Update();
+	void LateUpdate();
 
 	void Draw();
 

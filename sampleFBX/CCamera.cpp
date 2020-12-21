@@ -1,13 +1,14 @@
 ﻿#include "CCamera.h"
 #include "ImGui/imgui.h"
+#include "MyMath.h"
 
 // 静的メンバ
 CCamera* CCamera::m_pCamera = nullptr;
 const float NEARZ = 10.0f;
 const float FAR_Z = 10000.0f;
-XMFLOAT3 CCamera::m_vNowEye;	//!< 現在の視点
-XMFLOAT3 CCamera::m_vNowLook;	//!< 現在の注視点
-XMFLOAT3 CCamera::m_vNowUp;		//!< 現在の上方ベクトル
+//XMFLOAT3 CCamera::m_vNowEye;	//!< 現在の視点
+//XMFLOAT3 CCamera::m_vNowLook;	//!< 現在の注視点
+//XMFLOAT3 CCamera::m_vNowUp;		//!< 現在の上方ベクトル
 
 /**
  * @brief 初期化処理
@@ -19,13 +20,18 @@ void CCamera::Awake()
 	m_vEye = XMFLOAT3(0.0f, 200.0f, -400.0f);
 	m_vLook = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
+
 	m_fFOVY = XMConvertToRadians(45);
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fNearZ = NEARZ;
 	m_fFarZ = FAR_Z;
+
 	m_vNowEye = m_vEye;
 	m_vNowLook = m_vLook;
 	m_vNowUp = m_vUp;
+	transform->position = Vector3(m_vEye.x, m_vEye.y, m_vEye.z);
+	Vector3 look = Vector3(m_vLook.x, m_vLook.y, m_vLook.z);
+	transform->quaternion = MyMath::LookAt(transform->position, look);
 	//Update();
 }
 
@@ -44,21 +50,9 @@ void CCamera::Uninit()
  */
 void CCamera::Update()
 {
-	if (this->m_isActive == false) {
-		//return;
-	}
-	const float ratio = 0.92f;
-
-	// 始点、注視点、上方ベクトルを近づける
-	m_vNowEye.x = m_vNowEye.x   * ratio + m_vEye.x  * (1 - ratio);
-	m_vNowEye.y = m_vNowEye.y   * ratio + m_vEye.y  * (1 - ratio);
-	m_vNowEye.z = m_vNowEye.z   * ratio + m_vEye.z  * (1 - ratio);
-	m_vNowLook.x = m_vNowLook.x * ratio + m_vLook.x * (1 - ratio);
-	m_vNowLook.y = m_vNowLook.y * ratio + m_vLook.y * (1 - ratio);
-	m_vNowLook.z = m_vNowLook.z * ratio + m_vLook.z * (1 - ratio);
-	m_vNowUp.x = m_vNowUp.x     * ratio + m_vUp.x   * (1 - ratio);
-	m_vNowUp.y = m_vNowUp.y     * ratio + m_vUp.y   * (1 - ratio);
-	m_vNowUp.z = m_vNowUp.z     * ratio + m_vUp.z   * (1 - ratio);
+	//if (this->m_isActive == false) {
+	//	//return;
+	//}
 
 	//m_vNowEye.x  = m_vEye.x;
 	//m_vNowEye.y  = m_vEye.y;
@@ -76,6 +70,9 @@ void CCamera::Update()
 
 	// 射影変換更新
 	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));
+	transform->position = Vector3(m_vNowEye.x, m_vNowEye.y, m_vNowEye.z);
+	Vector3 look = Vector3(m_vNowLook.x, m_vNowLook.y, m_vNowLook.z);
+	transform->quaternion = MyMath::LookAt(transform->position, look);
 }
 
 /**
@@ -101,8 +98,8 @@ void CCamera::SetTransform(Transform& trans) {
 }
 XMFLOAT4X4& CCamera::GetView() { return m_View; }
 XMFLOAT4X4& CCamera::GetProj() { return m_Proj; }
-XMFLOAT3& CCamera::GetEye() { return m_vEye; }
-XMFLOAT3& CCamera::GetLook() { return m_vLook; }
+XMFLOAT3& CCamera::GetEye() { return m_vNowEye; }
+XMFLOAT3& CCamera::GetLook() { return m_vNowLook; }
 
 void CCamera::SetLook(XMFLOAT3 vLook) { m_vLook = vLook; }
 

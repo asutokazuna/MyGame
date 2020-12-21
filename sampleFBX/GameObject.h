@@ -20,7 +20,7 @@ protected:
 	int			tag;				//!< オブジェクト識別用タグ
 	GameObject* parent;
 
-public:
+private:
 	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
 	//std::list<GameObject*> m_ChildList;	//!< 子オブジェクトリスト
 
@@ -164,6 +164,33 @@ public:
 				return buff;
 		}
 		return nullptr;
+	}
+
+	GameObject* GetChild(int n)
+	{
+		int cnt = 0;
+		for (auto& child : m_ChildList)
+		{
+			if (cnt == n) {
+				return child.get();
+			}
+			cnt++;
+		}
+		return nullptr;
+	}
+
+	/**
+	 * @brief 子オブジェクトのリストを取得
+	 * @return 子オブジェクトリスト
+	 */
+	std::list<GameObject*> GetChildList() {
+		std::list<GameObject*> work;
+
+		for (auto& child : m_ChildList) {
+			work.push_back(child.get());
+		}
+
+		return work;
 	}
 
 };

@@ -84,6 +84,57 @@ void ObjectManager::Draw()
 	}
 }
 
+GameObject* Find(GameObject* obj, int tag)
+{
+	GameObject* work = nullptr;
+
+	if (obj->GetTag() == tag)
+	{
+		return obj;
+	}
+
+	for (auto& child : obj->GetChildList())
+	{
+	
+		work = Find(child, tag);
+		if (work != nullptr) {
+			break;
+		}
+	}
+
+	return work;
+}
+
+std::list<GameObject*> Finds(GameObject* obj, int tag)
+{
+	std::list<GameObject*> work;
+	if (obj->GetTag() == tag)
+	{
+		work.push_back(obj);
+	}
+
+	for (auto& child : obj->GetChildList())
+	{
+		work.merge(Finds(child,tag));
+	}
+
+	return work;
+}
+
+std::list<GameObject*> ObjectManager::FindObjectsWithTag(int tag)
+{
+	std::list<GameObject*> result;
+	GameObject* work;
+
+	auto& buff = m_ObjList;
+	for (auto& obj : buff) {
+		work = dynamic_cast<GameObject*>(obj.second.get());
+
+		result.merge(Finds(work,tag));
+	}
+	return result;
+}
+
  GameObject* ObjectManager::FindWithTag(int tag)
  {
 	 GameObject* resultObj = nullptr;
@@ -92,9 +143,9 @@ void ObjectManager::Draw()
 	 auto& buff = m_ObjList;
 	 for (auto& obj : buff) {
 		 work = dynamic_cast<GameObject*>(obj.second.get());
-		 if (work->GetTag() == tag)
-		 {
-			 resultObj = work;
+		 resultObj = Find(work, tag);
+		 if (resultObj != nullptr) {
+			 break;
 		 }
 	 }
 	 return resultObj;

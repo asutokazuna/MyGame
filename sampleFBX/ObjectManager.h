@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <memory>
 #include "GameObject.h"
+#include <list>
 
 class Object;
 
@@ -90,6 +91,8 @@ public:
 	 */
 	void Draw();
 	
+	std::list<GameObject*> FindObjectsWithTag(int tag);
+
 	/**
 	 * @brief オブジェクトの取得
 	 * @param[in] tag 取得したいオブジェクトのタグ

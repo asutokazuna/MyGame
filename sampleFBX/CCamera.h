@@ -23,10 +23,10 @@ protected:
 	float		m_fAspect;	//!< アスペクト比
 	float		m_fNearZ;	//!< 前方クリップ距離
 	float		m_fFarZ;	//!< 後方クリップ距離
-	static XMFLOAT3 m_vNowEye;	//!< 現在の視点
-	static XMFLOAT3 m_vNowLook;	//!< 現在の注視点
-	static XMFLOAT3 m_vNowUp;	//!< 現在の上方ベクトル
-	Transform *m_transform;
+	XMFLOAT3 m_vNowEye;	//!< 現在の視点
+	XMFLOAT3 m_vNowLook;	//!< 現在の注視点
+	XMFLOAT3 m_vNowUp;	//!< 現在の上方ベクトル
+	Transform* m_transform;	//!< ターゲット
 
 private:
 	static CCamera* m_pCamera;	//!< 現在有効なカメラ

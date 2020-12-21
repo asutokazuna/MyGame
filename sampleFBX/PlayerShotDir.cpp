@@ -8,8 +8,11 @@
 #include "Transform.h"
 #include "CCamera.h"
 #include "ImGui\imgui.h"
+#include "ObjectManager.h"
+#include <vector>
+#include <list>
 
-Vector3 size = Vector3(150, 150, 1200);
+Vector3 size = Vector3(50, 50, 1200);
 
 bool AABB(Transform myObj, Transform otherObj)
 {
@@ -39,7 +42,7 @@ HRESULT PlayerShotDir::Init()
 	m_ParentTrans = &m_Parent->GetTransform();
 
 	m_ParentTrans->position = m_PlayerTrans->position;
-	m_ParentTrans->position.z = m_PlayerTrans->position.z + size.z / 2;
+	m_ParentTrans->position.z = m_PlayerTrans->position.z + size.z / 2 + 520;
 	m_ParentTrans->scale = size;
 	return E_NOTIMPL;
 }
@@ -49,7 +52,7 @@ Vector3 pos = { 0,0,1 };
  * @brief 更新処理
  * @return　なし
  */
-void PlayerShotDir::Update()
+void PlayerShotDir::LateUpdate()
 {
 	Vector3 test = Vector3(0,0,size.z / 2);
 
@@ -66,6 +69,9 @@ void PlayerShotDir::Update()
 			m_target = nullptr;
 		}
 	}
+
+	std::list< GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+	GameObject* obj = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_TOWER);
 }
 
 void PlayerShotDir::Draw()

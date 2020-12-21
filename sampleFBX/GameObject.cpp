@@ -118,9 +118,6 @@ void GameObject::DrawAlpha()
  {
 	 std::unique_ptr<GameObject> buff(child);
 
-	 if (buff->tag == 0) {
-		 buff->tag = this->tag;
-	 }
 	 buff->parent = this;
 	 buff->Awake();
 	 m_ChildList.push_back(std::move(buff));
