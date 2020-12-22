@@ -146,7 +146,7 @@ void PlayerMove::SetMove(Vector3 move, Quaternion quat)
  */
 void PlayerMove::AddMove(Vector3 move)
 {
-	m_move = m_move + (m_Transform->GetForward() * move.z) + (m_Transform->GetRight() * move.x);
+	m_move = m_move + (m_Transform->GetForward() * move.z) + (m_Transform->GetRight() * move.x) + (m_Transform->GetUp() * move.y);
 }
 
 /**

@@ -14,6 +14,11 @@
 #include "PlayerShotDir.h"
 #include "GameObject.h"
 #include "PlayerState.h"
+#include "Lockon.h"
+#include "WeaponBulletCount.h"
+#include "DigitNumber.h"
+
+#define DIGIT (2)
 
 /**
  * @brief 初期化処理
@@ -30,14 +35,23 @@ void CPlayer::Awake()
 	m_col = AddComponent<Collision>();
 	m_col->SetModelKind(MODEL_PLAYER);
 
+	// 武器
 	m_Weapon = new Weapon(20);
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	SetChild(m_Weapon);
 
-	m_ShotCol = new Cube();
-	m_ShotCol->AddComponent<PlayerShotDir>();
-	m_ShotCol->AddComponent<Collision>();
-	SetChild(m_ShotCol);
+	AddComponent<PlayerShotDir>();
+	// ロックオン
+	GameObject* obj = new Lockon();
+	SetChild(obj);
+
+	for (int i = 0; i < DIGIT; i++)
+	{
+		DigitNumber* BulletCnt = new DigitNumber();
+		SetChild(BulletCnt);
+	}
+
+	AddComponent<WeaponBulletCount>();
 
 	AddComponent<PlayerCtrl>();
 	AddComponent<PlayerStateMachine>();

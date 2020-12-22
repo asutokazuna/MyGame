@@ -1,4 +1,4 @@
-#include "Number.h"
+#include "DigitNumber.h"
 #include "UIMesh.h"
 #include "DefaultShaderInfo.h"
 #include "TextureData.h"
@@ -8,10 +8,10 @@
  * @brief ‰Šú‰»ˆ—
  * @return ‚È‚µ
  */
-void Number::Awake()
+void DigitNumber::Awake()
 {
 	AddComponent<NumberDrawer>();
-	m_mesh = AddComponent<UIMesh>()->ChangeSize(200,200,0);
+	m_mesh = AddComponent<UIMesh>()->ChangeSize(50,50,0);
 	m_shader = AddComponent<DefaultShaderInfo>()->SetTexture(TEXTURE_NUMBER);
 
 	m_mesh->SetShader(*m_shader);

@@ -11,6 +11,7 @@
 #include "ObjectManager.h"
 #include <vector>
 #include <list>
+#include "Lockon.h"
 
 Vector3 size = Vector3(50, 50, 1200);
 
@@ -64,18 +65,13 @@ bool IsHit(XMFLOAT4 pos, Vector3 scale)
 void PlayerShotDir::Awake()
 {
 	m_target = nullptr;
+	m_target2DPos = Vector3();
 }
 
 HRESULT PlayerShotDir::Init()
 {
-	m_PlayerTrans = &CCamera::Get()->GetTransform();
-	//m_PlayerTrans = &m_Parent->GetParent()->GetTransform();
-	m_ParentTrans = &m_Parent->GetTransform();
-
-	m_ParentTrans->position = m_PlayerTrans->position;
-	m_ParentTrans->position.z = m_PlayerTrans->position.z + size.z / 2 + 520;
-	m_ParentTrans->scale = size;
-
+	m_Lockon = m_Parent->GetChild<Lockon>();
+	m_Lockon->SetActive(false);
 	std::list< GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
@@ -104,7 +100,6 @@ HRESULT PlayerShotDir::Init()
 	return E_NOTIMPL;
 }
 
-Vector3 pos = { 0,0,1 };
 static 
 XMFLOAT4 g_pos;
 /**
@@ -113,21 +108,6 @@ XMFLOAT4 g_pos;
  */
 void PlayerShotDir::LateUpdate()
 {
-	Vector3 test = Vector3(0,0,size.z / 2);
-
-	pos = { 0,0,1 };
-	m_ParentTrans->position = m_PlayerTrans->position;
-	//m_ParentTrans->position.z = m_ParentTrans->position.z + size.z / 2;
-	m_ParentTrans->position += MyMath::PosxQuaternion(test, m_PlayerTrans->quaternion);
-	m_ParentTrans->quaternion = m_PlayerTrans->quaternion;
-	pos = MyMath::PosxQuaternion(pos, m_PlayerTrans->quaternion);
-
-	//if (m_target != nullptr) {
-	//	//if (AABB(*m_ParentTrans, m_target->GetTransform()) == false) {
-	//	if (Collision::CheckOBB(*m_ParentTrans, m_target->GetTransform()) == false) {
-	//		m_target = nullptr;
-	//	}
-	//}
 	std::list< GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
@@ -154,9 +134,16 @@ void PlayerShotDir::LateUpdate()
 
 		XMStoreFloat4x4(&world, mtx);
 		XMStoreFloat4(&g_pos, vec);
+		g_pos.y = SCREEN_HEIGHT  -g_pos.y;
 		if (IsHit(g_pos, Vector3())) {
 			m_target = o;
+			m_target2DPos = Vector3(g_pos.x, g_pos.y, g_pos.z);
+			m_Lockon->SetActive(true);
+			m_Lockon->GetTransform().position = Vector3(m_target2DPos.x - SCREEN_WIDTH / 2, m_target2DPos.y - SCREEN_HEIGHT / 2, m_target2DPos.z);
 		}
+	}
+	if (m_target == nullptr) {
+		m_Lockon->SetActive(false);
 	}
 
 }
@@ -165,9 +152,6 @@ void PlayerShotDir::Draw()
 {
 #ifdef _DEBUG
 	ImGui::Begin("DirPos");
-	ImGui::SliderFloat("m_move x", &m_ParentTrans->position.x, -1000.0f, 500.0f);
-	ImGui::SliderFloat("m_move y", &m_ParentTrans->position.y, -1000.0f, 500.0f);
-	ImGui::SliderFloat("m_move z", &m_ParentTrans->position.z, -1000.0f, 500.0f);
 	ImGui::SliderFloat("g_pos x", &g_pos.x, -1000.0f, 500.0f);
 	ImGui::SliderFloat("g_pos y", &g_pos.y, -1000.0f, 500.0f);
 	ImGui::SliderFloat("g_pos z", &g_pos.z, -1000.0f, 500.0f);

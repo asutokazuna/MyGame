@@ -35,8 +35,7 @@ void PlayerCtrl::Update()
 void PlayerCtrl::Attak()
 {
 	Quaternion dir = m_Parent->GetTransform().quaternion;
-	Cube* cube = m_Parent->GetChild<Cube>();
-	GameObject* target = cube->GetComponent<PlayerShotDir>()->GetTarget();
+	GameObject* target = m_Parent->GetComponent<PlayerShotDir>()->GetTarget();
 
 	if (target != nullptr) {
 		dir = MyMath::LookAt(m_Parent->GetTransform().position, target->GetTransform().position);

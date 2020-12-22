@@ -11,7 +11,7 @@ class ShaderInfo;
  * @class Number
  * @brief 数字1桁表示オブジェクト
  */
-class Number :public GameObject
+class DigitNumber :public GameObject
 {
 private:
 	ShaderInfo* m_shader;

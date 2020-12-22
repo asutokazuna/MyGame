@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "Component.h"
+#include "MyMath.h"
 
 class Transform;
 
@@ -14,8 +15,8 @@ class PlayerShotDir:public Component
 {
 private:
 	GameObject* m_target;		//!< 当たっている敵
-	Transform* m_ParentTrans;
-	Transform* m_PlayerTrans;
+	Vector3 m_target2DPos;
+	GameObject* m_Lockon;
 
 public:
 	/**

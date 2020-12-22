@@ -202,13 +202,14 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Lockon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="MissileMove.cpp" />
     <ClCompile Include="ModelData.cpp" />
     <ClCompile Include="MyMath.cpp" />
-    <ClCompile Include="Number.cpp" />
+    <ClCompile Include="DigitNumber.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object3D.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Tween.cpp" />
     <ClCompile Include="UIMesh.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponBulletCount.cpp" />
     <ClCompile Include="WeaponCtrl.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WingParticle.cpp" />
@@ -306,13 +308,14 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Lockon.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="MissileMove.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="MyMath.h" />
-    <ClInclude Include="Number.h" />
+    <ClInclude Include="DigitNumber.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object3D.h" />
@@ -360,6 +363,7 @@
     <ClInclude Include="Tween.h" />
     <ClInclude Include="UIMesh.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponBulletCount.h" />
     <ClInclude Include="WeaponCtrl.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WingParticle.h" />

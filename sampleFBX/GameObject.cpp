@@ -58,9 +58,16 @@ void GameObject::Uninit()
  */
 void GameObject::Update()
 {
+	if (this->GetActive() == false) {
+		return;
+	}
 	auto buff = m_ComponentList;
-	for (auto com : buff)
+	for (auto com : buff) {
+		if (com->GetActive() == false) {
+			continue;
+		}
 		com->Update();
+	}
 	
 	for (auto& child : m_ChildList) {
 		child->Update();
@@ -73,9 +80,16 @@ void GameObject::Update()
  */
 void GameObject::LateUpdate()
 {
+	if (this->GetActive() == false) {
+		return;
+	}
 	auto buff = m_ComponentList;
-	for (auto com : buff)
+	for (auto com : buff) {
+		if (com->GetActive() == false) {
+			continue;
+		}
 		com->LateUpdate();
+	}
 
 	for (auto& child : m_ChildList) {
 		child->LateUpdate();
@@ -88,8 +102,15 @@ void GameObject::LateUpdate()
  */
 void GameObject::Draw()
 {
-	for (auto com : m_ComponentList)
+	if (this->GetActive() == false) {
+		return;
+	}
+	for (auto com : m_ComponentList) {
+		if (com->GetActive() == false) {
+			continue;
+		}
 		com->Draw();
+	}
 
 	for (auto& child : m_ChildList) {
 		child->Draw();
@@ -102,8 +123,15 @@ void GameObject::Draw()
  */
 void GameObject::DrawAlpha()
 {
-	for (auto com : m_ComponentList)
+	if (this->GetActive() == false) {
+		return;
+	}
+	for (auto com : m_ComponentList) {
+		if (com->GetActive() == false) {
+			continue;
+		}
 		com->DrawAlpha();
+	}
 
 	for (auto& child : m_ChildList) {
 		child->DrawAlpha();

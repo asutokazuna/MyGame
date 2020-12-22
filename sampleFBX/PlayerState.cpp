@@ -32,6 +32,7 @@ struct PLAYER_DEFAULT : public State<PLAYER_STATE>
 	{
 		speed = Vector3();
 
+		// 前後左右
 		if (CInput::GetKeyPress(VK_W)) {
 			speed += Vector3(0, 0, SPEED);
 		}
@@ -44,6 +45,13 @@ struct PLAYER_DEFAULT : public State<PLAYER_STATE>
 		if (CInput::GetKeyPress(VK_D)) {
 			speed += Vector3(SPEED, 0, 0);
 		}
+		if (CInput::GetKeyPress(VK_LSHIFT)) {
+			speed += Vector3(0, SPEED, 0);
+		}
+		if (CInput::GetKeyPress(VK_LCONTROL)) {
+			speed += Vector3(0, -SPEED, 0);
+		}
+
 
 		if (CInput::GetKeyPress(VK_L) || CInput::GetMouseButton(0)) {
 			machine.m_ctrl->Attak();

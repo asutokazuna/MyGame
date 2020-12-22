@@ -20,6 +20,8 @@ class WeaponCtrl :public Component
 private:
 	std::list<Missile*> m_BulletList;	//!< ミサイルリスト
 	Transform* m_ParentTrans;			//!< 親の座標
+	int m_BulletCount;
+	int m_DelayTime;
 
 public:
 
@@ -28,6 +30,12 @@ public:
 	 * @return なし
 	 */
 	HRESULT Init();
+
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
+	void Update();
 
 	/**
 	 * @brief 玉の発射
@@ -40,6 +48,14 @@ public:
 	 * @return なし
 	 */
 	void Shot(Quaternion quat);
+
+	/**
+	 * @brief 残弾数の取得
+	 * @return 弾の残り数
+	 */
+	const int& GetBulletCnt() {
+		return m_BulletCount;
+	}
 
 	/**
 	 * @brief 玉の発射

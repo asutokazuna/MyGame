@@ -3,6 +3,7 @@
 /sampleFBX/x86
 /sampleFBX/DirectXTex
 
+*.cso
 *.exe
 *.user
 *.ilk

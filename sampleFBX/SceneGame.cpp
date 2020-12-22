@@ -14,7 +14,6 @@
 #include "SceneManager.h"
 #include "input.h"
 #include "ObjectManager.h"
-#include "Number.h"
 #include "RangeCursor.h"
 
 bool SceneGame::m_isGameOver = false;
