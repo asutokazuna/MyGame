@@ -12,7 +12,7 @@ void Object::Destroy(Object* obj)
 /**
  * @brief コンストラクタ
  */
- Object::Object():m_isActive(true)
+ Object::Object():m_isActive(true), name("")
  {
  }
 

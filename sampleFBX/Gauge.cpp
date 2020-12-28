@@ -4,6 +4,9 @@
  */
 #include "Gauge.h"
 #include "Billboard.h"
+#include "LifeGauge.h"
+#include "LifeGaugeShaderInfo.h"
+#include "GaugeCtrl.h"
 
 /**
  * @brief コンストラクタ
@@ -18,56 +21,14 @@ Gauge::Gauge():m_Max(1),m_Min(0), m_Value(nullptr),m_offset(),m_transform(), m_m
  */
 void Gauge::Awake()
 {
-	m_bar = new GameObject();
+	m_LifeGauge = new LifeGauge();
 	m_frame = new GameObject();
-	SetChild(m_bar);
+	m_frame->SetName("frame");
+	SetChild(m_LifeGauge);
 	SetChild(m_frame);
-	m_frame->AddComponent<Billboard>()->ChangeSize(50, 50, 50)->ChangeColor(1, 1, 1);
-	barmesh = m_bar->AddComponent<Billboard>()->ChangeSize(0, 50, 50)->ChangeColor(1, 0, 0);
-}
-
-/**
- * @brief 更新処理
- * @return なし
- */
-void Gauge::Update()
-{
-	m_bar->GetTransform().position = m_transform->position + m_offset;
-	m_frame->GetTransform().position = m_transform->position + m_offset;
-	float sizeY = (*m_Value - (m_Max / 2)) / (m_Max / 2);
-	Vector3 color = Vector3();
-	if (sizeY > 0) {
-		color = m_myColor;
-	}
-	else {
-		color = m_EnemyColor;
-	}
-	sizeY = abs(sizeY);
-	barmesh->ChangeSize(50 * sizeY, 50, 50)->ChangeColor(color);
-	GameObject::Update();
-}
-
-void Gauge::SetParam(float max, float min, Vector3 myColor, Vector3 enemyColor)
-{
-	m_Max = max;
-	m_Min = min;
-	m_myColor = myColor;
-	m_EnemyColor = enemyColor;
-}
-
-void Gauge::SetValue(int& value)
-{
-	m_Value = &value;
-}
-
-void Gauge::SetTransform(Transform * trans)
-{
-	m_transform = trans;
-}
-
-void Gauge::SetOffset(Vector3 value)
-{
-	m_offset = value;
+	AddComponent<GaugeCtrl>()->SetSize(Vector3(50, 30, 1));
+	m_frame->AddComponent<Billboard>()->ChangeColor(1, 1, 1);
+	m_LifeGauge->GetComponent<LifeGaugeShaderInfo>()->ChangeColor(1, 0.5f, 0);
 }
 
 // EOF

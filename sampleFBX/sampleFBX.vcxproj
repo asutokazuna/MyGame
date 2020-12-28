@@ -192,6 +192,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Gauge.cpp" />
+    <ClCompile Include="GaugeCtrl.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -201,21 +202,30 @@
     <ClCompile Include="ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="LifeGauge.cpp" />
+    <ClCompile Include="LifeGaugeCtrl.cpp" />
+    <ClCompile Include="LifeGaugeShaderInfo.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Lockon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="MissileCtrl.cpp" />
     <ClCompile Include="MissileMove.cpp" />
     <ClCompile Include="ModelData.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="DigitNumber.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
+    <ClCompile Include="NumberList.cpp" />
+    <ClCompile Include="NumberListCtrl.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="PlayerCollision.cpp" />
     <ClCompile Include="PlayerCtrl.cpp" />
+    <ClCompile Include="PlayerLifeCtrl.cpp" />
+    <ClCompile Include="PlayerLifeDrawer.cpp" />
+    <ClCompile Include="PlayerLifeUI.cpp" />
     <ClCompile Include="PlayerMissile.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerShotDir.cpp" />
@@ -296,6 +306,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Gauge.h" />
+    <ClInclude Include="GaugeCtrl.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -307,21 +318,30 @@
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="LifeGauge.h" />
+    <ClInclude Include="LifeGaugeCtrl.h" />
+    <ClInclude Include="LifeGaugeShaderInfo.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Lockon.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Missile.h" />
+    <ClInclude Include="MissileCtrl.h" />
     <ClInclude Include="MissileMove.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="DigitNumber.h" />
     <ClInclude Include="NumberDrawer.h" />
+    <ClInclude Include="NumberList.h" />
+    <ClInclude Include="NumberListCtrl.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PlayerCollision.h" />
     <ClInclude Include="PlayerCtrl.h" />
+    <ClInclude Include="PlayerLifeCtrl.h" />
+    <ClInclude Include="PlayerLifeDrawer.h" />
+    <ClInclude Include="PlayerLifeUI.h" />
     <ClInclude Include="PlayerMissile.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerShotDir.h" />
@@ -498,6 +518,18 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)data\shader\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)data\shader\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)data\shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="LifeGaugePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)data\shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)data\shader\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Pixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

@@ -10,6 +10,7 @@
 #include "Gauge.h"
 #include "TowerCtrl.h"
 #include "collision.h"
+#include "GaugeCtrl.h"
 
  /**
   * @brief 初期化処理
@@ -25,10 +26,7 @@ void Tower::Awake()
 	m_LifeGauge = new Gauge();
 	m_ctrl = AddComponent<TowerCtrl>();
 	SetChild(m_LifeGauge);
-	m_LifeGauge->SetOffset({ 0, 150, 0 });
-	Vector3 blue = Vector3(0, 0, 1);
-	Vector3 red = Vector3(1, 0, 0);
-	m_LifeGauge->SetParam(ENERGY_MAX, 0, blue, red);
+	m_LifeGauge->GetComponent<GaugeCtrl>()->SetOffset({ 0, 150, 0 });
 }
 
 /**
@@ -37,8 +35,7 @@ void Tower::Awake()
  */
 HRESULT Tower::Init()
 {
-	m_LifeGauge->SetTransform(transform);
-	m_LifeGauge->SetValue(m_Energy->GetEnergy());
+	m_LifeGauge->GetComponent<GaugeCtrl>()->SetTarget(transform);
 	GameObject::Init();
 
 	return E_NOTIMPL;

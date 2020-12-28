@@ -8,6 +8,7 @@
 #include "Object3D.h"
 #include "collision.h"
 #include "MissileMove.h"
+#include "MissileCtrl.h"
 
  /**
   * @brief コンストラクタ
@@ -28,6 +29,7 @@ void Missile::Awake()
 	AddComponent<Object3D>()->SetModel(MODEL_MISSILE);
 	m_Move = AddComponent<MissileMove>();
 	m_col = AddComponent<Collision>()->SetModelKind(MODEL_MISSILE);
+	AddComponent<MissileCtrl>();
 	m_col->SetActive(false);
 }
 

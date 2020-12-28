@@ -31,6 +31,7 @@ SHADER_TABLE PS_Table[] =
 	{ShaderData::PS_PIXEL, "Pixel"},
 	{ShaderData::PS_CLOTH, "ClothPixel"},
 	{ShaderData::PS_EXPLOSION, "ExplosionPS"},
+	{ShaderData::PS_LIFEGAUGE, "LifeGaugePS"},
 };
 /**
  * @biref ハルシェーダ

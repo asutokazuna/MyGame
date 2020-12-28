@@ -17,6 +17,8 @@
 #include "Lockon.h"
 #include "WeaponBulletCount.h"
 #include "DigitNumber.h"
+#include "PlayerLifeCtrl.h"
+#include "NumberList.h"
 
 #define DIGIT (2)
 
@@ -45,11 +47,18 @@ void CPlayer::Awake()
 	GameObject* obj = new Lockon();
 	SetChild(obj);
 
+	// 残弾
 	for (int i = 0; i < DIGIT; i++)
 	{
 		DigitNumber* BulletCnt = new DigitNumber();
 		SetChild(BulletCnt);
 	}
+
+
+	NumberList* m_numberUI = new NumberList(3);
+	m_numberUI->SetName("LifeUI");
+	SetChild(m_numberUI);
+	AddComponent<PlayerLifeCtrl>();
 
 	AddComponent<WeaponBulletCount>();
 

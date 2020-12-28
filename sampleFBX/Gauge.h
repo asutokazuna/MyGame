@@ -20,7 +20,7 @@ private:
 	float m_Max;
 	int* m_Value;
 
-	GameObject* m_bar;
+	GameObject* m_LifeGauge;
 	GameObject* m_frame;
 	Transform* m_transform;
 
@@ -40,17 +40,6 @@ public:
 	 * @return Ç»Çµ
 	 */
 	void Awake();
-
-	/**
-	 * @brief çXêVèàóù
-	 * @return Ç»Çµ
-	 */
-	void Update();
-
-	void SetParam(float max, float min, Vector3 myColor, Vector3 enemyColor);
-	void SetValue(int& value);
-	void SetTransform(Transform* trans);
-	void SetOffset(Vector3 value);
 };
 
 // EOF

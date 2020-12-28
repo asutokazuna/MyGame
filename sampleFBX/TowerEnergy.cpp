@@ -16,7 +16,7 @@ static int num = 0;		//!< デバッグ用
  */
 TowerEnergy::TowerEnergy()
 {
-	m_Energy = ENERGY_MAX / 2;
+	m_Energy = 0;
 	id = num;
 	num++;
 }
@@ -44,8 +44,8 @@ void TowerEnergy::Draw()
 void TowerEnergy::AddEnergy(int num)
 {
 	m_Energy += num;
-	if (m_Energy < 0) {
-		m_Energy = 0;
+	if (m_Energy < -ENERGY_MAX) {
+		m_Energy = -ENERGY_MAX;
 	}
 	else if (m_Energy > ENERGY_MAX) {
 		m_Energy = ENERGY_MAX;
@@ -59,6 +59,15 @@ void TowerEnergy::AddEnergy(int num)
 int& TowerEnergy::GetEnergy()
 {
 	return m_Energy;
+}
+/**
+ * @brief エネルギーの割合を取得
+ * @return 現在の割合
+ * @details 1でプレイヤーの最大、-1で敵の最大
+ */
+float TowerEnergy::GetEnergyPercent()
+{
+ return m_Energy / (float)ENERGY_MAX;
 }
 
 /**

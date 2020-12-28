@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "main.h"
+#include <string>
 
 /**
  * @class Object
@@ -13,6 +14,7 @@ class Object
 {
 protected:
 	bool m_isActive;		//!< アクティブかどうか
+	std::string name;		//!< オブジェクト名
 
 public:
 	/**

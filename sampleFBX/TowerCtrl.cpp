@@ -7,6 +7,11 @@
 #include "TowerEnergy.h"
 #include "GameObject.h"
 #include "Object3D.h"
+#include "Gauge.h"
+#include "LifeGaugeShaderInfo.h"
+#include "LifeGauge.h"
+#include "TowerEnergy.h"
+
 /**
  * @brief 初期化処理
  * @return なし
@@ -14,6 +19,19 @@
 void TowerCtrl::Awake()
 {
 	//material = new TFbxMaterial();
+}
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
+HRESULT TowerCtrl::Init()
+{
+	m_percent = 0;
+	m_gauge = m_Parent->GetChild<Gauge>()->GetChild<LifeGauge>();
+	m_shader = m_gauge->GetComponent<LifeGaugeShaderInfo>();
+	m_energy = m_Parent->GetComponent<TowerEnergy>();
+
+	return E_NOTIMPL;
 }
 
 /**
@@ -27,7 +45,13 @@ void TowerCtrl::Uninit()
 
 void TowerCtrl::Update()
 {
-	//ChangeColor();
+	float per = m_energy->GetEnergyPercent();
+	Vector3 color = Vector3(0, 0, 1);
+	if (per < 0) {
+		color = Vector3(1, 0, 0);
+	}
+	m_shader->SetFloat("Life", fabsf(per));
+	m_shader->ChangeColor(color);
 }
 
 //

@@ -86,12 +86,6 @@ void Billboard::Draw()
 {
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 
-	//m_default->Draw();
-	//static Transform temp;
-	//temp.scale.x = 100;
-	//temp.scale.y = 100;
-	//temp.scale.z = 100;
-
 	XMFLOAT4X4 f4x4World, f4x4View, f4x4Temp;
 	XMMATRIX mtxTemp = XMMatrixIdentity();
 	XMStoreFloat4x4(&f4x4Temp, mtxTemp);
@@ -134,6 +128,12 @@ void Billboard::Draw()
 	m_default->SetFloat("View", view);
 	m_default->SetFloat("Proj", proj);
 	m_default->SetFloat("World", f4x4World);
+
+	if (m_shader != nullptr) {
+		m_shader->SetFloat("View", view);
+		m_shader->SetFloat("Proj", proj);
+		m_shader->SetFloat("World", f4x4World);
+	}
 
 	Mesh::Draw();
 }

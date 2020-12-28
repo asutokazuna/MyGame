@@ -121,6 +121,22 @@ public:
 	}
 
 	/**
+	 * @brief 名前のセット
+	 * @return なし
+	 */
+	void SetName(std::string name) {
+		this->name = name;
+	}
+
+	/**
+	 * @brief 名前の取得
+	 * @return オブジェクトにセットした名前
+	 */
+	std::string GetName() {
+		return this->name;
+	}
+
+	/**
 	 * @breif コンポーネントの取得
 	 * @return クラスのコンポーネント
 	 */
@@ -189,6 +205,25 @@ public:
 	 * @breif 子オブジェクトの取得
 	 * @return 子オブジェクト
 	 */
+	template<class T>
+	T* GetChild(std::string name)
+	{
+		for (auto& child : m_ChildList)
+		{
+			if (name == child->name)
+			{
+				T* buff = dynamic_cast<T*>(child.get());
+				if (buff != nullptr)
+					return buff;
+			}
+		}
+		return nullptr;
+	}
+
+	/**
+	 * @breif 子オブジェクトの取得
+	 * @return 子オブジェクト
+	 */
 	GameObject* GetChild(int n)
 	{
 		int cnt = 0;
@@ -198,6 +233,21 @@ public:
 				return child.get();
 			}
 			cnt++;
+		}
+		return nullptr;
+	}
+
+	/**
+	 * @breif 子オブジェクトの取得
+	 * @return 子オブジェクト
+	 */
+	GameObject* GetChild(std::string name)
+	{
+		for (auto& child : m_ChildList)
+		{
+			if (name == child->name) {
+				return child.get();
+			}
 		}
 		return nullptr;
 	}

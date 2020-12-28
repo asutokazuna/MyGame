@@ -6,7 +6,7 @@
 #include "Component.h"
 
 // def
-#define ENERGY_MAX (40)
+#define ENERGY_MAX (20)
 
 // 前方宣言
 class GameObject;
@@ -45,6 +45,13 @@ public:
 	 * @return 現在のエネルギー
 	 */
 	int& GetEnergy();
+
+	/**
+	 * @brief エネルギーの割合を取得
+	 * @return 現在の割合
+	 * @details 1でプレイヤーの最大、-1で敵の最大
+	 */
+	float GetEnergyPercent();
 
 	/**
 	 * @brief 当たり判定

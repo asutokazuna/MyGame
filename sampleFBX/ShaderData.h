@@ -52,6 +52,7 @@ public:
 		PS_PIXEL,
 		PS_CLOTH,
 		PS_EXPLOSION,
+		PS_LIFEGAUGE,
 		PS_MAX
 	};
 
