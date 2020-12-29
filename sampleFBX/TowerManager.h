@@ -1,6 +1,6 @@
 ﻿/**
  * @file TowerManager
- * @brief タワー管理クラス
+ * @brief タワー管理オブジェクト
  */
 #pragma once
 #include "GameObject.h"
@@ -11,7 +11,7 @@ class Tower;
 
 /**
  * @class TowerManager
- * @brief タワーの管理クラス
+ * @brief タワーの管理オブジェクト
  */
 class TowerManager: public GameObject
 {

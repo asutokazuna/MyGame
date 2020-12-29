@@ -39,6 +39,8 @@ HRESULT PlayerMove::Init()
 	return S_OK;
 }
 
+static float grav = 0;
+
 /**
  * @brief 更新処理
  * @return なし
@@ -53,6 +55,9 @@ void PlayerMove::Update()
 
 	Rotate();
 
+	grav -= 0.01f;
+
+	m_move.y += grav;
 
 	// Ctrl
 	if (CInput::GetKeyTrigger(VK_CONTROL)) {
@@ -65,16 +70,20 @@ void PlayerMove::LateUpdate()
 	// 座標更新
 	//m_Transform->position += m_Transform->GetForward() * m_move.z + m_Transform->GetRight() * m_move.x;
 	m_Transform->position += m_move;
+	if (m_Transform->position.y < 0) {
+		m_Transform->position.y = 0;
+		grav = 0;
+	}
 }
 
 void PlayerMove::Draw()
 {
 #ifdef _DEBUG
-	ImGui::Begin("PlayerMove");
-	ImGui::SliderFloat("m_move x", &m_move.x, -1000.0f, 500.0f);
-	ImGui::SliderFloat("m_move y", &m_move.y, -1000.0f, 500.0f);
-	ImGui::SliderFloat("m_move z", &m_move.z, -1000.0f, 500.0f);
-	ImGui::End();
+	//ImGui::Begin("PlayerMove");
+	//ImGui::SliderFloat("m_move x", &m_move.x, -1000.0f, 500.0f);
+	//ImGui::SliderFloat("m_move y", &m_move.y, -1000.0f, 500.0f);
+	//ImGui::SliderFloat("m_move z", &m_move.z, -1000.0f, 500.0f);
+	//ImGui::End();
 #endif
 }
 
@@ -168,9 +177,9 @@ void PlayerMove::AddMove(Vector3 move, Quaternion quat)
  * @brief 当たり判定処理
  * @return なし
  */
-void PlayerMove::OnCollisionEnter(GameObject* gameObbj)
+void PlayerMove::OnCollisionEnter(GameObject* gameObj)
 {
-	if (gameObbj->CompareTag(OBJ_TAG_FIELD))
+	if (gameObj->CompareTag(OBJ_TAG_FIELD))
 	{
 		//->position.y = gameObbj->GetTransform().position.y;// +m_Transform->scale.y;
 	}

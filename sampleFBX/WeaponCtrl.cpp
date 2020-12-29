@@ -44,10 +44,9 @@ void WeaponCtrl::Shot()
 	}
 
 	for (auto m : m_BulletList) {
-		bool flg = false;
-		flg = m->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
-		if (flg == true) {
-			m_BulletCount--;
+		if (m->GetActive() == false)
+		{
+			m->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
 			break;
 		}
 	}
@@ -64,14 +63,12 @@ void WeaponCtrl::Shot(Quaternion quat)
 	}
 
 	for (auto m : m_BulletList) {
-		bool flg = false;
-		flg = m->Fire(&m_ParentTrans->position, quat);
-		if (flg == true) {
-			m_BulletCount--;
-			break;
+		if (m->GetActive() == false)
+		{
+			 m->Fire(&m_ParentTrans->position, quat);
+			 break;
 		}
 	}
 }
-
 
 // EOF

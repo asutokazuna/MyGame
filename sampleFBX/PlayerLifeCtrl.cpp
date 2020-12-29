@@ -48,8 +48,9 @@ void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 			m_Life = 0;
 		}
 		else {
-			m_Life = power;
+			m_Life -= power;
 		}
+		gameObj->SetActive(false);
 	}
 }
 

@@ -30,8 +30,6 @@ public:
 	 */
 	void Awake();
 	void Update();
-	void Draw();
-	void DrawAlpha();
 
 	bool Fire(Vector3* pos);
 	bool Fire(Vector3* pos, Quaternion quat);

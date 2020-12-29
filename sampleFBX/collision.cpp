@@ -117,21 +117,21 @@ void Collision::Draw()
 {
 #if _DEBUG
 
-	ImGui::Begin("collision");
-	//ImGui::Text("fps: %.2f", pos.x);
-	//static char text1[8] = "";
-	//ImGui::InputText("textbox 1", text1, sizeof(text1));
-	//ImGui::Text("fps: %.2f", pos.x);
-	//static char text1[8] = "";
-	//ImGui::InputText("textbox 1", text1, sizeof(text1));
-	//ImGui::SliderFloat("slider 1", &pos.x, 0.0f, 1.0f);
-	//static bool show_another_window = false;
-	//ImGui::Begin("Another Window", &show_another_window);
-	//ImGui::Text("Hello from another window!");
+	//ImGui::Begin("collision");
+	////ImGui::Text("fps: %.2f", pos.x);
+	////static char text1[8] = "";
+	////ImGui::InputText("textbox 1", text1, sizeof(text1));
+	////ImGui::Text("fps: %.2f", pos.x);
+	////static char text1[8] = "";
+	////ImGui::InputText("textbox 1", text1, sizeof(text1));
+	////ImGui::SliderFloat("slider 1", &pos.x, 0.0f, 1.0f);
+	////static bool show_another_window = false;
+	////ImGui::Begin("Another Window", &show_another_window);
+	////ImGui::Text("Hello from another window!");
 
-	ImGui::Checkbox("view", &m_isViewCol);
+	//ImGui::Checkbox("view", &m_isViewCol);
 
-	ImGui::End();
+	//ImGui::End();
 #endif
 }
 
@@ -142,7 +142,7 @@ void Collision::Draw()
 void Collision::DrawAlpha()
 {
 #ifdef _DEBUG
-	if(m_isViewCol == true)
+	//if(m_isViewCol == true)
 	m_box.Draw();
 #endif
 }
@@ -168,7 +168,8 @@ void Collision::Check()
 			if (othor == col) {
 				continue; 
 			}
-			if (col->second->m_isActive == false || othor->second->m_isActive == false) {
+			if (col->second->m_isActive == false || othor->second->m_isActive == false ||
+				col->second->m_Parent->GetActive() == false || othor->second->m_Parent->GetActive() == false) {
 				continue;
 			}
 

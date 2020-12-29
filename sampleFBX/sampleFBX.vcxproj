@@ -258,6 +258,7 @@
     <ClCompile Include="TowerCtrl.cpp" />
     <ClCompile Include="TowerEnergy.cpp" />
     <ClCompile Include="TowerManager.cpp" />
+    <ClCompile Include="TowerMgrCtrl.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Tween.cpp" />
     <ClCompile Include="UIMesh.cpp" />
@@ -379,6 +380,7 @@
     <ClInclude Include="TowerCtrl.h" />
     <ClInclude Include="TowerEnergy.h" />
     <ClInclude Include="TowerManager.h" />
+    <ClInclude Include="TowerMgrCtrl.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Tween.h" />
     <ClInclude Include="UIMesh.h" />

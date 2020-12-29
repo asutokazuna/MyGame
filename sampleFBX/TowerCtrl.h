@@ -23,8 +23,17 @@ private:
 	LifeGauge* m_gauge;
 	ShaderInfo* m_shader;
 	TowerEnergy* m_energy;
+	int m_state;
 
 public:
+	enum TOWERSTATE
+	{
+		NONE,
+		PLAYER,
+		ENEMY,
+		MAX,
+	};
+
 	/**
 	 * @brief 初期化処理
 	 * @return なし
@@ -44,6 +53,8 @@ public:
 	void Uninit();
 
 	void Update();
+
+	int GetState();
 
 	//void ChangeColor();
 

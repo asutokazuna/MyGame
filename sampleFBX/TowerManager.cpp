@@ -6,9 +6,9 @@
 #include "Tower.h"
 #include "TowerEnergy.h"
 #include "collision.h"
+#include "TowerMgrCtrl.h"
 
 // @def
-#define MAX_TOWER (3)
 #define POS_OFFSET_X (300)
 
 /**
@@ -23,6 +23,7 @@ void TowerManager::Awake()
 		m_Tower.push_back(temp);
 		SetChild(temp);
 	}
+	AddComponent<TowerMgrCtrl>();
 }
 
 /**

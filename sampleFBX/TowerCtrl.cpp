@@ -19,6 +19,7 @@
 void TowerCtrl::Awake()
 {
 	//material = new TFbxMaterial();
+	m_state = TOWERSTATE::NONE;
 }
 /**
  * @brief 初期化処理
@@ -52,6 +53,21 @@ void TowerCtrl::Update()
 	}
 	m_shader->SetFloat("Life", fabsf(per));
 	m_shader->ChangeColor(color);
+
+	if (per >= 1) {
+		m_state = TOWERSTATE::PLAYER;
+	}
+	else if (per <= -1) {
+		m_state = TOWERSTATE::ENEMY;
+	}
+	else{
+		m_state = TOWERSTATE::NONE;
+	}
+}
+
+int TowerCtrl::GetState()
+{
+	return m_state;
 }
 
 //
