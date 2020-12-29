@@ -1,5 +1,6 @@
 /**
  * @file Lockon
+ * @brief プレイヤーが狙うターゲットのUIオブジェクト
  */
 #include "Lockon.h"
 #include "UIMesh.h"
@@ -8,6 +9,10 @@
 
 #define SIZE (40)
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void Lockon::Awake()
 {
 	Mesh* mesh =AddComponent<UIMesh>()->ChangeSize(SIZE, SIZE,1);

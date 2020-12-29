@@ -97,6 +97,21 @@
     <Filter Include="ヘッダー ファイル\Title">
       <UniqueIdentifier>{79805cea-be21-4e3d-8c93-8a6f87d0d568}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\99_share\Number">
+      <UniqueIdentifier>{6fffa34f-761e-4d48-baed-36085df5529f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\99_share\Number">
+      <UniqueIdentifier>{0a80e84e-9546-48e1-b514-e97282729b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ShaderInfo">
+      <UniqueIdentifier>{10b3482c-40f9-468a-8384-2945816f7140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\Gauge">
+      <UniqueIdentifier>{48ef538a-41cd-4ae4-8b06-8ecb6888f92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Gauge">
+      <UniqueIdentifier>{5941bf1f-94ce-4d02-9c9e-d8da1b4c9c48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -249,9 +264,6 @@
     <ClCompile Include="CoreEnemy.cpp">
       <Filter>ソース ファイル\Game\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Gauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CoreState.cpp">
       <Filter>ソース ファイル\Game\Core</Filter>
     </ClCompile>
@@ -342,12 +354,6 @@
     <ClCompile Include="ClothShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
-    <ClCompile Include="DotsBG.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DotsBGMove.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
@@ -384,9 +390,6 @@
     <ClCompile Include="ExplosionShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
-    <ClCompile Include="NumberDrawer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="RangeCursor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -396,41 +399,41 @@
     <ClCompile Include="WeaponBulletCount.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DigitNumber.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="LifeGauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="LifeGaugeCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="LifeGaugeShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
-    <ClCompile Include="GaugeCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLifeCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLifeDrawer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLifeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NumberList.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NumberListCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TowerMgrCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MissileCtrl.cpp">
       <Filter>ソース ファイル\Game\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberDrawer.cpp">
+      <Filter>ソース ファイル\99_share\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberList.cpp">
+      <Filter>ソース ファイル\99_share\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberListCtrl.cpp">
+      <Filter>ソース ファイル\99_share\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitNumber.cpp">
+      <Filter>ソース ファイル\99_share\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerMgrCtrl.cpp">
+      <Filter>ソース ファイル\Game\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauge.cpp">
+      <Filter>ソース ファイル\Game\Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="GaugeCtrl.cpp">
+      <Filter>ソース ファイル\Game\Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeGauge.cpp">
+      <Filter>ソース ファイル\Game\Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeGaugeCtrl.cpp">
+      <Filter>ソース ファイル\Game\Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLifeCtrl.cpp">
+      <Filter>ソース ファイル\Game\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -584,9 +587,6 @@
     <ClInclude Include="PlayerCollision.h">
       <Filter>ヘッダー ファイル\Game\player</Filter>
     </ClInclude>
-    <ClInclude Include="Gauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CoreState.h">
       <Filter>ヘッダー ファイル\Game\Core</Filter>
     </ClInclude>
@@ -632,9 +632,6 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>ヘッダー ファイル\99_share</Filter>
     </ClInclude>
-    <ClInclude Include="TowerCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -642,9 +639,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Geometry.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Tween.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
@@ -672,18 +666,6 @@
       <Filter>ヘッダー ファイル\Game\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultShaderInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClothShaderInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ExplosionShaderInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
@@ -740,15 +722,6 @@
     <ClInclude Include="Rogo.h">
       <Filter>ヘッダー ファイル\Title</Filter>
     </ClInclude>
-    <ClInclude Include="DotsBGMove.h">
-      <Filter>ヘッダー ファイル\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="DotsBG.h">
-      <Filter>ヘッダー ファイル\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="NumberDrawer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="RangeCursor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -758,41 +731,59 @@
     <ClInclude Include="WeaponBulletCount.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DigitNumber.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeGauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeGaugeShaderInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeGaugeCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GaugeCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerLifeCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Game\player</Filter>
     </ClInclude>
-    <ClInclude Include="MissileCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="DigitNumber.h">
+      <Filter>ヘッダー ファイル\99_share\Number</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerLifeDrawer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerLifeUI.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="NumberDrawer.h">
+      <Filter>ヘッダー ファイル\99_share\Number</Filter>
     </ClInclude>
     <ClInclude Include="NumberList.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\99_share\Number</Filter>
     </ClInclude>
     <ClInclude Include="NumberListCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\99_share\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Tower</Filter>
     </ClInclude>
     <ClInclude Include="TowerMgrCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Game\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Tween.h">
+      <Filter>ヘッダー ファイル\99_share\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultShaderInfo.h">
+      <Filter>ヘッダー ファイル\ShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionShaderInfo.h">
+      <Filter>ヘッダー ファイル\ShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ClothShaderInfo.h">
+      <Filter>ヘッダー ファイル\ShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderInfo.h">
+      <Filter>ヘッダー ファイル\ShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge.h">
+      <Filter>ヘッダー ファイル\Game\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="GaugeCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeGauge.h">
+      <Filter>ヘッダー ファイル\Game\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeGaugeCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeGaugeShaderInfo.h">
+      <Filter>ヘッダー ファイル\ShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Missile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

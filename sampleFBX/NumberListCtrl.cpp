@@ -3,18 +3,31 @@
 #include "DigitNumber.h"
 #include "NumberDrawer.h"
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void NumberListCtrl::Awake()
 {
-	m_width = 0;
+	m_width = 35;
+	m_NumberList = m_Parent->GetChildren<DigitNumber>();
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT NumberListCtrl::Init()
 {
-	m_NumberList = m_Parent->GetChildren<DigitNumber>();
 
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 数字のセット
+ * @param[in] セットする数字
+ * @return なし
+ */
 void NumberListCtrl::SetNumber(int num)
 {
 	int work = num;
@@ -28,6 +41,11 @@ void NumberListCtrl::SetNumber(int num)
 	}
 }
 
+/**
+ * @brief 座標の設定
+ * @param[in] pos 設定座標
+ * @return なし
+ */
 void NumberListCtrl::SetPos(Vector3 pos)
 {
 	int i = 0;
@@ -40,6 +58,11 @@ void NumberListCtrl::SetPos(Vector3 pos)
 	}
 }
 
+/**
+ * @brief 数字同士の幅の設定
+ * @param[in] width 幅
+ * @return なし
+ */
 void NumberListCtrl::SetWidth(float width)
 {
 	m_width = width;

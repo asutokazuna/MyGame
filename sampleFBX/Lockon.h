@@ -1,5 +1,6 @@
 /**
  * @file Lockon
+ * @brief プレイヤーが狙うターゲットのUIオブジェクト
  */
 #pragma once
 #include "GameObject.h"

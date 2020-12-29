@@ -20,6 +20,10 @@ void PlayerLifeCtrl::Awake()
 	m_Life = MAX_LIFE;
 }
 
+/**
+ * @brief ‰Šú‰»ˆ—
+ * @return ‚È‚µ
+ */
 HRESULT PlayerLifeCtrl::Init()
 {
 	m_numberUI = m_Parent->GetChild<NumberList>("LifeUI");

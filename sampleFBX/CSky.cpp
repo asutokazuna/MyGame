@@ -29,6 +29,13 @@ void CSky::Draw()
 	XMStoreFloat4x4(&world, XMMatrixTranslation(
 		vEye.x, vEye.y, vEye.z));
 	m_Model->Render(world, pCamera->GetView(), pCamera->GetProj(), eOpacityOnly);
+#ifdef _DEBUG
+	ImGui::Begin("Sky");
+	ImGui::SliderFloat("Pos x", &world._41, -1000.0f, 500.0f);
+	ImGui::SliderFloat("Pos y", &world._42, -1000.0f, 500.0f);
+	ImGui::SliderFloat("Pos z", &world._43, -1000.0f, 500.0f);
+	ImGui::End();
+#endif
 }
 
 // EOF

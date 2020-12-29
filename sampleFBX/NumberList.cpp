@@ -7,7 +7,8 @@
 #include "NumberListCtrl.h"
 
 /**
- * @param num 桁数
+ * @brief コンストラクタ
+ * @param[in] num 桁数
  */
 NumberList::NumberList(int num)
 {
@@ -18,6 +19,10 @@ NumberList::NumberList(int num)
 	}
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void NumberList::Awake()
 {
 	AddComponent<NumberListCtrl>()->SetNumber(0);

@@ -4,14 +4,25 @@
  */
 #pragma once
 #include "GameObject.h"
-#include "MyMath.h"
 
+// 前方宣言
 class DigitNumber;
 
 class NumberList :public GameObject
 {
 public:
+
+	/**
+	 * @brief コンストラクタ
+	 * @param[in] num 桁数
+	 */
 	NumberList(int num);
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	void Awake();
 };
 
+// EOF

@@ -1,3 +1,7 @@
+/**
+ * @file NumberDrawer
+ * @brief 1数字表示コンポーネント
+ */
 #pragma once
 #include "Component.h"
 
@@ -13,9 +17,24 @@ private:
 	int num;
 	DefaultShaderInfo* m_shader;
 public:
+
+	/**
+	 * @brief コンストラクタ
+	 */
 	NumberDrawer();
-	HRESULT Init();
-	void Draw();
+
+	void Awake();
+
+	/**
+	 * @brief 初期化処理
+	 * @retrun なし
+	 */
+	//HRESULT Init();
+
+	/**
+	 * @brief 数字のセット
+	 * @return なし
+	 */
 	void SetNumber(int num);
 };
 

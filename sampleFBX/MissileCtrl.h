@@ -1,6 +1,6 @@
 /**
  * @file MissileCtrl
- * @brief 弾の制御
+ * @brief 弾の制御コンポーネント
  */
 #pragma once
 #include "Component.h"

@@ -48,13 +48,11 @@ void CPlayer::Awake()
 	SetChild(obj);
 
 	// 残弾
-	for (int i = 0; i < DIGIT; i++)
-	{
-		DigitNumber* BulletCnt = new DigitNumber();
-		SetChild(BulletCnt);
-	}
+	NumberList* m_bulletUI = new NumberList(2);
+	m_bulletUI->SetName("BulletUI");
+	SetChild(m_bulletUI);
 
-
+	// HPの表示(数字)
 	NumberList* m_numberUI = new NumberList(3);
 	m_numberUI->SetName("LifeUI");
 	SetChild(m_numberUI);

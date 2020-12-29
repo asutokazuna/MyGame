@@ -57,9 +57,9 @@ void CCamera::Update()
 	//m_vNowEye.x  = m_vEye.x;
 	//m_vNowEye.y  = m_vEye.y;
 	//m_vNowEye.z  = m_vEye.z;
-	//m_vNowLook.x = m_vLook.x;
-	//m_vNowLook.y = m_vLook.y;
-	//m_vNowLook.z = m_vLook.z;
+	m_vNowLook.x = m_vLook.x;
+	m_vNowLook.y = m_vLook.y;
+	m_vNowLook.z = m_vLook.z;
 	//m_vNowUp.x   = m_vUp.x;
 	//m_vNowUp.y   = m_vUp.y;
 	//m_vNowUp.z   = m_vUp.z;

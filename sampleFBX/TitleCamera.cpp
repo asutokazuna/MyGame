@@ -1,8 +1,8 @@
 ﻿#include "TitleCamera.h"
 // 定数
 namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル変数になる
-	const XMFLOAT3 g_vEye(0.0f, 0, 0);
-	const XMFLOAT3 g_vLook(0.0f, 10.0f, 0.0f);
+	const XMFLOAT3 g_vEye(0.0f, 0.0f, -1.0f);
+	const XMFLOAT3 g_vLook(10.0f, 1.0f, 0.0f);
 	const XMFLOAT3 g_vUp(0.0f, 1.0f, 0.0f);
 }
 
@@ -15,7 +15,7 @@ void TitleCamera::Awake()
 	m_vEye = g_vEye;
 	m_vLook = g_vLook;
 	m_vUp = g_vUp;
-	m_fFOVY = XMConvertToRadians(45);
+	m_fFOVY = XMConvertToRadians(60);
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fNearZ = 10.0f;
 	m_fFarZ = 10000.0f;
@@ -105,7 +105,5 @@ void TitleCamera::Update()
 	// 行列更新
 	CCamera::Update();
 }
-
-
 
 // EOF

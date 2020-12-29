@@ -47,6 +47,7 @@ void WeaponCtrl::Shot()
 		if (m->GetActive() == false)
 		{
 			m->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
+			m_BulletCount--;
 			break;
 		}
 	}
@@ -66,6 +67,7 @@ void WeaponCtrl::Shot(Quaternion quat)
 		if (m->GetActive() == false)
 		{
 			 m->Fire(&m_ParentTrans->position, quat);
+			 m_BulletCount--;
 			 break;
 		}
 	}
