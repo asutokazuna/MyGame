@@ -171,7 +171,11 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="CoreCollision.cpp" />
     <ClCompile Include="CoreEnemy.cpp" />
+    <ClCompile Include="CoreEnemyGauge.cpp" />
+    <ClCompile Include="CoreGauge.cpp" />
+    <ClCompile Include="CoreGaugeUI.cpp" />
     <ClCompile Include="CorePlayer.cpp" />
+    <ClCompile Include="CorePlayerGauge.cpp" />
     <ClCompile Include="CoreState.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSky.cpp" />
@@ -191,6 +195,7 @@
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Gauge.cpp" />
     <ClCompile Include="GaugeCtrl.cpp" />
+    <ClCompile Include="GaugeUI.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -281,7 +286,11 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="CoreCollision.h" />
     <ClInclude Include="CoreEnemy.h" />
+    <ClInclude Include="CoreEnemyGauge.h" />
+    <ClInclude Include="CoreGauge.h" />
+    <ClInclude Include="CoreGaugeUI.h" />
     <ClInclude Include="CorePlayer.h" />
+    <ClInclude Include="CorePlayerGauge.h" />
     <ClInclude Include="CoreState.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSky.h" />
@@ -302,6 +311,7 @@
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Gauge.h" />
     <ClInclude Include="GaugeCtrl.h" />
+    <ClInclude Include="GaugeUI.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="ImGui\imconfig.h" />

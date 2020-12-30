@@ -66,6 +66,7 @@ void LifeGaugeShaderInfo::Awake()
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
+	m_SizePer = 1;
 }
 
 /**

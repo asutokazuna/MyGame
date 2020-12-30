@@ -15,6 +15,7 @@
 #include "input.h"
 #include "ObjectManager.h"
 #include "RangeCursor.h"
+#include "CoreGaugeUI.h"
 
 bool SceneGame::m_isGameOver = false;
 bool SceneGame::m_isVictory = true;
@@ -37,6 +38,7 @@ void SceneGame::Awake()
 	m_Tower		= ObjectManager::Create<TowerManager>("TowerManager");
 	m_Core		= ObjectManager::Create<CorePlayer>("CorePlayer");
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
+	ObjectManager::Create<CoreGaugeUI>("CoreGaugeUI");
 }
 
 /**

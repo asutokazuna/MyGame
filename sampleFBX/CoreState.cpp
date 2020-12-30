@@ -5,7 +5,9 @@
 #include "CoreState.h"
 #include "imgui/imgui.h"
 
-CoreState::CoreState():m_Life(30)
+#define MAX_CORE_LIFE (50)
+
+CoreState::CoreState():m_Life(MAX_CORE_LIFE)
 {
 }
 
@@ -33,6 +35,11 @@ void CoreState::AddLife(int value)
 void CoreState::SetLife(int Life)
 {
 	m_Life = Life;
+}
+
+float CoreState::GetPercent()
+{
+	return (float)m_Life / MAX_CORE_LIFE;
 }
 
 // EOF

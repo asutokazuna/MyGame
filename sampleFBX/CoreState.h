@@ -1,10 +1,14 @@
 /**
  * @file CoreState
- * @brief CoreStateクラス
+ * @brief CoreStateコンポーネント
  */
 #pragma once
 #include "Component.h"
 
+/**
+ * @file CoreState
+ * @brief CoreStateクラス
+ */
 class CoreState :public Component
 {
 private:
@@ -15,5 +19,7 @@ public:
 	int GetLife();
 	void AddLife(int value);
 	void SetLife(int Life);
+	float GetPercent();
 };
 
+// EOF

@@ -435,6 +435,21 @@
     <ClCompile Include="PlayerLifeCtrl.cpp">
       <Filter>ソース ファイル\Game\Player</Filter>
     </ClCompile>
+    <ClCompile Include="CorePlayerGauge.cpp">
+      <Filter>ソース ファイル\Game\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGaugeUI.cpp">
+      <Filter>ソース ファイル\Game\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGauge.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreEnemyGauge.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -784,6 +799,21 @@
     </ClInclude>
     <ClInclude Include="MissileCtrl.h">
       <Filter>ヘッダー ファイル\Game\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="GaugeUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CorePlayerGauge.h">
+      <Filter>ヘッダー ファイル\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGaugeUI.h">
+      <Filter>ヘッダー ファイル\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGauge.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreEnemyGauge.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
