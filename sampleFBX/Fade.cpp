@@ -77,12 +77,13 @@ void Fade::UpdateInst()
 void Fade::DrawInst()
 {
 #ifdef _DEBUG
-	ImGui::Begin("Fade");
-	ImGui::SliderFloat("FadeAlpha", &m_Alpha, 0, 1);
-	ImGui::RadioButton("FADE_NONE", &m_State, 0);
-	ImGui::RadioButton("FADE_IN", &m_State, 1);
-	ImGui::RadioButton("FADE_OUT", &m_State, 2);
-	ImGui::End();
+	if (ImGui::TreeNode("Fade")) {
+		ImGui::SliderFloat("FadeAlpha", &m_Alpha, 0, 1);
+		ImGui::RadioButton("FADE_NONE", &m_State, 0);
+		ImGui::RadioButton("FADE_IN", &m_State, 1);
+		ImGui::RadioButton("FADE_OUT", &m_State, 2);
+		ImGui::TreePop();
+	}
 #endif // _DEBUG
 
 	UI->ChangeColor(0,0,0, m_Alpha);

@@ -82,14 +82,15 @@ void CCamera::Update()
 void CCamera::Draw()
 {
 #ifdef _DEBUG
-	ImGui::Begin("Camera");
-	ImGui::SliderFloat("Pos x", &m_vNowEye.x,  -1000.0f, 500.0f);
-	ImGui::SliderFloat("Pos y", &m_vNowEye.y,  -1000.0f, 500.0f);
-	ImGui::SliderFloat("Pos z", &m_vNowEye.z,  -1000.0f, 500.0f);
-	ImGui::SliderFloat("Look x", &m_vNowLook.x, -500.0f, 500.0f);
-	ImGui::SliderFloat("Look y", &m_vNowLook.y, -500.0f, 500.0f);
-	ImGui::SliderFloat("Look z", &m_vNowLook.z, -500.0f, 500.0f);
-	ImGui::End();
+	if (ImGui::TreeNode("Camera")) {
+		ImGui::SliderFloat("Pos x", &m_vNowEye.x, -1000.0f, 500.0f);
+		ImGui::SliderFloat("Pos y", &m_vNowEye.y, -1000.0f, 500.0f);
+		ImGui::SliderFloat("Pos z", &m_vNowEye.z, -1000.0f, 500.0f);
+		ImGui::SliderFloat("Look x", &m_vNowLook.x, -500.0f, 500.0f);
+		ImGui::SliderFloat("Look y", &m_vNowLook.y, -500.0f, 500.0f);
+		ImGui::SliderFloat("Look z", &m_vNowLook.z, -500.0f, 500.0f);
+		ImGui::TreePop();
+	}
 #endif
 }
 void CCamera::SetPos(XMFLOAT3 eye){	m_vEye = eye; }

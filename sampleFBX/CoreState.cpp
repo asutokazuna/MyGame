@@ -14,11 +14,10 @@ CoreState::CoreState():m_Life(MAX_CORE_LIFE)
 void CoreState::Draw()
 {
 #ifdef _DEBUG
-
-	ImGui::Begin("CoreState");
-	ImGui::SliderInt("Life", &m_Life, 0, 100);
-	ImGui::End();
-
+	if (ImGui::TreeNode("CoreState")) {
+		ImGui::SliderInt("Life", &m_Life, 0, 100);
+		ImGui::TreePop();
+	}
 #endif // _DEBUG
 }
 

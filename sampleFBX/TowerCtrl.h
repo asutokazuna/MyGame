@@ -54,9 +54,11 @@ public:
 
 	void Update();
 
+	void Draw();
+
 	int GetState();
 
-	//void ChangeColor();
+	void ChangeColor();
 
 };
 

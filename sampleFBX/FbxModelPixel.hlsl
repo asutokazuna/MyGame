@@ -52,8 +52,10 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		float3 H = normalize(L + V);							// ハーフベクトル
 		Diff = g_lightAmbient.rgb * g_Ambient.rgb +
 			g_lightDiffuse.rgb * Diff * saturate(dot(L, N));	// 拡散色 + 環境色
+			float aaa = max(g_Specular.a,0.0001f);
 		float3 Spec = g_Specular.rgb * g_lightSpecular.rgb *
-			pow(saturate(dot(N, H)), g_Specular.a);				// 鏡面反射色
+			pow(saturate(dot(N, H)), aaa);				// 鏡面反射色
+			float3 zero3 = float3(0,0,0);
 		Diff += Spec;
 	}
 

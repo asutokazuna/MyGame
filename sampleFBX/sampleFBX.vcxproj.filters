@@ -438,9 +438,6 @@
     <ClCompile Include="CorePlayerGauge.cpp">
       <Filter>ソース ファイル\Game\Core</Filter>
     </ClCompile>
-    <ClCompile Include="GaugeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CoreGaugeUI.cpp">
       <Filter>ソース ファイル\Game\Core</Filter>
     </ClCompile>
@@ -449,6 +446,9 @@
     </ClCompile>
     <ClCompile Include="CoreEnemyGauge.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GaugeUI.cpp">
+      <Filter>ソース ファイル\Game\Gauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -53,7 +53,9 @@ void PlayerMove::Update()
 	}
 	m_move = Vector3();
 
-	Rotate();
+	if (!CInput::GetKeyPress(VK_P)) {
+		Rotate();
+	}
 
 	grav -= 0.01f;
 

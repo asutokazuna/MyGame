@@ -19,6 +19,7 @@
 #include "DigitNumber.h"
 #include "PlayerLifeCtrl.h"
 #include "NumberList.h"
+#include "GaugeUI.h"
 
 #define DIGIT (2)
 
@@ -47,7 +48,7 @@ void CPlayer::Awake()
 	GameObject* obj = new Lockon();
 	SetChild(obj);
 
-	// 残弾
+	// 残弾数
 	NumberList* m_bulletUI = new NumberList(2);
 	m_bulletUI->SetName("BulletUI");
 	SetChild(m_bulletUI);
@@ -56,6 +57,11 @@ void CPlayer::Awake()
 	NumberList* m_numberUI = new NumberList(3);
 	m_numberUI->SetName("LifeUI");
 	SetChild(m_numberUI);
+
+	GameObject* m_gaugeLife = new GaugeUI();
+	m_gaugeLife->SetName("LifeGauge");
+	SetChild(m_gaugeLife);
+
 	AddComponent<PlayerLifeCtrl>();
 
 	AddComponent<WeaponBulletCount>();

@@ -16,7 +16,7 @@ class PlayerLifeCtrl :public Component
 private:
 	unsigned int m_Life;		//!< HP
 	NumberList* m_numberUI;
-
+	GameObject* m_gauge;
 public:
 	/**
 	 * @brief ‰Šú‰»ˆ—

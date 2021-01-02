@@ -28,11 +28,20 @@ TowerEnergy::TowerEnergy()
 void TowerEnergy::Draw()
 {
 #ifdef _DEBUG
-	ImGui::Begin("Tower");
-	char str[50];
-	sprintf(str, "Energy%d", id);
-	ImGui::SliderInt(str, &m_Energy, 0, 500);
-	ImGui::End();
+
+	//ImGui::Begin("Tower");
+	//if (ImGui::CollapsingHeader("Tower"))
+	{
+		char str[50];
+		sprintf(str, "Energy%d", id);
+		if (ImGui::TreeNode(str)) {
+			ImGui::SliderInt(str, &m_Energy, 0, 500);
+			ImGui::TreePop();
+		}
+		//ImGui::TreePop();
+	}
+
+	//ImGui::End();
 #endif
 }
 

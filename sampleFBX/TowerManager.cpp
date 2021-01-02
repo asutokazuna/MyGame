@@ -9,7 +9,7 @@
 #include "TowerMgrCtrl.h"
 
 // @def
-#define POS_OFFSET_X (300)
+#define POS_OFFSET_X (500)
 
 /**
  * @brief 初期化処理

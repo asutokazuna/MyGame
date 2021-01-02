@@ -98,10 +98,12 @@ void ExplosionShaderInfo::Uninit()
 void ExplosionShaderInfo::Draw()
 {
 #ifdef _DEBUG
-	ImGui::Begin("Explosion");
-	ImGui::SliderFloat("Dist", &m_power, 0, 1);
-	ImGui::SliderFloat("fade", &m_fadethrosh, 0, 1);
-	ImGui::End();
+
+	if (ImGui::TreeNode("Explosion")) {
+		ImGui::SliderFloat("Dist", &m_power, 0, 1);
+		ImGui::SliderFloat("fade", &m_fadethrosh, 0, 1);
+		ImGui::TreePop();
+	}
 #endif
 }
 

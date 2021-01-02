@@ -117,21 +117,24 @@ void Collision::Draw()
 {
 #if _DEBUG
 
-	//ImGui::Begin("collision");
-	////ImGui::Text("fps: %.2f", pos.x);
-	////static char text1[8] = "";
-	////ImGui::InputText("textbox 1", text1, sizeof(text1));
-	////ImGui::Text("fps: %.2f", pos.x);
-	////static char text1[8] = "";
-	////ImGui::InputText("textbox 1", text1, sizeof(text1));
-	////ImGui::SliderFloat("slider 1", &pos.x, 0.0f, 1.0f);
-	////static bool show_another_window = false;
-	////ImGui::Begin("Another Window", &show_another_window);
-	////ImGui::Text("Hello from another window!");
+	//if (ImGui::TreeNode("Collsiion")) {
 
-	//ImGui::Checkbox("view", &m_isViewCol);
+		ImGui::Begin("PlayerCollision");
+	//ImGui::Text("fps: %.2f", pos.x);
+	//static char text1[8] = "";
+	//ImGui::InputText("textbox 1", text1, sizeof(text1));
+	//ImGui::Text("fps: %.2f", pos.x);
+	//static char text1[8] = "";
+	//ImGui::InputText("textbox 1", text1, sizeof(text1));
+	//ImGui::SliderFloat("slider 1", &pos.x, 0.0f, 1.0f);
+	//static bool show_another_window = false;
+	//ImGui::Begin("Another Window", &show_another_window);
+	//ImGui::Text("Hello from another window!");
 
-	//ImGui::End();
+	ImGui::Checkbox("view", &m_isViewCol);
+
+	ImGui::End();
+//	ImGui::TreePop();}
 #endif
 }
 
@@ -142,7 +145,7 @@ void Collision::Draw()
 void Collision::DrawAlpha()
 {
 #ifdef _DEBUG
-	//if(m_isViewCol == true)
+	if(m_isViewCol == true)
 	m_box.Draw();
 #endif
 }

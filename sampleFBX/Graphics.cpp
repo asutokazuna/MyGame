@@ -243,16 +243,25 @@ void CGraphics::Draw(SceneManager* pScene)
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
+#if _DEBUG
+	ImGui::Begin("DebugWindow");
+#endif
 	// シーンの描画
 	if (pScene) {
 		pScene->Draw();
 	}
+
+#if _DEBUG
+	ImGui::End();
+#endif
 #if _DEBUG
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	
 #endif
 	// バックバッファとフロントバッファの入れ替え
 	m_pSwapChain->Present(m_uSyncInterval, 0);
+
 }
 
 // 深度バッファ有効無効制御

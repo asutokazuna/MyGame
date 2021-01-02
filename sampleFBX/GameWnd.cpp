@@ -126,7 +126,6 @@ bool CGameWindow::OnIdle(long lCount)
 
 	CGraphics::Draw(&SceneManager::GetInstance());		// レンダリング処理
 
-
 	m_dwFrameCount++;					// フレームカウント＋１
 	return true;
 }

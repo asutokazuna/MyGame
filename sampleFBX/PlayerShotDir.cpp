@@ -151,11 +151,13 @@ void PlayerShotDir::LateUpdate()
 void PlayerShotDir::Draw()
 {
 #ifdef _DEBUG
-	ImGui::Begin("DirPos");
-	ImGui::SliderFloat("g_pos x", &g_pos.x, -1000.0f, 500.0f);
-	ImGui::SliderFloat("g_pos y", &g_pos.y, -1000.0f, 500.0f);
-	ImGui::SliderFloat("g_pos z", &g_pos.z, -1000.0f, 500.0f);
-	ImGui::End();
+	if (ImGui::TreeNode("DirPos")) {
+		char str[50];
+		ImGui::SliderFloat("g_pos x", &g_pos.x, -1000.0f, 500.0f);
+		ImGui::SliderFloat("g_pos y", &g_pos.y, -1000.0f, 500.0f);
+		ImGui::SliderFloat("g_pos z", &g_pos.z, -1000.0f, 500.0f);
+		ImGui::TreePop();
+	}
 #endif
 }
 
