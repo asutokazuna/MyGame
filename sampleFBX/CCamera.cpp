@@ -17,22 +17,17 @@ const float FAR_Z = 10000.0f;
 void CCamera::Awake()
 {
 	HRESULT hr = S_OK;
-	m_vEye = XMFLOAT3(0.0f, 200.0f, -400.0f);
-	m_vLook = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
+
+	transform->position = Vector3(0.0f, 200.0f, -400.0f);
+	m_vLook = Vector3(0.0f, 0.0f, 0.0f);
 
 	m_fFOVY = XMConvertToRadians(45);
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fNearZ = NEARZ;
 	m_fFarZ = FAR_Z;
 
-	m_vNowEye = m_vEye;
-	m_vNowLook = m_vLook;
-	m_vNowUp = m_vUp;
-	transform->position = Vector3(m_vEye.x, m_vEye.y, m_vEye.z);
-	Vector3 look = Vector3(m_vLook.x, m_vLook.y, m_vLook.z);
-	transform->quaternion = MyMath::LookAt(transform->position, look);
-	//Update();
+	transform->quaternion = MyMath::LookAt(transform->position, m_vLook);
+	UpdateMatrix();
 }
 
 /**
@@ -50,29 +45,7 @@ void CCamera::Uninit()
  */
 void CCamera::Update()
 {
-	//if (this->m_isActive == false) {
-	//	//return;
-	//}
 
-	//m_vNowEye.x  = m_vEye.x;
-	//m_vNowEye.y  = m_vEye.y;
-	//m_vNowEye.z  = m_vEye.z;
-	m_vNowLook.x = m_vLook.x;
-	m_vNowLook.y = m_vLook.y;
-	m_vNowLook.z = m_vLook.z;
-	//m_vNowUp.x   = m_vUp.x;
-	//m_vNowUp.y   = m_vUp.y;
-	//m_vNowUp.z   = m_vUp.z;
-	XMStoreFloat3(&m_vNowUp, XMVector3Normalize(XMLoadFloat3(&m_vNowUp)));
-	// ビュー変換更新
-	XMStoreFloat4x4(&m_View,
-		XMMatrixLookAtLH(XMLoadFloat3(&m_vNowEye), XMLoadFloat3(&m_vNowLook), XMLoadFloat3(&m_vNowUp)));
-
-	// 射影変換更新
-	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));
-	transform->position = Vector3(m_vNowEye.x, m_vNowEye.y, m_vNowEye.z);
-	Vector3 look = Vector3(m_vNowLook.x, m_vNowLook.y, m_vNowLook.z);
-	transform->quaternion = MyMath::LookAt(transform->position, look);
 }
 
 /**
@@ -83,26 +56,55 @@ void CCamera::Draw()
 {
 #ifdef _DEBUG
 	if (ImGui::TreeNode("Camera")) {
-		ImGui::SliderFloat("Pos x", &m_vNowEye.x, -1000.0f, 500.0f);
-		ImGui::SliderFloat("Pos y", &m_vNowEye.y, -1000.0f, 500.0f);
-		ImGui::SliderFloat("Pos z", &m_vNowEye.z, -1000.0f, 500.0f);
-		ImGui::SliderFloat("Look x", &m_vNowLook.x, -500.0f, 500.0f);
-		ImGui::SliderFloat("Look y", &m_vNowLook.y, -500.0f, 500.0f);
-		ImGui::SliderFloat("Look z", &m_vNowLook.z, -500.0f, 500.0f);
+		//ImGui::SliderFloat("Pos x", &m_vNowEye.x, -1000.0f, 500.0f);
+		//ImGui::SliderFloat("Pos y", &m_vNowEye.y, -1000.0f, 500.0f);
+		//ImGui::SliderFloat("Pos z", &m_vNowEye.z, -1000.0f, 500.0f);
+		//ImGui::SliderFloat("Look x", &m_vNowLook.x, -500.0f, 500.0f);
+		//ImGui::SliderFloat("Look y", &m_vNowLook.y, -500.0f, 500.0f);
+		//ImGui::SliderFloat("Look z", &m_vNowLook.z, -500.0f, 500.0f);		
+		Vector3 te2 = transform->position;
+		ImGui::SliderFloat("Pos x", &te2.x, -1000.0f, 500.0f);
+		ImGui::SliderFloat("Pos y", &te2.y, -1000.0f, 500.0f);
+		ImGui::SliderFloat("Pos z", &te2.z, -1000.0f, 500.0f);
 		ImGui::TreePop();
 	}
 #endif
 }
-void CCamera::SetPos(XMFLOAT3 eye){	m_vEye = eye; }
+
+void CCamera::UpdateMatrix()
+{
+	XMFLOAT3 vUP;
+	XMFLOAT3 vPos;
+	XMFLOAT3 vLook;
+
+	transform->quaternion = MyMath::LookAt(transform->position, m_vLook);
+
+	Vector3 cameraPos = transform->position;
+	Vector3 cameraUP = transform->GetUp();
+
+	vPos = XMFLOAT3(cameraPos.x, cameraPos.y, cameraPos.z);
+	vLook = XMFLOAT3(m_vLook.x, m_vLook.y, m_vLook.z);
+	vUP = XMFLOAT3(cameraUP.x, cameraUP.y, cameraUP.z);
+
+
+	// ビュー変換更新
+	XMStoreFloat4x4(&m_View,
+		XMMatrixLookAtLH(XMLoadFloat3(&vPos), XMLoadFloat3(&vLook), XMLoadFloat3(&vUP)));
+
+	// 射影変換更新
+	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));
+}
+
+void CCamera::SetPos(XMFLOAT3 eye){	}
 void CCamera::SetTransform(Transform& trans) { 
 	m_transform = &trans;
 }
 XMFLOAT4X4& CCamera::GetView() { return m_View; }
 XMFLOAT4X4& CCamera::GetProj() { return m_Proj; }
-XMFLOAT3& CCamera::GetEye() { return m_vNowEye; }
-XMFLOAT3& CCamera::GetLook() { return m_vNowLook; }
-
-void CCamera::SetLook(XMFLOAT3 vLook) { m_vLook = vLook; }
+XMFLOAT3 CCamera::GetEye() { return XMFLOAT3(transform->position.x, transform->position.y, transform->position.z); }
+//XMFLOAT3& CCamera::GetLook() { return m_vNowLook; }
+//
+//void CCamera::SetLook(XMFLOAT3 vLook) { m_vLook = vLook; }
 
 void CCamera::Set(CCamera* pCamera) 
 {

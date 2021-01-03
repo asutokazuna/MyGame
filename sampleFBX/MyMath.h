@@ -227,7 +227,7 @@ public:
 	 * @brief 対象方向へ向くクォータニオンを求める
 	 * @return 対象方向への回転クォータニオン
 	 */
-	static Quaternion LookAt(const Vector3& myPos, const Vector3& targetPos);
+	static Quaternion LookAt(const Vector3& myPos, const Vector3& targetPos, Vector3 axis = Vector3(0, 1, 0));
 
 	/**
 	 * @brief 内積を求める

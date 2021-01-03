@@ -7,6 +7,7 @@ public:
 	void Awake();
 	void Uninit();
 	void Update();
+	void Draw();
 };
 
 // EOF

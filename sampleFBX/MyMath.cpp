@@ -236,20 +236,22 @@ float MyMath::AngleToRadian(const float& angle)
  * @brief 対象方向へ向くクォータニオンを求める
  * @return 対象方向への回転クォータニオン
  */
-Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos)
+Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos, Vector3 axis)
 {
 	Quaternion result;
 	Vector3 target = targetPos - myPos;
 	Vector3 forward = Vector3(0, 0, 1);
-	Vector3 axis = Vector3(0, 1, 0);
 	float dot = 0;
 	float radian = 0;
 
 	Normalize(target);
 	dot = Dot(forward, target);
 	radian = acosf(dot);
-	axis = Cross(forward, target);
-
+	if (axis.x == 0 &&
+		axis.y == 0 &&
+		axis.z == 0) {
+		axis = Cross(forward, target);
+	}
 	result = MakeQuaternion(axis, radian);
 
 	return result;

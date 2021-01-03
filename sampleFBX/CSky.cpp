@@ -25,7 +25,7 @@ void CSky::Draw()
 	// FBXファイル表示
 	XMFLOAT4X4 world;
 	CCamera* pCamera = CCamera::Get();
-	XMFLOAT3& vEye = pCamera->GetEye();
+	XMFLOAT3 vEye = pCamera->GetEye();
 	XMStoreFloat4x4(&world, XMMatrixTranslation(
 		vEye.x, vEye.y, vEye.z));
 	m_Model->Render(world, pCamera->GetView(), pCamera->GetProj(), eOpacityOnly);

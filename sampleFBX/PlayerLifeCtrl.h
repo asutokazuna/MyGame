@@ -14,7 +14,7 @@ class NumberList;
 class PlayerLifeCtrl :public Component
 {
 private:
-	unsigned int m_Life;		//!< HP
+	int m_Life;		//!< HP
 	NumberList* m_numberUI;
 	GameObject* m_gauge;
 public:

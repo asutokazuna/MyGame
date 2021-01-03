@@ -54,6 +54,7 @@ public:
 		bd.CPUAccessFlags = 0;
 		hr = pDevice->CreateBuffer(&bd, nullptr, buffer);
 		if (FAILED(hr)) return false;
+		return true;
 	}
 
 	void SetShader();

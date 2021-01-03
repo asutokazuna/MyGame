@@ -26,8 +26,6 @@ bool SceneGame::m_isVictory = true;
  */
 void SceneGame::Awake()
 {
-	m_pCTPCamera = new CTPCamera();
-	m_pCTPCamera->Awake();
 	m_BCamera = new CBulletTime();
 	m_BCamera->Awake();
 
@@ -39,6 +37,7 @@ void SceneGame::Awake()
 	m_Core		= ObjectManager::Create<CorePlayer>("CorePlayer");
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
 	ObjectManager::Create<CoreGaugeUI>("CoreGaugeUI");
+	m_pCTPCamera = ObjectManager::Create<CTPCamera>("CTPCamera");
 }
 
 /**
@@ -51,7 +50,6 @@ HRESULT SceneGame::Init()
 	m_BCamera->Init();
 
 	m_pCTPCamera->SetTransform(m_pPlayer->GetTransform());
-	m_pCTPCamera->Init();
 	CCamera::Set(m_pCTPCamera);
 
 	return S_OK;
@@ -65,10 +63,8 @@ void SceneGame::Uninit()
 {
 	m_BCamera->Uninit();
 	CScene::Uninit();
-	m_pCTPCamera->Uninit();
 
 	delete m_BCamera;
-	delete m_pCTPCamera;
 }
 
 /**

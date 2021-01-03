@@ -238,7 +238,8 @@ void CBox::Draw()
 	pDeviceContext->UpdateSubresource(m_pConstantBuffer[0], 0, nullptr, &cb, 0, 0);
 	pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer[0]);
 	SHADER_GLOBAL2 cb2;
-	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
+	XMFLOAT3 eye = CCamera::Get()->GetEye();
+	cb2.vEye = XMLoadFloat3(&eye);
 	CFbxLight& light = *Light::Get();
 	cb2.vLightDir = XMVectorSet(light.m_direction.x, light.m_direction.y, light.m_direction.z, 0.f);
 	cb2.vLa = XMLoadFloat4(&light.m_ambient);

@@ -4,8 +4,8 @@
 #include "UIMesh.h"
 #include "ExplosionShaderInfo.h"
 
-#define ROGO_WIDTH (723 * 1.2)		//!< ロゴの横幅
-#define ROGO_HEIGHT (210 * 1.2)		//!< ロゴの縦幅
+#define ROGO_WIDTH (723 * 1.2f)		//!< ロゴの横幅
+#define ROGO_HEIGHT (210 * 1.2f)		//!< ロゴの縦幅
 
 static ExplosionShaderInfo* g_shader;
 
@@ -20,7 +20,7 @@ void Rogo::Awake()
 	g_shader = AddComponent<ExplosionShaderInfo>();
 	g_shader->SetTexture(TEXTURE_ROGO_BLACK);
 //	g_shader->SetNoizeTexture(TEXTURE_NOIZE);
-	m_mesh = AddComponent<UIMesh>()->ChangeSize(ROGO_WIDTH, ROGO_HEIGHT , 1)->ChangePos(0, 100, 0);
+	m_mesh = AddComponent<UIMesh>()->ChangeSize(ROGO_WIDTH, ROGO_HEIGHT , 1)->ChangePos(0, 100.0f, 0);
 	m_mesh->SetPrimitive(6);
 	m_mesh->SetShader(*g_shader);
 }

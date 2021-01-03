@@ -15,9 +15,9 @@ HRESULT CBulletTime::Init()
 {
 	HRESULT hr = S_OK;
 	m_isActive = false;
-	m_vEye = XMFLOAT3(0.0f, 0.0f, -g_fRadius * 2.0f);
-	m_vLook = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	//m_vEye = XMFLOAT3(0.0f, 0.0f, -g_fRadius * 2.0f);
+	//m_vLook = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	//m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	m_fFOVY = XMConvertToRadians(45);
 	m_fangle = 0.0f;
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
@@ -41,9 +41,9 @@ void CBulletTime::Update()
 	// 回転マトリックス生成
 	XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(m_fangle));
 	// 視点座標を回転
-	XMStoreFloat3(&m_vEye,
-	XMVector3TransformCoord(
-	XMVectorSet(0.0f, 0.0f, -g_fRadius * 2,1.0f),mRotate));
+	//XMStoreFloat3(&m_vEye,
+	//XMVector3TransformCoord(
+	//XMVectorSet(0.0f, 0.0f, -g_fRadius * 2,1.0f),mRotate));
 
 	//// プレイヤー位置に移動
 	//m_vLook = CPlayer::GetPos();

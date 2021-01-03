@@ -5,6 +5,7 @@
 #pragma once
 #include "Component.h"
 #include "MyMath.h"
+#include "Tween.h"
 
 class Tween;
 
@@ -29,6 +30,22 @@ public:
 public:
 	Tween* Do;
 
+	Transform& operator= (const Transform trs) {
+		position = trs.position;
+		rotation = trs.rotation;
+		scale = trs.scale;
+		localPosition = trs.localPosition;
+		localRotation = trs.localRotation;
+		localScale = trs.localScale;
+		axisX = trs.axisX;
+		axisY = trs.axisY;
+		axisZ = trs.axisZ;
+		quaternion = trs.quaternion;
+		*(Do) = *(trs.Do);
+		//Tween t;
+		//t = *trs.Do;
+		return *this;
+	}
 	/**
 	 * @brief コンストラクタ
 	 */

@@ -106,7 +106,7 @@ void SceneManager::Update()
 
 	ObjectManager::GetInstance().Update();
 	m_nowScene->Update();
-	CCamera::Get()->Update();
+	//CCamera::Get()->Update();
 
 	Collision::Check();
 }
@@ -118,7 +118,7 @@ void SceneManager::Update()
 void SceneManager::Draw()
 {	
 	m_pSky->Draw();
-	CCamera::Get()->Draw();
+	//CCamera::Get()->Draw();
 	m_nowScene->Draw();
 
 	ObjectManager::GetInstance().Draw();

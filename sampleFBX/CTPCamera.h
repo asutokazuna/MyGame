@@ -20,8 +20,10 @@ public:
 	 * @return なし
 	 */
 	void Awake();
+	HRESULT Init();
 	void Uninit();
-	void Update();
+	void LateUpdate();
+	void Draw();
 };
 
 // EOF

@@ -29,6 +29,10 @@ public:
 	Tween() {
 		m_Threshold = 0;
 	}
+	Tween& operator= (const Tween num) {
+		this->m_Threshold = num.m_Threshold;
+		return *this;
+	}
 	//static void Update();
 	//
 	//Tween* Move(Transform& obj, Vector3 startPos, Vector3 endPos, float time);
