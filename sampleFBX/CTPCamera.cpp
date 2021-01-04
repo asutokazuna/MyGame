@@ -10,7 +10,8 @@
 // 定数
 namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル変数になる
 	const Vector3 g_vEye (0.0f, 50.0f, -150.0f);
-	const Vector3 g_vLook(0.0f, 50.0f, 100.0f);
+	const Vector3 g_vLook(0.0f, 50.0f, 0.0f);
+	const Vector3 g_vUp(0.0f, 1.0f, 0.0f);
 }
 
 /**
@@ -69,9 +70,10 @@ void CTPCamera::LateUpdate()
 		MyMath::StoreXMFloat4x4(mtrs);
 
 	Vector3 pos = Vector3(mmtxWorld._41, mmtxWorld._42, mmtxWorld._43);
-	m_vLook = Vector3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
+	Vector3 look = Vector3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
 
-	transform->position = pos;
+//	transform->position = pos;
+//	m_vLook = look;
 
 	// 始点と注視点を移動、上方ベクトルを回転
 	XMMATRIX world = XMLoadFloat4x4(&mtxWorld);
@@ -80,7 +82,8 @@ void CTPCamera::LateUpdate()
 	//XMStoreFloat3(&m_vUp  , XMVector3TransformNormal(XMLoadFloat3(&g_vUp), world));
 
 	const float ratio = 0.9f;
-
+	transform->position = transform->position * ratio + pos * (1 - ratio);
+	m_vLook = m_vLook * ratio + look * (1 - ratio);
 	// 始点、注視点、上方ベクトルを近づける
 	//m_vNowEye.x = m_vNowEye.x   * ratio + m_vEye.x  * (1 - ratio);
 	//m_vNowEye.y = m_vNowEye.y   * ratio + m_vEye.y  * (1 - ratio);
@@ -103,9 +106,6 @@ void CTPCamera::Draw()
 		ImGui::SliderFloat("pos x", &pos.x, -1000.0f, 500.0f);
 		ImGui::SliderFloat("pos y", &pos.y, -1000.0f, 500.0f);
 		ImGui::SliderFloat("pos z", &pos.z, -1000.0f, 500.0f);
-		ImGui::SliderFloat("transPos x", &mmtxWorld._41, -1000.0f, 500.0f);
-		ImGui::SliderFloat("transPos y", &mmtxWorld._42, -1000.0f, 500.0f);
-		ImGui::SliderFloat("transPos z", &mmtxWorld._43, -1000.0f, 500.0f);
 		ImGui::SliderFloat("Look x", &m_vLook.x, -1000.0f, 500.0f);
 		ImGui::SliderFloat("Look y", &m_vLook.y, -1000.0f, 500.0f);
 		ImGui::SliderFloat("Look z", &m_vLook.z, -1000.0f, 500.0f);
@@ -114,10 +114,18 @@ void CTPCamera::Draw()
 		//ImGui::SliderFloat("transfor y", &te2.y, -1.0f, 1.0f);
 		//ImGui::SliderFloat("transfor z", &te2.z, -1.0f, 1.0f);
 
-		Vector3 te = mtrs.GetUp();
-		ImGui::SliderFloat("transLookUp x", &te.x, -1.0f, 1.0f);
-		ImGui::SliderFloat("transLookUp y", &te.y, -1.0f, 1.0f);
-		ImGui::SliderFloat("transLookUp z", &te.z, -1.0f, 1.0f);
+		Vector3 te = transform->GetUp();
+		ImGui::SliderFloat("GetUp x", &te.x, -1.0f, 1.0f);
+		ImGui::SliderFloat("GetUp y", &te.y, -1.0f, 1.0f);
+		ImGui::SliderFloat("GetUp z", &te.z, -1.0f, 1.0f);
+		//Vector3 tete = mtrs.GetUp();
+		//ImGui::SliderFloat("GetUp x", &tete.x, -1.0f, 1.0f);
+		//ImGui::SliderFloat("GetUp y", &tete.y, -1.0f, 1.0f);
+		//ImGui::SliderFloat("GetUp z", &tete.z, -1.0f, 1.0f);
+		//Vector3 qut = transform->quaternion.x;
+		ImGui::SliderFloat("qut x", &transform->quaternion.x, -1.0f, 1.0f);
+		ImGui::SliderFloat("qut y", &transform->quaternion.y, -1.0f, 1.0f);
+		ImGui::SliderFloat("qut z", &transform->quaternion.z, -1.0f, 1.0f);
 		ImGui::TreePop();
 	}
 }

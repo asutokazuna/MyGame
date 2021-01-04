@@ -97,15 +97,17 @@ void PlayerMove::Rotate()
 {
 	POINT mousePos = *CInput::GetMousePosition();
 
-	angle.x = mousePos.x - mousePosX;
-	angle.y = mousePos.y - mousePosY;
+	float ax, ay;
+
+	ax = (mousePos.x - mousePosX) / 3.0f;
+	ay = (mousePos.y - mousePosY) / 1.0f;
 
 	mousePosX = mousePos.x;
 	mousePosY = mousePos.y;
 
-	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian((float)angle.x));
+	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian((float)ax));
 	
-	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)angle.y));
+	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)ay));
 	
 }
 

@@ -20,6 +20,7 @@ void CCamera::Awake()
 
 	transform->position = Vector3(0.0f, 200.0f, -400.0f);
 	m_vLook = Vector3(0.0f, 0.0f, 0.0f);
+	m_vUp = Vector3(0.0f, 1.0f, 0.0f);
 
 	m_fFOVY = XMConvertToRadians(45);
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
@@ -73,23 +74,22 @@ void CCamera::Draw()
 
 void CCamera::UpdateMatrix()
 {
-	XMFLOAT3 vUP;
-	XMFLOAT3 vPos;
-	XMFLOAT3 vLook;
+	XMFLOAT3 pos;
+	XMFLOAT3 look;
+	XMFLOAT3 up;
 
 	transform->quaternion = MyMath::LookAt(transform->position, m_vLook);
 
 	Vector3 cameraPos = transform->position;
 	Vector3 cameraUP = transform->GetUp();
 
-	vPos = XMFLOAT3(cameraPos.x, cameraPos.y, cameraPos.z);
-	vLook = XMFLOAT3(m_vLook.x, m_vLook.y, m_vLook.z);
-	vUP = XMFLOAT3(cameraUP.x, cameraUP.y, cameraUP.z);
-
+	pos = XMFLOAT3(cameraPos.x, cameraPos.y, cameraPos.z);
+	look = XMFLOAT3(m_vLook.x, m_vLook.y, m_vLook.z);
+	up = XMFLOAT3(cameraUP.x, cameraUP.y, cameraUP.z);
 
 	// ビュー変換更新
 	XMStoreFloat4x4(&m_View,
-		XMMatrixLookAtLH(XMLoadFloat3(&vPos), XMLoadFloat3(&vLook), XMLoadFloat3(&vUP)));
+		XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&look), XMLoadFloat3(&up)));
 
 	// 射影変換更新
 	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));

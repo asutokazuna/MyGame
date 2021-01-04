@@ -16,6 +16,7 @@ class CCamera:public GameObject
 {
 protected:
 	Vector3	m_vLook;	//!< 注視点座標
+	Vector3	m_vUp;	//!< 注視点座標
 	XMFLOAT4X4	m_View;		//!< ビュー変換
 	XMFLOAT4X4	m_Proj;		//!< 射影変換
 	float		m_fFOVY;	//!< 視野角

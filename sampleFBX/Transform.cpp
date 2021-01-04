@@ -134,7 +134,6 @@ Transform& Transform::AngleAxis(AxisKind kind, float rad)
 		axis = axisY;
 		break;
 	case Transform::AXIS_Z:
-		rotation.z += rad;
 		axis = axisZ;
 		break;
 	case Transform::AXIS_WORLD_X:

@@ -238,21 +238,35 @@ float MyMath::AngleToRadian(const float& angle)
  */
 Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos, Vector3 axis)
 {
-	Quaternion result;
+	Quaternion result = {1,0,0,0};
+	Quaternion te = {1,0,0,0};
 	Vector3 target = targetPos - myPos;
 	Vector3 forward = Vector3(0, 0, 1);
+	Vector3 up = Vector3(0, 1, 0);
+	Vector3 right;
+	Vector3 newUp;
+	Vector3 newforward;
+	Vector3 temp;
 	float dot = 0;
 	float radian = 0;
 
+	right = Cross(up, target);
+	newUp = Cross(target, right);
+	newforward = Cross(right, newUp);
+
 	Normalize(target);
-	dot = Dot(forward, target);
+	temp = target;
+	temp.y = 0;
+	dot = Dot(forward, temp);
 	radian = acosf(dot);
-	if (axis.x == 0 &&
-		axis.y == 0 &&
-		axis.z == 0) {
-		axis = Cross(forward, target);
-	}
 	result = MakeQuaternion(axis, radian);
+
+	dot = Dot(target, temp);
+	radian = acosf(dot);
+	te = MakeQuaternion(right, radian);
+	
+	result = CalcQuaternion(te, result);
+	//AnglexQuaternion(quaternion, axis, rad);
 
 	return result;
 }
