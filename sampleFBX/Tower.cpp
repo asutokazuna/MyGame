@@ -19,9 +19,10 @@
 void Tower::Awake()
 {
 	tag = OBJ_TAG_TOWER;
+	transform->scale = Vector3(0.3f, 0.3f, 0.3f);
 
 	m_Object3D = &AddComponent<Object3D>()->SetModel(MODEL_TOWER);
-	m_collision = AddComponent<Collision>()->SetSize({ 50,50,50 });
+	m_collision = AddComponent<Collision>()->SetModelKind(MODEL_TOWER);
 	m_Energy = AddComponent<TowerEnergy>();
 	m_LifeGauge = new Gauge();
 	m_ctrl = AddComponent<TowerCtrl>();

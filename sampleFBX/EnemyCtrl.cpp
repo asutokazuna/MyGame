@@ -22,6 +22,10 @@ HRESULT EnemyCtrl::Init()
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void EnemyCtrl::Update()
 {
 	//m_transform->position += m_transform->GetForward();
@@ -32,8 +36,29 @@ void EnemyCtrl::Update()
 	if (time >= 60)
 	{
 		time = 0;
-		m_Weapon->GetComponent<WeaponCtrl>()->Shot();
+		
 	}
+}
+
+void EnemyCtrl::Move(Vector3 target)
+{
+}
+
+void EnemyCtrl::GotoPlayerTower()
+{
+}
+
+void EnemyCtrl::GotoNoneTower()
+{
+}
+
+void EnemyCtrl::GotoCore()
+{
+}
+
+void EnemyCtrl::Attack()
+{
+	m_Weapon->GetComponent<WeaponCtrl>()->Shot();
 }
 
 // EOF

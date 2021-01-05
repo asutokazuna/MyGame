@@ -9,6 +9,7 @@
 #include "EnemyCtrl.h"
 #include "Weapon.h"
 #include "collision.h"
+#include "EnemyState.h"
 
 /**
  * @brief 初期化処理
@@ -21,6 +22,7 @@ void Enemy::Awake()
 
 	AddComponent<Object3D>()->SetModel(MODEL_ENEMY);
 	AddComponent<EnemyCtrl>();
+	AddComponent<EnemyStateMachine>();
 
 	m_Weapon = new Weapon(20);
 	m_Weapon->SetTag(OBJ_TAG_ENEMYMISSILE);

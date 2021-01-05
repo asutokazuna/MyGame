@@ -100,15 +100,15 @@ HRESULT PlayerShotDir::Init()
 	return E_NOTIMPL;
 }
 
-static 
-XMFLOAT4 g_pos;
 /**
  * @brief 更新処理
  * @return　なし
  */
 void PlayerShotDir::LateUpdate()
 {
-	std::list< GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+	std::list<GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
+	objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
+	XMFLOAT4 g_pos;
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
 	XMFLOAT4X4 proj;
@@ -119,22 +119,17 @@ void PlayerShotDir::LateUpdate()
 	viewport._22 = -SCREEN_HEIGHT / 2;
 	viewport._41 = SCREEN_WIDTH / 2;
 	viewport._42 = SCREEN_HEIGHT / 2;
-	XMMATRIX mtx;
 	XMVECTOR vec;
 	m_target = nullptr;
 	for (auto o : objlist)
 	{
 		world = MyMath::StoreXMFloat4x4(o->GetTransform());
-
-		mtx = XMMatrixMultiply( XMLoadFloat4x4(&world), XMLoadFloat4x4(&view));
-		mtx*= XMLoadFloat4x4(&proj);
-		mtx *= XMLoadFloat4x4(&viewport);
-
 		vec = XMVector3Project(XMVectorSet(world._41, world._42, world._43,1), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, XMLoadFloat4x4(&proj), XMLoadFloat4x4(&view), XMMatrixIdentity());
 
-		XMStoreFloat4x4(&world, mtx);
 		XMStoreFloat4(&g_pos, vec);
 		g_pos.y = SCREEN_HEIGHT  -g_pos.y;
+
+		// 範囲内チェック
 		if (IsHit(g_pos, Vector3())) {
 			m_target = o;
 			m_target2DPos = Vector3(g_pos.x, g_pos.y, g_pos.z);
@@ -152,9 +147,9 @@ void PlayerShotDir::Draw()
 {
 #ifdef _DEBUG
 	if (ImGui::TreeNode("DirPos")) {
-		ImGui::SliderFloat("g_pos x", &g_pos.x, -1000.0f, 500.0f);
-		ImGui::SliderFloat("g_pos y", &g_pos.y, -1000.0f, 500.0f);
-		ImGui::SliderFloat("g_pos z", &g_pos.z, -1000.0f, 500.0f);
+		ImGui::SliderFloat("g_pos x", &m_target2DPos.x, -1000.0f, 500.0f);
+		ImGui::SliderFloat("g_pos y", &m_target2DPos.y, -1000.0f, 500.0f);
+		ImGui::SliderFloat("g_pos z", &m_target2DPos.z, -1000.0f, 500.0f);
 		ImGui::TreePop();
 	}
 #endif

@@ -26,6 +26,11 @@ public:
 	 */
 	HRESULT Init();
 	void Update();
+	void Move(Vector3 target);
+	void GotoPlayerTower();
+	void GotoNoneTower();
+	void GotoCore();
+	void Attack();
 };
 
 // EOF

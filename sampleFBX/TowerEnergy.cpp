@@ -86,14 +86,14 @@ float TowerEnergy::GetEnergyPercent()
  */
 void TowerEnergy::OnCollisionEnter(GameObject* othor)
 {
-	if (othor->CompareTag(OBJ_TAG_PLAYERMISSILE)) {
+	if (othor->CompareTag(OBJ_TAG_PLAYER)) {
 		AddEnergy(1);
-		othor->SetActive(false);
+		//othor->SetActive(false);
 		//othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
-	if (othor->CompareTag(OBJ_TAG_ENEMYMISSILE)) {
+	if (othor->CompareTag(OBJ_TAG_ENEMY)) {
 		AddEnergy(-1);
-		othor->SetActive(false);
+		//othor->SetActive(false);
 		//othor->GetComponent<MissileMove>()->m_nLife = 0;
 	}
 }

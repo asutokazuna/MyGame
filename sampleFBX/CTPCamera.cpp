@@ -27,7 +27,7 @@ void CTPCamera::Awake()
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fNearZ = 10.0f;
 	m_fFarZ = 10000.0f;
-
+	m_vUp = g_vUp;
 	transform->position = g_vEye;
 	UpdateMatrix();
 }
@@ -63,14 +63,19 @@ void CTPCamera::LateUpdate()
 	mtrs.localPosition = Vector3(g_vEye.x, g_vEye.y, g_vEye.z);
 	//m_vLook = m_transform->position + g_vLook;
 
+	transform->quaternion = mtrs.quaternion;
+
 	mmtxWorld =
 		MyMath::StoreXMFloat4x4(mtrs);
 	mtrs.localPosition = Vector3(g_vLook.x, g_vLook.y, g_vLook.z);
-	XMFLOAT4X4 mtxWorld =
-		MyMath::StoreXMFloat4x4(mtrs);
+	XMFLOAT4X4 mtxWorld = MyMath::StoreXMFloat4x4(mtrs);
 
 	Vector3 pos = Vector3(mmtxWorld._41, mmtxWorld._42, mmtxWorld._43);
 	Vector3 look = Vector3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
+	mtrs.localPosition = Vector3(g_vUp.x, g_vUp.y, g_vUp.z);
+	mtxWorld = MyMath::StoreXMFloat4x4(mtrs);
+	m_vUp = MyMath::PosxQuaternion(g_vUp, transform->quaternion);
+	//m_vUp = Vector3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
 
 //	transform->position = pos;
 //	m_vLook = look;
@@ -109,6 +114,9 @@ void CTPCamera::Draw()
 		ImGui::SliderFloat("Look x", &m_vLook.x, -1000.0f, 500.0f);
 		ImGui::SliderFloat("Look y", &m_vLook.y, -1000.0f, 500.0f);
 		ImGui::SliderFloat("Look z", &m_vLook.z, -1000.0f, 500.0f);
+		ImGui::SliderFloat("UP x", &m_vUp.x, -1.0f, 1.0f);
+		ImGui::SliderFloat("UP y", &m_vUp.y, -1.0f, 1.0f);
+		ImGui::SliderFloat("UP z", &m_vUp.z, -1.0f, 1.0f);
 		//Vector3 te2 = mtrs.GetForward();
 		//ImGui::SliderFloat("transfor x", &te2.x, -1.0f, 1.0f);
 		//ImGui::SliderFloat("transfor y", &te2.y, -1.0f, 1.0f);

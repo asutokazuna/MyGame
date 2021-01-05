@@ -21,7 +21,7 @@ private:
 	std::list<Missile*> m_BulletList;	//!< ミサイルリスト
 	Transform* m_ParentTrans;			//!< 親の座標
 	int m_BulletCount;
-	int m_DelayTime;
+	int m_ReloadTime;
 
 public:
 

@@ -77,15 +77,13 @@ void CCamera::UpdateMatrix()
 	XMFLOAT3 pos;
 	XMFLOAT3 look;
 	XMFLOAT3 up;
-
-	transform->quaternion = MyMath::LookAt(transform->position, m_vLook);
-
+	
 	Vector3 cameraPos = transform->position;
 	Vector3 cameraUP = transform->GetUp();
 
 	pos = XMFLOAT3(cameraPos.x, cameraPos.y, cameraPos.z);
 	look = XMFLOAT3(m_vLook.x, m_vLook.y, m_vLook.z);
-	up = XMFLOAT3(cameraUP.x, cameraUP.y, cameraUP.z);
+	up = XMFLOAT3(m_vUp.x, m_vUp.y, m_vUp.z);
 
 	// ビュー変換更新
 	XMStoreFloat4x4(&m_View,

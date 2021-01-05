@@ -18,18 +18,18 @@ HRESULT WeaponCtrl::Init()
 	m_ParentTrans = &m_Parent->GetTransform();
 	m_BulletCount = m_BulletList.size();
 
-	m_DelayTime = 60;
+	m_ReloadTime = 60;
 	return E_NOTIMPL;
 }
 
 void WeaponCtrl::Update()
 {
 	if (m_BulletCount <= 0) {
-		m_DelayTime--;
+		m_ReloadTime--;
 	}
-	if (m_DelayTime < 0) {
+	if (m_ReloadTime < 0) {
 		m_BulletCount = m_BulletList.size();
-		m_DelayTime = 60;
+		m_ReloadTime = 60;
 	}
 }
 

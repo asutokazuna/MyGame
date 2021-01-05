@@ -8,9 +8,9 @@
 
 #define PATH_MODELSKY		"data/model/sky.fbx"
 #define PATH_MODELPLAYER	"data/model/cube.fbx"
-#define PATH_MODELENEMY		"data/model/eagle.fbx"
+#define PATH_MODELENEMY		"data/model/cube.fbx"
 #define PATH_MISSILE		"data/model/bullet.fbx"
-#define PATH_TOWER			"data/model/cube.fbx"
+#define PATH_TOWER			"data/model/tower.fbx"
 #define PATH_CORE			"data/model/core.fbx"
 
 struct MODEL_TABLE
