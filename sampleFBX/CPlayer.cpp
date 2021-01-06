@@ -39,7 +39,7 @@ void CPlayer::Awake()
 	m_col->SetModelKind(MODEL_PLAYER);
 
 	// 武器
-	m_Weapon = new Weapon(20);
+	m_Weapon = new Weapon(60);
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	SetChild(m_Weapon);
 

@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "Component.h"
+#include "MyMath.h"
 
 // 前方宣言
 class Transform;

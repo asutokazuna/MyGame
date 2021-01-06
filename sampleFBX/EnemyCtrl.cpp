@@ -6,6 +6,10 @@
 #include "GameObject.h"
 #include "Weapon.h"
 #include "WeaponCtrl.h"
+#include "ObjectManager.h"
+#include <list>
+#include "collision.h"
+#include "TowerCtrl.h"
 
 /**
  * @brief 初期化処理
@@ -42,14 +46,39 @@ void EnemyCtrl::Update()
 
 void EnemyCtrl::Move(Vector3 target)
 {
+	Vector3 vec = target - m_transform->position;
+
+	MyMath::Normalize(vec);
+
+	m_transform->position += vec;
 }
 
 void EnemyCtrl::GotoPlayerTower()
 {
+	std::list<GameObject*> towerList = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+
+	for (auto obj : towerList)
+	{
+		if (obj->GetComponent<TowerCtrl>()->GetState() == TowerCtrl::TOWERSTATE::PLAYER)
+		{
+			Move(obj->GetTransform().position);
+			break;
+		}
+	}
 }
 
 void EnemyCtrl::GotoNoneTower()
 {
+	std::list<GameObject*> towerList = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+
+	for (auto obj : towerList)
+	{
+		if (obj->GetComponent<TowerCtrl>()->GetState() == TowerCtrl::TOWERSTATE::NONE)
+		{
+			Move(obj->GetTransform().position);
+			break;
+		}
+	}
 }
 
 void EnemyCtrl::GotoCore()

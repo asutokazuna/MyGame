@@ -44,6 +44,10 @@ void TowerCtrl::Uninit()
 	delete material;
 }
 
+/** 
+ * @brief 更新処理
+ * @return なし
+ */
 void TowerCtrl::Update()
 {
 	float per = m_energy->GetEnergyPercent();
@@ -85,6 +89,10 @@ void TowerCtrl::Draw()
 #endif
 }
 
+/** 
+ * @brief 占拠状態の取得
+ * @return 1の時プレイヤー、-1で敵、それ以外で未占拠
+ */
 int TowerCtrl::GetState()
 {
 	return m_state;

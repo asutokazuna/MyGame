@@ -23,23 +23,37 @@ void PlayerCtrl::Awake()
 	m_Weapon = m_Parent->GetChild<Weapon>();
 }
 
+static Quaternion dir;
 /**
  * @brief 更新処理
  * @return なし
  */
 void PlayerCtrl::Update()
 {
+	dir = m_Parent->GetTransform().quaternion;
+	GameObject* target = m_Parent->GetComponent<PlayerShotDir>()->GetTarget();
 
+	if (target != nullptr) {
+		Vector3 targetdir = target->GetTransform().position - m_Parent->GetTransform().position;
+		dir = MyMath::LookAt(targetdir);
+	}
+
+}
+void PlayerCtrl::Draw()
+{
+#ifdef _DEBUG
+	if (ImGui::TreeNode("shotDir")) {
+		ImGui::SliderFloat("dir x", &dir.x, -1.0f, 1.0f);
+		ImGui::SliderFloat("dir y", &dir.y, -1.0f, 1.0f);
+		ImGui::SliderFloat("dir z", &dir.z, -1.0f, 1.0f);
+		ImGui::TreePop();
+	}
+#endif
 }
 
 void PlayerCtrl::Attak()
 {
-	Quaternion dir = m_Parent->GetTransform().quaternion;
-	GameObject* target = m_Parent->GetComponent<PlayerShotDir>()->GetTarget();
 
-	if (target != nullptr) {
-		dir = MyMath::LookAt(m_Parent->GetTransform().position, target->GetTransform().position);
-	}
 
 	m_Weapon->GetComponent<WeaponCtrl>()->Shot(dir);	
 }

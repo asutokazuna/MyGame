@@ -13,12 +13,16 @@
   */
 Quaternion MakeQuaternion(Vector3 axis, float radian);
 
-
+/**
+ * @brief トランスフォームをDirectXの4x4行列へ変換
+ * @param[in] transform 変換したいトランスフォーム
+ * @return 変換した4x4行列
+ */
 DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 {
 	DirectX::XMFLOAT4X4 mtx = XMFLOAT4X4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
-	if (&transform == nullptr) {// 参照渡しだから何とか出来るはず
+	if (&transform == nullptr) {// 参照渡しだから本来は何とか出来るはず
 		return mtx;
 	}
 
@@ -109,7 +113,6 @@ Quaternion MakeQuaternion(Vector3 axis, float radian)
 	// 方向ベクトルへ（単位ベクトル：長さは1）
 	normal = 1.0f / sqrtf(normal);
 	axis = axis * normal;
-
 
 	halfSin = sinf(radian * 0.5f);
 	halfCos = cosf(radian * 0.5f);
@@ -233,15 +236,86 @@ float MyMath::AngleToRadian(const float& angle)
 }
 
 /**
+ * @brief 行列をクォータニオンに変換
+ * @param[in] matrix 変換したい行列
+ * @return 変換したクォータニオン
+ */
+Quaternion MyMath::MatrixToQuaternion(float4x4 & matrix)
+{
+	Quaternion result = Quaternion();
+	float elem[4];
+	elem[0] =  matrix._11 - matrix._22 - matrix._33 + 1.0f;
+	elem[1] = -matrix._11 + matrix._22 - matrix._33 + 1.0f;
+	elem[2] = -matrix._11 - matrix._22 + matrix._33 + 1.0f;
+	elem[3] =  matrix._11 + matrix._22 + matrix._33 + 1.0f;
+
+	int biggestIdx = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if (elem[i] > elem[biggestIdx])
+		{
+			biggestIdx = i;
+		}
+	}
+
+	if (elem[biggestIdx] < 0)
+	{
+		return result;
+	}
+
+	float q[4];
+	float v = sqrtf(elem[biggestIdx]) * 0.5f;
+	q[biggestIdx] = v;
+	float mult = 0.25f / v;
+
+	switch (biggestIdx)
+	{
+	case 0: // x
+		q[1] = (matrix._12 + matrix._21) * mult;
+		q[2] = (matrix._31 + matrix._13) * mult;
+		q[3] = (matrix._32 - matrix._23 ) * mult;
+		break;
+	case 1: // y
+		q[0] = (matrix._12 + matrix._21) * mult;
+		q[2] = (matrix._23 + matrix._32) * mult;
+		q[3] = (matrix._13 - matrix._31) * mult;
+		break;
+	case 2: // z
+		q[0] = (matrix._31 + matrix._13) * mult;
+		q[1] = (matrix._23 + matrix._32) * mult;
+		q[3] = (matrix._21 - matrix._12) * mult;
+		break;
+	case 3: // w
+		q[0] = (matrix._32 - matrix._23) * mult;
+		q[1] = (matrix._13 - matrix._31) * mult;
+		q[2] = (matrix._21 - matrix._12) * mult;
+		break;
+	}
+
+	result.x = q[0];
+	result.y = q[1];
+	result.z = q[2];
+	result.w = q[3];
+
+	return result;
+}
+
+/**
  * @brief 対象方向へ向くクォータニオンを求める
  * @return 対象方向への回転クォータニオン
  */
 Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos, Vector3 axis)
 {
 	Quaternion result;
+	Quaternion temp;
 	Vector3 target = targetPos - myPos;
 	Vector3 forward = Vector3(0, 0, 1);
 	Vector3 up = Vector3(0, 1, 0);
+	Vector3 right = Vector3(1, 0, 0);
+	Vector3 newUp;
+	Vector3 newRight;
+	Vector3 newForward;
+	Vector3 temptarget;
 	float dot = 0;
 	float radian = 0;
 
@@ -249,10 +323,35 @@ Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos, Vector
 	dot = Dot(forward, target);
 	radian = acosf(dot);
 
-	axis = Cross(forward, target);
-	result = MakeQuaternion(axis, radian);
+	newUp = Cross(forward, target);
+	result = MakeQuaternion(newUp, radian);
 
 	return result;
+}
+
+/**
+ * @brief 対象方向へ向くクォータニオンを求める
+ * @param[in] 向かせたい方向ベクトル
+ * @return 対象方向への回転クォータニオン
+ * @details 上方向を(0,1,0)で固定しているので捻じれずに対象方向へ向くことができる
+ */
+Quaternion MyMath::LookAt(const Vector3 & dir)
+{
+	Vector3 z = dir;
+	MyMath::Normalize(z);
+	Vector3 x = Cross(Vector3(0,1,0), z);
+	MyMath::Normalize(x);
+	Vector3 y = Cross(z, x);
+	MyMath::Normalize(y);
+
+	float4x4 m = float4x4::Identity();
+	m._11 = x.x; m._12 = y.x; m._13 = z.x;
+	m._21 = x.y; m._22 = y.y; m._23 = z.y;
+	m._31 = x.z; m._32 = y.z; m._33 = z.z;
+
+	Quaternion rot = MatrixToQuaternion(m);
+
+	return rot;
 }
 
 /**
@@ -307,6 +406,11 @@ float MyMath::Lerp(const float& start,const float& end,const float& t)
 	return start + (end - start) * t;
 }
 
+/**
+ * @brief 絶対値を求める
+ * @param[in] value 変換したい値
+ * @return 入力値の絶対値
+ */
 Vector3 MyMath::Abs(const Vector3& value)
 {
 	Vector3	result = value;
@@ -314,6 +418,22 @@ Vector3 MyMath::Abs(const Vector3& value)
 	result.x = fabsf(result.x);
 	result.y = fabsf(result.y);
 	result.z = fabsf(result.z);
+
+	return result;
+}
+
+/**
+ * @brief 距離を求める
+ * @param[in] pos 自分の座標
+ * @param[in] othorPos 相手の座標
+ * @return 長さ
+ */
+float MyMath::Distance(const Vector3& pos, const Vector3& othorPos)
+{
+	Vector3 vec = othorPos - pos;
+	float result = 0;
+
+	result = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 
 	return result;
 }

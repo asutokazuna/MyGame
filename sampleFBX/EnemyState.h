@@ -9,9 +9,13 @@
 struct IDOL;
 struct MOVE;
 
+/**
+ * @brief 敵の状態
+ */
 enum EnemyState {
 	E_ENEMY_IDOL,
 	E_ENEMY_MOVE,
+	E_ENEMY_FIGHT,
 };
 
 /**
@@ -32,6 +36,13 @@ public:
 	 *@return なし
 	 */
 	void SetState();
+
+	/** 
+	 * @brief ステートの遷移先の確認
+	 * @return なし
+	 * @details 現在の状態を確認しステートの遷移を行う
+	 */
+	void Check();
 };
 
 // EOF

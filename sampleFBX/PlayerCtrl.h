@@ -33,6 +33,7 @@ public:
 	 * @return なし
 	 */
 	void Update();
+	void Draw();
 	void Attak();
 };
 
