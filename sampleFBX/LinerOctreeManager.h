@@ -117,6 +117,7 @@ public:
 		m_unitSize.x = m_unitSize.y = m_unitSize.z = 1.0f;
 		m_cellNum = 0;
 		m_level = 0;
+		m_ppCellList = NULL;
 	}
 
 	/**
@@ -150,14 +151,18 @@ public:
 
 		int i;
 		m_pow[0] = 1;
-		for (i = 0; i < OCTREE_MAX_LEVEL + 1; i++) {
+		for (i = 1; i < OCTREE_MAX_LEVEL + 1; i++) {
 			m_pow[i] = m_pow[i - 1] * 8;
 		}
 
 		// Levelの配列作成(線形)
 		m_cellNum = (m_pow[level + 1] - 1) / 7;
 		m_ppCellList = new OctreeCell<T>*[m_cellNum];
-		ZeroMemory(m_ppCellList, sizeof(OctreeCell<T>*) * m_cellNum);
+		for (i = 0; i < m_cellNum; i++)
+		{
+			m_ppCellList[i] = NULL;
+		}
+		//ZeroMemory(m_ppCellList, sizeof(OctreeCell<T>*) * m_cellNum);
 
 		// 領域登録
 		m_minSize = min;
@@ -176,7 +181,7 @@ public:
 	 * @param[in] max オブジェクトの最大位置
 	 * @param[in] obj 登録するオブジェクト
 	 */
-	bool Regist(Vector3 min, Vector3 max, TreeRegisterObject<T> obj)
+	bool Regist(Vector3 min, Vector3 max, TreeRegisterObject<T>* obj)
 	{
 		// 登録モートン番号を算出
 		DWORD elem = GetMortonNumber(min, max);
@@ -185,7 +190,7 @@ public:
 			if (m_ppCellList[elem] == NULL) {
 				CreateNewCell(elem);
 			}
-			return m_ppCellList[elem]->push(obj);
+			return m_ppCellList[elem]->Push(obj);
 		}
 		return false;
 	}
@@ -366,11 +371,13 @@ class OctreeCell
 protected:
 	TreeRegisterObject<T> *m_objList;	//!< オブジェクトのリスト
 
+public:
 	/**
 	 * @brief コンストラクタ
 	 */
 	OctreeCell()
 	{
+		m_objList = NULL;
 	}
 
 	/**

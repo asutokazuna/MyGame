@@ -16,9 +16,6 @@ static bool m_isViewCol = true;
  */
 Collision::Collision()
 {
-	static int num = 0;
-	id = num;
-	num++;
 	m_isActive = true;
 	m_tag = 0;
 	m_offsetPos = Vector3();
@@ -70,7 +67,6 @@ void Collision::Uninit()
 #ifdef _DEBUG
 	m_box.Uninit();
 #endif
-	CollisionManager::GetInstance().Delete(this);
 }
 
 /**
@@ -213,12 +209,6 @@ bool Collision::CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vect
 		Az - Ad <= Bz + Bd &&
 		Bz - Bd <= Az + Ad;
 	return isHit;
-}
-
-Vector3 Collision::GetSize(const Transform& trans)
-{
-	Vector3 size = trans.m_Parent->GetComponent<Collision>()->m_offsetSize;
-	return size;
 }
 
 // EOF

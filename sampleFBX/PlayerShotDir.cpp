@@ -72,7 +72,7 @@ HRESULT PlayerShotDir::Init()
 {
 	m_Lockon = m_Parent->GetChild<Lockon>();
 	m_Lockon->SetActive(false);
-	std::list< GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
 	XMFLOAT4X4 proj;
@@ -106,8 +106,8 @@ HRESULT PlayerShotDir::Init()
  */
 void PlayerShotDir::LateUpdate()
 {
-	std::list<GameObject*> objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
-	objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
+	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
+	//objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
 	XMFLOAT4 g_pos;
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;

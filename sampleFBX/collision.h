@@ -44,7 +44,6 @@ protected:
 	Transform* m_transform;	//!< 親のトランスフォーム
 	Vector3 m_offsetPos;		//!< 親からのオフセット
 	Vector3 m_offsetSize;		//!< モデルの半分の大きさ
-	int id;			//!< ユニークID
 	int m_tag;		//!< 識別タグ
 
 public:
@@ -123,14 +122,6 @@ public:
 		return m_offsetSize;
 	}
 
-	void SetID(int num) {
-		id = num;
-	}
-
-	int GetID() {
-		return id;
-	}
-
 public :
 
 	/**
@@ -138,9 +129,6 @@ public :
 	 * @return 当たっていればtrue
 	 */
 	static bool CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize);
-
-
-	static Vector3 GetSize(const Transform& trans);
 };
 
 // EOF

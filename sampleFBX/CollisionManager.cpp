@@ -5,9 +5,7 @@
 #include "CollisionManager.h"
 #include "GameObject.h"
 #include "Object.h"
-
-std::unordered_map<int, Collision*> CollisionManager::m_List;	//!< コライダーリスト
-LinerOctreeManager<Collision> CollisionManager::m_CollisionTree;
+#include <vector>
 
  /**
   * @brief OBBの当たり判定
@@ -74,58 +72,101 @@ bool OBB(Vector3 myPos, Quaternion myVector, Vector3 myScale, Vector3 othorPos, 
 
 void CollisionManager::Init()
 {
-	const int LEVEL = 4;
+	const int LEVEL = 5;
 	const float length = 5000.0f;
 	Vector3 MIN = Vector3(-length,-length,-length);
 	Vector3 MAX = Vector3(+length,+length,+length);
 	m_CollisionTree.Init(LEVEL,MIN,MAX);
 }
 
+void CollisionManager::Uninit()
+{
+	for (auto &list : m_registList)
+	{
+		list->Remove();
+	}
+}
+
 void CollisionManager::Check()
 {
-	for (std::unordered_map<int, Collision*>::iterator col = m_List.begin(), colend = m_List.end(); col != colend; ++col) {
-		for (std::unordered_map<int, Collision*>::iterator othor = m_List.begin(), e = colend; othor != e; ++othor) {
+	DWORD num = 0;
+	std::vector<Collision*> colVect;
+	for (auto &list : m_registList)
+	{
+		Collision *col = list.get()->m_object;
+		list.get()->Remove();
+		if (col->GetActive() == false || col->m_Parent->GetActive() == false) {
+			continue;
+		}
+		Vector3 pos, size, min, max;
+		pos = col->m_Parent->GetTransform().position;
+		size = col->m_Parent->GetTransform().scale + col->GetoffsetSize();
+		min = pos - size;
+		max = pos + size;
 
-			if (othor == col) {
-				continue;
-			}
-			if (col->second->GetActive() == false || othor->second->GetActive() == false ||
-				col->second->m_Parent->GetActive() == false || othor->second->m_Parent->GetActive() == false) {
-				continue;
-			}
+		m_CollisionTree.Regist(min, max, list.get());
+	}
 
-			Vector3 size = col->second->m_Parent->GetTransform().scale * col->second->GetoffsetSize();
-			Vector3 othorsize = othor->second->m_Parent->GetTransform().scale *  othor->second->GetoffsetSize();
+	num = m_CollisionTree.GetAllCollisionList(colVect);
 
-			/*		if (CheckBox(col->second->m_transform->position, size, othor->second->m_transform->position, othorsize)) {
-						col->second->m_Parent->OnCollisionEnter((othor->second->m_Parent));
-					}*//*
-					Transform mytrans = *(col->second->m_transform);
-					Transform othortrans = *(othor->second->m_transform);
-					mytrans.scale = size;
-					othortrans.scale = othorsize;*/
-					//if (CheckOBB(mytrans, othortrans)) {
-			if (CheckOBB(col->second->m_Parent->GetTransform(), othor->second->m_Parent->GetTransform())) {
-				col->second->m_Parent->OnCollisionEnter((othor->second->m_Parent));
-			}
+	DWORD i;
+	num /= 2;
+	for (i = 0; i < num; i++)
+	{
+		Collision* myCol = colVect[i * 2];
+		Collision* othorCol = colVect[i * 2 + 1];
+		GameObject* myObj = myCol->m_Parent;
+		GameObject* othorObj = othorCol->m_Parent;
+
+		if (myCol->GetActive() == false || othorCol->GetActive() == false || 
+			myObj->GetActive() == false || othorObj->GetActive() == false) {
+			continue;
+		}
+
+		if (CheckOBB(myObj->GetTransform(), othorObj->GetTransform(), myCol, othorCol))
+		{
+			myObj->OnCollisionEnter((othorObj));
+			othorObj->OnCollisionEnter((myObj));
 		}
 	}
 }
 
 void CollisionManager::Set(Collision* col)
 {
-	static int num = 0;
-	col->SetID(num);
-	m_List[num] = col;
-	num++;
+	std::unique_ptr<TreeRegisterObject<Collision>> obj = std::make_unique<TreeRegisterObject<Collision>>();
+	obj->m_object = col;
+
+	m_registList.push_back(((std::move(obj))));
+
+	Vector3 pos, size,min, max;
+	pos = col->m_Parent->GetTransform().position;
+	size = col->m_Parent->GetTransform().scale + col->GetoffsetSize();
+	min = pos - size;
+	max = pos + size;
+	
+	m_CollisionTree.Regist(min, max, obj.get());
 }
 
-void CollisionManager::Delete(Collision * col)
+bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othorObj, Collision* myCol, Collision* othorCol)
 {
-	m_List.erase(col->GetID());
+	bool isHit = false;
+
+	Vector3 myVec, othorVec;
+	Vector3 size = myObj.scale * myCol->GetoffsetSize();
+	Vector3 othorsize = othorObj.scale * othorCol->GetoffsetSize();
+
+
+	myVec.x = myObj.quaternion.x;
+	myVec.y = myObj.quaternion.y;
+	myVec.z = myObj.quaternion.z;
+	othorVec.x = othorObj.quaternion.x;
+	othorVec.y = othorObj.quaternion.y;
+	othorVec.z = othorObj.quaternion.z;
+
+	isHit = OBB(myObj.position, myObj.quaternion, size, othorObj.position, othorObj.quaternion, othorsize);
+
+	return isHit;
 }
-
-
 bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othorObj)
 {
 	bool isHit = false;
@@ -151,11 +192,6 @@ Vector3 CollisionManager::GetSize(const Transform & trans)
 {
 	Vector3 size = trans.m_Parent->GetComponent<Collision>()->GetoffsetSize();
 	return size;
-}
-
-void CollisionManager::Clear()
-{
-	m_List.clear();
 }
 
 // EOF

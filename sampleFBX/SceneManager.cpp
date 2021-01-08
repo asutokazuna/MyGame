@@ -77,7 +77,7 @@ void SceneManager::Uninit()
 	m_pSky->Uninit();
 	if(m_pCamera)
 	m_pCamera->Uninit();
-
+	CollisionManager::GetInstance().Uninit();
 	CSound::Fin();
 	Fade::Uninit();
 	ModelData::Uninit();
