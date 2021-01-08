@@ -106,6 +106,7 @@ void CTPCamera::LateUpdate()
 
 void CTPCamera::Draw()
 {
+#ifdef _DEBUG
 	if (ImGui::TreeNode("TPCamera")) {
 		Vector3 pos = transform->position;
 		ImGui::SliderFloat("pos x", &pos.x, -1000.0f, 500.0f);
@@ -136,6 +137,7 @@ void CTPCamera::Draw()
 		ImGui::SliderFloat("qut z", &transform->quaternion.z, -1.0f, 1.0f);
 		ImGui::TreePop();
 	}
+#endif
 }
 
 // EOF

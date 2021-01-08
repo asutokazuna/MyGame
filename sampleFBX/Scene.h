@@ -16,9 +16,6 @@ protected:
 	TCHAR		m_szDebug[1024];	// デバッグ用文字列
 	int			m_FPS;				// フレーム数カウント用
 
-	//-------- ゲーム用オブジェクト
-	std::list<Object*>	m_pObj;				// オブジェクト先頭
-
 public:
 	CScene();
 	virtual ~CScene();
@@ -29,11 +26,10 @@ public:
 	virtual void Update();
 	virtual void Draw();
 
-	void SetFPS(int nFPS) { m_FPS = nFPS; }
-
-	Object* GetObj() { return m_pObj.back(); }
-	void SetObj(Object* pObj) { m_pObj.push_back(pObj); }
-
+	void SetFPS(int nFPS) { 
+		m_FPS = nFPS; 
+	}
+	
 	static CScene* Get() { return m_pScene; }
 	static void Set(CScene* pScene);
 };

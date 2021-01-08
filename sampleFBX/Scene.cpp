@@ -18,9 +18,6 @@ CScene::~CScene()
 
 void CScene::Awake()
 {
-	for (auto& obj : m_pObj) {
-		obj->Awake();
-	}
 }
 
 // 初期化
@@ -28,9 +25,6 @@ HRESULT CScene::Init()
 {
 	HRESULT hr = S_OK;
 
-	for (auto& obj : m_pObj) {
-		obj->Init();
-	}
 
 	return hr;
 }
@@ -38,22 +32,13 @@ HRESULT CScene::Init()
 // 終了処理
 void CScene::Uninit()
 {
-	// 全オブジェクト終了
-	for (auto& obj : m_pObj) {
-		obj->Uninit();
-	}
+
 }
 
 // 更新
 void CScene::Update()
 {
-	// 全オブジェクト更新
-	for (auto& obj : m_pObj) {
-		obj->Update();
-	}
-	for (auto& obj : m_pObj) {
-		obj->LateUpdate();
-	}
+
 
 }
 
@@ -77,15 +62,11 @@ void CScene::Draw()
 	CGraphics::SetBlendState(BS_NONE);			// アルファ処理しない
 	CGraphics::SetZWrite(true);
 
-	for (auto& obj : m_pObj) {
-		obj->Draw();
-	}
+
 
 	CGraphics::SetZWrite(false);
 	CGraphics::SetBlendState(BS_ALPHABLEND);	// 半透明描画
-	for (auto& obj : m_pObj) {
-		obj->DrawAlpha();
-	}
+	
 }
 
 // シーン切替

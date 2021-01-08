@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include "MyMath.h"
 #include "Box.h"
+#include "LinerOctreeManager.h"
 
 /**
  * 当たり判定用オブジェクト識別タグ
@@ -35,9 +36,6 @@ class Transform;
  */
 class Collision :public Component
 {
-private:
-	static std::unordered_map<int, Collision*> m_List;	//!< コライダーリスト
-
 #ifdef _DEBUG
 	CBox m_box;	//!< 当たり判定のサイズデバッグ用
 #endif
@@ -58,7 +56,7 @@ public:
 	/**
 	 * @brief デストラクタ
 	 */
-	~Collision();
+	virtual ~Collision();
 
 	/**
 	 * @breif 初期化処理
@@ -121,12 +119,19 @@ public:
 	 */
 	int GetTag();
 
+	Vector3 GetoffsetSize() {
+		return m_offsetSize;
+	}
+
+	void SetID(int num) {
+		id = num;
+	}
+
+	int GetID() {
+		return id;
+	}
+
 public :
-	/**
-	 * @breif リストにある全てのオブジェクトが当たっているか判定する
-	 * @return なし
-	 */
-	static void Check();
 
 	/**
 	 * @breif バウンディングボックスでの当たり判定の比較
@@ -134,15 +139,8 @@ public :
 	 */
 	static bool CheckBox(Vector3 mypos, Vector3 halfsize, Vector3 othorPos, Vector3 othorhalsize);
 
-	static bool CheckOBB(const Transform& myObj, const Transform& othorObj);
 
 	static Vector3 GetSize(const Transform& trans);
-
-	/**
-	 * @breif 当たり判定のリストの初期化
-	 * @return なし
-	 */
-	static void Clear();
 };
 
 // EOF

@@ -103,9 +103,10 @@ bool CGameWindow::OnIdle(long lCount)
 	DWORD dwCurrentTime = ::timeGetTime();			// 現在のタイマ値を取得
 	if (dwCurrentTime - m_dwFPSLastTime >= 500) {	// 0.5 秒ごとに計測
 		// フレーム数を計算
-		//if (m_pScene) {
-		//	m_pScene->SetFPS(m_dwFrameCount * 1000 / (dwCurrentTime - m_dwFPSLastTime));
-		//}
+		if (m_pScene) {
+			m_pScene->SetFPS(m_dwFrameCount * 1000 / (dwCurrentTime - m_dwFPSLastTime));
+		}
+		SceneManager::GetInstance().SetFPS(m_dwFrameCount * 1000 / (dwCurrentTime - m_dwFPSLastTime));
 		m_dwFPSLastTime = dwCurrentTime;	// タイマ値を更新
 		m_dwFrameCount = 0;					// フレームカウンタをリセット
 	}

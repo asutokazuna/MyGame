@@ -75,6 +75,7 @@ void TitleCamera::Update()
 
 void TitleCamera::Draw()
 {
+#ifdef _DEBUG
 	if (ImGui::TreeNode("TitleCamera")) {
 		Vector3 te2 = transform->position;
 
@@ -90,6 +91,7 @@ void TitleCamera::Draw()
 		ImGui::SliderFloat("transLookUp z", &te.z, -1.0f, 1.0f);
 		ImGui::TreePop();
 	}
+#endif
 }
 
 // EOF

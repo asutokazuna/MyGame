@@ -36,6 +36,8 @@ private:
 	CCamera*	m_pCamera;			// アクティブなカメラ
 	CSky*	m_pSky;
 
+	int m_FPS;
+
 public:
 	/**
 	 * @brief コンストラクタ
@@ -84,6 +86,8 @@ public:
 	 * @return なし
 	 */
 	static void Change(ESCENE sceneID);
+
+	void SetFPS(int nFPS) { m_FPS = (nFPS); }
 };
 
 // EOF

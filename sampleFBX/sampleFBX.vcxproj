@@ -168,6 +168,7 @@
     <ClCompile Include="CFPCamera.cpp" />
     <ClCompile Include="ClothShaderInfo.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="CoreCollision.cpp" />
     <ClCompile Include="CoreEnemy.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="CFPCamera.h" />
     <ClInclude Include="ClothShaderInfo.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="CoreCollision.h" />
@@ -327,6 +329,7 @@
     <ClInclude Include="LifeGaugeCtrl.h" />
     <ClInclude Include="LifeGaugeShaderInfo.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LinerOctreeManager.h" />
     <ClInclude Include="Lockon.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Mesh.h" />

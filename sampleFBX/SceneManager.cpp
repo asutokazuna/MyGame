@@ -18,6 +18,7 @@
 #include "ObjectManager.h"
 #include "TextureData.h"
 #include "Sound.h"
+#include "CollisionManager.h"
 
 CScene* SceneManager::m_nowScene = nullptr;
 int SceneManager::m_SceneID = 0;
@@ -26,7 +27,7 @@ int SceneManager::m_NextSceneID = 0;
 /**
  * @brief コンストラクタ
  */
-SceneManager::SceneManager(): m_pCamera(nullptr),m_pSky(nullptr)
+SceneManager::SceneManager(): m_pCamera(nullptr),m_pSky(nullptr), m_FPS(0)
 {
 }
 
@@ -40,6 +41,7 @@ void SceneManager::Init()
 	ModelData::Init();
 	TextureData::Init();
 	CSound::Init();
+	CollisionManager::GetInstance().Init();
 
 	// 全オブジェクト初期化
 	m_pCamera = new CCamera();
@@ -108,7 +110,7 @@ void SceneManager::Update()
 	m_nowScene->Update();
 	//CCamera::Get()->Update();
 
-	Collision::Check();
+	CollisionManager::GetInstance().Check();
 }
 
 /**
@@ -117,6 +119,12 @@ void SceneManager::Update()
  */
 void SceneManager::Draw()
 {	
+#ifdef _DEBUG
+	//if (ImGui::TreeNode("FPS")) {
+		ImGui::Text("FPS%d", m_FPS);
+		//ImGui::TreePop();
+	//}
+#endif
 	m_pSky->Draw();
 	//CCamera::Get()->Draw();
 	m_nowScene->Draw();
