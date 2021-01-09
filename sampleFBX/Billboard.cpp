@@ -120,7 +120,7 @@ void Billboard::Draw()
 	XMStoreFloat4x4(&f4x4World, mtxWorld);
 	XMStoreFloat4x4(&f4x4Temp, mtxWorld);
 
-	XMFLOAT4X4 view, proj, world;
+	XMFLOAT4X4 view, proj;
 
 	view = CCamera::Get()->GetView();
 	proj = CCamera::Get()->GetProj();

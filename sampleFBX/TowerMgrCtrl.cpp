@@ -23,7 +23,7 @@ void TowerMgrCtrl::Awake()
 bool TowerMgrCtrl::IsOccupation(int kind)
 {
 	int cnt = 0;
-	int haltCnt = (float)MAX_TOWER / 2 + 0.5;
+	int haltCnt = (int)((float)MAX_TOWER / 2 + 0.5f);
 
 	if (TowerCtrl::TOWERSTATE::NONE == kind) {
 		return true;

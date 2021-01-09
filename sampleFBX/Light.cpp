@@ -21,7 +21,7 @@ CFbxLight* Light::Get()
 {
 	if (m_light == nullptr) {
 		m_light = new CFbxLight();
-		XMFLOAT3 vecDir;
+		//XMFLOAT3 vecDir;
 		m_light->m_diffuse = LIGHT0_DIFFUSE;
 		m_light->m_ambient = LIGHT0_AMBIENT;
 		m_light->m_specular = LIGHT0_SPECULAR;

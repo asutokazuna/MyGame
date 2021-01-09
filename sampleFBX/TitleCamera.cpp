@@ -1,7 +1,7 @@
 ﻿#include "TitleCamera.h"
 // 定数
 namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル変数になる
-	const Vector3 g_vEye(0.0f, 0.0f, 0.0f);
+	const Vector3 g_vEye(0.0f, 0.0f, -1.0f);
 	const Vector3 g_vLook(0.0f, 1.0f, 10.0f);
 }
 
@@ -44,6 +44,7 @@ void TitleCamera::Awake()
 
 	this->transform->position = g_vEye;
 	m_vLook = g_vLook;
+	m_vUp = Vector3(0, 1, 0);
 
 	Transform* trs = this->transform;
 	XMFLOAT4X4 mtxWorld = MyMath::StoreXMFloat4x4(*trs);

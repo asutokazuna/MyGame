@@ -85,6 +85,7 @@ void CollisionManager::Uninit()
 	{
 		list->Remove();
 	}
+	m_registList.clear();
 }
 
 void CollisionManager::Check()
@@ -95,6 +96,9 @@ void CollisionManager::Check()
 	{
 		Collision *col = list.get()->m_object;
 		list.get()->Remove();
+		if (col == NULL) {
+			continue;
+		}
 		if (col->GetActive() == false || col->m_Parent->GetActive() == false) {
 			continue;
 		}

@@ -8,6 +8,7 @@
 class CoreEnemy :public Core
 {
 public:
+	void Awake();
 	HRESULT Init();
 };
 

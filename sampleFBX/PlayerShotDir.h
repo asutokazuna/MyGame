@@ -5,6 +5,7 @@
 #pragma once
 #include "Component.h"
 #include "MyMath.h"
+#include <list>
 
 class Transform;
 
@@ -14,6 +15,7 @@ class Transform;
 class PlayerShotDir:public Component
 {
 private:
+	std::list<GameObject*> m_objlist;
 	GameObject* m_target;		//!< 当たっている敵
 	Vector3 m_target2DPos;
 	GameObject* m_Lockon;

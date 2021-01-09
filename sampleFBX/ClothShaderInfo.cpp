@@ -90,7 +90,7 @@ void ClothShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
 	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 
-	XMFLOAT4X4 f4x4World, f4x4TexWorld;
+	XMFLOAT4X4 f4x4TexWorld;
 
 	f4x4TexWorld = m_TexWorld;
 	SHADER_GLOBAL cb;

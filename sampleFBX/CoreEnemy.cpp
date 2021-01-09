@@ -8,14 +8,21 @@
 
 #define CORE_POS_Z (600)
 
+void CoreEnemy::Awake()
+{
+	Core::Awake();
+	tag = OBJ_TAG_CORE_ENEMY;
+	transform->position.z = CORE_POS_Z;
+}
+
 HRESULT CoreEnemy::Init()
 {
 	Core::Init();
-	tag = OBJ_TAG_CORE_ENEMY;
 
-	transform->position.z = CORE_POS_Z;
 	GetComponent<CoreCollision>()->SetOpponentBullet(OBJ_TAG_PLAYERMISSILE);
 	GetComponent<CoreCollision>()->SetOpponentTower(TowerCtrl::TOWERSTATE::PLAYER);
 
 	return E_NOTIMPL;
 }
+
+// EOF

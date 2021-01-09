@@ -53,7 +53,7 @@ void SceneManager::Init()
 	m_pSky->Init();
 	Fade::Init();
 
-	m_nowScene = new SceneGame();
+	m_nowScene = new SceneTitle();
 	m_nowScene->Awake();
 	//ObjectManager::GetInstance().Awake();
 
@@ -157,6 +157,7 @@ void SceneManager::Change()
 	m_SceneID = m_NextSceneID;
 
 	ObjectManager::GetInstance().Uninit();
+	CollisionManager::GetInstance().Uninit();
 	m_nowScene->Uninit();
 	delete m_nowScene;
 	ObjectManager::Clear();

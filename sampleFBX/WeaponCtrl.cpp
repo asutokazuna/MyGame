@@ -16,7 +16,7 @@ HRESULT WeaponCtrl::Init()
 {
 	m_BulletList = m_Parent->GetChildren<Missile>();
 	m_ParentTrans = &m_Parent->GetTransform();
-	m_BulletCount = m_BulletList.size();
+	m_BulletCount = (int)m_BulletList.size();
 
 	m_ReloadTime = 60;
 	return E_NOTIMPL;
@@ -28,7 +28,7 @@ void WeaponCtrl::Update()
 		m_ReloadTime--;
 	}
 	if (m_ReloadTime < 0) {
-		m_BulletCount = m_BulletList.size();
+		m_BulletCount = (int)m_BulletList.size();
 		m_ReloadTime = 60;
 	}
 }

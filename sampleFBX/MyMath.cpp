@@ -307,15 +307,15 @@ Quaternion MyMath::MatrixToQuaternion(float4x4 & matrix)
 Quaternion MyMath::LookAt(const Vector3& myPos, const Vector3& targetPos, Vector3 axis)
 {
 	Quaternion result;
-	Quaternion temp;
+//	Quaternion temp;
 	Vector3 target = targetPos - myPos;
 	Vector3 forward = Vector3(0, 0, 1);
 	Vector3 up = Vector3(0, 1, 0);
 	Vector3 right = Vector3(1, 0, 0);
 	Vector3 newUp;
-	Vector3 newRight;
-	Vector3 newForward;
-	Vector3 temptarget;
+	//Vector3 newRight;
+//	Vector3 newForward;
+//	Vector3 temptarget;
 	float dot = 0;
 	float radian = 0;
 

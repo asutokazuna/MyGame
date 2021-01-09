@@ -73,6 +73,8 @@ HRESULT PlayerShotDir::Init()
 	m_Lockon = m_Parent->GetChild<Lockon>();
 	m_Lockon->SetActive(false);
 	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+	m_objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
+	m_objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
 	XMFLOAT4X4 proj;
@@ -85,7 +87,7 @@ HRESULT PlayerShotDir::Init()
 	viewport._42 = SCREEN_HEIGHT / 2;
 	XMMATRIX mtx;
 
-	for (auto o : objlist)
+	for (auto o : m_objlist)
 	{
 		world = MyMath::StoreXMFloat4x4(o->GetTransform());
 
@@ -106,8 +108,7 @@ HRESULT PlayerShotDir::Init()
  */
 void PlayerShotDir::LateUpdate()
 {
-	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
-	//objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
+
 	XMFLOAT4 g_pos;
 	XMFLOAT4X4 world;
 	XMFLOAT4X4 view;
@@ -121,7 +122,7 @@ void PlayerShotDir::LateUpdate()
 	viewport._42 = SCREEN_HEIGHT / 2;
 	XMVECTOR vec;
 	m_target = nullptr;
-	for (auto o : objlist)
+	for (auto o : m_objlist)
 	{
 		world = MyMath::StoreXMFloat4x4(o->GetTransform());
 		vec = XMVector3Project(XMVectorSet(world._41, world._42, world._43,1), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, XMLoadFloat4x4(&proj), XMLoadFloat4x4(&view), XMMatrixIdentity());
