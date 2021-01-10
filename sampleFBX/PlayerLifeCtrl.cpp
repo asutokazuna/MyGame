@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @class PlayerLifeCtrl
- * @brief ƒvƒŒƒCƒ„[‚ÌHP‚ÌŠÇ—
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã®ç®¡ç†
  */
 #include "PlayerLifeCtrl.h"
 #include "collision.h"
@@ -9,12 +9,15 @@
 #include "NumberList.h"
 #include "NumberListCtrl.h"
 #include "LifeGaugeShaderInfo.h"
+#include "CharacterSpawner.h"
+#include "CharacterSpawnCtrl.h"
+#include "ObjectManager.h"
 
 #define MAX_LIFE (10)
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void PlayerLifeCtrl::Awake()
 {
@@ -22,11 +25,12 @@ void PlayerLifeCtrl::Awake()
 }
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 HRESULT PlayerLifeCtrl::Init()
 {
+	m_Life = MAX_LIFE;
 	m_numberUI = m_Parent->GetChild<NumberList>("LifeUI");
 	m_numberUI->GetComponent<NumberListCtrl>()->SetWidth(30);
 	m_numberUI->GetComponent<NumberListCtrl>()->SetPos(Vector3(-SCREEN_CENTER_X + 120, -SCREEN_CENTER_Y + 50, 0));
@@ -39,8 +43,8 @@ HRESULT PlayerLifeCtrl::Init()
 }
 
 /**
- * @brief XVˆ—
- * @return ‚È‚µ
+ * @brief æ›´æ–°å‡¦ç†
+ * @return ãªã—
  */
 void PlayerLifeCtrl::Update()
 {
@@ -62,11 +66,17 @@ void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 		}
 		gameObj->SetActive(false);
 	}
+
+	if (m_Life <= 0)
+	{
+		ObjectManager::GetInstance().FindObject<GameObject>("CharacterSpawner")->GetComponent<CharacterSpawnCtrl>()->Set(m_Parent);
+		m_Parent->SetActive(false);
+	}
 }
 
 /**
- * @brief HP‚Ìæ“¾
- * @return Œ»İHP‚Ìæ“¾
+ * @brief HPã®å–å¾—
+ * @return ç¾åœ¨HPã®å–å¾—
  */
 unsigned int PlayerLifeCtrl::GetLife()
 {

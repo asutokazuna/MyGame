@@ -166,6 +166,8 @@
     <ClCompile Include="CameraStateMachine.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CFPCamera.cpp" />
+    <ClCompile Include="CharacterSpawnCtrl.cpp" />
+    <ClCompile Include="CharacterSpawner.cpp" />
     <ClCompile Include="ClothShaderInfo.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -281,6 +283,8 @@
     <ClInclude Include="CameraStateMachine.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CFPCamera.h" />
+    <ClInclude Include="CharacterSpawnCtrl.h" />
+    <ClInclude Include="CharacterSpawner.h" />
     <ClInclude Include="ClothShaderInfo.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="CollisionManager.h" />
