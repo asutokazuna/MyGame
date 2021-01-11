@@ -52,8 +52,13 @@ void PlayerLifeCtrl::Update()
 	m_gauge->GetComponent<LifeGaugeShaderInfo>()->SetFloat("Life", m_Life / (float)MAX_LIFE);
 }
 
+/**
+ * @brief 当たった時の処理
+ * @return なし
+ */
 void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 {
+	// 弾と当たった時
 	if (gameObj->CompareTag(OBJ_TAG_ENEMYMISSILE)) 
 	{
 		int power = gameObj->GetComponent<MissileCtrl>()->GetPower();
@@ -65,20 +70,23 @@ void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 			m_Life -= power;
 		}
 		gameObj->SetActive(false);
+
+		// 倒されたとき
+		if (m_Life <= 0)
+		{
+			ObjectManager::GetInstance().FindObject<GameObject>("CharacterSpawner")->GetComponent<CharacterSpawnCtrl>()->Set(m_Parent);
+			m_Parent->SetActive(false);
+		}
 	}
 
-	if (m_Life <= 0)
-	{
-		ObjectManager::GetInstance().FindObject<GameObject>("CharacterSpawner")->GetComponent<CharacterSpawnCtrl>()->Set(m_Parent);
-		m_Parent->SetActive(false);
-	}
+
 }
 
 /**
  * @brief HPの取得
  * @return 現在HPの取得
  */
-unsigned int PlayerLifeCtrl::GetLife()
+int PlayerLifeCtrl::GetLife()
 {
 	return m_Life;
 }

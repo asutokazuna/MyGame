@@ -20,6 +20,8 @@ Collision::Collision()
 	m_tag = 0;
 	m_offsetPos = Vector3();
 	m_offsetSize = Vector3(0.5f,0.5f,0.5f);
+
+	CollisionManager::GetInstance().Set(this);
 }
 
 /**
@@ -35,7 +37,6 @@ Collision::~Collision()
  */
 HRESULT Collision::Init()
 {
-	CollisionManager::GetInstance().Set(this);
 	m_transform = &m_Parent->GetTransform();
 	m_tag = m_Parent->GetTag();
 	Vector3 pos = m_transform->position + m_offsetPos;

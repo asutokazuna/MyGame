@@ -22,13 +22,17 @@ class CharacterSpawnCtrl :public Component
 protected:
 	std::list<CharaData> m_charaList;
 public:
-	void Awake();
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	virtual void Awake();
 
-	void Uninit();
+	virtual void Uninit();
 
-	void Update();
+	virtual void Update();
 
-	void Set(GameObject* obj);
+	virtual void Set(GameObject* obj);
 };
 
 // EOF

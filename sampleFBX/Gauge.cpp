@@ -7,6 +7,7 @@
 #include "LifeGauge.h"
 #include "LifeGaugeShaderInfo.h"
 #include "GaugeCtrl.h"
+#include "DefaultShaderInfo.h"
 
 /**
  * @brief コンストラクタ
@@ -27,7 +28,8 @@ void Gauge::Awake()
 	SetChild(m_LifeGauge);
 	SetChild(m_frame);
 	AddComponent<GaugeCtrl>()->SetSize(Vector3(50, 30, 1));
-	m_frame->AddComponent<Billboard>()->ChangeColor(1, 1, 1);
+	m_frame->AddComponent<DefaultShaderInfo>()->ChangeColor(1, 1, 1);
+	m_frame->AddComponent<Billboard>();
 	m_LifeGauge->GetComponent<LifeGaugeShaderInfo>()->ChangeColor(1, 0.5f, 0);
 }
 

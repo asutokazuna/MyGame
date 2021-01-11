@@ -70,6 +70,8 @@ void PlayerShotDir::Awake()
 
 HRESULT PlayerShotDir::Init()
 {
+	m_target = nullptr;
+	m_target2DPos = Vector3();
 	m_Lockon = m_Parent->GetChild<Lockon>();
 	m_Lockon->SetActive(false);
 	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);

@@ -1,6 +1,8 @@
 #include "GaugeCtrl.h"
 #include "GameObject.h"
 #include "LifeGauge.h"
+#include "LifeGaugeShaderInfo.h"
+#include "DefaultShaderInfo.h"
 
 /**
  * @brief ‰Šú‰»ˆ—
@@ -46,6 +48,16 @@ void GaugeCtrl::SetTarget(Transform* trans)
 void GaugeCtrl::SetOffset(Vector3 offset)
 {
 	m_offset = offset;
+}
+
+LifeGaugeShaderInfo* GaugeCtrl::GetLifeShader()
+{
+	return m_LifeGauge->GetComponent<LifeGaugeShaderInfo>();
+}
+
+DefaultShaderInfo* GaugeCtrl::GetBackShader()
+{
+	return m_frame->GetComponent<DefaultShaderInfo>();
 }
 
 // EOF

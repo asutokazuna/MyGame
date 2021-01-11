@@ -88,6 +88,8 @@ void EnemyStateMachine::SetState()
 void EnemyStateMachine::Check()
 {
 	GameObject* player = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_PLAYER);
+
+	// プレイヤーが一定の距離にいたら攻撃する
 	if (MyMath::Distance(m_Parent->GetTransform().position, player->GetTransform().position) <= 300)
 	{
 		GoToState(EnemyState::E_ENEMY_FIGHT);

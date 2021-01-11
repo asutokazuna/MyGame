@@ -14,6 +14,14 @@ struct Quaternion
 	float x;
 	float y;
 	float z;
+	Quaternion() = default;
+	Quaternion(float w, float x, float y, float z)
+	{
+		this->w = w;
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 };
 
 struct float4x4

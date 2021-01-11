@@ -88,9 +88,24 @@ void CollisionManager::Uninit()
 	m_registList.clear();
 }
 
+DWORD num = 0;
+
+void CollisionManager::Draw()
+{
+#ifdef _DEBUG
+	if (ImGui::TreeNode("ColNum")) {
+		ImGui::Text("Num:%d", num);
+		ImGui::Text("ListCnt:%d", m_registList.size());
+		ImGui::TreePop();
+	}
+#endif
+}
+
+/**
+ * @brief “–‚½‚è”»’è‚ÌŠm”F
+ */
 void CollisionManager::Check()
 {
-	DWORD num = 0;
 	std::vector<Collision*> colVect;
 	for (auto &list : m_registList)
 	{
@@ -141,14 +156,19 @@ void CollisionManager::Set(Collision* col)
 	obj->m_object = col;
 
 	m_registList.push_back(((std::move(obj))));
+}
 
-	Vector3 pos, size,min, max;
-	pos = col->m_Parent->GetTransform().position;
-	size = col->m_Parent->GetTransform().scale + col->GetoffsetSize();
-	min = pos - size;
-	max = pos + size;
-	
-	m_CollisionTree.Regist(min, max, obj.get());
+void CollisionManager::Remove(Collision* col)
+{
+	for (auto it = m_registList.begin(); it != m_registList.end();)
+	{
+		if (it->get()->m_object = col) {
+			it = m_registList.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
 }
 
 bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othorObj, Collision* myCol, Collision* othorCol)

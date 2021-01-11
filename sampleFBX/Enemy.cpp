@@ -10,6 +10,9 @@
 #include "Weapon.h"
 #include "collision.h"
 #include "EnemyState.h"
+#include "EnemyLifeCtrl.h"
+#include "Gauge.h"
+#include "EnemyLifeGaugeCtrl.h"
 
 /**
  * @brief 初期化処理
@@ -21,12 +24,19 @@ void Enemy::Awake()
 	tag = OBJ_TAG_ENEMY;
 
 	AddComponent<Object3D>()->SetModel(MODEL_ENEMY);
+	AddComponent<Collision>()->SetModelKind(MODEL_ENEMY);
 	AddComponent<EnemyCtrl>();
+	AddComponent<EnemyLifeCtrl>();
 	AddComponent<EnemyStateMachine>();
+	AddComponent<EnemyLifeGaugeCtrl>();
 
 	m_Weapon = new Weapon(20);
 	m_Weapon->SetTag(OBJ_TAG_ENEMYMISSILE);
 	SetChild(m_Weapon);
+
+	GameObject* gauge = new Gauge();
+	gauge->SetName("LifeGauge");
+	SetChild(gauge);
 }
 
 // EOF

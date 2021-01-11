@@ -4,6 +4,8 @@
 
 class LifeGauge;
 class Transform;
+class LifeGaugeShaderInfo;
+class DefaultShaderInfo;
 
 class GaugeCtrl :public Component
 {
@@ -19,6 +21,8 @@ public:
 	void SetSize(Vector3 size);
 	void SetTarget(Transform* trans);
 	void SetOffset(Vector3 offset);
+	LifeGaugeShaderInfo * GetLifeShader();
+	DefaultShaderInfo * GetBackShader();
 };
 
 // EOF

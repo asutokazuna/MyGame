@@ -29,7 +29,6 @@
  */
 void CPlayer::Awake()
 {
-	transform->position.z = -500;
 	tag = OBJ_TAG_PLAYER;
 
 	AddComponent<PlayerMove>();
@@ -39,7 +38,7 @@ void CPlayer::Awake()
 	m_col->SetModelKind(MODEL_PLAYER);
 
 	// 武器
-	m_Weapon = new Weapon(60);
+	m_Weapon = new Weapon(30);
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	SetChild(m_Weapon);
 

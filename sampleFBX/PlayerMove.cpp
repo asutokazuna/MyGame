@@ -29,6 +29,7 @@ static int mousePosY;
 HRESULT PlayerMove::Init()
 {
 	m_Transform = &m_Parent->GetTransform();
+	m_Transform->position.z = -500;
 	m_move = Vector3();
 	m_isDelay = false;
 

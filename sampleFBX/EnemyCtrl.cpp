@@ -18,7 +18,8 @@
 HRESULT EnemyCtrl::Init()
 {
 	m_transform = &m_Parent->GetTransform();
-	m_transform->position.z = 500;
+	m_transform->position = Vector3(0, 0, 500);
+	m_transform->quaternion = Quaternion(1,0,0,0);
 	m_transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(180));
 
 	m_Weapon = m_Parent->GetChild<Weapon>();
@@ -44,6 +45,10 @@ void EnemyCtrl::Update()
 	}
 }
 
+/**
+ * @breif target位置へ移動
+ * @return なし
+ */
 void EnemyCtrl::Move(Vector3 target)
 {
 	Vector3 vec = target - m_transform->position;
@@ -53,6 +58,10 @@ void EnemyCtrl::Move(Vector3 target)
 	m_transform->position += vec;
 }
 
+/**
+ * @brief プレイヤーが占拠しているタワーへ移動
+ * @return なし
+ */
 void EnemyCtrl::GotoPlayerTower()
 {
 	std::list<GameObject*> towerList = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
@@ -67,6 +76,10 @@ void EnemyCtrl::GotoPlayerTower()
 	}
 }
 
+/**
+ * @brief 占拠されていないタワーへ移動
+ * @return なし
+ */
 void EnemyCtrl::GotoNoneTower()
 {
 	std::list<GameObject*> towerList = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
@@ -85,6 +98,10 @@ void EnemyCtrl::GotoCore()
 {
 }
 
+/**
+ * @brief 正面の方向へ攻撃
+ * @return なし
+ */
 void EnemyCtrl::Attack()
 {
 	m_Weapon->GetComponent<WeaponCtrl>()->Shot();

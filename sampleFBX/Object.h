@@ -91,6 +91,10 @@ public:
 	bool GetActive() {
 		return m_isActive;
 	}
+
+	std::string GetName() {
+		return name;
+	}
 };
 
 // EOF

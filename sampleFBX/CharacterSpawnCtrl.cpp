@@ -40,3 +40,5 @@ void CharacterSpawnCtrl::Set(GameObject * obj)
 	data.time = SPAWN_TIME;
 	m_charaList.push_back(data);
 }
+
+// EOF

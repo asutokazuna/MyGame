@@ -1,36 +1,24 @@
 /**
- * @class PlayerLifeCtrl
- * @brief プレイヤーのHPの管理
+ * @class EnemyLifeCtrl
+ * @brief 敵のHPの管理コンポーネント
  */
 #pragma once
 #include "Component.h"
 
-class NumberList;
-
 /**
- * @class PlayerLifeCtrl
- * @brief プレイヤーのHPの管理
+ * @class EnemyLifeCtrl
+ * @brief 敵のHPの管理コンポーネント
  */
-class PlayerLifeCtrl :public Component
+class EnemyLifeCtrl :public Component
 {
 private:
 	int m_Life;		//!< HP
-	NumberList* m_numberUI;
-	GameObject* m_gauge;
 public:
 	/**
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	void Awake();
-
 	HRESULT Init();
-
-	/**
-	 * @brief 更新処理
-	 * @return なし
-	 */
-	void Update();
 
 	/**
 	 * @brief 当たった時の処理
@@ -42,6 +30,7 @@ public:
 	 * @return 現在HPの取得
 	 */
 	int GetLife();
+	float GetLifePercent();
 };
 
 // EOF

@@ -27,6 +27,8 @@ public:
 
 	void Uninit();
 
+	void Draw();
+
 	/**
 	 * @breif リストにある全てのオブジェクトが当たっているか判定する
 	 * @return なし
@@ -34,6 +36,8 @@ public:
 	void Check();
 
 	void Set(Collision* col);
+
+	void Remove(Collision * col);
 
 	bool CheckOBB(const Transform & myObj, const Transform & othorObj, Collision * myCol, Collision * othorCol);
 	

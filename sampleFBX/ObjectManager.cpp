@@ -75,6 +75,7 @@ void ObjectManager::Draw()
 			continue;
 		}
 		obj.second.get()->Draw();
+
 	}
 	for (auto& obj : buff) {
 		if (obj.second.get()->GetActive() == false) {
@@ -82,6 +83,14 @@ void ObjectManager::Draw()
 		}
 		obj.second.get()->DrawAlpha();
 	}
+#ifdef _DEBUG
+	if (ImGui::TreeNode("ObjectName")) {
+		for (auto& obj : buff) {
+			ImGui::Text("%s\n", obj.first.c_str());
+		}
+		ImGui::TreePop();
+	}
+#endif
 }
 
 GameObject* Find(GameObject* obj, int tag)
