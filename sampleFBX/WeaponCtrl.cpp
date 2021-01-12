@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "Missile.h"
 #include "GameObject.h"
-
+#include "MissileCtrl.h"
 
 /**
  * @brief 初期化処理
@@ -46,7 +46,7 @@ void WeaponCtrl::Shot()
 	for (auto m : m_BulletList) {
 		if (m->GetActive() == false)
 		{
-			m->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
+			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
 			m_BulletCount--;
 			break;
 		}
@@ -66,9 +66,50 @@ void WeaponCtrl::Shot(Quaternion quat)
 	for (auto m : m_BulletList) {
 		if (m->GetActive() == false)
 		{
-			 m->Fire(&m_ParentTrans->position, quat);
+			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, quat);
 			 m_BulletCount--;
 			 break;
+		}
+	}
+}
+
+/**
+ * @brief 玉の発射
+ * @return なし
+ */
+void WeaponCtrl::Shot(Quaternion quat, GameObject * target)
+{
+	if (m_BulletCount <= 0) {
+		return;
+	}
+
+	for (auto m : m_BulletList) {
+		if (m->GetActive() == false)
+		{
+			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, quat, target);
+			m_BulletCount--;
+			break;
+		}
+	}
+}
+
+
+/**
+ * @brief 玉の発射
+ * @return なし
+ */
+void WeaponCtrl::Shot(GameObject * target)
+{
+	if (m_BulletCount <= 0) {
+		return;
+	}
+
+	for (auto m : m_BulletList) {
+		if (m->GetActive() == false)
+		{
+			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion, target);
+			m_BulletCount--;
+			break;
 		}
 	}
 }

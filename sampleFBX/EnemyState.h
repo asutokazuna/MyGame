@@ -24,12 +24,16 @@ enum EnemyState {
  */
 class EnemyStateMachine:public StateMachine<EnemyState>
 {
+private:
+	GameObject* m_playerObj;	// プレイヤーオブジェクト
 public:
 	/**
 	 * @brief 初期化処理
 	 * @return なし
 	 */
-	void Awake();
+	virtual void Awake();
+
+	virtual HRESULT Init();
 
 	/**
 	 * @brief ステートをリストにセット
@@ -43,6 +47,8 @@ public:
 	 * @details 現在の状態を確認しステートの遷移を行う
 	 */
 	void Check();
+
+	GameObject* GetTarget();
 };
 
 // EOF

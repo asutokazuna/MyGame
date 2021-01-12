@@ -4,6 +4,9 @@
  */
 #pragma once
 #include "Component.h"
+#include "MyMath.h"
+
+class GameObject;
 
 /**
  * @class MissileCtrl
@@ -12,7 +15,10 @@
 class MissileCtrl :public Component
 {
 protected:
+	int m_nLife;			//!< Žõ–½
 	int m_power;		//!< ’e‚ÌˆÐ—Í
+	GameObject* m_target;
+	Transform* m_parentTrans;
 
 public:
 	/**
@@ -21,11 +27,21 @@ public:
 	 */
 	virtual void Awake();
 
+	HRESULT Init();
+
+	void Update();
+
 	/**
 	 * ’e‚ÌˆÐ—Í‚ÌŽæ“¾
 	 * @return ’e‚ÌˆÐ—Í
 	 */
 	virtual int GetPower();
+
+
+	bool Fire(Vector3* pos);
+
+	bool Fire(Vector3* pos, Quaternion quat);
+	bool Fire(Vector3* pos, Quaternion quat, GameObject* target);
 };
 
 // EOF

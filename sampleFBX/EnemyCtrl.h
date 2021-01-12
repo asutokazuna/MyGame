@@ -19,6 +19,7 @@ class EnemyCtrl :public Component
 private:
 	Transform* m_transform;		// 親のトランスフォーム
 	Weapon* m_Weapon;
+	GameObject* lookTarget;
 
 public:
 	/**
@@ -27,11 +28,13 @@ public:
 	 */
 	HRESULT Init();
 	void Update();
+	void Draw();
 	void Move(Vector3 target);
 	void GotoPlayerTower();
 	void GotoNoneTower();
 	void GotoCore();
 	void Attack();
+	void Attack(GameObject * target);
 };
 
 // EOF

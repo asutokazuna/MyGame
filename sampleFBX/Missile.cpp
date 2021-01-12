@@ -33,40 +33,4 @@ void Missile::Awake()
 	m_isActive = false;
 }
 
-/**
- * @brief 更新処理
- * @return なし
- */
-void Missile::Update()
-{
-	if (m_Move->m_nLife <= 0) {
-
-		m_isActive = false;
-		//return;
-	}
-	GameObject::Update();
-}
-
-// Offsetがモデル座標でのミサイルの位置らしいよ
-bool Missile::Fire(Vector3* pos)
-{
-	m_isActive = true;
-	transform->position = *pos;
-	//m_col->SetPos(*pos);
-	m_Move->m_nLife = 3 * 60;		// 5秒
-	m_Move->m_nStat = 1;			// 追尾中
-	return true;
-}
-
-bool Missile::Fire(Vector3 * pos, Quaternion quat)
-{
-	m_isActive = true;
-	transform->position = *pos;
-	transform->quaternion = quat;
-	//m_col->SetPos(*pos);
-	m_Move->m_nLife = 3 * 60;		// 5秒
-	m_Move->m_nStat = 1;			// 追尾中
-	return true;
-}
-
 // EOF

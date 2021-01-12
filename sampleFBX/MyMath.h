@@ -297,6 +297,8 @@ public:
 	 */
 	static Quaternion LookAt(const Vector3& dir);
 
+	static Quaternion LookRotation(Vector3 forward, Vector3 dir, float maxRadian);
+
 	/**
 	 * @brief 内積を求める
 	 */

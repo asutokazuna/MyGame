@@ -10,18 +10,12 @@
 //*****************************************************************************
 #define SPEED			(5.0f)
 
-MissileMove::MissileMove() :m_nStat(0), m_nLife(0)
-{
-}
-
 /**
  * @brief 初期化処理
  * @return なし
  */
 HRESULT MissileMove::Init()
 {
-	m_nLife = 0;
-	m_nStat = 0;
 	m_Speed = SPEED;
 
 	m_transform = &m_Parent->GetTransform();
@@ -31,17 +25,6 @@ HRESULT MissileMove::Init()
 
 void MissileMove::Update()
 {
-	// 未使用
-	if (m_nStat == 0) {
-		return;
-	}
-	// 追尾中(m_nStat == 1)
-	--m_nLife;
-	if (m_nLife <= 0) {
-		m_nStat = 0;
-		return;
-	}
-
 	m_transform->position += m_transform->GetForward() * m_Speed;
 }
 

@@ -54,7 +54,7 @@ struct FIGHT : public State<EnemyState>
 
 	void Update()
 	{
-		m_ctrl->Attack();
+		m_ctrl->Attack(m_machine.GetTarget());
 		m_machine.Check();
 	}
 };
@@ -65,8 +65,17 @@ struct FIGHT : public State<EnemyState>
  */
 void EnemyStateMachine::Awake()
 {
+	m_playerObj = nullptr;
 	SetState();
 	GoToState(E_ENEMY_MOVE);
+}
+
+HRESULT EnemyStateMachine::Init()
+{
+	StateMachine::Init();
+	m_playerObj = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_PLAYER);
+
+	return E_NOTIMPL;
 }
 
 /**
@@ -87,10 +96,8 @@ void EnemyStateMachine::SetState()
  */
 void EnemyStateMachine::Check()
 {
-	GameObject* player = ObjectManager::GetInstance().FindWithTag(OBJ_TAG_PLAYER);
-
 	// プレイヤーが一定の距離にいたら攻撃する
-	if (MyMath::Distance(m_Parent->GetTransform().position, player->GetTransform().position) <= 300)
+	if (MyMath::Distance(m_Parent->GetTransform().position, m_playerObj->GetTransform().position) <= 300)
 	{
 		GoToState(EnemyState::E_ENEMY_FIGHT);
 	}
@@ -98,6 +105,11 @@ void EnemyStateMachine::Check()
 	{
 		GoToState(EnemyState::E_ENEMY_MOVE);
 	}
+}
+
+GameObject * EnemyStateMachine::GetTarget()
+{
+	return m_playerObj;
 }
 
 // EOF

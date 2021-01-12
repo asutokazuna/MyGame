@@ -24,6 +24,7 @@ void PlayerCtrl::Awake()
 }
 
 static Quaternion dir;
+GameObject* target;
 /**
  * @brief 更新処理
  * @return なし
@@ -31,7 +32,7 @@ static Quaternion dir;
 void PlayerCtrl::Update()
 {
 	dir = m_Parent->GetTransform().quaternion;
-	GameObject* target = m_Parent->GetComponent<PlayerShotDir>()->GetTarget();
+	target = m_Parent->GetComponent<PlayerShotDir>()->GetTarget();
 
 	if (target != nullptr) {
 		Vector3 targetdir = target->GetTransform().position - m_Parent->GetTransform().position;
@@ -53,9 +54,7 @@ void PlayerCtrl::Draw()
 
 void PlayerCtrl::Attak()
 {
-
-
-	m_Weapon->GetComponent<WeaponCtrl>()->Shot(dir);	
+	m_Weapon->GetComponent<WeaponCtrl>()->Shot(dir, target);
 }
 
 // EOF

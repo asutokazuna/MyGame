@@ -10,6 +10,7 @@
 // 前方宣言
 class Missile;
 class Transform;
+class GameObject;
 
 /**
  * @class WeaponCtrl
@@ -22,7 +23,6 @@ private:
 	Transform* m_ParentTrans;			//!< 親の座標
 	int m_BulletCount;
 	int m_ReloadTime;
-
 public:
 
 	/**
@@ -48,6 +48,14 @@ public:
 	 * @return なし
 	 */
 	void Shot(Quaternion quat);
+
+	/**
+	 * @brief 弾の発射
+	 * @return なし
+	 */
+	void Shot(Quaternion quat, GameObject* target);
+
+	void Shot(GameObject * target);
 
 	/**
 	 * @brief 残弾数の取得

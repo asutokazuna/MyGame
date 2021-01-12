@@ -1,6 +1,6 @@
 ﻿/**
  * @file Missile
- * @brief ミサイルクラス
+ * @brief ミサイルオブジェクト
  * @date 2020/06/19
  */
 #pragma once
@@ -14,7 +14,7 @@ class MissileMove;
 
 /**
  * @class Missile
- * @brief ミサイルクラスr
+ * @brief ミサイルクラス
  */
 class Missile: public GameObject
 {
@@ -29,10 +29,6 @@ public:
 	 * @return なし
 	 */
 	void Awake();
-	void Update();
-
-	bool Fire(Vector3* pos);
-	bool Fire(Vector3* pos, Quaternion quat);
 };
 
 // EOF

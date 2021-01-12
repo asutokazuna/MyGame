@@ -11,12 +11,11 @@ class MissileMove :public Component
 {
 private:
 	Transform* m_transform;
+
 public:
-	int m_nStat;			//!< 0:未使用, 1:使用中
-	int m_nLife;			//!< 寿命
-	float m_Speed;
+	float m_Speed;		//!< 弾の移動速度
+
 public:
-	MissileMove();
 
 	/**
 	 * @brief 初期化処理

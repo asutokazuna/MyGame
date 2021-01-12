@@ -354,6 +354,32 @@ Quaternion MyMath::LookAt(const Vector3 & dir)
 	return rot;
 }
 
+Quaternion MyMath::LookRotation(Vector3 forward, Vector3 dir, float maxRadian)
+{
+	MyMath::Normalize(forward);
+	MyMath::Normalize(dir);
+	float radian = 0;
+	float dot;
+	Vector3 axis = Vector3();
+	Quaternion rot;
+
+	dot = MyMath::Dot(forward, dir);
+	if(dot <= 1 && dot >= -1) {
+		radian = acosf(dot);
+	}
+	axis = MyMath::Cross(forward, dir);
+
+	if (radian > maxRadian) {
+		radian = maxRadian;
+	}
+
+	rot = MakeQuaternion(axis, radian);
+
+	forward = MyMath::PosxQuaternion(forward, rot);
+
+	return MyMath::LookAt(forward);
+}
+
 /**
  * @brief 内積を求める
  */
