@@ -30,6 +30,7 @@ void SceneGame::Awake()
 	m_BCamera = new CBulletTime();
 	m_BCamera->Awake();
 
+	ObjectManager::Create<CharacterSpawner>("CharacterSpawner");
 	m_pPlayer	= ObjectManager::Create<CPlayer>("Player");
 	ObjectManager::Create<RangeCursor>("RangeCursor");
 	m_pEnemy	= ObjectManager::Create<Enemy>("Enemy");
@@ -39,7 +40,6 @@ void SceneGame::Awake()
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
 	ObjectManager::Create<CoreGaugeUI>("CoreGaugeUI");
 	m_pCTPCamera = ObjectManager::Create<CTPCamera>("CTPCamera");
-	ObjectManager::Create<CharacterSpawner>("CharacterSpawner");
 }
 
 /**

@@ -8,6 +8,9 @@
 #include "input.h"
 #include "PlayerMove.h"
 #include "PlayerCtrl.h"
+#include "PlayerLifeCtrl.h"
+#include "ObjectManager.h"
+#include "CharacterSpawnCtrl.h"
 
 /**
  * @struct 待機
@@ -152,6 +155,42 @@ struct PLAYER_AVOID : public State<PLAYER_STATE>
 	}
 };
 
+
+/**
+ * @struct 倒された時
+ */
+struct PLAYER_DEAD : public State<PLAYER_STATE>
+{
+	PlayerStateMachine& machine;
+	CharacterSpawnCtrl* spawner;
+	PLAYER_DEAD(PlayerStateMachine & _machine): State<PLAYER_STATE>(PLAYER_STATE::E_PLAYER_STATE_DEAD), machine(_machine){}
+
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
+	void Init()
+	{
+		spawner = ObjectManager::GetInstance().FindObject<GameObject>("CharacterSpawner")->GetComponent<CharacterSpawnCtrl>();
+		spawner->Set(machine.m_Parent);
+		machine.m_Parent->SetActive(false);
+	}
+
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
+	void Update()
+	{
+		// プレイヤーが生成された時
+		if (spawner->IsExistence(machine.m_Parent) == false)
+		{
+			machine.GoToState(E_PLAYER_STATE_DEFAULT);
+		}
+	}
+};
+
+
 /**
  * @brief 初期化処理
  * @return なし
@@ -161,6 +200,7 @@ void PlayerStateMachine::Awake()
 	m_ParentTrans = &m_Parent->GetTransform();
 	m_move = m_Parent->GetComponent<PlayerMove>();
 	m_ctrl = m_Parent->GetComponent<PlayerCtrl>();
+	m_life = m_Parent->GetComponent<PlayerLifeCtrl>();
 	SetState();
 	GoToState(E_PLAYER_STATE_DEFAULT);
 }
@@ -175,6 +215,21 @@ void PlayerStateMachine::SetState()
 	AddState(std::make_shared<PLAYER_DEFAULT>(*this));
 	AddState(std::make_shared<PLAYER_FD>(*this));
 	AddState(std::make_shared<PLAYER_AVOID>(*this));
+	AddState(std::make_shared<PLAYER_DEAD>(*this));
+}
+
+/**
+ * @brief 更新処理
+ * @return なし
+ * @details 座標更新、当たり判定後の処理内容を記述する
+ */
+void PlayerStateMachine::LastUpdate()
+{
+	StateMachine::LastUpdate();
+	if (m_life->GetLife() <= 0)
+	{
+		GoToState(E_PLAYER_STATE_DEAD);
+	}
 }
 
 // EOF

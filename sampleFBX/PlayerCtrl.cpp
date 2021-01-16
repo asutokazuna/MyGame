@@ -47,6 +47,9 @@ void PlayerCtrl::Draw()
 		ImGui::SliderFloat("dir x", &dir.x, -1.0f, 1.0f);
 		ImGui::SliderFloat("dir y", &dir.y, -1.0f, 1.0f);
 		ImGui::SliderFloat("dir z", &dir.z, -1.0f, 1.0f);
+		ImGui::SliderFloat("pos x", &m_Parent->GetTransform().position.x, -1000.0f, 1000.0f);
+		ImGui::SliderFloat("pos y", &m_Parent->GetTransform().position.y, -1000.0f, 1000.0f);
+		ImGui::SliderFloat("pos z", &m_Parent->GetTransform().position.z, -1000.0f, 1000.0f);
 		ImGui::TreePop();
 	}
 #endif

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file CollisionManager
- * @brief “–‚½‚è”»’èŠÇ—ƒNƒ‰ƒX
+ * @brief å½“ãŸã‚Šåˆ¤å®šç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #include "CollisionManager.h"
 #include "GameObject.h"
@@ -8,14 +8,14 @@
 #include <vector>
 
  /**
-  * @brief OBB‚Ì“–‚½‚è”»’è
-  * @param[in] myPos			©•ª‚ÌÀ•W
-  * @param[in] myVector		©•ª‚ÌÀ•W²
-  * @param[in] myScale		©•ª‚Ì”¼•ª‚ÌƒTƒCƒY
-  * @param[in] othorPos		‘Šè‚ÌÀ•W
-  * @param[in] othorVector	‘Šè‚ÌÀ•W²
-  * @param[in] othorScale	‘Šè‚Ì”¼•ª‚ÌƒTƒCƒY
-  * @return “–‚½‚Á‚Ä‚¢‚ê‚Îtrue
+  * @brief OBBã®å½“ãŸã‚Šåˆ¤å®š
+  * @param[in] myPos			è‡ªåˆ†ã®åº§æ¨™
+  * @param[in] myVector		è‡ªåˆ†ã®åº§æ¨™è»¸
+  * @param[in] myScale		è‡ªåˆ†ã®åŠåˆ†ã®ã‚µã‚¤ã‚º
+  * @param[in] othorPos		ç›¸æ‰‹ã®åº§æ¨™
+  * @param[in] othorVector	ç›¸æ‰‹ã®åº§æ¨™è»¸
+  * @param[in] othorScale	ç›¸æ‰‹ã®åŠåˆ†ã®ã‚µã‚¤ã‚º
+  * @return å½“ãŸã£ã¦ã„ã‚Œã°true
   */
 bool OBB(Vector3 myPos, Quaternion myVector, Vector3 myScale, Vector3 othorPos, Quaternion othorVector, Vector3 othorScale)
 {
@@ -42,7 +42,7 @@ bool OBB(Vector3 myPos, Quaternion myVector, Vector3 myScale, Vector3 othorPos, 
 	vec[4] = othorUp;
 	vec[5] = othorForward;
 
-	// Še²•ûŒü‚Ì”¼•ª‚Ì‘å‚«‚³‚ğ‹‚ß‚é
+	// å„è»¸æ–¹å‘ã®åŠåˆ†ã®å¤§ãã•ã‚’æ±‚ã‚ã‚‹
 	Vector3 Length[6];
 	Length[0] = vec[0] * myScale.x;
 	Length[1] = vec[1] * myScale.y;
@@ -73,8 +73,8 @@ bool OBB(Vector3 myPos, Quaternion myVector, Vector3 myScale, Vector3 othorPos, 
 void CollisionManager::Init()
 {
 	const int LEVEL = 5;
-	const float length = 5000.0f;
-	Vector3 MIN = Vector3(-length,-length,-length);
+	const float length = 5000;
+	Vector3 MIN = Vector3(-length-500,-length - 500,-length - 500);
 	Vector3 MAX = Vector3(+length,+length,+length);
 	m_CollisionTree.Init(LEVEL,MIN,MAX);
 }
@@ -96,13 +96,17 @@ void CollisionManager::Draw()
 	if (ImGui::TreeNode("ColNum")) {
 		ImGui::Text("Num:%d", num);
 		ImGui::Text("ListCnt:%d", m_registList.size());
+		for (auto &list : m_registList)
+		{
+			ImGui::Text("cell:%d",list.get()->m_cell);
+		}
 		ImGui::TreePop();
 	}
 #endif
 }
 
 /**
- * @brief “–‚½‚è”»’è‚ÌŠm”F
+ * @brief å½“ãŸã‚Šåˆ¤å®šã®ç¢ºèª
  */
 void CollisionManager::Check()
 {

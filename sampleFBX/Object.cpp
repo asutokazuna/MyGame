@@ -51,10 +51,17 @@ void Object::Update() {}
 void Object::LateUpdate() {}
 
 /**
+ * @brief 更新処理
+ * @return なし
+ * @details 座標更新、当たり判定後の処理内容を記述する
+ */
+void Object::LastUpdate() {}
+
+/**
  * @brief 描画処理
  * @return　なし
  */
-void Object::Draw() {}
+ void Object::Draw() {}
 
 /**
  * @brief 透明部分描画処理

@@ -62,6 +62,22 @@ void ObjectManager::Update()
 		obj.second.get()->LateUpdate();
 	}
 }
+
+/**
+ * @brief 更新処理
+ * @return なし
+ * @details 座標更新、当たり判定後の処理内容を記述する
+ */
+void ObjectManager::LastUpdate()
+{
+	auto& buff = m_ObjList;
+	for (auto& obj : buff) {
+		if (obj.second.get()->GetActive() == false) {
+			continue;
+		}
+		obj.second.get()->LastUpdate();
+	}
+}
 	
 /**
  * @brief 描画処理

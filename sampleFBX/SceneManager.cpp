@@ -111,6 +111,8 @@ void SceneManager::Update()
 	//CCamera::Get()->Update();
 
 	CollisionManager::GetInstance().Check();
+
+	ObjectManager::GetInstance().LastUpdate();
 }
 
 /**

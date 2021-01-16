@@ -97,6 +97,29 @@ void GameObject::LateUpdate()
 }
 
 /**
+ * @brief 更新処理
+ * @return なし
+ * @details 座標更新、当たり判定後の処理内容を記述する
+ */
+ void GameObject::LastUpdate()
+ {
+	 if (this->GetActive() == false) {
+		 return;
+	 }
+	 auto buff = m_ComponentList;
+	 for (auto com : buff) {
+		 if (com->GetActive() == false) {
+			 continue;
+		 }
+		 com->LastUpdate();
+	 }
+
+	 for (auto& child : m_ChildList) {
+		 child->LastUpdate();
+	 }
+ }
+
+/**
  * @brief 描画処理
  * @return  なし
  */

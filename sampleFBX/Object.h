@@ -64,6 +64,13 @@ public:
 	virtual void LateUpdate();
 
 	/**
+	 * @brief 更新処理
+	 * @return なし
+	 * @details 座標更新、当たり判定後の処理内容を記述する
+	 */
+	virtual void LastUpdate();
+
+	/**
 	 * @brief 描画処理
 	 * @return　なし
 	 */

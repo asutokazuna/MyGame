@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file LinerOctreeManager
- * @brief ”ª•ª–Ø‚ÌŠÇ—‚ğ‚·‚é
+ * @brief å…«åˆ†æœ¨ã®ç®¡ç†ã‚’ã™ã‚‹
  */
 #pragma once
 #include "MyMath.h"
@@ -15,19 +15,19 @@ class OctreeCell;
 
 /**
  * @class TreeRegisterObject
- * @brief •ª–Ø‚É“o˜^‚·‚é‘o•ûŒüƒŠƒXƒgƒIƒuƒWƒFƒNƒg
+ * @brief åˆ†æœ¨ã«ç™»éŒ²ã™ã‚‹åŒæ–¹å‘ãƒªã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 template <class T>
 class TreeRegisterObject
 {
 public:
-	OctreeCell<T> *m_cell;		//!< “o˜^‚³‚ê‚Ä‚¢‚é‹óŠÔ
-	T* m_object;				//!< “o˜^‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg
-	TreeRegisterObject<T> *m_pre;	//!< ‘O‚ÌƒIƒuƒWƒFƒNƒg
-	TreeRegisterObject<T> *m_next;	//!< Ÿ‚ÌƒIƒuƒWƒFƒNƒg
+	OctreeCell<T> *m_cell;		//!< ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ç©ºé–“
+	T* m_object;				//!< ç™»éŒ²ã—ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	TreeRegisterObject<T> *m_pre;	//!< å‰ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	TreeRegisterObject<T> *m_next;	//!< æ¬¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 public:
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	TreeRegisterObject()
 	{
@@ -38,15 +38,15 @@ public:
 	}
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	virtual ~TreeRegisterObject() 
 	{
 	}
 
 	/**
-	 * @brief “o˜^‚µ‚Ä‚¢‚éƒŠƒXƒg‚©‚çíœ
-	 * @return íœ‚·‚ê‚Îtrue,Šù‚Éíœ‚³‚ê‚Ä‚¢‚ê‚Îfalse
+	 * @brief ç™»éŒ²ã—ã¦ã„ã‚‹ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤
+	 * @return å‰Šé™¤ã™ã‚Œã°true,æ—¢ã«å‰Šé™¤ã•ã‚Œã¦ã„ã‚Œã°false
 	 */
 	bool Remove()
 	{
@@ -58,7 +58,7 @@ public:
 			return false;
 		}
 
-		// íœˆ—
+		// å‰Šé™¤å‡¦ç†
 		if (m_pre != NULL)
 		{
 			m_pre->m_next = m_next;
@@ -74,9 +74,9 @@ public:
 	}
 
 	/**
-	 * @brief ‹óŠÔ‚ğ“o˜^
-	 * @param[in] cell “o˜^‚·‚é‹óŠÔ
-	 * @return ‚È‚µ
+	 * @brief ç©ºé–“ã‚’ç™»éŒ²
+	 * @param[in] cell ç™»éŒ²ã™ã‚‹ç©ºé–“
+	 * @return ãªã—
 	 */
 	void RegistCell(OctreeCell<T>* cell)
 	{
@@ -91,23 +91,23 @@ public:
 
 /**
  * @class LinerOctreeManager
- * @brief üŒ`8•ª–ØŠÇ—ƒNƒ‰ƒX
+ * @brief ç·šå½¢8åˆ†æœ¨ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 template <class T>
 class LinerOctreeManager
 {
 protected:
-	OctreeCell<T> **m_ppCellList;		//!< üŒ`‹óŠÔƒ|ƒCƒ“ƒ^ƒŠƒXƒg
-	unsigned int m_pow[OCTREE_MAX_LEVEL + 1];		//!< ‚×‚«æ”’l”z—ñ
-	Vector3 m_size;		//!< •
-	Vector3 m_minSize;	//!< —Ìˆæ‚ÌÅ¬‚ÌˆÊ’u
-	Vector3 m_maxSize;	//!< —Ìˆæ‚ÌÅ‘å‚ÌˆÊ’u
-	Vector3 m_unitSize;	//!< Å¬‹óŠÔ‚Ì‘å‚«‚³
-	DWORD m_cellNum;	//!< ‹óŠÔ‚Ì”
-	unsigned int m_level;	//!< ƒŒƒxƒ‹
+	OctreeCell<T> **m_ppCellList;		//!< ç·šå½¢ç©ºé–“ãƒã‚¤ãƒ³ã‚¿ãƒªã‚¹ãƒˆ
+	unsigned int m_pow[OCTREE_MAX_LEVEL + 1];		//!< ã¹ãä¹—æ•°å€¤é…åˆ—
+	Vector3 m_size;		//!< å¹…
+	Vector3 m_minSize;	//!< é ˜åŸŸã®æœ€å°ã®ä½ç½®
+	Vector3 m_maxSize;	//!< é ˜åŸŸã®æœ€å¤§ã®ä½ç½®
+	Vector3 m_unitSize;	//!< æœ€å°ç©ºé–“ã®å¤§ãã•
+	DWORD m_cellNum;	//!< ç©ºé–“ã®æ•°
+	unsigned int m_level;	//!< ãƒ¬ãƒ™ãƒ«
 public:
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	LinerOctreeManager()
 	{
@@ -121,7 +121,7 @@ public:
 	}
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	virtual ~LinerOctreeManager()
 	{
@@ -136,15 +136,15 @@ public:
 	}
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @param[in] level	‹óŠÔƒŒƒxƒ‹
-	 * @param[in] min	‹óŠÔ‚ÌÅ¬’l(Å¬’[)
-	 * @param[in] man	‹óŠÔ‚ÌÅ‘å’l(Å‘å’[)
-	 * @return ì¬‚É¬Œ÷‚·‚ê‚Îtrue(‹óŠÔƒŒƒxƒ‹‚ªİ’èÅ‘å‚ğ’´‚¦‚½‚Æ‚«false)
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @param[in] level	ç©ºé–“ãƒ¬ãƒ™ãƒ«
+	 * @param[in] min	ç©ºé–“ã®æœ€å°å€¤(æœ€å°ç«¯)
+	 * @param[in] man	ç©ºé–“ã®æœ€å¤§å€¤(æœ€å¤§ç«¯)
+	 * @return ä½œæˆã«æˆåŠŸã™ã‚Œã°true(ç©ºé–“ãƒ¬ãƒ™ãƒ«ãŒè¨­å®šæœ€å¤§ã‚’è¶…ãˆãŸã¨ãfalse)
 	 */
 	bool Init(unsigned int level, Vector3& min, Vector3& max)
 	{
-		// İ’èƒŒƒxƒ‹‚æ‚è‘å‚«‚¯‚ê‚Îì¬‚µ‚È‚¢
+		// è¨­å®šãƒ¬ãƒ™ãƒ«ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ä½œæˆã—ãªã„
 		if (level >= OCTREE_MAX_LEVEL) {
 			return false;
 		}
@@ -155,7 +155,7 @@ public:
 			m_pow[i] = m_pow[i - 1] * 8;
 		}
 
-		// Level‚Ì”z—ñì¬(üŒ`)
+		// Levelã®é…åˆ—ä½œæˆ(ç·šå½¢)
 		m_cellNum = (m_pow[level + 1] - 1) / 7;
 		m_ppCellList = new OctreeCell<T>*[m_cellNum];
 		for (i = 0; i < m_cellNum; i++)
@@ -164,7 +164,7 @@ public:
 		}
 		//ZeroMemory(m_ppCellList, sizeof(OctreeCell<T>*) * m_cellNum);
 
-		// —Ìˆæ“o˜^
+		// é ˜åŸŸç™»éŒ²
 		m_minSize = min;
 		m_maxSize = max;
 		m_size = m_maxSize - m_minSize;
@@ -176,14 +176,14 @@ public:
 	}
 
 	/**
-	 * @brief ƒIƒuƒWƒFƒNƒg‚ğ“o˜^‚·‚é
-	 * @param[in] min ƒIƒuƒWƒFƒNƒg‚ÌÅ¬ˆÊ’u
-	 * @param[in] max ƒIƒuƒWƒFƒNƒg‚ÌÅ‘åˆÊ’u
-	 * @param[in] obj “o˜^‚·‚éƒIƒuƒWƒFƒNƒg
+	 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in] min ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æœ€å°ä½ç½®
+	 * @param[in] max ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æœ€å¤§ä½ç½®
+	 * @param[in] obj ç™»éŒ²ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	 */
 	bool Regist(Vector3 min, Vector3 max, TreeRegisterObject<T>* obj)
 	{
-		// “o˜^ƒ‚[ƒgƒ“”Ô†‚ğZo
+		// ç™»éŒ²ãƒ¢ãƒ¼ãƒˆãƒ³ç•ªå·ã‚’ç®—å‡º
 		DWORD elem = GetMortonNumber(min, max);
 		if (elem < m_cellNum)
 		{
@@ -199,7 +199,7 @@ public:
 	{
 		colVect.clear();
 
-		// ‹óŠÔ‚ª¶¬‚³‚ê‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+		// ç©ºé–“ãŒç”Ÿæˆã•ã‚Œã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 		if (m_ppCellList[0] == NULL) {
 			return 0;	
 		}
@@ -212,13 +212,13 @@ public:
 
 protected:
 	/**
-	 * @brief ‹óŠÔ“à‚Å‚ÌÕ“ËƒŠƒXƒg‚ğì¬‚·‚é
+	 * @brief ç©ºé–“å†…ã§ã®è¡çªãƒªã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹
 	 */
 	bool GetCollisionList(DWORD elem, std::vector<T*> &colVect, std::list<T*> &colstac)
 	{
 		typename std::list<T*>::iterator it;
 
-		// ‹óŠÔ“à‚ÌƒIƒuƒWƒFƒNƒg“¯m‚ÌÕ“ËƒŠƒXƒgì¬
+		// ç©ºé–“å†…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒå£«ã®è¡çªãƒªã‚¹ãƒˆä½œæˆ
 		TreeRegisterObject<T> *objList = m_ppCellList[elem]->GetFirstObj();
 		while (objList != NULL)
 		{
@@ -229,7 +229,7 @@ protected:
 				colVect.push_back(othorObjList->m_object);
 				othorObjList = othorObjList->m_next;
 			}
-			// Õ“ËƒXƒ^ƒbƒN(eƒIƒuƒWƒFƒNƒg)‚Æ‚ÌÕ“ËƒŠƒXƒg‚ğì¬
+			// è¡çªã‚¹ã‚¿ãƒƒã‚¯(è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ)ã¨ã®è¡çªãƒªã‚¹ãƒˆã‚’ä½œæˆ
 			for (it = colstac.begin(); it != colstac.end(); it++)
 			{
 				colVect.push_back(objList->m_object);
@@ -239,13 +239,13 @@ protected:
 		}
 
 		bool childFlg = false;
-		// q‹óŠÔ‚ÖˆÚ“®
+		// å­ç©ºé–“ã¸ç§»å‹•
 		DWORD objNum = 0;
 		DWORD i, nextElem;
-		for (i = 0; i < 4; i++)
+		for (i = 0; i < 8; i++)
 		{
 			nextElem = elem * 4 + 1 + i;
-			if (nextElem < m_cellNum && m_ppCellList[elem * 4 + 1 + i])
+			if (nextElem < m_cellNum && m_ppCellList[elem * 8 + 1 + i])
 			{
 				if (childFlg == false)
 				{
@@ -258,11 +258,11 @@ protected:
 					}
 				}
 				childFlg = true;
-				GetCollisionList(elem * 4 + 1 + i, colVect, colstac);
+				GetCollisionList(elem * 8 + 1 + i, colVect, colstac);
 			}
 		}
 
-		// ƒXƒ^ƒbƒN‚©‚çƒIƒuƒWƒFƒNƒg‚ğŠO‚·
+		// ã‚¹ã‚¿ãƒƒã‚¯ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å¤–ã™
 		if (childFlg == true)
 		{
 			for (i = 0; i < objNum; i++) {
@@ -273,8 +273,8 @@ protected:
 	}
 
 	/**
-	 * @brief ‹óŠÔ‚ğ¶¬
-	 * @return true,¸”s‚Å–³ŒÀƒ‹[ƒv
+	 * @brief ç©ºé–“ã‚’ç”Ÿæˆ
+	 * @return true,å¤±æ•—ã§ç„¡é™ãƒ«ãƒ¼ãƒ—
 	 */
 	bool CreateNewCell(DWORD elem)
 	{
@@ -292,18 +292,18 @@ protected:
 	}
 
 	/**
-	 * @brief À•W‚©‚ç‹óŠÔ”Ô†(ƒ‚[ƒgƒ“”Ô†)‚ğZo
-	 * @param[in] min À•W‚ÌÅ¬’l 
-	 * @param[in] max À•W‚ÌÅ‘å’l 
-	 * @return Zo‚µ‚½‹óŠÔ”Ô†(ƒ‚[ƒgƒ“”Ô†)
+	 * @brief åº§æ¨™ã‹ã‚‰ç©ºé–“ç•ªå·(ãƒ¢ãƒ¼ãƒˆãƒ³ç•ªå·)ã‚’ç®—å‡º
+	 * @param[in] min åº§æ¨™ã®æœ€å°å€¤ 
+	 * @param[in] max åº§æ¨™ã®æœ€å¤§å€¤ 
+	 * @return ç®—å‡ºã—ãŸç©ºé–“ç•ªå·(ãƒ¢ãƒ¼ãƒˆãƒ³ç•ªå·)
 	 */
 	DWORD GetMortonNumber(Vector3& min, Vector3& max)
 	{
-		// Å¬ƒŒƒxƒ‹‚É‚¨‚¯‚éŠe²ˆÊ’u‚ğZo
+		// æœ€å°ãƒ¬ãƒ™ãƒ«ã«ãŠã‘ã‚‹å„è»¸ä½ç½®ã‚’ç®—å‡º
 		DWORD LT = GetPointElem(min);
 		DWORD RB = GetPointElem(max);
 
-		// ‹óŠÔ”Ô†‚ğˆø‚«Z‚µ‚ÄÅãˆÊ‹æØ‚è‚©‚çŠ‘®ƒŒƒxƒ‹‚ğZo
+		// ç©ºé–“ç•ªå·ã‚’å¼•ãç®—ã—ã¦æœ€ä¸Šä½åŒºåˆ‡ã‚Šã‹ã‚‰æ‰€å±ãƒ¬ãƒ™ãƒ«ã‚’ç®—å‡º
 		DWORD def = RB ^ LT;
 		unsigned int HiLevel = 1;
 		unsigned int i;
@@ -326,8 +326,8 @@ protected:
 	}
 
 	/**
-	 * @brief ƒrƒbƒg•ªŠ„ŠÖ”
-	 * @details ƒ‚[ƒgƒ“”Ô†‚É‚·‚é‚½‚ß‚É”’l‚ğƒrƒbƒgƒVƒtƒg‚·‚é
+	 * @brief ãƒ“ãƒƒãƒˆåˆ†å‰²é–¢æ•°
+	 * @details ãƒ¢ãƒ¼ãƒˆãƒ³ç•ªå·ã«ã™ã‚‹ãŸã‚ã«æ•°å€¤ã‚’ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆã™ã‚‹
 	 */
 	DWORD BitSeparateFor3D(BYTE n)
 	{
@@ -339,7 +339,7 @@ protected:
 	}
 
 	/**
-	 * @brief 3Dƒ‚[ƒgƒ“‹óŠÔ”Ô†ZoŠÖ”
+	 * @brief 3Dãƒ¢ãƒ¼ãƒˆãƒ³ç©ºé–“ç•ªå·ç®—å‡ºé–¢æ•°
 	 */
 	DWORD Get3DMortonNumber(BYTE x, BYTE y, BYTE z)
 	{
@@ -347,9 +347,9 @@ protected:
 	}
 
 	/**
-	 * @brief À•W‚©‚çüŒ`”ª•ª–Ø—v‘f”Ô†•ÏŠ·ŠÖ”
-	 * @param[in] pos À•W
-	 * @return •ÏŠ·‚µ‚½ƒ‚[ƒgƒ“”Ô†
+	 * @brief åº§æ¨™ã‹ã‚‰ç·šå½¢å…«åˆ†æœ¨è¦ç´ ç•ªå·å¤‰æ›é–¢æ•°
+	 * @param[in] pos åº§æ¨™
+	 * @return å¤‰æ›ã—ãŸãƒ¢ãƒ¼ãƒˆãƒ³ç•ªå·
 	 */
 	DWORD GetPointElem(Vector3& pos)
 	{
@@ -363,17 +363,17 @@ protected:
 
 /**
  * @class OctreeCell
- * @brief •ª–Ø‚Ì1‚Â‚Ì‹óŠÔƒNƒ‰ƒX
+ * @brief åˆ†æœ¨ã®1ã¤ã®ç©ºé–“ã‚¯ãƒ©ã‚¹
  */
 template <class T>
 class OctreeCell
 {
 protected:
-	TreeRegisterObject<T> *m_objList;	//!< ƒIƒuƒWƒFƒNƒg‚ÌƒŠƒXƒg
+	TreeRegisterObject<T> *m_objList;	//!< ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒªã‚¹ãƒˆ
 
 public:
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	OctreeCell()
 	{
@@ -381,7 +381,7 @@ public:
 	}
 
 	/**
-	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	virtual ~OctreeCell()
 	{
@@ -391,8 +391,8 @@ public:
 	}
 
 	/**
-	 * @brief ƒŠƒ“ƒN‚ğ‘S‚ÄÁ‚·
-	 * @return ‚È‚µ
+	 * @brief ãƒªãƒ³ã‚¯ã‚’å…¨ã¦æ¶ˆã™
+	 * @return ãªã—
 	 */
 	void ResetLink(TreeRegisterObject<T> *objList)
 	{
@@ -403,9 +403,9 @@ public:
 	}
 
 	/**
-	 * @brief ƒIƒuƒWƒFƒNƒg‚ğ‹óŠÔ‚ÌƒŠƒXƒg‚ÉƒZƒbƒg
-	 * @param[in] obj “o˜^‚·‚éƒIƒuƒWƒFƒNƒg
-	 * @return ‚È‚µ
+	 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç©ºé–“ã®ãƒªã‚¹ãƒˆã«ã‚»ãƒƒãƒˆ
+	 * @param[in] obj ç™»éŒ²ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @return ãªã—
 	 */
 	bool Push(TreeRegisterObject<T> *obj)
 	{

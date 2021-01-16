@@ -86,7 +86,7 @@ void CTPCamera::LateUpdate()
 	//XMStoreFloat3(&m_vLook, XMVector3TransformCoord (XMLoadFloat3(&g_vLook), world));
 	//XMStoreFloat3(&m_vUp  , XMVector3TransformNormal(XMLoadFloat3(&g_vUp), world));
 
-	const float ratio = 0.9f;
+	const float ratio = 0.97f;
 	transform->position = transform->position * ratio + pos * (1 - ratio);
 	m_vLook = m_vLook * ratio + look * (1 - ratio);
 	// 始点、注視点、上方ベクトルを近づける

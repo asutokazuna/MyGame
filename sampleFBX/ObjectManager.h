@@ -86,6 +86,13 @@ public:
 	void Update();
 	
 	/**
+	 * @brief 更新処理
+	 * @return なし
+	 * @details 座標更新、当たり判定後の処理内容を記述する
+	 */
+	void LastUpdate();
+	
+	/**
 	 * @brief 描画処理
 	 * @return　なし
 	 */

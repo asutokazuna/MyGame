@@ -70,13 +70,6 @@ void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 			m_Life -= power;
 		}
 		gameObj->SetActive(false);
-
-		// 倒されたとき
-		if (m_Life <= 0)
-		{
-			ObjectManager::GetInstance().FindObject<GameObject>("CharacterSpawner")->GetComponent<CharacterSpawnCtrl>()->Set(m_Parent);
-			m_Parent->SetActive(false);
-		}
 	}
 
 
