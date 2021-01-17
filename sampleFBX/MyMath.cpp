@@ -389,6 +389,7 @@ float MyMath::Dot(const Vector3& vec1,const Vector3& vec2)
 
 	result = vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 
+
 	return result;
 }
 
@@ -431,6 +432,16 @@ float MyMath::Lerp(const float& start,const float& end,const float& t)
 {
 	return start + (end - start) * t;
 }
+
+/**
+ * @brief 線形補間
+ */
+ Vector3 MyMath::Lerp(const Vector3 & start, const Vector3 & end, const float & t)
+ {
+	 return Vector3(Lerp(start.x, end.x, t),
+					Lerp(start.y, end.y, t), 
+					Lerp(start.z, end.z, t));
+ }
 
 /**
  * @brief 絶対値を求める
@@ -476,5 +487,56 @@ DirectX::XMFLOAT4X4 MyMath::LoadPosisiton(Vector3 pos)
 	mtx._43 = pos.z;
 	return mtx;
 }
+
+/**
+ * @brief 球面線形補間
+ * @param[in] start 始点
+ * @param[in] end 終点
+ * @param[in] t 割合
+ * @return 補間した数値
+ */
+ Vector3 MyMath::Slerp(const Vector3 & start, const Vector3 end, const float t)
+ {
+	 Vector3 vecStart = start;
+	 Vector3 vecEnd = end;
+	 float scaler;
+	 float rad;
+	 float sinTheta;
+	 float thre = t;
+
+	 if (thre < 0) {
+		 thre = 0;
+	 }
+	 else if (thre > 1) {
+		 thre = 1;
+	 }
+
+
+	 MyMath::Normalize(vecStart);
+	 MyMath::Normalize(vecEnd);
+
+	 scaler = MyMath::Dot(vecStart, vecEnd);
+
+	 if (scaler > 1) {
+		 scaler = 1;
+	 }
+	 else if (scaler < -1) {
+		 scaler = -1;
+	 }
+
+	 rad = acosf(scaler);
+	 if (rad >= 3.14f) {
+		 rad -= 3.14f;
+	 }
+	 sinTheta = sinf(rad);
+
+	 if (sinTheta == 0) {
+		 return end;
+	 }
+
+	 return Vector3((start.x * sinf(rad * (1.0f - thre)) + end.x * sinf(rad * thre)) / sinTheta,
+					(start.y * sinf(rad * (1.0f - thre)) + end.y * sinf(rad * thre)) / sinTheta, 
+					(start.z * sinf(rad * (1.0f - thre)) + end.z * sinf(rad * thre)) / sinTheta);
+ }
 
 // EOF

@@ -218,6 +218,22 @@ struct Vector3
 		value.z = z / num.z;
 		return value;
 	}
+	const bool operator == (const Vector3& val)
+	{
+		if (x == val.x && y == val.y && z == val.z)
+		{
+			return true;
+		}
+		return false;
+	}
+	const bool operator != (const Vector3& val)
+	{
+		if (x == val.x || y == val.y || z == val.z)
+		{
+			return false;
+		}
+		return true;
+	}
 };
 
 class Transform;
@@ -321,6 +337,11 @@ public:
 	static float Lerp(const float& start, const float& end, const float & t);
 
 	/**
+	 * @brief 線形補間
+	 */
+	static Vector3 Lerp(const Vector3& start, const Vector3& end, const float & t);
+
+	/**
 	 * @brief 絶対値を求める
 	 * @param[in] value 変換したい値
 	 * @return 入力値の絶対値
@@ -336,6 +357,15 @@ public:
 	static float Distance(const Vector3& pos, const Vector3& othorPos);
 
 	static DirectX::XMFLOAT4X4 LoadPosisiton(Vector3 pos);
+
+	/**
+	 * @brief 球面線形補間
+	 * @param[in] start 始点
+	 * @param[in] end 終点
+	 * @param[in] t 割合
+	 * @return 補間した数値
+	 */
+	static Vector3 Slerp(const Vector3& start, const Vector3 end, const float t);
 };
 
 // EOF

@@ -13,6 +13,10 @@ class Transform;
  */
 class CTPCamera :public CCamera
 {
+private:
+	Vector3 m_pos;
+	Vector3 m_oldPos;
+	float m_threshold;
 public:
 
 	/**
