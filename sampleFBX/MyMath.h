@@ -72,6 +72,11 @@ struct Vector3
 		this->y = y;
 		this->z = z;
 	}
+	Vector3(float num) {
+		this->x = num;
+		this->y = num;
+		this->z = num;
+	}
 	Vector3 operator+ (const Vector3 num) {
 		Vector3 value;
 		value.x = x + num.x;
@@ -366,6 +371,82 @@ public:
 	 * @return 補間した数値
 	 */
 	static Vector3 Slerp(const Vector3& start, const Vector3 end, const float t);
+
+	template<typename Ty>
+	static const Ty _0 = static_cast<Ty>(0);
+	template<typename Ty>
+	static const Ty _1 = static_cast<Ty>(1);
+	template<typename Ty>
+	static constexpr Ty _1_5 = static_cast<Ty>(1.5f);
+	template<typename Ty>
+	static constexpr Ty _1_525 = static_cast<Ty>(1.525f);
+
+	template<typename Ty>
+	static constexpr Ty _2 = static_cast<Ty>(2);
+	template<typename Ty = float>
+	static inline Ty InQuint(float time, Ty max = _1<Ty>, Ty min = _0<Ty>, float totaltime = 1)
+	{
+		max -= min;
+		time /= totaltime;
+
+		return max * time * time * time * time * time + min;
+	}
+
+	template<typename Ty = float>
+	static inline Ty OutQuint(float time, Ty max = _1<Ty>, Ty min = _0<Ty>, float totaltime = 1)
+	{
+		max -= min;
+		time = time / totaltime - _1<Ty>;
+
+		return max * (time * time * time * time * time + _1<Ty>) + min;
+	}
+
+	template<typename Ty = float>
+	static inline Ty InOutQuint(float time, Ty max = _1<Ty>, Ty min = _0<Ty>, float totaltime = 1)
+	{
+		max -= min;
+		time /= totaltime;
+
+		if (time / _2<Ty> < _1<Ty>)
+			return max / _2<Ty> * time * time * time * time * time + min;
+
+		time -= _2<Ty>;
+
+		return max / _2<Ty> * (time * time * time * time * time + _2<Ty>) + min;
+	}
+
+	static inline Vector3 InQuint(float time, Vector3 max, Vector3 min , float totaltime = 1)
+	{
+		max -= min;
+		time /= totaltime;
+
+		return max * time * time * time * time * time + min;
+	}
+
+	static Vector3 OutQuint(float time, Vector3 max, Vector3 min, float totaltime = 1)
+	{
+		max -= min;
+		time = time / totaltime - 1;
+
+		return max * (time * time * time * time * time + 1) + min;
+	}
+	static Vector3 InOutQuint(float time, Vector3 max, Vector3 min, float totaltime = 1);
+
+
+	//static inline Vector3 OutInQuint(float time, Vector3 max, Vector3 min, float totaltime = 1)
+	//{
+	//	max -= min;
+	//	time /= totaltime;
+
+	//	if (time / 2 < 0.5f) {
+	//		time -= 2;
+	//		return max / 2 * (time * time * time * time * time + 2) + min;
+
+	//	}
+
+	//	return max / 2 * time * time * time * time * time + min;
+	//}
+
 };
 
 // EOF

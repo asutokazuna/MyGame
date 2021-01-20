@@ -539,4 +539,40 @@ DirectX::XMFLOAT4X4 MyMath::LoadPosisiton(Vector3 pos)
 					(start.z * sinf(rad * (1.0f - thre)) + end.z * sinf(rad * thre)) / sinTheta);
  }
 
+ Vector3 MyMath::InOutQuint(float time, Vector3 max, Vector3 min, float totaltime)
+ {
+	 max -= min;
+	 time /= totaltime;
+
+	 if (time < 0.5f)
+		 return max * 16  * time * time * time * time * time + min;
+
+	 time -= 2;
+
+	 return max / 2 * (time * time * time * time * time + 1) + min;
+ }
+
+ //Vector3 MyMath::InQuint(Vector3 start, Vector3 end, float time)
+ //{
+	// Vector3 vec = end - start;
+
+	// return Vector3(end.x *time * time* time * time* time + start.x,
+	//	 end.y *time * time* time * time* time + start.y,
+	//	 end.z *time * time* time * time* time + start.z);
+ //}
+
+ //Vector3 MyMath::OutQuint(Vector3 start, Vector3 end, float time)
+ //{
+	// Vector3 vec = end - start;
+
+	// return Vector3(end.x *time * time* time * time* time + start.x,
+	//	 end.y *time * time* time * time* time + start.y,
+	//	 end.z *time * time* time * time* time + start.z);
+ //}
+
+ //Vector3 MyMath::InOutQuint(Vector3 start, Vector3 end, float time)
+ //{
+	// return Vector3();
+ //}
+
 // EOF

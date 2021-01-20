@@ -74,7 +74,7 @@ HRESULT PlayerShotDir::Init()
 	m_target2DPos = Vector3();
 	m_Lockon = m_Parent->GetChild<Lockon>();
 	m_Lockon->SetActive(false);
-	std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+	//std::list<GameObject*> objlist;// = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
 	m_objlist = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_CORE_ENEMY);
 	m_objlist.merge(ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_ENEMY));
 	XMFLOAT4X4 world;

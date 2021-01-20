@@ -6,6 +6,7 @@
 #include "CPlayer.h"
 #include "MyMath.h"
 #include "Transform.h"
+#include "input.h"
 
 // 定数
 namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル変数になる
@@ -82,8 +83,12 @@ void CTPCamera::LateUpdate()
 
 //	transform->position = pos;
 //	m_vLook = look;
-	if (m_pos != m_oldPos) {
-		m_threshold = 0.1f;
+
+
+	if (m_pos.x != m_oldPos.x ||
+		m_pos.y != m_oldPos.y || 
+		m_pos.z != m_oldPos.z) {
+		m_threshold = 0.01f;
 	}
 
 	// 始点と注視点を移動、上方ベクトルを回転
@@ -92,9 +97,9 @@ void CTPCamera::LateUpdate()
 	//XMStoreFloat3(&m_vLook, XMVector3TransformCoord (XMLoadFloat3(&g_vLook), world));
 	//XMStoreFloat3(&m_vUp  , XMVector3TransformNormal(XMLoadFloat3(&g_vUp), world));
 
-	const float ratioX = 0.93f;
-	const float ratioY = 0.5f;
-	const float ratioZ = 0.7f;
+	const float ratioX = 0.5f;
+	const float ratioY = 0.2f;
+	const float ratioZ = 0.0f;
 	Vector3 add = Vector3();
 	/*
 	// x,y,z軸
@@ -111,41 +116,51 @@ void CTPCamera::LateUpdate()
 
 	Vector3 rightPos, righteyepos;
 	Vector3 rightLook, righteyeLook;
+	Vector3 upPos, upeyepos;
+	Vector3 upLook, upeyeLook;
+	Vector3 forwardPos, forwardeyepos;
+	Vector3 forwardLook, forwardeyeLook;
 
 	righteyepos = (transform->GetRight()) * MyMath::Dot(transform->GetRight(), transform->position);
 	rightPos = (transform->GetRight()) * MyMath::Dot(transform->GetRight(), m_pos);
+	upeyepos = (transform->GetUp()) * MyMath::Dot(transform->GetUp(), transform->position);
+	upPos = (transform->GetUp()) * MyMath::Dot(transform->GetUp(), m_pos);
+	forwardeyepos = (transform->GetForward()) * MyMath::Dot(transform->GetForward(), transform->position);
+	forwardPos = (transform->GetForward()) * MyMath::Dot(transform->GetForward(), m_pos);
 
-	float ttt = m_threshold * m_threshold;
-	add += MyMath::Lerp(righteyepos, rightPos, ttt);
-	if (add.x > 1000 ||
-		add.z > 1000) {
-		add = add;
-	}
+	float ttt = m_threshold;
+	add += MyMath::InQuint(ratioX +(1 - ratioX) * ttt, rightPos, righteyepos);
+	add += MyMath::Lerp(upeyepos, upPos, ratioY + (1 - ratioY) * ttt);
+	add += MyMath::OutQuint(ratioZ + (1 - ratioZ) * ttt,forwardPos, forwardeyepos);
+	//if (add.x > 1000 ||
+	//	add.z > 1000) {
+	//	add = add;
+	//}
 
-	Vector3 none;
-	none = MyMath::Slerp(righteyepos, rightPos, ttt);
+	//Vector3 none;
+	//none = MyMath::Slerp(righteyepos, rightPos, ttt);
 
 	//add += (transform->GetRight())	* MyMath::Dot(transform->GetRight(), transform->position)	*ratioX + (transform->GetRight())	* MyMath::Dot(transform->GetRight(), m_pos)	* (1 - ratioX);
-	add += (transform->GetUp())		* MyMath::Dot(transform->GetUp(), transform->position)		*ratioY + (transform->GetUp())		* MyMath::Dot(transform->GetUp(), m_pos)		* (1 - ratioY);
-	add += (transform->GetForward())* MyMath::Dot(transform->GetForward(), transform->position) *ratioZ + (transform->GetForward())	* MyMath::Dot(transform->GetForward(), m_pos) * (1 - ratioZ);
+	//add += (transform->GetUp())		* MyMath::Dot(transform->GetUp(), transform->position)		*ratioY + (transform->GetUp())		* MyMath::Dot(transform->GetUp(), m_pos)		* (1 - ratioY);
+	//add += (transform->GetForward())* MyMath::Dot(transform->GetForward(), transform->position) *ratioZ + (transform->GetForward())	* MyMath::Dot(transform->GetForward(), m_pos) * (1 - ratioZ);
 	transform->position = add;
-
-
-	if (add.x > 1000 ||
-		add.z > 1000) {
-		add = add;
-	}
-	none = MyMath::Slerp(righteyepos, rightPos, ttt);
 
 	righteyeLook = (transform->GetRight()) * MyMath::Dot(transform->GetRight(), m_vLook);
 	rightLook = (transform->GetRight()) * MyMath::Dot(transform->GetRight(), look);
+	upeyeLook = (transform->GetUp()) * MyMath::Dot(transform->GetUp(), m_vLook);
+	upLook = (transform->GetUp()) * MyMath::Dot(transform->GetUp(), look);
+	forwardeyeLook = (transform->GetForward()) * MyMath::Dot(transform->GetForward(), m_vLook);
+	forwardLook = (transform->GetForward()) * MyMath::Dot(transform->GetForward(), look);
 
 	Vector3 lookadd = Vector3();
-	lookadd += MyMath::Lerp(righteyeLook, rightLook, ttt);
+	lookadd += MyMath::InQuint(ratioX + (1 - ratioX) * ttt, rightLook, righteyeLook);
+
+	lookadd += MyMath::Lerp(upeyeLook, upLook, ratioY + ratioY * ttt);
+	lookadd += MyMath::OutQuint(ratioZ + (1 - ratioZ) * ttt, forwardLook, forwardeyeLook);
 
 	//lookadd += (transform->GetRight())	* MyMath::Dot(transform->GetRight(), m_vLook)	*ratioX + (transform->GetRight())	* MyMath::Dot(transform->GetRight(), look)	* (1 - ratioX);
-	lookadd += (transform->GetUp())		* MyMath::Dot(transform->GetUp(), m_vLook)		*ratioY + (transform->GetUp())		* MyMath::Dot(transform->GetUp(), look)		* (1 - ratioY);
-	lookadd += (transform->GetForward())* MyMath::Dot(transform->GetForward(), m_vLook) *ratioZ + (transform->GetForward())	* MyMath::Dot(transform->GetForward(), look) * (1 - ratioZ);
+	//lookadd += (transform->GetUp())		* MyMath::Dot(transform->GetUp(), m_vLook)		*ratioY + (transform->GetUp())		* MyMath::Dot(transform->GetUp(), look)		* (1 - ratioY);
+	//lookadd += (transform->GetForward())* MyMath::Dot(transform->GetForward(), m_vLook) *ratioZ + (transform->GetForward())	* MyMath::Dot(transform->GetForward(), look) * (1 - ratioZ);
 	m_vLook = lookadd;
 
 
@@ -175,7 +190,7 @@ void CTPCamera::LateUpdate()
 	CCamera::UpdateMatrix();
 
 	if (m_threshold < 1) {
-		m_threshold += 0.0005f;
+		m_threshold += 0.001f;
 	}
 }
 
@@ -183,6 +198,7 @@ void CTPCamera::Draw()
 {
 #ifdef _DEBUG
 	if (ImGui::TreeNode("TPCamera")) {
+		ImGui::RadioButton("changePos", m_pos != m_oldPos);
 		ImGui::SliderFloat("pos x", &m_pos.x, -1000.0f, 500.0f);
 		ImGui::SliderFloat("pos y", &m_pos.y, -1000.0f, 500.0f);
 		ImGui::SliderFloat("pos z", &m_pos.z, -1000.0f, 500.0f);
