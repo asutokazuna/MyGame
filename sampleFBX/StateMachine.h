@@ -50,6 +50,12 @@ public:
 	 * @return なし
 	 */
 	virtual void Update(){}
+	
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
+	virtual void LateUpdate(){}
 
 	/**
 	 * @biref 描画処理
@@ -142,6 +148,18 @@ public:
 			return;
 		}
 		m_state->Update();
+	}
+
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
+	void LateUpdate()
+	{
+		if (m_state == nullptr) {
+			return;
+		}
+		m_state->LateUpdate();
 	}
 
 	/**

@@ -65,6 +65,9 @@ public:
 	//void SetLook(XMFLOAT3 vLook);
 	static void Set(CCamera* pCamera);
 	static CCamera* Get();
+	Vector3 GetLook() {
+		return m_vLook;
+	}
 };
 
 // EOF

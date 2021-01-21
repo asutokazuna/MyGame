@@ -7,6 +7,8 @@
 #include "MyMath.h"
 #include "Transform.h"
 #include "input.h"
+#include "ObjectManager.h"
+#include "CPlayer.h"
 
 // 定数
 namespace {	// 空のnamespaceを付けるとこのcppだけのグローバル変数になる
@@ -36,10 +38,12 @@ void CTPCamera::Awake()
 
 HRESULT CTPCamera::Init()
 {
-	if (m_transform != NULL) {
-		transform->position +=  m_transform->position;
-		m_vLook =  m_transform->position + g_vLook;
+	if (m_transform == NULL) {
+		m_transform = &ObjectManager::GetInstance().FindObject<GameObject>("Player")->GetTransform();
 	}
+	transform->position +=  m_transform->position;
+	m_vLook =  m_transform->position + g_vLook;
+
 	Vector3 dir = transform->position - m_vLook;
 	transform->quaternion = MyMath::LookAt(dir);
 	UpdateMatrix();
@@ -59,6 +63,9 @@ static Transform mtrs;
  */
 void CTPCamera::LateUpdate()
 {
+	if (m_isActive == false) {
+		return;
+	}
 	Transform* trs = this->transform;
 	if (m_transform != nullptr) {
 		//trs = m_transform;

@@ -162,6 +162,7 @@
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BulletTime.cpp" />
+    <ClCompile Include="CameraInfo.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraStateMachine.cpp" />
     <ClCompile Include="CCamera.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSky.cpp" />
     <ClCompile Include="CTPCamera.cpp" />
+    <ClCompile Include="DeadCamera.cpp" />
     <ClCompile Include="DebugBox.cpp" />
     <ClCompile Include="DefaultShaderInfo.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -196,6 +198,8 @@
     <ClCompile Include="FbxModel.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldMesh.cpp" />
+    <ClCompile Include="GameCameraManager.cpp" />
+    <ClCompile Include="GameCameraManagerCtrl.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Gauge.cpp" />
@@ -257,6 +261,7 @@
     <ClCompile Include="StarParticle.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureData.cpp" />
+    <ClCompile Include="ThirdPersonCamera.cpp" />
     <ClCompile Include="TitleCamera.cpp" />
     <ClCompile Include="TitleRogo.cpp" />
     <ClCompile Include="TitleStart.cpp" />
@@ -283,6 +288,7 @@
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BulletTime.h" />
+    <ClInclude Include="CameraInfo.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraStateMachine.h" />
     <ClInclude Include="CCamera.h" />
@@ -306,6 +312,7 @@
     <ClInclude Include="CSky.h" />
     <ClInclude Include="CTPCamera.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="DeadCamera.h" />
     <ClInclude Include="DebugBox.h" />
     <ClInclude Include="DefaultShaderInfo.h" />
     <ClInclude Include="Enemy.h" />
@@ -319,6 +326,8 @@
     <ClInclude Include="FbxModel.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldMesh.h" />
+    <ClInclude Include="GameCameraManager.h" />
+    <ClInclude Include="GameCameraManagerCtrl.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Gauge.h" />
@@ -388,6 +397,7 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureData.h" />
+    <ClInclude Include="ThirdPersonCamera.h" />
     <ClInclude Include="TitleCamera.h" />
     <ClInclude Include="TitleRogo.h" />
     <ClInclude Include="TitleStart.h" />

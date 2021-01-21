@@ -17,6 +17,7 @@
 #include "RangeCursor.h"
 #include "CoreGaugeUI.h"
 #include "CharacterSpawner.h"
+#include "GameCameraManager.h"
 
 bool SceneGame::m_isGameOver = false;
 bool SceneGame::m_isVictory = true;
@@ -27,9 +28,7 @@ bool SceneGame::m_isVictory = true;
  */
 void SceneGame::Awake()
 {
-	m_BCamera = new CBulletTime();
-	m_BCamera->Awake();
-
+	ObjectManager::Create<GameCameraManager>("GameCameraManager");
 	ObjectManager::Create<CharacterSpawner>("CharacterSpawner");
 	m_pPlayer	= ObjectManager::Create<CPlayer>("Player");
 	ObjectManager::Create<RangeCursor>("RangeCursor");
@@ -49,10 +48,6 @@ void SceneGame::Awake()
 HRESULT SceneGame::Init()
 {
 	m_isGameOver = false;
-	m_BCamera->Init();
-
-	m_pCTPCamera->SetTransform(m_pPlayer->GetTransform());
-	CCamera::Set(m_pCTPCamera);
 
 	return S_OK;
 }
@@ -63,10 +58,8 @@ HRESULT SceneGame::Init()
  */
 void SceneGame::Uninit()
 {
-	m_BCamera->Uninit();
 	CScene::Uninit();
 
-	delete m_BCamera;
 }
 
 /**
