@@ -29,38 +29,69 @@ struct PLAYER_DEFAULT : public State<PLAYER_STATE>
 	PlayerStateMachine& machine;
 	PLAYER_DEFAULT(PlayerStateMachine & _machine) : State<PLAYER_STATE>(PLAYER_STATE::E_PLAYER_STATE_DEFAULT), machine(_machine) {}
 	Vector3 speed;
-	const float SPEED = 3.0f;
-
-	void Update() override
+	float resist;
+	const float MAX_SPEED = 5.0f;
+	const float MIN_SPEED = 2.0f;
+	
+	void Move()
 	{
 		speed = Vector3();
+		bool flg = false;
+
 
 		// 前後左右
 		if (CInput::GetKeyPress(VK_W)) {
-			speed += Vector3(0, 0, SPEED);
+			speed += Vector3(0, 0, 1);
+			flg = true;
 		}
 		if (CInput::GetKeyPress(VK_S)) {
-			speed += Vector3(0, 0, -SPEED);
+			speed += Vector3(0, 0, -1);
+			flg = true;
 		}
 		if (CInput::GetKeyPress(VK_A)) {
-			speed += Vector3(-SPEED, 0, 0);
+			speed += Vector3(-1, 0, 0);
+			flg = true;
 		}
 		if (CInput::GetKeyPress(VK_D)) {
-			speed += Vector3(SPEED, 0, 0);
+			flg = true;
+			speed += Vector3(1, 0, 0);
 		}
 		if (CInput::GetKeyPress(VK_LSHIFT)) {
-			speed += Vector3(0, SPEED, 0);
+			speed += Vector3(0, 1, 0);
+			flg = true;
 		}
 		if (CInput::GetKeyPress(VK_LCONTROL)) {
-			speed += Vector3(0, -SPEED, 0);
+			speed += Vector3(0, -1, 0);
+			flg = true;
 		}
 
+		if (flg == true)
+		{
+			if (MAX_SPEED - MIN_SPEED > resist){
+				resist += 0.1f;
+			}
+			speed = speed * (MAX_SPEED - resist);
+		}
+		else {
+			resist = 0;
+		}
 
+		machine.m_move->AddMove(speed);
+	}
+
+	void Init()
+	{
+		resist = 0;
+	}
+
+	void Update() override
+	{
 		if (CInput::GetKeyPress(VK_L) || CInput::GetMouseButton(0)) {
 			machine.m_ctrl->Attak();
 		}
 
-		machine.m_move->AddMove(speed);
+		Move();
+
 
 		if (CInput::GetKeyTrigger(VK_SPACE)) {
 			machine.GoToState(PLAYER_STATE::E_PLAYER_STATE_FD);
@@ -80,7 +111,7 @@ struct PLAYER_FD : public State<PLAYER_STATE>
 	PLAYER_FD(PlayerStateMachine & _machine) : State<PLAYER_STATE>(PLAYER_STATE::E_PLAYER_STATE_FD), machine(_machine) {}
 
 	const int WAIT_TIME = 1 * 60;
-	const float FD_SPEED = 5.0f;
+	const float FD_SPEED = 7.0f;
 	int m_waitTime;
 
 	void Init() override
@@ -125,7 +156,7 @@ struct PLAYER_AVOID : public State<PLAYER_STATE>
 	PlayerStateMachine& machine;
 	PLAYER_AVOID(PlayerStateMachine & _machine) : State<PLAYER_STATE>(PLAYER_STATE::E_PLAYER_STATE_AVOID), machine(_machine) {}
 	Vector3 speed;
-	const float SPEED = 5.0f;
+	const float SPEED = 10.0f;
 	const int WAIT_TIME = 15;
 	int m_waitTime;
 	int dir;
