@@ -148,11 +148,11 @@ void ShaderBuffer::Bind(int kind, UINT slot, void * data)
 void ShaderBuffer::UpdateData(void * data)
 {
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
-	//D3D11_MAPPED_SUBRESOURCE pData;
-	//if (SUCCEEDED(pDeviceContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
-	//	memcpy_s(pData.pData, pData.RowPitch, (void*)&data, sizeof(data));
-	//	pDeviceContext->Unmap(m_cbuffer, 0);
-	//}
+	D3D11_MAPPED_SUBRESOURCE pData;
+	if (SUCCEEDED(pDeviceContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+		memcpy_s(pData.pData, pData.RowPitch, data, m_size);
+		pDeviceContext->Unmap(m_cbuffer, 0);
+	}
 
-	pDeviceContext->UpdateSubresource(m_cbuffer, 0,nullptr, data,0,0);
+	//pDeviceContext->UpdateSubresource(m_cbuffer, 0,nullptr, data,0,0);
 }

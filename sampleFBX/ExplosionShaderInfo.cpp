@@ -86,10 +86,10 @@ void ExplosionShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 
 	HULL_DATA hullcb;
-	hullcb.factor.x = 20;
-	hullcb.factor.y = 20;
-	hullcb.factor.z = 20;
-	hullcb.factor.w = 20;
+	hullcb.factor.x = 1;
+	hullcb.factor.y = 1;
+	hullcb.factor.z = 1;
+	hullcb.factor.w = 1;
 //	m_HD.BindHS(0);
 
 	SHADER_GLOBAL cb;

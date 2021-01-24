@@ -24,13 +24,14 @@ class ShaderBuffer
 {
 private:
 	ID3D11Buffer* m_cbuffer;
-
+	UINT m_size;
 
 public:
-	HRESULT CreateCBuffer(int size)
+	HRESULT CreateCBuffer(UINT size)
 	{
 		HRESULT hr;
 		ID3D11Device* pDevice = CGraphics::GetDevice();
+		m_size = size;
 		// 定数バッファ生成
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
