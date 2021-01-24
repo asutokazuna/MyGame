@@ -8,13 +8,33 @@
 class ClothShaderInfo :public ShaderInfo
 {
 private:
+	struct SHADER_GLOBAL {
+		XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
+		XMMATRIX	mW;			// ワールド行列(転置行列)
+		XMMATRIX	mTex;		// テクスチャ行列(転置行列)
+		XMFLOAT4	value;
+	};
+	struct SHADER_GLOBAL2 {
+		XMVECTOR	vEye;		// 視点座標
+								// 光源
+		XMVECTOR	vLightDir;	// 光源方向
+		XMVECTOR	vLa;		// 光源色(アンビエント)
+		XMVECTOR	vLd;		// 光源色(ディフューズ)
+		XMVECTOR	vLs;		// 光源色(スペキュラ)
+								// マテリアル
+		XMVECTOR	vAmbient;	// アンビエント色(+テクスチャ有無)
+		XMVECTOR	vDiffuse;	// ディフューズ色
+		XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
+		XMVECTOR	vEmissive;	// エミッシブ色
+		XMFLOAT4	value;
+	};
+
+private:
 	XMFLOAT4X4 m_View;		//!< ビュー行列
 	XMFLOAT4X4 m_Proj;		//!< プロジェクション行列
 	XMFLOAT4X4 m_world;		//!< ワールド行列
-	XMFLOAT4X4 m_TexWorld;	//!< テクスチャ行列
 	float m_power;			//!< 揺れる強さ(振幅)
 	float m_fadethrosh;		//!< 消える速度
-	ID3D11ShaderResourceView* m_pTexture;	//!< テクスチャ
 	ID3D11ShaderResourceView* m_pNoizeTexture;	//!< テクスチャ
 public:
 	/**
@@ -46,12 +66,6 @@ public:
 	 */
 	void UpdateConstant();
 		
-	/**
-	 * @brief テクスチャのセット
-	 * @param[in] kind テクスチャの種類のenum番号
-	 * @retrun なし
-	 */
-	void SetTexture(int kind);
 
 	void SetNoizeTexture(int kind);
 		

@@ -1,12 +1,13 @@
 ﻿#include "ShaderInfo.h"
 #include "ShaderData.h"
+#include "TextureData.h"
 
 #define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
 #define M_SPECULAR		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
 #define M_AMBIENT		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
 #define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,0.0f)
 
-ShaderInfo::ShaderInfo(): m_VSKind(0), m_HSKind(-1), m_DSKind(-1), m_GSKind(-1),m_PSKind(0),m_VertexConstant(nullptr), m_PixelConstant(nullptr), m_material(nullptr), m_DomainConstant(nullptr)
+ShaderInfo::ShaderInfo(): m_VSKind(0), m_HSKind(-1), m_DSKind(-1), m_GSKind(-1),m_PSKind(0),m_material(nullptr), m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr)
 {
 	m_material = new MATERIAL;
 	// マテリアルの初期設定
@@ -93,5 +94,65 @@ ShaderInfo* ShaderInfo::ChangeAlpha(float alpha)
 	return this;
 }
 
+/**
+* @brief テクスチャのセット
+* @param[in] kind テクスチャの種類のenum番号
+* @retrun なし
+*/
+ShaderInfo* ShaderInfo::SetTexture(int kind)
+{
+	m_pTexture = TextureData::GetInstance().GetData(kind);
+
+	return this;
+}
+
+/**
+* @brief テクスチャのセット
+* @param[in] texture テクスチャデータ
+* @retrun なし
+*/
+void ShaderInfo::SetTexture(ID3D11ShaderResourceView* texture)
+{
+	m_pTexture = texture;
+}
+
 
 // EOF
+
+void ShaderBuffer::Bind(int kind, UINT slot, void * data)
+{
+	UpdateData(data);
+
+	switch (kind)
+	{
+	case ShaderKind::VS:
+		BindVS(slot);
+		break;
+	case ShaderKind::HS:
+		BindHS(slot);
+		break;
+	case ShaderKind::DS:
+		BindDS(slot);
+		break;
+	case ShaderKind::GS:
+		BindGS(slot);
+		break;
+	case ShaderKind::PS:
+		BindPS(slot);
+		break;
+	default:
+		break;
+	}
+}
+
+void ShaderBuffer::UpdateData(void * data)
+{
+	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+	//D3D11_MAPPED_SUBRESOURCE pData;
+	//if (SUCCEEDED(pDeviceContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+	//	memcpy_s(pData.pData, pData.RowPitch, (void*)&data, sizeof(data));
+	//	pDeviceContext->Unmap(m_cbuffer, 0);
+	//}
+
+	pDeviceContext->UpdateSubresource(m_cbuffer, 0,nullptr, data,0,0);
+}

@@ -1,4 +1,4 @@
-// FBXƒtƒ@ƒCƒ‹“Ç/•\¦ (FbxModel.h)
+ï»¿// FBXãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼/è¡¨ç¤º (FbxModel.h)
 //#define D3DCOMPILER
 #pragma once
 #include <stdio.h>
@@ -13,7 +13,7 @@
 
 #pragma comment(lib, "libfbxsdk-mt")
 
-// ƒ}ƒNƒ
+// ãƒã‚¯ãƒ­
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(p)			{if(p){(p)->Release();(p)=nullptr;}}
 #endif
@@ -24,24 +24,27 @@
 #define SAFE_DELETE_ARRAY(p)	{if(p){delete[]p;(p)=nullptr;}}
 #endif
 
-#define MAX_REF_POLY			60	// Å‘å‹¤—L’¸“_QÆ”
+#define MAX_REF_POLY			60	// æœ€å¤§å…±æœ‰é ‚ç‚¹å‚ç…§æ•°
 
-// ’è”
+class ShaderInfo;
+
+
+// å®šæ•°
 enum EByOpacity {
-	eNoAffect = 0,		// ‘S‚Ä
-	eOpacityOnly,		// •s“§–¾‚Ì‚İ
-	eTransparentOnly,	// “§–¾‚Ì‚İ
+	eNoAffect = 0,		// å…¨ã¦
+	eOpacityOnly,		// ä¸é€æ˜ã®ã¿
+	eTransparentOnly,	// é€æ˜ã®ã¿
 };
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 struct TFbxMaterial {
-	DirectX::XMFLOAT4	Ka;		// ƒAƒ“ƒrƒGƒ“ƒg+ƒeƒNƒXƒ`ƒƒ—L–³
-	DirectX::XMFLOAT4	Kd;		// ƒfƒBƒtƒ…[ƒY
-	DirectX::XMFLOAT4	Ks;		// ƒXƒyƒLƒ…ƒ‰+ƒXƒyƒLƒ…ƒ‰‹­“x
-	DirectX::XMFLOAT4	Ke;		// ƒGƒ~ƒbƒVƒu
-	ID3D11ShaderResourceView*	pTexture;		// ŠgUƒeƒNƒXƒ`ƒƒ
-	ID3D11ShaderResourceView*	pTexEmmisive;	// ”­ŒõƒeƒNƒXƒ`ƒƒ
-	DWORD		dwNumFace;		// ‚±‚Ìƒ}ƒeƒŠƒAƒ‹‚Ìƒ|ƒŠƒSƒ“”
+	DirectX::XMFLOAT4	Ka;		// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ+ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰ç„¡
+	DirectX::XMFLOAT4	Kd;		// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º
+	DirectX::XMFLOAT4	Ks;		// ã‚¹ãƒšã‚­ãƒ¥ãƒ©+ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·åº¦
+	DirectX::XMFLOAT4	Ke;		// ã‚¨ãƒŸãƒƒã‚·ãƒ–
+	ID3D11ShaderResourceView*	pTexture;		// æ‹¡æ•£ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	ID3D11ShaderResourceView*	pTexEmmisive;	// ç™ºå…‰ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	DWORD		dwNumFace;		// ã“ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒãƒªã‚´ãƒ³æ•°
 	TFbxMaterial()
 	{
 		Ka = DirectX::XMFLOAT4(0, 0, 0, 0);
@@ -58,13 +61,13 @@ struct TFbxMaterial {
 	}
 };
 
-// ’¸“_î•ñ
+// é ‚ç‚¹æƒ…å ±
 struct TFbxVertex {
-	DirectX::XMFLOAT3	vPos;	// ’¸“_ˆÊ’u
-	DirectX::XMFLOAT3	vNorm;	// ’¸“_–@ü
-	DirectX::XMFLOAT2	vTex;	// UVÀ•W
-	UINT		uBoneIndex[4];	// ƒ{[ƒ“”Ô†
-	float		fBoneWeight[4];	// ƒ{[ƒ“d‚İ
+	DirectX::XMFLOAT3	vPos;	// é ‚ç‚¹ä½ç½®
+	DirectX::XMFLOAT3	vNorm;	// é ‚ç‚¹æ³•ç·š
+	DirectX::XMFLOAT2	vTex;	// UVåº§æ¨™
+	UINT		uBoneIndex[4];	// ãƒœãƒ¼ãƒ³ç•ªå·
+	float		fBoneWeight[4];	// ãƒœãƒ¼ãƒ³é‡ã¿
 	TFbxVertex()
 	{
 		vPos = DirectX::XMFLOAT3(0, 0, 0);
@@ -75,10 +78,10 @@ struct TFbxVertex {
 	}
 };
 
-// ƒ{[ƒ“
+// ãƒœãƒ¼ãƒ³
 struct TBone {
-	DirectX::XMFLOAT4X4 mBindPose;	// ‰Šúƒ|[ƒY (‚¸‚Á‚Æ•Ï‚í‚ç‚È‚¢)
-	DirectX::XMFLOAT4X4 mNewPose;	// Œ»İ‚Ìƒ|[ƒY (‚»‚Ì“s“x•Ï‚í‚é)
+	DirectX::XMFLOAT4X4 mBindPose;	// åˆæœŸãƒãƒ¼ã‚º (ãšã£ã¨å¤‰ã‚ã‚‰ãªã„)
+	DirectX::XMFLOAT4X4 mNewPose;	// ç¾åœ¨ã®ãƒãƒ¼ã‚º (ãã®éƒ½åº¦å¤‰ã‚ã‚‹)
 
 	TBone()
 	{
@@ -99,11 +102,11 @@ struct TSkinInfo {
 	}
 };
 
-// 1’¸“_‚Ì‹¤—L (Å‘åMAX_REF_POLYƒ|ƒŠƒSƒ“)
+// 1é ‚ç‚¹ã®å…±æœ‰ (æœ€å¤§MAX_REF_POLYãƒãƒªã‚´ãƒ³)
 struct TPolyTable {
-	int nPolyIndex[MAX_REF_POLY];	// ƒ|ƒŠƒSƒ“”Ô† 
-	int nIndex123[MAX_REF_POLY];	// 3‚Â‚Ì’¸“_‚Ì‚¤‚¿A‰½”Ô–Ú‚©
-	int nNumRef;					// ‘®‚µ‚Ä‚¢‚éƒ|ƒŠƒSƒ“”
+	int nPolyIndex[MAX_REF_POLY];	// ãƒãƒªã‚´ãƒ³ç•ªå· 
+	int nIndex123[MAX_REF_POLY];	// 3ã¤ã®é ‚ç‚¹ã®ã†ã¡ã€ä½•ç•ªç›®ã‹
+	int nNumRef;					// å±ã—ã¦ã„ã‚‹ãƒãƒªã‚´ãƒ³æ•°
 
 	TPolyTable()
 	{
@@ -114,7 +117,7 @@ struct TPolyTable {
 };
 
 //
-// FBXƒ‚ƒfƒ‹ŒõŒ¹
+// FBXãƒ¢ãƒ‡ãƒ«å…‰æº
 //
 class CFbxLight
 {
@@ -132,36 +135,37 @@ public:
 	}
 };
 
-// ƒƒbƒVƒ… ƒNƒ‰ƒX
+// ãƒ¡ãƒƒã‚·ãƒ¥ ã‚¯ãƒ©ã‚¹
 class CFbxMesh
 {
 public:
 	CFbxMesh();
 	~CFbxMesh();
 
-	CFbxMesh** m_ppChild;	// ©•ª‚Ìq‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD m_dwNumChild;		// q‚Ì”
+	CFbxMesh** m_ppChild;	// è‡ªåˆ†ã®å­ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD m_dwNumChild;		// å­ã®æ•°
 
 public:
-	// ŠO•”‚ÌƒfƒoƒCƒX“™î•ñ
+	// å¤–éƒ¨ã®ãƒ‡ãƒã‚¤ã‚¹ç­‰æƒ…å ±
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
 	ID3D11SamplerState* m_pSampleLinear;
 	ID3D11Buffer* m_pConstantBuffer0;
 	ID3D11Buffer* m_pConstantBuffer1;
-	FbxNode* m_pFBXNode;						// FBX‚©‚çp¨s—ñ‚ğæ‚èo‚·Û‚Ég‚¤FBXƒ|ƒCƒ“ƒ^
+	FbxNode* m_pFBXNode;						// FBXã‹ã‚‰å§¿å‹¢è¡Œåˆ—ã‚’å–ã‚Šå‡ºã™éš›ã«ä½¿ã†FBXãƒã‚¤ãƒ³ã‚¿
 	DirectX::XMFLOAT4X4 m_mView;
 	DirectX::XMFLOAT4X4 m_mProj;
 	CFbxLight* m_pLight;
 	DirectX::XMFLOAT3* m_pCamera;
-	// ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖ˜A
-	DirectX::XMFLOAT4X4 m_mParentOrientation;	// e‚Ìp¨s—ñ
-	DirectX::XMFLOAT4X4 m_mFBXOrientation;		// ©•ª‚Ìp¨s—ñ (e‚©‚çŒ©‚½‘Š‘Îp¨)
-	DirectX::XMFLOAT4X4 m_mFinalWorld;			// ÅI“I‚Èƒ[ƒ‹ƒhs—ñ (‚±‚Ìp¨‚ÅƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é)
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
+	DirectX::XMFLOAT4X4 m_mParentOrientation;	// è¦ªã®å§¿å‹¢è¡Œåˆ—
+	DirectX::XMFLOAT4X4 m_mFBXOrientation;		// è‡ªåˆ†ã®å§¿å‹¢è¡Œåˆ— (è¦ªã‹ã‚‰è¦‹ãŸç›¸å¯¾å§¿å‹¢)
+	DirectX::XMFLOAT4X4 m_mFinalWorld;			// æœ€çµ‚çš„ãªãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ— (ã“ã®å§¿å‹¢ã§ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹)
 	TFbxMaterial* m_pMateUsr;
+	ShaderInfo* m_shader;
 
 private:
-	// ƒƒbƒVƒ…ŠÖ˜A
+	// ãƒ¡ãƒƒã‚·ãƒ¥é–¢é€£
 	DWORD m_dwNumVert;
 	DWORD m_dwNumFace;
 	DWORD m_dwNumUV;
@@ -169,20 +173,20 @@ private:
 	ID3D11Buffer** m_ppIndexBuffer;
 	TFbxMaterial* m_pMaterial;
 	DWORD m_dwNumMaterial;
-	// «’¸“_”z—ñ/ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğ’Ç‰Á.
-	TFbxVertex* m_pVertex;	// ’¸“_”z—ñ
-	int** m_ppIndex;		// ƒCƒ“ƒfƒbƒNƒX”z—ñ(‚Ì”z—ñ)
-	// ƒ{[ƒ“
+	// â†“é ‚ç‚¹é…åˆ—/ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’è¿½åŠ .
+	TFbxVertex* m_pVertex;	// é ‚ç‚¹é…åˆ—
+	int** m_ppIndex;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—(ã®é…åˆ—)
+	// ãƒœãƒ¼ãƒ³
 	int m_nNumSkin;
 	TSkinInfo* m_pBoneTable;
 	ID3D11Buffer* m_pConstantBufferBone;
 
 public:
-	// ƒƒ\ƒbƒh
+	// ãƒ¡ã‚½ãƒƒãƒ‰
 	HRESULT CreateFromFBX(FbxMesh* pFbxMesh);
 	void RenderMesh(EByOpacity byOpacity = eNoAffect);
 	void SetNewPoseMatrices(int nFrame);
-	// «’Ç‰Á2
+	// â†“è¿½åŠ 2
 	int GetVertexCount();
 	int GetVertex(TFbxVertex* pVertex, int nCount);
 	int GetIndexCount();
@@ -198,7 +202,7 @@ private:
 };
 
 //
-// FBXƒ‚ƒfƒ‹ ƒNƒ‰ƒX
+// FBXãƒ¢ãƒ‡ãƒ« ã‚¯ãƒ©ã‚¹
 //
 class CFbxModel
 {
@@ -209,7 +213,7 @@ public:
 	}
 	~CFbxModel();
 
-	// ƒƒ\ƒbƒh
+	// ãƒ¡ã‚½ãƒƒãƒ‰
 	void Render(DirectX::XMFLOAT4X4& mWorld, DirectX::XMFLOAT4X4& mView, DirectX::XMFLOAT4X4& mProj, EByOpacity byOpacity = eNoAffect);
 	HRESULT Init(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LPCSTR pszFileName);
 	void SetLight(CFbxLight& light);
@@ -219,7 +223,7 @@ public:
 	void SetAnimStack(int nAnimStack);
 	int GetMaxAnimStack();
 	void SetMaterial(TFbxMaterial* pMaterial = nullptr);
-	// «’Ç‰Á2
+	// â†“è¿½åŠ 2
 	int GetVertexCount();
 	int GetVertex(TFbxVertex* pVertex, int nCount);
 	int GetIndexCount();
@@ -230,10 +234,11 @@ public:
 
 private:
 	CFbxMesh* m_pRootMesh;
-	// ŠO•”‚ÌƒfƒoƒCƒX“™î•ñ
+	// å¤–éƒ¨ã®ãƒ‡ãƒã‚¤ã‚¹ç­‰æƒ…å ±
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext *m_pDeviceContext;
 	ID3D11SamplerState* m_pSampleLinear;
+
 	ID3D11Buffer* m_pConstantBuffer0;
 	ID3D11Buffer* m_pConstantBuffer1;
 	ID3D11InputLayout* m_pVertexLayout;
@@ -246,18 +251,19 @@ private:
 	FbxManager* m_pSdkManager;
 	FbxImporter* m_pImporter;
 	FbxScene* m_pScene;
-	DirectX::XMFLOAT4X4 m_mFinalWorld;//ÅI“I‚Èƒ[ƒ‹ƒhs—ñi‚±‚Ìp¨‚ÅƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚éj
+	DirectX::XMFLOAT4X4 m_mFinalWorld;//æœ€çµ‚çš„ãªãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ï¼ˆã“ã®å§¿å‹¢ã§ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹ï¼‰
 	CFbxLight m_light;
 	DirectX::XMFLOAT3 m_vCamera;
 	TFbxMaterial* m_pMaterial;
 	TFbxMaterial m_material;
+	ShaderInfo* m_shader;
 
 	DirectX::XMFLOAT3 m_vCenter;
 	DirectX::XMFLOAT3 m_vBBox;
 	float m_fRadius;
 
 private:
-	// ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ãƒ¬ãƒ¼ãƒ 
 	int m_nAnimFrame;
 	FbxTime m_tStart;
 	FbxTime m_tStop;
@@ -275,3 +281,5 @@ private:
 
 	void CalcBoundingSphere();
 };
+
+// EOF

@@ -5,6 +5,13 @@
 #include "ShaderData.h"
 #include "Shader.h"
 
+enum LAYOUT_KIND
+{
+	IL_2D,
+	IL_3D,
+	IL_MAX,
+};
+
 /**
  * @struct シェーダーデータのテーブル
  */
@@ -13,14 +20,22 @@ struct SHADER_TABLE {
 	const char* filename;
 };
 
+struct VERTEX_TABLE
+{
+	SHADER_TABLE table;
+	LAYOUT_KIND layoutKind;
+
+};
+
 /**
  * @biref バーテックスシェーダー
  */
-SHADER_TABLE VS_Table[] = 
+VERTEX_TABLE VS_Table[] = 
 {
-	{ShaderData::VS_VERTEX, "Vertex"},
-	{ShaderData::VS_CLOTH, "ClothVertex"},
-	{ShaderData::VS_DEFAULT, "DefaultVS"},
+	{ShaderData::VS_VERTEX, "Vertex",IL_2D },
+	{ShaderData::VS_VERTEX3D, "FbxModelVertex",IL_3D },
+	{ShaderData::VS_CLOTH, "ClothVertex",IL_2D },
+	{ShaderData::VS_DEFAULT, "DefaultVS",IL_2D },
 };
 
 /**
@@ -29,6 +44,7 @@ SHADER_TABLE VS_Table[] =
 SHADER_TABLE PS_Table[] = 
 {
 	{ShaderData::PS_PIXEL, "Pixel"},
+	{ShaderData::PS_PIXEL3D, "FbxModelPixel"},
 	{ShaderData::PS_CLOTH, "ClothPixel"},
 	{ShaderData::PS_EXPLOSION, "ExplosionPS"},
 	{ShaderData::PS_LIFEGAUGE, "LifeGaugePS"},
@@ -67,12 +83,29 @@ SHADER_TABLE GS_Table[] =
 void ShaderData::InitInstance()
 {
 	// シェーダ初期化
-	static const D3D11_INPUT_ELEMENT_DESC layout[] = {
+	static const D3D11_INPUT_ELEMENT_DESC layout2D[] = {
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                            D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,       0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
+	// 頂点フォーマットの定義、生成
+	static const D3D11_INPUT_ELEMENT_DESC layout3D[] = {
+		{ "POSITION",    0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                            D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL",      0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD",    0, DXGI_FORMAT_R32G32_FLOAT,       0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "BONE_INDEX",  0, DXGI_FORMAT_R32G32B32A32_UINT,  0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "BONE_WEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+
+	static const D3D11_INPUT_ELEMENT_DESC* pLayout[] = {
+		layout2D,layout3D
+	};
+
+	static const int layoutCnt[] = {
+		_countof(layout2D), _countof(layout3D)
+	};
+
 	ID3D11VertexShader* workVs;
 	ID3D11InputLayout* workIl;
 	ID3D11PixelShader* workPs;
@@ -82,9 +115,9 @@ void ShaderData::InitInstance()
 
 	for (int i = 0; i < VS_MAX; i++)
 	{
-		LoadVertexShader(VS_Table[i].filename, &workVs, &workIl, layout, _countof(layout));
-		m_VS.Set(VS_Table[i].type,workVs);
-		m_IL.Set(VS_Table[i].type,workIl);
+		LoadVertexShader(VS_Table[i].table.filename, &workVs, &workIl, pLayout[VS_Table[i].layoutKind], layoutCnt[VS_Table[i].layoutKind]);
+		m_VS.Set(VS_Table[i].table.type,workVs);
+		m_IL.Set(VS_Table[i].table.type,workIl);
 	}
 	for (int i = 0; i < PS_MAX; i++)
 	{

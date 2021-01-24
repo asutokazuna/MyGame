@@ -39,6 +39,7 @@ public:
 	enum VS_KIND
 	{
 		VS_VERTEX,
+		VS_VERTEX3D,
 		VS_CLOTH,
 		VS_DEFAULT,
 		VS_MAX
@@ -50,6 +51,7 @@ public:
 	enum PS_KIND
 	{
 		PS_PIXEL,
+		PS_PIXEL3D,
 		PS_CLOTH,
 		PS_EXPLOSION,
 		PS_LIFEGAUGE,

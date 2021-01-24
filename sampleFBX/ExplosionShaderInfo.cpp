@@ -5,35 +5,10 @@
 #include "FbxModel.h"
 #include "TextureData.h"
 
-struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
-	XMMATRIX	mW;			// ワールド行列(転置行列)
-	XMMATRIX	mTex;		// テクスチャ行列(転置行列)
-	XMFLOAT4	value;
-};
-struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// 視点座標
-							// 光源
-	XMVECTOR	vLightDir;	// 光源方向
-	XMVECTOR	vLa;		// 光源色(アンビエント)
-	XMVECTOR	vLd;		// 光源色(ディフューズ)
-	XMVECTOR	vLs;		// 光源色(スペキュラ)
-							// マテリアル
-	XMVECTOR	vAmbient;	// アンビエント色(+テクスチャ有無)
-	XMVECTOR	vDiffuse;	// ディフューズ色
-	XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
-	XMVECTOR	vEmissive;	// エミッシブ色
-	XMFLOAT4	value;
-};
-struct HULL_DATA
-{
-	XMFLOAT4 factor;
-};
-
 /**
  * @brief コンストラクタ
  */
-ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr), m_fadethrosh(0), m_pNoizeTexture(nullptr)
+ExplosionShaderInfo::ExplosionShaderInfo(): m_fadethrosh(0), m_pNoizeTexture(nullptr)
 {
 	m_VSKind = ShaderData::VS_DEFAULT;
 	m_HSKind = ShaderData::HS_DEFAULT;
@@ -41,9 +16,9 @@ ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 
 	m_GSKind = ShaderData::GS_EXPLOSION;
 	m_PSKind = ShaderData::PS_EXPLOSION;
 
-	m_HullConstant = new ID3D11Buffer*();
-	m_GeometryConstant = new ID3D11Buffer*();
-	m_PixelConstant = new ID3D11Buffer*();
+	m_cbufferManager.Create<SHADER_GLOBAL>("SHADER_GLOBAL");
+	m_cbufferManager.Create<SHADER_GLOBAL2>("SHADER_GLOBAL2");
+	m_cbufferManager.Create<HULL_DATA>("HULL_DATA");
 	m_time = 0;
 	m_power = 0;
 }
@@ -53,9 +28,6 @@ ExplosionShaderInfo::ExplosionShaderInfo():m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 
  */
 ExplosionShaderInfo::~ExplosionShaderInfo()
 {
-	delete m_HullConstant;
-	delete m_GeometryConstant;
-	delete m_PixelConstant;
 }
 
 /**
@@ -64,9 +36,6 @@ ExplosionShaderInfo::~ExplosionShaderInfo()
  */
 void ExplosionShaderInfo::Awake()
 {
-	CreateConstantBuffer<SHADER_GLOBAL>(m_GeometryConstant);
-	CreateConstantBuffer<SHADER_GLOBAL2>(m_PixelConstant);
-	CreateConstantBuffer<HULL_DATA>(m_HullConstant);
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
@@ -80,15 +49,6 @@ void ExplosionShaderInfo::Awake()
  */
 void ExplosionShaderInfo::Uninit()
 {
-	for (int i = 0; i < 1; ++i) {
-		SAFE_RELEASE(m_HullConstant[i]);
-	}
-	for (int i = 0; i < 1; ++i) {
-		SAFE_RELEASE(m_PixelConstant[i]);
-	}
-	for (int i = 0; i < 1; ++i) {
-		SAFE_RELEASE(m_GeometryConstant[i]);
-	}
 }
 
 /**
@@ -130,8 +90,7 @@ void ExplosionShaderInfo::UpdateConstant()
 	hullcb.factor.y = 20;
 	hullcb.factor.z = 20;
 	hullcb.factor.w = 20;
-	pDeviceContext->UpdateSubresource(m_HullConstant[0], 0, nullptr, &hullcb, 0, 0);
-	pDeviceContext->HSSetConstantBuffers(0, 1, &m_HullConstant[0]);
+//	m_HD.BindHS(0);
 
 	SHADER_GLOBAL cb;
 	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_world);
@@ -141,8 +100,7 @@ void ExplosionShaderInfo::UpdateConstant()
 	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&m_TexWorld));
 	cb.value.x = m_time;
 	cb.value.y = m_power;
-	pDeviceContext->UpdateSubresource(m_GeometryConstant[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->GSSetConstantBuffers(0, 1, &m_GeometryConstant[0]);
+	//m_SG.BindDS(0);
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
@@ -160,28 +118,11 @@ void ExplosionShaderInfo::UpdateConstant()
 		(m_pTexture != nullptr) ? 1.f : 0.f);
 	cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
 	cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
-	pDeviceContext->UpdateSubresource(m_PixelConstant[0], 0, nullptr, &cb2, 0, 0);
-	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
-}
+	//m_SG2.BindPS(1);
 
-/**
- * @brief テクスチャのセット
- * @param[in] kind テクスチャの種類のenum番号
- * @retrun なし
- */
-void ExplosionShaderInfo::SetTexture(int kind)
-{
-	m_pTexture = TextureData::GetInstance().GetData(kind);
-}
-
-/**
- * @brief テクスチャのセット
- * @param[in] texture テクスチャデータ
- * @retrun なし
- */
-void ExplosionShaderInfo::SetTexture(ID3D11ShaderResourceView * texture)
-{
-	m_pTexture = texture;
+	m_cbufferManager.BindBuffer("HULL_DATA", ShaderKind::HS, &hullcb, 0);
+	m_cbufferManager.BindBuffer("SHADER_GLOBAL", ShaderKind::DS, &cb, 0);
+	m_cbufferManager.BindBuffer("SHADER_GLOBAL2", ShaderKind::PS, &cb2, 1);
 }
 
 /**

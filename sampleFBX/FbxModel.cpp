@@ -2,6 +2,8 @@
 #include "FbxModel.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Graphics.h"
+#include "ShaderInfo.h"
 
 #pragma comment(lib, "d3d11")
 #ifdef D3DCOMPILER
@@ -73,6 +75,7 @@ CFbxMesh::CFbxMesh()
 	m_pVertexBuffer = nullptr;
 	m_ppIndexBuffer = nullptr;
 	m_pMaterial = nullptr;
+	m_shader = nullptr;
 	m_dwNumMaterial = 0;
 	m_nNumSkin = 0;
 	m_pBoneTable = nullptr;
@@ -525,6 +528,8 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 		m_pDeviceContext->IASetIndexBuffer(m_ppIndexBuffer[i], DXGI_FORMAT_R32_UINT, 0);
 
 		// マテリアルの各要素をシェーダに渡す
+		//m_shader->UpdateMatCBuffer(&sg);
+		//m_shader->UpdateMatCBuffer<T>();
 		D3D11_MAPPED_SUBRESOURCE pData;
 		if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer1, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
 			SHADER_MATERIAL sg;
@@ -545,9 +550,7 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 			if (m_pMaterial[i].pTexEmmisive)
 				m_pDeviceContext->PSSetShaderResources(1, 1, &m_pMaterial[i].pTexEmmisive);
 		}
-		// ボーンをシェーダに渡す
-		m_pDeviceContext->VSSetConstantBuffers(2, 1, &m_pConstantBufferBone);
-		m_pDeviceContext->PSSetConstantBuffers(2, 1, &m_pConstantBufferBone);
+		m_shader->UpdateBoneCBuffer();
 		// 描画
 		m_pDeviceContext->DrawIndexed(m_pMaterial[i].dwNumFace * 3, 0, 0);
 	}
@@ -887,6 +890,7 @@ CFbxModel::CFbxModel()
 	m_nAnimFrame = 0;
 	m_nAnimStack = 0;
 	m_pMaterial = nullptr;
+	m_shader = nullptr;
 	m_vCenter = m_vBBox = XMFLOAT3(0, 0, 0);
 	m_fRadius = -1.0f;
 }
@@ -952,30 +956,33 @@ HRESULT CFbxModel::LoadRecursive(FbxNode* pNode, CFbxMesh* pFBXMesh)
 }
 
 //---------------------------------------------------------------------------------------
-// 初期化
+// 初期化(ローダー)
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LPCSTR pszFileName)
 {
 	m_pDevice = pDevice;
 	m_pDeviceContext = pContext;
 
-	HRESULT hr = InitShader();
-	if (FAILED(hr)) {
-		MessageBoxW(0, L"メッシュ用シェーダ作成失敗", nullptr, MB_OK);
-		return hr;
-	}
+	HRESULT hr;
+	// = InitShader();
+	//if (FAILED(hr)) {
+	//	MessageBoxW(0, L"メッシュ用シェーダ作成失敗", nullptr, MB_OK);
+	//	return hr;
+	//}
 
-	// テクスチャ用サンプラ作成
-	CD3D11_DEFAULT def;
-	CD3D11_SAMPLER_DESC sd(def);
-	sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	hr = m_pDevice->CreateSamplerState(&sd, &m_pSampleLinear);
-	if (FAILED(hr)) {
-		MessageBoxW(0, L"テクスチャ用サンプラ作成失敗", nullptr, MB_OK);
-		return hr;
-	}
+	//// テクスチャ用サンプラ作成
+	//CD3D11_DEFAULT def;
+	//CD3D11_SAMPLER_DESC sd(def);
+	//sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	//sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	//sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	//hr = m_pDevice->CreateSamplerState(&sd, &m_pSampleLinear);
+	//if (FAILED(hr)) {
+	//	MessageBoxW(0, L"テクスチャ用サンプラ作成失敗", nullptr, MB_OK);
+	//	return hr;
+	//}
+
+	m_pSampleLinear = CGraphics::GetSamplerState();
 
 	char* pszFName = nullptr;
 	size_t uFName = 0;
@@ -1115,6 +1122,7 @@ void CFbxModel::RenderMesh(CFbxMesh* pMesh, EByOpacity byOpacity)
 	pMesh->m_pLight = &m_light;
 	pMesh->m_pCamera = &m_vCamera;
 	pMesh->m_pMateUsr = m_pMaterial;
+	pMesh->m_shader = m_shader;
 	pMesh->RenderMesh(byOpacity);
 }
 

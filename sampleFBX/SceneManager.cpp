@@ -38,8 +38,8 @@ SceneManager::SceneManager(): m_pCamera(nullptr),m_pSky(nullptr), m_FPS(0)
 void SceneManager::Init()
 {
 	ShaderData::Init();
-	ModelData::Init();
 	TextureData::Init();
+	ModelData::Init();
 	CSound::Init();
 	CollisionManager::GetInstance().Init();
 
@@ -49,11 +49,11 @@ void SceneManager::Init()
 	m_pCamera->Awake();
 	m_pCamera->Init();
 
-	m_pSky = new CSky();
-	m_pSky->Init();
+	//m_pSky = new CSky();
+	//m_pSky->Init();
 	Fade::Init();
 
-	m_nowScene = new SceneGame();
+	m_nowScene = new SceneTitle();
 	m_nowScene->Awake();
 	//ObjectManager::GetInstance().Awake();
 
@@ -127,7 +127,7 @@ void SceneManager::Draw()
 		//ImGui::TreePop();
 	//}
 #endif
-	m_pSky->Draw();
+	//m_pSky->Draw();
 	//CCamera::Get()->Draw();
 	m_nowScene->Draw();
 

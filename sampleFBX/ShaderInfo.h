@@ -3,6 +3,114 @@
 #include "Graphics.h"
 #include <string>
 #include "MyMath.h"
+#include <unordered_map>
+#include <memory>
+
+enum ShaderKind
+{
+	VS,
+	HS,
+	DS,
+	GS,
+	PS,
+
+	MAX
+};
+
+/**
+ * @brief コンスタントバッファをラップしたクラス
+ */
+class ShaderBuffer
+{
+private:
+	ID3D11Buffer* m_cbuffer;
+
+
+public:
+	HRESULT CreateCBuffer(int size)
+	{
+		HRESULT hr;
+		ID3D11Device* pDevice = CGraphics::GetDevice();
+		// 定数バッファ生成
+		D3D11_BUFFER_DESC bd;
+		ZeroMemory(&bd, sizeof(bd));
+		bd.Usage = D3D11_USAGE_DYNAMIC;
+		bd.ByteWidth = size;
+		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bd.MiscFlags = 0;
+		hr = pDevice->CreateBuffer(&bd, nullptr, &m_cbuffer);
+		return hr;
+	}
+
+public:
+	ShaderBuffer()
+	{
+		//CreateCBuffer();
+	}
+
+	~ShaderBuffer()
+	{
+		SAFE_RELEASE(m_cbuffer);
+	}
+
+	void Bind(int kind, UINT slot, void* data);
+private:
+	void BindVS(UINT slot)
+	{
+		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		pDeviceContext->VSSetConstantBuffers(slot, 1, &m_cbuffer);
+	}
+	void BindPS(UINT slot)
+	{
+		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		pDeviceContext->PSSetConstantBuffers(slot, 1, &m_cbuffer);
+	}
+	void BindGS(UINT slot)
+	{
+		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		pDeviceContext->GSSetConstantBuffers(slot, 1, &m_cbuffer);
+	}
+	void BindHS(UINT slot)
+	{
+		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		pDeviceContext->HSSetConstantBuffers(slot, 1, &m_cbuffer);
+	}
+	void BindDS(UINT slot)
+	{
+		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		pDeviceContext->DSSetConstantBuffers(slot, 1, &m_cbuffer);
+	}
+	void Update()
+	{
+		//ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
+		//D3D11_MAPPED_SUBRESOURCE pData;
+		//if (SUCCEEDED(m_pDeviceContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+		//	memcpy_s(pData.pData, pData.RowPitch, (void*)&m_data, sizeof(m_data));
+		//	m_pDeviceContext->Unmap(m_cbuffer, 0);
+		//}
+	}
+	void UpdateData(void* data);
+
+};
+
+class ShaderBufferManager
+{
+private:
+	std::unordered_map<std::string, std::unique_ptr<ShaderBuffer>> m_buffList;
+public:
+	template <class T>
+	void Create(std::string name)
+	{
+		m_buffList[name] = std::make_unique<ShaderBuffer>();
+		m_buffList[name].get()->CreateCBuffer(sizeof(T));
+	}
+
+	void BindBuffer(std::string name, int shaderkind, void* data, UINT slot)
+	{
+		m_buffList[name].get()->Bind(shaderkind, slot, data);
+	}
+};
 
 class ShaderInfo :public Component
 {
@@ -22,39 +130,25 @@ protected:
 	int m_DSKind;	// ドメインシェーダの種類
 	int m_GSKind;	// ジオメトリシェーダの種類
 	int m_PSKind;	// ピクセルシェーダの種類
-	int m_VSMax;
-	int m_PSMax;	// 最大数
-	ID3D11Buffer** m_VertexConstant;
-	ID3D11Buffer** m_PixelConstant;
-	ID3D11Buffer** m_HullConstant;
-	ID3D11Buffer** m_DomainConstant;
-	ID3D11Buffer** m_GeometryConstant;
 	MATERIAL* m_material;
+	XMFLOAT4X4 m_TexWorld;
+	ID3D11ShaderResourceView* m_pTexture;
+
+	ShaderBufferManager m_cbufferManager;
 public:
 	ShaderInfo();
 	virtual ~ShaderInfo();
-	//
-	//void Uninit();
 
-	//virtual void Draw() = 0;
+	virtual void UpdateConstant() = 0;
 
-	virtual void UpdateConstant(){}
+	virtual void UpdateMatCBuffer(){}
 
-	template<typename T>
-	bool CreateConstantBuffer(ID3D11Buffer** buffer)
+	virtual void UpdateBoneCBuffer(){}
+
+
+	virtual void BindCBuffer(std::string name, int shaderkind, void *data, int slot)
 	{
-		HRESULT hr;
-		ID3D11Device* pDevice = CGraphics::GetDevice();
-		// 定数バッファ生成
-		D3D11_BUFFER_DESC bd;
-		ZeroMemory(&bd, sizeof(bd));
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof(T);
-		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bd.CPUAccessFlags = 0;
-		hr = pDevice->CreateBuffer(&bd, nullptr, buffer);
-		if (FAILED(hr)) return false;
-		return true;
+		m_cbufferManager.BindBuffer(name, shaderkind, data, slot);
 	}
 
 	void SetShader();
@@ -70,6 +164,9 @@ public:
 	ShaderInfo* ChangeColor(float r, float g, float b, float a);
 
 	ShaderInfo* ChangeAlpha(float alpha);
+
+	ShaderInfo* SetTexture(int kind);
+	void SetTexture(ID3D11ShaderResourceView* texture);
 
 	virtual void SetFloat(std::string key, float value){}
 	virtual void SetFloat(std::string key, XMFLOAT4 value){}

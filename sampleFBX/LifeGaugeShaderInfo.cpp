@@ -1,4 +1,4 @@
-#include "LifeGaugeShaderInfo.h"
+ï»¿#include "LifeGaugeShaderInfo.h"
 #include "ShaderData.h"
 #include "Graphics.h"
 #include "MyMath.h"
@@ -13,56 +13,30 @@
 #define NUM_VSCONSTANT (1)
 #define NUM_PSCONSTANT (1)
 
-//*****************************************************************************
-// ƒVƒF[ƒ_‚É“n‚·’l
-struct SHADER_GLOBAL {
-	XMMATRIX	mWVP;		// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ(“]’us—ñ)
-	XMMATRIX	mW;			// ƒ[ƒ‹ƒhs—ñ(“]’us—ñ)
-	XMMATRIX	mTex;		// ƒeƒNƒXƒ`ƒƒs—ñ(“]’us—ñ)
-};
-struct SHADER_GLOBAL2 {
-	XMVECTOR	vEye;		// ‹“_À•W
-							// ŒõŒ¹
-	XMVECTOR	vLightDir;	// ŒõŒ¹•ûŒü
-	XMVECTOR	vLa;		// ŒõŒ¹F(ƒAƒ“ƒrƒGƒ“ƒg)
-	XMVECTOR	vLd;		// ŒõŒ¹F(ƒfƒBƒtƒ…[ƒY)
-	XMVECTOR	vLs;		// ŒõŒ¹F(ƒXƒyƒLƒ…ƒ‰)
-							// ƒ}ƒeƒŠƒAƒ‹
-	XMVECTOR	vAmbient;	// ƒAƒ“ƒrƒGƒ“ƒgF(+ƒeƒNƒXƒ`ƒƒ—L–³)
-	XMVECTOR	vDiffuse;	// ƒfƒBƒtƒ…[ƒYF
-	XMVECTOR	vSpecular;	// ƒXƒyƒLƒ…ƒ‰F(+ƒXƒyƒLƒ…ƒ‰‹­“x)
-	XMVECTOR	vEmissive;	// ƒGƒ~ƒbƒVƒuF
-	XMFLOAT4	value;		// x:è‡’l@y.z.w:–¢g—p
-};
-
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
-LifeGaugeShaderInfo::LifeGaugeShaderInfo() :m_TexWorld(XMFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), m_pTexture(nullptr)
+LifeGaugeShaderInfo::LifeGaugeShaderInfo()
 {
-	m_VertexConstant = new ID3D11Buffer*();
-	m_PixelConstant = new ID3D11Buffer*();
 	m_VSKind = ShaderData::VS_VERTEX;
 	m_PSKind = ShaderData::PS_LIFEGAUGE;
+	m_cbufferManager.Create<SHADER_GLOBAL>("SHADER_GLOBAL");
+	m_cbufferManager.Create<SHADER_GLOBAL2>("SHADER_GLOBAL2");
 }
 
 /**
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
+ * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 LifeGaugeShaderInfo::~LifeGaugeShaderInfo()
 {
-	delete m_VertexConstant;
-	delete m_PixelConstant;
 }
 
 /**
- * @brief ‰Šú‰»
- * @retrun ‚È‚µ
+ * @brief åˆæœŸåŒ–
+ * @retrun ãªã—
  */
 void LifeGaugeShaderInfo::Awake()
 {
-	CreateConstantBuffer<SHADER_GLOBAL>(m_VertexConstant);
-	CreateConstantBuffer<SHADER_GLOBAL2>(&m_PixelConstant[0]);
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
@@ -70,22 +44,16 @@ void LifeGaugeShaderInfo::Awake()
 }
 
 /**
- * @brief I—¹
- * @retrun ‚È‚µ
+ * @brief çµ‚äº†
+ * @retrun ãªã—
  */
 void LifeGaugeShaderInfo::Uninit()
 {
-	for (int i = 0; i < NUM_VSCONSTANT; ++i) {
-		SAFE_RELEASE(m_VertexConstant[i]);
-	}
-	for (int i = 0; i < NUM_PSCONSTANT; ++i) {
-		SAFE_RELEASE(m_PixelConstant[i]);
-	}
 }
 
 /**
- * @brief ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚ÌXV
- * @retrun ‚È‚µ
+ * @brief ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°
+ * @retrun ãªã—
  */
 void LifeGaugeShaderInfo::UpdateConstant()
 {
@@ -104,12 +72,12 @@ void LifeGaugeShaderInfo::UpdateConstant()
 		XMLoadFloat4x4(&m_View) * XMLoadFloat4x4(&m_Proj));
 	cb.mW = XMMatrixTranspose(mtxWorld);
 	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&m_TexWorld));
-	pDeviceContext->UpdateSubresource(m_VertexConstant[0], 0, nullptr, &cb, 0, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &m_VertexConstant[0]);
+	//m_SG.BindVS(0);
+
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
-	// ‚Æ‚è‚ ‚¦‚¸ƒ‰ƒCƒg–³‚µ
+	// ã¨ã‚Šã‚ãˆãšãƒ©ã‚¤ãƒˆç„¡ã—
 	cb2.vLightDir = XMVectorSet(0, 0, 0, 0.f);
 	cb2.vLa = XMLoadFloat4(&light->m_ambient);
 	cb2.vLd = XMLoadFloat4(&light->m_diffuse);
@@ -122,30 +90,10 @@ void LifeGaugeShaderInfo::UpdateConstant()
 	cb2.vSpecular = XMVectorSet(pMaterial->Specular.x, pMaterial->Specular.y, pMaterial->Specular.z, pMaterial->Power);
 	cb2.vEmissive = XMLoadFloat4(&pMaterial->Emissive);
 	cb2.value.x = m_SizePer;
-	pDeviceContext->UpdateSubresource(m_PixelConstant[0], 0, nullptr, &cb2, 0, 0);
-	pDeviceContext->PSSetConstantBuffers(1, 1, &m_PixelConstant[0]);
-}
+	//m_SG2.BindPS(1);
 
-/**
- * @brief ƒeƒNƒXƒ`ƒƒ‚ÌƒZƒbƒg
- * @param[in] kind ƒeƒNƒXƒ`ƒƒ‚Ìí—Ş‚Ìenum”Ô†
- * @retrun ‚È‚µ
- */
-LifeGaugeShaderInfo* LifeGaugeShaderInfo::SetTexture(int kind)
-{
-	m_pTexture = TextureData::GetInstance().GetData(kind);
-
-	return this;
-}
-
-/**
- * @brief ƒeƒNƒXƒ`ƒƒ‚ÌƒZƒbƒg
- * @param[in] texture ƒeƒNƒXƒ`ƒƒƒf[ƒ^
- * @retrun ‚È‚µ
- */
-void LifeGaugeShaderInfo::SetTexture(ID3D11ShaderResourceView* texture)
-{
-	m_pTexture = texture;
+	m_cbufferManager.BindBuffer("SHADER_GLOBAL", ShaderKind::VS, &cb, 0);
+	m_cbufferManager.BindBuffer("SHADER_GLOBAL2", ShaderKind::PS, &cb2, 1);
 }
 
 void LifeGaugeShaderInfo::SetView(XMFLOAT4X4 view)
@@ -159,10 +107,10 @@ void LifeGaugeShaderInfo::SetProj(XMFLOAT4X4 proj)
 }
 
 /**
- * @brief ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ìƒf[ƒ^‚ğƒZƒbƒg
- * @param[in] key •Ï”‚Ì”»•Ê‚·‚éƒL[
- * @param[in] value ƒZƒbƒg‚·‚é’l
- * @retrun ‚È‚µ
+ * @brief ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆ
+ * @param[in] key å¤‰æ•°ã®åˆ¤åˆ¥ã™ã‚‹ã‚­ãƒ¼
+ * @param[in] value ã‚»ãƒƒãƒˆã™ã‚‹å€¤
+ * @retrun ãªã—
  */
 void LifeGaugeShaderInfo::SetFloat(std::string key, XMFLOAT4X4 value)
 {
@@ -189,10 +137,10 @@ void LifeGaugeShaderInfo::SetFloat(std::string key, float value)
 }
 
 /**
- * @brief UV‚Ìİ’è
- * @param[in] uv UVˆÊ’u
- * @param[in] scale UVƒTƒCƒY
- * @return ‚È‚µ
+ * @brief UVã®è¨­å®š
+ * @param[in] uv UVä½ç½®
+ * @param[in] scale UVã‚µã‚¤ã‚º
+ * @return ãªã—
  */
 void LifeGaugeShaderInfo::SetUV(Vector3 uv, Vector3 scale)
 {

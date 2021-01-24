@@ -186,6 +186,7 @@
     <ClCompile Include="CTPCamera.cpp" />
     <ClCompile Include="DeadCamera.cpp" />
     <ClCompile Include="DebugBox.cpp" />
+    <ClCompile Include="Default3DShaderInfo.cpp" />
     <ClCompile Include="DefaultShaderInfo.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyCtrl.cpp" />
@@ -239,8 +240,6 @@
     <ClCompile Include="PlayerMissile.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerShotDir.cpp" />
-    <ClCompile Include="PlayerSpawnCtrl.cpp" />
-    <ClCompile Include="PlayerSpawner.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="RangeCursor.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
@@ -314,6 +313,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="DeadCamera.h" />
     <ClInclude Include="DebugBox.h" />
+    <ClInclude Include="Default3DShaderInfo.h" />
     <ClInclude Include="DefaultShaderInfo.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyCtrl.h" />
@@ -370,8 +370,6 @@
     <ClInclude Include="PlayerMissile.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerShotDir.h" />
-    <ClInclude Include="PlayerSpawnCtrl.h" />
-    <ClInclude Include="PlayerSpawner.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="RangeCursor.h" />
     <ClInclude Include="resource.h" />

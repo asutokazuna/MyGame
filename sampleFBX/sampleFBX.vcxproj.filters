@@ -64,12 +64,6 @@
     <Filter Include="ソース ファイル\Game\Core">
       <UniqueIdentifier>{fccfdeee-b6f1-46c4-859c-344faf42bf0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Core">
-      <UniqueIdentifier>{8a2456c8-cc16-4ea8-bd95-a60adc51aaf5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Core\Missile">
-      <UniqueIdentifier>{ad1c4574-b1a8-48ac-b279-429090d66c11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Game\Tower">
       <UniqueIdentifier>{f6662843-c5d5-4dc7-b201-84dd367dd2de}</UniqueIdentifier>
     </Filter>
@@ -111,6 +105,18 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\Gauge">
       <UniqueIdentifier>{5941bf1f-94ce-4d02-9c9e-d8da1b4c9c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\UI">
+      <UniqueIdentifier>{cc911a8e-81fe-43c0-b5b9-968d4cc25d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Core">
+      <UniqueIdentifier>{8a2456c8-cc16-4ea8-bd95-a60adc51aaf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Core\Missile">
+      <UniqueIdentifier>{ad1c4574-b1a8-48ac-b279-429090d66c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Core\UI">
+      <UniqueIdentifier>{e321809e-d0ec-402f-8182-2101693431d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -387,15 +393,6 @@
     <ClCompile Include="ExplosionShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
-    <ClCompile Include="RangeCursor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Lockon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WeaponBulletCount.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="LifeGaugeShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
@@ -438,53 +435,59 @@
     <ClCompile Include="CoreGaugeUI.cpp">
       <Filter>ソース ファイル\Game\Core</Filter>
     </ClCompile>
-    <ClCompile Include="CoreGauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CoreEnemyGauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GaugeUI.cpp">
       <Filter>ソース ファイル\Game\Gauge</Filter>
     </ClCompile>
     <ClCompile Include="EnemyState.cpp">
       <Filter>ソース ファイル\Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSpawner.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSpawnCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerSpawner.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerSpawnCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyLifeCtrl.cpp">
       <Filter>ソース ファイル\Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyLifeGaugeCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="DeadCamera.cpp">
+      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClCompile>
     <ClCompile Include="GameCameraManager.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClCompile>
     <ClCompile Include="GameCameraManagerCtrl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DeadCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClCompile>
     <ClCompile Include="ThirdPersonCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBulletCount.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeCursor.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Lockon.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGauge.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreEnemyGauge.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="CameraInfo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>ソース ファイル\99_share</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyLifeGaugeCtrl.cpp">
+      <Filter>ソース ファイル\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSpawnCtrl.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSpawner.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Default3DShaderInfo.cpp">
+      <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -668,9 +671,6 @@
     <ClInclude Include="BulletTime.h">
       <Filter>ヘッダー ファイル\Game\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Data.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="TextureData.h">
       <Filter>ヘッダー ファイル\99_share</Filter>
     </ClInclude>
@@ -684,21 +684,6 @@
       <Filter>ヘッダー ファイル\99_share</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugBox.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraStateMachine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
@@ -715,9 +700,6 @@
     </ClInclude>
     <ClInclude Include="EnemyMissile.h">
       <Filter>ヘッダー ファイル\Game\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ヘッダー ファイル\system</Filter>
@@ -772,12 +754,6 @@
     </ClInclude>
     <ClInclude Include="Rogo.h">
       <Filter>ヘッダー ファイル\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="RangeCursor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Lockon.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="WeaponBulletCount.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -836,26 +812,11 @@
     <ClInclude Include="MissileCtrl.h">
       <Filter>ヘッダー ファイル\Game\Missile</Filter>
     </ClInclude>
-    <ClInclude Include="GaugeUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CorePlayerGauge.h">
       <Filter>ヘッダー ファイル\Game\Core</Filter>
     </ClInclude>
     <ClInclude Include="CoreGaugeUI.h">
       <Filter>ヘッダー ファイル\Game\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreGauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreEnemyGauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LinerOctreeManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CharacterSpawner.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -863,31 +824,70 @@
     <ClInclude Include="CharacterSpawnCtrl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerSpawner.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerSpawnCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyLifeCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyLifeGaugeCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCameraManagerCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DeadCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
     </ClInclude>
     <ClInclude Include="ThirdPersonCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCameraManagerCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCameraManager.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadCamera.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CameraInfo.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraStateMachine.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleCamera.h">
+      <Filter>ヘッダー ファイル\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugBox.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="LinerOctreeManager.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ヘッダー ファイル\99_share</Filter>
+    </ClInclude>
+    <ClInclude Include="Lockon.h">
+      <Filter>ヘッダー ファイル\Game\Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="RangeCursor.h">
+      <Filter>ヘッダー ファイル\Game\Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GaugeUI.h">
+      <Filter>ヘッダー ファイル\Game\Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGauge.h">
+      <Filter>ヘッダー ファイル\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreEnemyGauge.h">
+      <Filter>ヘッダー ファイル\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLifeCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLifeGaugeCtrl.h">
+      <Filter>ヘッダー ファイル\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Default3DShaderInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
