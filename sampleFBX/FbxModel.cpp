@@ -472,26 +472,43 @@ HRESULT CFbxMesh::CreateIndexBuffer(DWORD dwSize, int* pIndex, ID3D11Buffer** pp
 //---------------------------------------------------------------------------------------
 void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 {
+	// シェーダーをパイプラインにセット
+	m_shader->SetShader();
+
 	// 定数領域更新
 	D3D11_MAPPED_SUBRESOURCE pData;
-	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer0, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
-		SHADER_GLOBAL sg;
-		XMMATRIX mtxWorld = XMLoadFloat4x4(&m_mFinalWorld);
-		XMMATRIX mtxView = XMLoadFloat4x4(&m_mView);
-		XMMATRIX mtxProj = XMLoadFloat4x4(&m_mProj);
-		sg.mW = XMMatrixTranspose(mtxWorld);
-		sg.mWVP = mtxWorld * mtxView * mtxProj;
-		sg.mWVP = XMMatrixTranspose(sg.mWVP);
-		sg.vEye = XMLoadFloat3(m_pCamera);
-		sg.vLightDir = XMLoadFloat3(&m_pLight->m_direction);
-		sg.vLd = XMLoadFloat4(&m_pLight->m_diffuse);
-		sg.vLa = XMLoadFloat4(&m_pLight->m_ambient);
-		sg.vLs = XMLoadFloat4(&m_pLight->m_specular);
-		memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(sg));
-		m_pDeviceContext->Unmap(m_pConstantBuffer0, 0);
-	}
-	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
-	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
+	//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer0, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+	//	SHADER_GLOBAL sg;
+	//	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_mFinalWorld);
+	//	XMMATRIX mtxView = XMLoadFloat4x4(&m_mView);
+	//	XMMATRIX mtxProj = XMLoadFloat4x4(&m_mProj);
+	//	sg.mW = XMMatrixTranspose(mtxWorld);
+	//	sg.mWVP = mtxWorld * mtxView * mtxProj;
+	//	sg.mWVP = XMMatrixTranspose(sg.mWVP);
+	//	sg.vEye = XMLoadFloat3(m_pCamera);
+	//	sg.vLightDir = XMLoadFloat3(&m_pLight->m_direction);
+	//	sg.vLd = XMLoadFloat4(&m_pLight->m_diffuse);
+	//	sg.vLa = XMLoadFloat4(&m_pLight->m_ambient);
+	//	sg.vLs = XMLoadFloat4(&m_pLight->m_specular);
+	//	memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(sg));
+	//	m_pDeviceContext->Unmap(m_pConstantBuffer0, 0);
+	//}
+	SHADER_GLOBAL sg;
+	XMMATRIX mtxWorld = XMLoadFloat4x4(&m_mFinalWorld);
+	XMMATRIX mtxView = XMLoadFloat4x4(&m_mView);
+	XMMATRIX mtxProj = XMLoadFloat4x4(&m_mProj);
+	sg.mW = XMMatrixTranspose(mtxWorld);
+	sg.mWVP = mtxWorld * mtxView * mtxProj;
+	sg.mWVP = XMMatrixTranspose(sg.mWVP);
+	sg.vEye = XMLoadFloat3(m_pCamera);
+	sg.vLightDir = XMLoadFloat3(&m_pLight->m_direction);
+	sg.vLd = XMLoadFloat4(&m_pLight->m_diffuse);
+	sg.vLa = XMLoadFloat4(&m_pLight->m_ambient);
+	sg.vLs = XMLoadFloat4(&m_pLight->m_specular);
+	m_shader->BindCBuffer("SHADER_GLOBAL", ShaderKind::VS, &sg, 0);
+	m_shader->BindCBuffer("SHADER_GLOBAL", ShaderKind::PS, &sg, 0);
+	//m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
+	//m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer0);
 
 	// 頂点バッファをセット (頂点バッファは1つ)
 	UINT stride = sizeof(TFbxVertex);

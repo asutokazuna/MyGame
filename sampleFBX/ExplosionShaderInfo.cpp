@@ -86,10 +86,10 @@ void ExplosionShaderInfo::UpdateConstant()
 	pDeviceContext->PSSetShaderResources(0, texCount, pTex);
 
 	HULL_DATA hullcb;
-	hullcb.factor.x = 1;
-	hullcb.factor.y = 1;
-	hullcb.factor.z = 1;
-	hullcb.factor.w = 1;
+	hullcb.factor.x = 20;
+	hullcb.factor.y = 20;
+	hullcb.factor.z = 20;
+	hullcb.factor.w = 20;
 //	m_HD.BindHS(0);
 
 	SHADER_GLOBAL cb;
@@ -100,7 +100,7 @@ void ExplosionShaderInfo::UpdateConstant()
 	cb.mTex = XMMatrixTranspose(XMLoadFloat4x4(&m_TexWorld));
 	cb.value.x = m_time;
 	cb.value.y = m_power;
-	//m_SG.BindDS(0);
+	//m_SG.BindGS(0);
 	SHADER_GLOBAL2 cb2;
 	cb2.vEye = XMLoadFloat3(&CCamera::Get()->GetEye());
 	CFbxLight* light = Light::Get();
@@ -121,7 +121,7 @@ void ExplosionShaderInfo::UpdateConstant()
 	//m_SG2.BindPS(1);
 
 	m_cbufferManager.BindBuffer("HULL_DATA", ShaderKind::HS, &hullcb, 0);
-	m_cbufferManager.BindBuffer("SHADER_GLOBAL", ShaderKind::DS, &cb, 0);
+	m_cbufferManager.BindBuffer("SHADER_GLOBAL", ShaderKind::GS, &cb, 0);
 	m_cbufferManager.BindBuffer("SHADER_GLOBAL2", ShaderKind::PS, &cb2, 1);
 }
 
