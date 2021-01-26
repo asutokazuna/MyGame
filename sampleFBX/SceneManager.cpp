@@ -49,8 +49,8 @@ void SceneManager::Init()
 	m_pCamera->Awake();
 	m_pCamera->Init();
 
-	//m_pSky = new CSky();
-	//m_pSky->Init();
+	m_pSky = new CSky();
+	m_pSky->Init();
 	Fade::Init();
 
 	m_nowScene = new SceneTitle();
@@ -127,7 +127,7 @@ void SceneManager::Draw()
 		//ImGui::TreePop();
 	//}
 #endif
-	//m_pSky->Draw();
+	m_pSky->Draw();
 	//CCamera::Get()->Draw();
 	m_nowScene->Draw();
 

@@ -19,7 +19,7 @@ struct MODEL_TABLE
 	ModelKind kind;
 };
 
-MODEL_TABLE m_table[MODEL_MAX] = {
+static MODEL_TABLE g_Model_Table[MODEL_MAX] = {
 	{PATH_MODELSKY, MODEL_SKY},
 	{PATH_MODELPLAYER, MODEL_PLAYER},
 	{PATH_MODELENEMY, MODEL_ENEMY},
@@ -44,10 +44,10 @@ void ModelData::Initinstance()
 	for (int i = 0; i < MODEL_MAX; i++)
 	{
 		CFbxModel* temp = new CFbxModel();
-		hr = temp->Init(pDevice, pDeviceContext, m_table[i].filename);
+		hr = temp->Init(pDevice, pDeviceContext, g_Model_Table[i].filename);
 		temp->SetLight(m_light);
 		if (SUCCEEDED(hr)) {
-			m_data.Set(m_table[i].kind, temp);
+			m_data.Set(g_Model_Table[i].kind, temp);
 		}
 	}
 }

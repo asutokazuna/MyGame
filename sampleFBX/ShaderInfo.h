@@ -146,6 +146,11 @@ public:
 
 	virtual void UpdateBoneCBuffer(){}
 
+	template <class T>
+	void CreateCBuffer(std::string name)
+	{
+		m_cbufferManager.Create<T>(name);
+	}
 
 	virtual void BindCBuffer(std::string name, int shaderkind, void *data, int slot)
 	{

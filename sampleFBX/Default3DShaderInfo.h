@@ -7,7 +7,7 @@
 
 #define MAX_BONE_MATRIX	256
 
-class TFbxMaterial;
+struct TFbxMaterial;
 
 /**
  * @class Default3DShaderInfo 
@@ -54,7 +54,7 @@ public:
 	Default3DShaderInfo();
 	~Default3DShaderInfo();
 	void Awake();
-	//void UpdateConstant();
+	void UpdateConstant();
 
 	//void UpdateMatCBuffer(TFbxMaterial* pMaterial);
 

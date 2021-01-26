@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Graphics.h"
 #include "ShaderInfo.h"
+#include "Default3DShaderInfo.h"
 
 #pragma comment(lib, "d3d11")
 #ifdef D3DCOMPILER
@@ -76,6 +77,7 @@ CFbxMesh::CFbxMesh()
 	m_ppIndexBuffer = nullptr;
 	m_pMaterial = nullptr;
 	m_shader = nullptr;
+	m_shaderBone = nullptr;
 	m_dwNumMaterial = 0;
 	m_nNumSkin = 0;
 	m_pBoneTable = nullptr;
@@ -89,6 +91,7 @@ CFbxMesh::CFbxMesh()
 //---------------------------------------------------------------------------------------
 CFbxMesh::~CFbxMesh()
 {
+	delete m_shaderBone;
 	// ↓追加
 	SAFE_DELETE_ARRAY(m_pVertex);
 	if (m_ppIndex) {
@@ -440,6 +443,10 @@ HRESULT CFbxMesh::CreateFromFBX(FbxMesh* pFbxMesh)
 	// ↓追加
 	m_pVertex = pvVB;
 
+	m_shaderBone = new Default3DShaderInfo();
+
+	m_shaderBone->CreateCBuffer<SHADER_BONE>("SHADER_BONE");
+
 	// コンスタントバッファ ボーン用 作成
 	D3D11_BUFFER_DESC cb;
 	ZeroMemory(&cb, sizeof(cb));
@@ -548,17 +555,25 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 		//m_shader->UpdateMatCBuffer(&sg);
 		//m_shader->UpdateMatCBuffer<T>();
 		D3D11_MAPPED_SUBRESOURCE pData;
-		if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer1, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
-			SHADER_MATERIAL sg;
-			sg.vAmbient = XMLoadFloat4(&pMaterial->Ka);
-			sg.vDiffuse = XMLoadFloat4(&pMaterial->Kd);
-			sg.vSpecular = XMLoadFloat4(&pMaterial->Ks);
-			sg.vEmissive = XMLoadFloat4(&pMaterial->Ke);
-			memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(sg));
-			m_pDeviceContext->Unmap(m_pConstantBuffer1, 0);
-		}
-		m_pDeviceContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
-		m_pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
+		//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer1, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+		//	SHADER_MATERIAL sg;
+		//	sg.vAmbient = XMLoadFloat4(&pMaterial->Ka);
+		//	sg.vDiffuse = XMLoadFloat4(&pMaterial->Kd);
+		//	sg.vSpecular = XMLoadFloat4(&pMaterial->Ks);
+		//	sg.vEmissive = XMLoadFloat4(&pMaterial->Ke);
+		//	memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(sg));
+		//	m_pDeviceContext->Unmap(m_pConstantBuffer1, 0);
+		//}
+		//m_pDeviceContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
+		//m_pDeviceContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer1);
+		SHADER_MATERIAL sgm;
+		sgm.vAmbient = XMLoadFloat4(&pMaterial->Ka);
+		sgm.vDiffuse = XMLoadFloat4(&pMaterial->Kd);
+		sgm.vSpecular = XMLoadFloat4(&pMaterial->Ks);
+		sgm.vEmissive = XMLoadFloat4(&pMaterial->Ke);
+		m_shader->BindCBuffer("SHADER_MATERIAL", ShaderKind::VS, &sgm, 1);
+		m_shader->BindCBuffer("SHADER_MATERIAL", ShaderKind::PS, &sgm, 1);
+
 		// テクスチャをシェーダに渡す
 		m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampleLinear);
 		if (m_pMaterial[i].pTexture || m_pMaterial[i].pTexEmmisive) {
@@ -566,8 +581,41 @@ void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 				m_pDeviceContext->PSSetShaderResources(0, 1, &m_pMaterial[i].pTexture);
 			if (m_pMaterial[i].pTexEmmisive)
 				m_pDeviceContext->PSSetShaderResources(1, 1, &m_pMaterial[i].pTexEmmisive);
+		}	
+		
+		// フレームを進めたことにより変化したポーズ（ボーンの行列）をシェーダーに渡す
+		//D3D11_MAPPED_SUBRESOURCE pData;
+		//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBufferBone, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
+		//	SHADER_BONE sg;
+		//	int j = 0;
+		//	for (int nSkin = 0; nSkin < m_nNumSkin; ++nSkin) {
+		//		for (int i = 0; i < m_pBoneTable[nSkin].nNumBone; ++i) {
+		//			XMFLOAT4X4 mtx = GetCurrentPoseMatrix(nSkin, i);
+		//			if (j >= 256) {
+		//				nSkin = m_nNumSkin;
+		//				break;
+		//			}
+		//			sg.mBone[j++] = XMMatrixTranspose(XMLoadFloat4x4(&mtx));
+		//		}
+		//	}
+		//	memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(SHADER_BONE));
+		//	m_pDeviceContext->Unmap(m_pConstantBufferBone, 0);
+		//}
+		SHADER_BONE sgb;
+		int j = 0;
+		for (int nSkin = 0; nSkin < m_nNumSkin; ++nSkin) {
+			for (int i = 0; i < m_pBoneTable[nSkin].nNumBone; ++i) {
+				XMFLOAT4X4 mtx = GetCurrentPoseMatrix(nSkin, i);
+				if (j >= 256) {
+					nSkin = m_nNumSkin;
+					break;
+				}
+				sgb.mBone[j++] = XMMatrixTranspose(XMLoadFloat4x4(&mtx));
+			}
 		}
-		m_shader->UpdateBoneCBuffer();
+		m_shader->BindCBuffer("SHADER_BONE", ShaderKind::VS, &sgb, 2);
+		m_shader->BindCBuffer("SHADER_BONE", ShaderKind::PS, &sgb, 2);
+
 		// 描画
 		m_pDeviceContext->DrawIndexed(m_pMaterial[i].dwNumFace * 3, 0, 0);
 	}
@@ -726,24 +774,7 @@ void CFbxMesh::SetNewPoseMatrices(int nFrame)
 				XMLoadFloat4x4(&bt.pBoneArray[i].mNewPose) * XMLoadFloat4x4(&m));//FBX右手座標系なのでｘが逆　補正する	
 		}
 	}
-	// フレームを進めたことにより変化したポーズ（ボーンの行列）をシェーダーに渡す
-	D3D11_MAPPED_SUBRESOURCE pData;
-	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBufferBone, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData))) {
-		SHADER_BONE sg;
-		int j = 0;
-		for (int nSkin = 0; nSkin < m_nNumSkin; ++nSkin) {
-			for (int i = 0; i < m_pBoneTable[nSkin].nNumBone; ++i) {
-				XMFLOAT4X4 mtx = GetCurrentPoseMatrix(nSkin, i);
-				if (j >= 256) {
-					nSkin = m_nNumSkin;
-					break;
-				}
-				sg.mBone[j++] = XMMatrixTranspose(XMLoadFloat4x4(&mtx));
-			}
-		}
-		memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(SHADER_BONE));
-		m_pDeviceContext->Unmap(m_pConstantBufferBone, 0);
-	}
+
 }
 
 //---------------------------------------------------------------------------------------
@@ -917,8 +948,9 @@ CFbxModel::CFbxModel()
 //---------------------------------------------------------------------------------------
 CFbxModel::~CFbxModel()
 {
+	SAFE_DELETE(m_shader);
 	DestroyMesh(m_pRootMesh);
-	SAFE_RELEASE(m_pSampleLinear);
+	//SAFE_RELEASE(m_pSampleLinear);
 	if (m_pSdkManager) m_pSdkManager->Destroy();
 }
 
@@ -998,6 +1030,11 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 	//	MessageBoxW(0, L"テクスチャ用サンプラ作成失敗", nullptr, MB_OK);
 	//	return hr;
 	//}
+
+	m_shader = new Default3DShaderInfo();
+	m_shader->CreateCBuffer<SHADER_GLOBAL>("SHADER_GLOBAL");
+	m_shader->CreateCBuffer<SHADER_MATERIAL>("SHADER_MATERIAL");
+	m_shader->CreateCBuffer<SHADER_BONE>("SHADER_BONE");
 
 	m_pSampleLinear = CGraphics::GetSamplerState();
 

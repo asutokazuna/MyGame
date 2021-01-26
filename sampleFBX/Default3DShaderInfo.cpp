@@ -12,9 +12,9 @@ Default3DShaderInfo::Default3DShaderInfo()
 	m_VSKind = ShaderData::VS_VERTEX3D;
 	m_PSKind = ShaderData::PS_PIXEL3D;
 
-	m_cbufferManager.Create< SHADER_GLOBAL>("SHADER_GLOBAL");
-	m_cbufferManager.Create< SHADER_MATERIAL>("SHADER_MATERIAL");
-	m_cbufferManager.Create< SHADER_BONE>("SHADER_BONE");
+//	m_cbufferManager.Create< SHADER_GLOBAL>("SHADER_GLOBAL");
+//	m_cbufferManager.Create< SHADER_MATERIAL>("SHADER_MATERIAL");
+//	m_cbufferManager.Create< SHADER_BONE>("SHADER_BONE");
 }
 
 
@@ -27,6 +27,16 @@ void Default3DShaderInfo::Awake()
 	m_View = CCamera::Get()->GetView();
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
+}
+
+
+/**
+ * @brief 更新とバインド
+ * @return なし
+ */
+void Default3DShaderInfo::UpdateConstant()
+{
+
 }
 //
 ///**

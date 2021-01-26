@@ -152,6 +152,9 @@ public:
 	ID3D11SamplerState* m_pSampleLinear;
 	ID3D11Buffer* m_pConstantBuffer0;
 	ID3D11Buffer* m_pConstantBuffer1;
+
+	ShaderInfo* m_shader;
+
 	FbxNode* m_pFBXNode;						// FBXから姿勢行列を取り出す際に使うFBXポインタ
 	DirectX::XMFLOAT4X4 m_mView;
 	DirectX::XMFLOAT4X4 m_mProj;
@@ -162,7 +165,7 @@ public:
 	DirectX::XMFLOAT4X4 m_mFBXOrientation;		// 自分の姿勢行列 (親から見た相対姿勢)
 	DirectX::XMFLOAT4X4 m_mFinalWorld;			// 最終的なワールド行列 (この姿勢でレンダリングする)
 	TFbxMaterial* m_pMateUsr;
-	ShaderInfo* m_shader;
+	
 
 private:
 	// メッシュ関連
@@ -180,7 +183,7 @@ private:
 	int m_nNumSkin;
 	TSkinInfo* m_pBoneTable;
 	ID3D11Buffer* m_pConstantBufferBone;
-
+	ShaderInfo* m_shaderBone;
 public:
 	// メソッド
 	HRESULT CreateFromFBX(FbxMesh* pFbxMesh);
