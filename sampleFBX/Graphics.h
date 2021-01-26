@@ -1,62 +1,66 @@
-//=======================================================================================
+ï»¿//=======================================================================================
 //
-//	  DirectX11 Graphics ƒNƒ‰ƒX’è‹` [Graphics.h]
+//	  DirectX11 Graphics ã‚¯ãƒ©ã‚¹å®šç¾© [Graphics.h]
 //
 //=======================================================================================
 #pragma once
 #include "Main.h"
 
 enum EBlendState {
-	BS_NONE = 0,		// ”¼“§–¾‡¬–³‚µ
-	BS_ALPHABLEND,		// ”¼“§–¾‡¬
-	BS_ADDITIVE,		// ‰ÁZ‡¬
-	BS_SUBTRACTION,		// Œ¸Z‡¬
+	BS_NONE = 0,		// åŠé€æ˜åˆæˆç„¡ã—
+	BS_ALPHABLEND,		// åŠé€æ˜åˆæˆ
+	BS_ADDITIVE,		// åŠ ç®—åˆæˆ
+	BS_SUBTRACTION,		// æ¸›ç®—åˆæˆ
 
 	MAX_BLENDSTATE
 };
 
 enum ECullMode {
-	CULLMODE_NONE = 0,	// ƒJƒŠƒ“ƒO‚µ‚È‚¢
-	CULLMODE_CW,		// ‘O–ÊƒJƒŠƒ“ƒO
-	CULLMODE_CCW,		// ”w–ÊƒJƒŠƒ“ƒO
+	CULLMODE_NONE = 0,	// ã‚«ãƒªãƒ³ã‚°ã—ãªã„
+	CULLMODE_CW,		// å‰é¢ã‚«ãƒªãƒ³ã‚°
+	CULLMODE_CCW,		// èƒŒé¢ã‚«ãƒªãƒ³ã‚°
 
 	MAX_CULLMODE
 };
-//// ƒVƒF[ƒ_‚É“n‚·’l
+//// ã‚·ã‚§ãƒ¼ãƒ€ã«æ¸¡ã™å€¤
 //struct SHADER_GLOBAL {
-//	XMMATRIX	mWVP;		// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ(“]’us—ñ)
-//	XMMATRIX	mW;			// ƒ[ƒ‹ƒhs—ñ(“]’us—ñ)
-//	XMMATRIX	mTex;		// ƒeƒNƒXƒ`ƒƒs—ñ(“]’us—ñ)
+//	XMMATRIX	mWVP;		// ãƒ¯ãƒ¼ãƒ«ãƒ‰Ã—ãƒ“ãƒ¥ãƒ¼Ã—å°„å½±è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+//	XMMATRIX	mW;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
+//	XMMATRIX	mTex;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£è¡Œåˆ—(è»¢ç½®è¡Œåˆ—)
 //};
 //struct SHADER_GLOBAL2 {
-//	XMVECTOR	vEye;		// ‹“_À•W
-//	// ŒõŒ¹
-//	XMVECTOR	vLightDir;	// ŒõŒ¹•ûŒü
-//	XMVECTOR	vLa;		// ŒõŒ¹F(ƒAƒ“ƒrƒGƒ“ƒg)
-//	XMVECTOR	vLd;		// ŒõŒ¹F(ƒfƒBƒtƒ…[ƒY)
-//	XMVECTOR	vLs;		// ŒõŒ¹F(ƒXƒyƒLƒ…ƒ‰)
-//	// ƒ}ƒeƒŠƒAƒ‹
-//	XMVECTOR	vAmbient;	// ƒAƒ“ƒrƒGƒ“ƒgF(+ƒeƒNƒXƒ`ƒƒ—L–³)
-//	XMVECTOR	vDiffuse;	// ƒfƒBƒtƒ…[ƒYF
-//	XMVECTOR	vSpecular;	// ƒXƒyƒLƒ…ƒ‰F(+ƒXƒyƒLƒ…ƒ‰‹­“x)
-//	XMVECTOR	vEmissive;	// ƒGƒ~ƒbƒVƒuF
+//	XMVECTOR	vEye;		// è¦–ç‚¹åº§æ¨™
+//	// å…‰æº
+//	XMVECTOR	vLightDir;	// å…‰æºæ–¹å‘
+//	XMVECTOR	vLa;		// å…‰æºè‰²(ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ)
+//	XMVECTOR	vLd;		// å…‰æºè‰²(ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º)
+//	XMVECTOR	vLs;		// å…‰æºè‰²(ã‚¹ãƒšã‚­ãƒ¥ãƒ©)
+//	// ãƒãƒ†ãƒªã‚¢ãƒ«
+//	XMVECTOR	vAmbient;	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²(+ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰ç„¡)
+//	XMVECTOR	vDiffuse;	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+//	XMVECTOR	vSpecular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²(+ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·åº¦)
+//	XMVECTOR	vEmissive;	// ã‚¨ãƒŸãƒƒã‚·ãƒ–è‰²
 //};
 
 class SceneManager;
 class CGraphics
 {
 private:
-	static ID3D11Device*			m_pDevice;				// ƒfƒoƒCƒX
-	static ID3D11DeviceContext*		m_pDeviceContext;		// ƒfƒoƒCƒX ƒRƒ“ƒeƒLƒXƒg
-	static IDXGISwapChain*			m_pSwapChain;			// ƒXƒƒbƒvƒ`ƒF[ƒ“
-	static ID3D11RenderTargetView*	m_pRenderTargetView;	// ƒtƒŒ[ƒ€ƒoƒbƒtƒ@
-	static ID3D11Texture2D*			m_pDepthStencilTexture;	// Zƒoƒbƒtƒ@—pƒƒ‚ƒŠ
-	static ID3D11DepthStencilView*	m_pDepthStencilView;	// Zƒoƒbƒtƒ@
-	static UINT						m_uSyncInterval;		// ‚’¼“¯Šú (0:–³, 1:—L)
-	static ID3D11RasterizerState*	m_pRs[MAX_CULLMODE];	// ƒ‰ƒXƒ^ƒ‰ƒCƒU ƒXƒe[ƒg
-	static ID3D11BlendState*		m_pBlendState[MAX_BLENDSTATE];// ƒuƒŒƒ“ƒh ƒXƒe[ƒg
-	static ID3D11DepthStencilState*	m_pDSS[2];				// Zƒoƒbƒtƒ@/ƒXƒeƒ“ƒVƒ‹ ƒXƒe[ƒg
-	static ID3D11SamplerState*		m_pSamplerState;		// ƒeƒNƒXƒ`ƒƒ ƒTƒ“ƒvƒ‰
+	static ID3D11Device*			m_pDevice;				// ãƒ‡ãƒã‚¤ã‚¹
+	static ID3D11DeviceContext*		m_pDeviceContext;		// ãƒ‡ãƒã‚¤ã‚¹ ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+	static IDXGISwapChain*			m_pSwapChain;			// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
+	static ID3D11RenderTargetView*	m_pRenderTargetView;	// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡
+	static ID3D11Texture2D*			m_pDepthStencilTexture;	// Zãƒãƒƒãƒ•ã‚¡ç”¨ãƒ¡ãƒ¢ãƒª
+	static ID3D11DepthStencilView*	m_pDepthStencilView;	// Zãƒãƒƒãƒ•ã‚¡
+	static UINT						m_uSyncInterval;		// å‚ç›´åŒæœŸ (0:ç„¡, 1:æœ‰)
+	static ID3D11RasterizerState*	m_pRs[MAX_CULLMODE];	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ ã‚¹ãƒ†ãƒ¼ãƒˆ
+	static ID3D11BlendState*		m_pBlendState[MAX_BLENDSTATE];// ãƒ–ãƒ¬ãƒ³ãƒ‰ ã‚¹ãƒ†ãƒ¼ãƒˆ
+	static ID3D11DepthStencilState*	m_pDSS[2];				// Zãƒãƒƒãƒ•ã‚¡/ã‚¹ãƒ†ãƒ³ã‚·ãƒ« ã‚¹ãƒ†ãƒ¼ãƒˆ
+	static ID3D11SamplerState*		m_pSamplerState;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ ã‚µãƒ³ãƒ—ãƒ©
+
+	static ID3D11DepthStencilView*	m_pDepthStencliViewShadow;
+	static ID3D11ShaderResourceView* m_ShadowTexture;
+	static ID3D11Texture2D*			m_pDepthStencilTextureShadow;
 
 private:
 	static HRESULT CreateBackBuffer();
@@ -76,4 +80,7 @@ public:
 	static void SetZWrite(bool bEnable);
 	static void SetBlendState(int nBlendState);
 	static void SetCullMode(int nCullMode);
+
+	static void SetDepthShadowDSV();
+	static void SetDefaultDSV();
 };

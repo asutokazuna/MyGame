@@ -21,6 +21,7 @@ cbuffer global2 : register(b1) {
 
 Texture2D    g_texture		: register(t0);	// テクスチャ
 Texture2D    g_texEmissive	: register(t1);	// 発光テクスチャ
+Texture2D    g_texShadow	: register(t3);	// 発光テクスチャ
 SamplerState g_sampler		: register(s0);	// サンプラ
 
 // パラメータ
@@ -45,6 +46,9 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 	if (Alpha <= 0.0f) discard;
 
+	float depth = g_lightDir.z / g_lightDir.w;
+	float shadowDepth = g_texShadow.Sample(g_sampler. input.Tex).r;
+	
 	if (g_lightDir.x != 0.0f || g_lightDir.y != 0.0f || g_lightDir.z != 0.0f) {
 		float3 L = normalize(-g_lightDir.xyz);					// 光源へのベクトル
 		float3 N = normalize(input.Normal);						// 法線ベクトル

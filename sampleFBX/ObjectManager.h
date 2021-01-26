@@ -20,7 +20,7 @@ class ObjectManager : public Singleton<ObjectManager>
 public:
 	friend class Singleton<ObjectManager>;		//!< シングルトンクラスでの生成を可能に
 
-private:
+public:
 	std::unordered_map<std::string, std::unique_ptr<Object>> m_ObjList;
 	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやる
 
@@ -97,6 +97,8 @@ public:
 	 * @return　なし
 	 */
 	void Draw();
+
+	void DrawShadow();
 	
 	std::list<GameObject*> FindObjectsWithTag(int tag);
 

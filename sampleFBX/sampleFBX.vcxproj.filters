@@ -489,6 +489,9 @@
     <ClCompile Include="Default3DShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -888,6 +891,9 @@
       <Filter>ヘッダー ファイル\Game\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Default3DShaderInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

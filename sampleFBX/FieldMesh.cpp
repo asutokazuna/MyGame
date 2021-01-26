@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "CCamera.h"
 #include "DefaultShaderInfo.h"
+#include "CCamera.h"
 
 #define	TEXTURE_FILENAME	L"data/texture/field000.jpg"	// 読み込むテクスチャファイル名
 ID3D11ShaderResourceView* m_pTexture;
@@ -119,6 +120,20 @@ void FieldMesh::Awake()
  */
 void FieldMesh::Draw()
 {
+	XMFLOAT4X4 view, proj, world;
+
+	view = CCamera::Get()->GetView();
+	proj = CCamera::Get()->GetProj();
+	world = MyMath::StoreXMFloat4x4(*m_transform);
+	m_default->SetView(view);
+	m_default->SetProj(proj);
+	m_default->SetFloat("World", world);
+
+	if (m_shader != nullptr) {
+		m_shader->SetFloat("View", view);
+		m_shader->SetFloat("Proj", proj);
+		m_shader->SetFloat("World", world);
+	}
 	Mesh::Draw();
 }
 

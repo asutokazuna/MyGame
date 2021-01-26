@@ -19,6 +19,7 @@
 #include "TextureData.h"
 #include "Sound.h"
 #include "CollisionManager.h"
+#include "ObjectRenderer.h"
 
 CScene* SceneManager::m_nowScene = nullptr;
 int SceneManager::m_SceneID = 0;
@@ -53,7 +54,7 @@ void SceneManager::Init()
 	m_pSky->Init();
 	Fade::Init();
 
-	m_nowScene = new SceneTitle();
+	m_nowScene = new SceneGame();
 	m_nowScene->Awake();
 	//ObjectManager::GetInstance().Awake();
 

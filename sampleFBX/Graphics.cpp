@@ -8,6 +8,7 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui_impl_dx11.h"
+#include "ObjectRenderer.h"
 
 //-------- ライブラリのリンク
 #pragma comment(lib, "d3d11")
@@ -24,6 +25,10 @@ ID3D11RasterizerState*		CGraphics::m_pRs[MAX_CULLMODE];		// ラスタライザ �
 ID3D11BlendState*			CGraphics::m_pBlendState[MAX_BLENDSTATE];// ブレンド ステート
 ID3D11DepthStencilState*	CGraphics::m_pDSS[2];				// Zバッファ/ステンシル ステート
 ID3D11SamplerState*			CGraphics::m_pSamplerState;		// テクスチャ サンプラ1Buffer
+
+ID3D11DepthStencilView*		CGraphics::m_pDepthStencliViewShadow;
+ID3D11ShaderResourceView*	CGraphics::m_ShadowTexture;
+ID3D11Texture2D*			CGraphics::m_pDepthStencilTextureShadow;
 
 // グラフィック環境の初期化
 HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
@@ -204,6 +209,41 @@ HRESULT CGraphics::CreateBackBuffer()
 		return hr;
 	}
 
+	//--- テクスチャ
+	// 設定
+	D3D11_TEXTURE2D_DESC texDesc = {};
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
+	texDesc.Width = SCREEN_WIDTH;
+	texDesc.Height = SCREEN_HEIGHT;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 1;
+	texDesc.SampleDesc.Count = 1;
+	// 生成
+	hr = m_pDevice->CreateTexture2D(&texDesc, NULL, &m_pDepthStencilTextureShadow);
+	if (FAILED(hr)) { return E_FAIL; }
+
+	//--- デプスステンシル
+	// 設定
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	// 生成
+	hr = m_pDevice->CreateDepthStencilView(m_pDepthStencilTextureShadow, &dsvDesc, &m_pDepthStencliViewShadow);
+	if (FAILED(hr)) { return E_FAIL; }
+
+	//--- シェーダリソース
+	// 設定
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+	srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = 1;
+	// 生成
+	hr = m_pDevice->CreateShaderResourceView(m_pDepthStencilTextureShadow, &srvDesc, &m_ShadowTexture);
+	if (FAILED(hr)) { return E_FAIL; }
+
+
 	// 各ターゲットビューをレンダーターゲットに設定
 	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
 
@@ -226,6 +266,9 @@ void CGraphics::ReleaseBackBuffer()
 	if (m_pDeviceContext) {
 		m_pDeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 	}
+	SAFE_RELEASE(m_ShadowTexture);
+	SAFE_RELEASE(m_pDepthStencilTextureShadow);
+	SAFE_RELEASE(m_pDepthStencliViewShadow);
 	SAFE_RELEASE(m_pDepthStencilView);
 	SAFE_RELEASE(m_pDepthStencilTexture);
 	SAFE_RELEASE(m_pRenderTargetView);
@@ -239,6 +282,13 @@ void CGraphics::Draw(SceneManager* pScene)
 {
 	// バックバッファ＆Ｚバッファのクリア
 	float ClearColor[4] = { 0.117647f, 0.254902f, 0.352941f, 1.0f };
+
+	SetDepthShadowDSV();
+
+	ObjectRenderer::GetInstance().DrawShadow();
+
+	SetDefaultDSV();
+
 	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -291,4 +341,18 @@ void CGraphics::SetCullMode(int nCullMode)
 	if (nCullMode >= 0 && nCullMode < MAX_CULLMODE) {
 		m_pDeviceContext->RSSetState(m_pRs[nCullMode]);
 	}
+}
+
+void CGraphics::SetDepthShadowDSV()
+{
+	// 各ターゲットビューをレンダーターゲットに設定
+	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
+	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencliViewShadow, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
+}
+
+void CGraphics::SetDefaultDSV()
+{
+	// 各ターゲットビューをレンダーターゲットに設定
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
 }

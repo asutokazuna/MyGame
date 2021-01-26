@@ -1056,36 +1056,36 @@ HRESULT CFbxModel::Init(ID3D11Device* pDevice, ID3D11DeviceContext *pContext, LP
 //---------------------------------------------------------------------------------------
 HRESULT CFbxModel::InitShader()
 {
-	// シェーダ読み込み
-	HRESULT hr = LoadShader("FbxModelVertex", "FbxModelPixel",
-		&m_pVertexShader, &m_pVertexLayout, &m_pPixelShader);
-	if (FAILED(hr)) {
-		MessageBoxW(0, L"hlsl読み込み失敗", nullptr, MB_OK);
-		return hr;
-	}
+	//// シェーダ読み込み
+	//HRESULT hr = LoadShader("FbxModelVertex", "FbxModelPixel",
+	//	&m_pVertexShader, &m_pVertexLayout, &m_pPixelShader);
+	//if (FAILED(hr)) {
+	//	MessageBoxW(0, L"hlsl読み込み失敗", nullptr, MB_OK);
+	//	return hr;
+	//}
 
-	// コンスタントバッファ作成 変換行列渡し用
-	D3D11_BUFFER_DESC cb;
-	ZeroMemory(&cb, sizeof(cb));
-	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cb.ByteWidth = sizeof(SHADER_GLOBAL);
-	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	cb.MiscFlags = 0;
-	cb.Usage = D3D11_USAGE_DYNAMIC;
-	hr = m_pDevice->CreateBuffer(&cb, nullptr, &m_pConstantBuffer0);
-	if (FAILED(hr)) {
-		return hr;
-	}
+	//// コンスタントバッファ作成 変換行列渡し用
+	//D3D11_BUFFER_DESC cb;
+	//ZeroMemory(&cb, sizeof(cb));
+	//cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	//cb.ByteWidth = sizeof(SHADER_GLOBAL);
+	//cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	//cb.MiscFlags = 0;
+	//cb.Usage = D3D11_USAGE_DYNAMIC;
+	//hr = m_pDevice->CreateBuffer(&cb, nullptr, &m_pConstantBuffer0);
+	//if (FAILED(hr)) {
+	//	return hr;
+	//}
 
-	// コンスタントバッファ作成 マテリアル渡し用
-	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cb.ByteWidth = sizeof(SHADER_MATERIAL);
-	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	cb.MiscFlags = 0;
-	cb.Usage = D3D11_USAGE_DYNAMIC;
-	hr = m_pDevice->CreateBuffer(&cb, nullptr, &m_pConstantBuffer1);
+	//// コンスタントバッファ作成 マテリアル渡し用
+	//cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	//cb.ByteWidth = sizeof(SHADER_MATERIAL);
+	//cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	//cb.MiscFlags = 0;
+	//cb.Usage = D3D11_USAGE_DYNAMIC;
+	//hr = m_pDevice->CreateBuffer(&cb, nullptr, &m_pConstantBuffer1);
 
-	return hr;
+	return S_OK;
 }
 
 //---------------------------------------------------------------------------------------
@@ -1158,10 +1158,10 @@ void CFbxModel::Render(XMFLOAT4X4& mWorld, XMFLOAT4X4& mView, XMFLOAT4X4& mProj,
 	m_mView = mView;
 	m_mProj = mProj;
 	// 使用するシェーダーの登録	
-	m_pDeviceContext->VSSetShader(m_pVertexShader, nullptr, 0);
-	m_pDeviceContext->PSSetShader(m_pPixelShader, nullptr, 0);
-	// 頂点インプットレイアウトをセット
-	m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
+	//m_pDeviceContext->VSSetShader(m_pVertexShader, nullptr, 0);
+	//m_pDeviceContext->PSSetShader(m_pPixelShader, nullptr, 0);
+	//// 頂点インプットレイアウトをセット
+	//m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
 
 	RecursiveRender(m_pRootMesh, byOpacity);
 }

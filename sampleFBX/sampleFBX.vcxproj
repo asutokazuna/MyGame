@@ -234,6 +234,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ObjectRenderer.cpp" />
     <ClCompile Include="PlayerCollision.cpp" />
     <ClCompile Include="PlayerCtrl.cpp" />
     <ClCompile Include="PlayerLifeCtrl.cpp" />
@@ -364,6 +365,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ObjectRenderer.h" />
     <ClInclude Include="PlayerCollision.h" />
     <ClInclude Include="PlayerCtrl.h" />
     <ClInclude Include="PlayerLifeCtrl.h" />

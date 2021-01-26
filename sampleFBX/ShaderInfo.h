@@ -56,7 +56,7 @@ public:
 	}
 
 	void Bind(int kind, UINT slot, void* data);
-private:
+public:
 	void BindVS(UINT slot)
 	{
 		ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
@@ -110,6 +110,12 @@ public:
 	void BindBuffer(std::string name, int shaderkind, void* data, UINT slot)
 	{
 		m_buffList[name].get()->Bind(shaderkind, slot, data);
+	}
+
+
+	static void BindCBuffer(std::string name, void* data)
+	{
+
 	}
 };
 

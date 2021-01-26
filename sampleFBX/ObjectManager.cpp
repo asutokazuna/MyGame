@@ -3,6 +3,7 @@
  * @brief オブジェクト管理クラス
  */
 #include "ObjectManager.h"
+#include "ObjectRenderer.h"
 
 /**
  * @brief 初期化処理
@@ -86,13 +87,14 @@ void ObjectManager::LastUpdate()
 void ObjectManager::Draw()
 {
 	auto& buff = m_ObjList;
-	for (auto& obj : buff) {
-		if (obj.second.get()->GetActive() == false) {
-			continue;
-		}
-		obj.second.get()->Draw();
+	ObjectRenderer::GetInstance().Draw();
+	//for (auto& obj : buff) {
+	//	if (obj.second.get()->GetActive() == false) {
+	//		continue;
+	//	}
+	//	obj.second.get()->Draw();
 
-	}
+	//}
 	for (auto& obj : buff) {
 		if (obj.second.get()->GetActive() == false) {
 			continue;
@@ -108,6 +110,7 @@ void ObjectManager::Draw()
 	}
 #endif
 }
+
 
 GameObject* Find(GameObject* obj, int tag)
 {
