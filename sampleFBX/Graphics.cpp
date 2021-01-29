@@ -283,15 +283,17 @@ void CGraphics::Draw(SceneManager* pScene)
 	// バックバッファ＆Ｚバッファのクリア
 	float ClearColor[4] = { 0.117647f, 0.254902f, 0.352941f, 1.0f };
 
-	SetDepthShadowDSV();
+	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
+	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencliViewShadow, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
 
 	ObjectRenderer::GetInstance().DrawShadow();
 
-	SetDefaultDSV();
-
-	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
-	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView,
-		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+	
+	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
 
 #if _DEBUG
 	ImGui::Begin("DebugWindow");
@@ -346,13 +348,10 @@ void CGraphics::SetCullMode(int nCullMode)
 void CGraphics::SetDepthShadowDSV()
 {
 	// 各ターゲットビューをレンダーターゲットに設定
-	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
-	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencliViewShadow, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
 }
 
 void CGraphics::SetDefaultDSV()
 {
 	// 各ターゲットビューをレンダーターゲットに設定
-	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+
 }

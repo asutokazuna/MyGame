@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Light
- * @brief ƒ‰ƒCƒgƒNƒ‰ƒX
+ * @brief ãƒ©ã‚¤ãƒˆã‚¯ãƒ©ã‚¹
  */
 #include "Light.h"
 #include "FbxModel.h"
@@ -16,6 +16,7 @@ using namespace DirectX;
 #define LIGHT0_DIR_Y	(-1.0f)
 #define LIGHT0_DIR_Z	(1.0f)
 CFbxLight* Light::m_light = nullptr;
+XMFLOAT3 Light::pos = XMFLOAT3(1000, 1000,-1000);
 
 CFbxLight* Light::Get()
 {
@@ -26,7 +27,7 @@ CFbxLight* Light::Get()
 		m_light->m_ambient = LIGHT0_AMBIENT;
 		m_light->m_specular = LIGHT0_SPECULAR;
 
-		// ƒ‰ƒCƒg‚Ì•ûŒü‚ÌÝ’è
+		// ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã®è¨­å®š
 		//vecDir = LIGHT0_DIR;
 		//XMStoreFloat3(&m_light->m_direction, XMVector3Normalize(XMLoadFloat3(&vecDir)));
 		XMStoreFloat3(&m_light->m_direction,

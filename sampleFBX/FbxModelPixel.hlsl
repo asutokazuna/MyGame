@@ -1,74 +1,82 @@
-// FBX—pƒsƒNƒZƒ‹ƒVƒF[ƒ_ (FbxModelPixel.hlsl)
+// FBXÂ—pÂƒsÂƒNÂƒZÂƒÂ‹ÂƒVÂƒFÂ[Âƒ_ (FbxModelPixel.hlsl)
 
-// ƒOƒ[ƒoƒ‹
+// ÂƒOÂƒÂÂ[ÂƒoÂƒÂ‹
 cbuffer global : register(b0) {
-	matrix	g_WorldViewProj;	// ƒ[ƒ‹ƒh~ƒrƒ…[~Ë‰es—ñ
-	matrix	g_World;			// ƒ[ƒ‹ƒhs—ñ
-	float4	g_cameraPos;		// ‹“_À•W(ƒ[ƒ‹ƒh‹óŠÔ)
-	float4	g_lightDir;			// ŒõŒ¹•ûŒü(ƒ[ƒ‹ƒh‹óŠÔ)
-	float4	g_lightAmbient;		// ŠÂ‹«Œõ
-	float4	g_lightDiffuse;		// ŠgUŒõ
-	float4	g_lightSpecular;	// ‹¾–Ê”½ËŒõ
+	matrix	g_WorldViewProj;	// ÂƒÂÂ[ÂƒÂ‹ÂƒhÂ~ÂƒrÂƒÂ…Â[Â~ÂÃ‹Â‰eÂsÂ—Å„
+	matrix	g_World;			// ÂƒÂÂ[ÂƒÂ‹ÂƒhÂsÂ—Å„
+	float4	g_cameraPos;		// ÂÂ‹Â“_ÂÅ”Â•W(ÂƒÂÂ[ÂƒÂ‹ÂƒhÂ‹Ã³ÂŠÃ”)
+	float4	g_lightDir;			// ÂŒÅ‘ÂŒÅ¡Â•Å±ÂŒÃ¼(ÂƒÂÂ[ÂƒÂ‹ÂƒhÂ‹Ã³ÂŠÃ”)
+	float4	g_lightAmbient;		// ÂŠÃ‚Â‹Å¤ÂŒÅ‘
+	float4	g_lightDiffuse;		// ÂŠgÂUÂŒÅ‘
+	float4	g_lightSpecular;	// Â‹Å¾Â–Ä˜Â”ËÂÃ‹ÂŒÅ‘
 };
 
-// ƒ}ƒeƒŠƒAƒ‹
+// Âƒ}ÂƒeÂƒÂŠÂƒAÂƒÂ‹
 cbuffer global2 : register(b1) {
-	float4	g_Ambient;			// ŠÂ‹«F
-	float4	g_Diffuse;			// ŠgUF
-	float4	g_Specular;			// ‹¾–Ê”½ËF
-	float4	g_Emissive;			// ”­ŒõF
+	float4	g_Ambient;			// ÂŠÃ‚Â‹Å¤ÂF
+	float4	g_Diffuse;			// ÂŠgÂUÂF
+	float4	g_Specular;			// Â‹Å¾Â–Ä˜Â”ËÂÃ‹ÂF
+	float4	g_Emissive;			// Â”Â­ÂŒÅ‘ÂF
 };
 
-Texture2D    g_texture		: register(t0);	// ƒeƒNƒXƒ`ƒƒ
-Texture2D    g_texEmissive	: register(t1);	// ”­ŒõƒeƒNƒXƒ`ƒƒ
-Texture2D    g_texShadow	: register(t3);	// ”­ŒõƒeƒNƒXƒ`ƒƒ
-SamplerState g_sampler		: register(s0);	// ƒTƒ“ƒvƒ‰
+Texture2D    g_texture		: register(t0);	// ÂƒeÂƒNÂƒXÂƒ`ÂƒÂƒ
+Texture2D    g_texEmissive	: register(t1);	// Â”Â­ÂŒÅ‘ÂƒeÂƒNÂƒXÂƒ`ÂƒÂƒ
+Texture2D    g_texShadow	: register(t3);	// Â”Â­ÂŒÅ‘ÂƒeÂƒNÂƒXÂƒ`ÂƒÂƒ
+SamplerState g_sampler		: register(s0);	// ÂƒTÂƒÂ“ÂƒvÂƒÂ‰
 
-// ƒpƒ‰ƒ[ƒ^
+// ÂƒpÂƒÂ‰ÂƒÂÂ[Âƒ^
 struct VS_OUTPUT {
 	float4	Pos			: SV_Position;
 	float2	Tex			: TEXCOORD0;
 	float3	Normal		: TEXCOORD1;
 	float3	PosForPS	: TEXCOORD2;
+	float4 lightpos :TEXCOORD3;
 };
 
 //
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+// ÂƒsÂƒNÂƒZÂƒÂ‹ÂƒVÂƒFÂ[Âƒ_
 //
 float4 main(VS_OUTPUT input) : SV_Target0
 {
 	float3 Diff = g_Diffuse.rgb;
 	float Alpha = g_Diffuse.a;
-	if (g_Ambient.a != 0.0f) {								// ƒeƒNƒXƒ`ƒƒ—L–³
+	if (g_Ambient.a != 0.0f) {								// ÂƒeÂƒNÂƒXÂƒ`ÂƒÂƒÂ—LÂ–Å‚
 		float4 TexDiff = g_texture.Sample(g_sampler, input.Tex);
 		Diff *= TexDiff.rgb;
 		Alpha *= TexDiff.a;
 	}
 	if (Alpha <= 0.0f) discard;
-
-	float depth = g_lightDir.z / g_lightDir.w;
-	float shadowDepth = g_texShadow.Sample(g_sampler. input.Tex).r;
+	float2 shadowUV;
+	shadowUV.x = 0.5f + (input.lightpos.x / input.lightpos.w * 0.5f);
+	shadowUV.y = 0.5f - (input.lightpos.y / input.lightpos.w * 0.5f);
+	float depth = input.lightpos.z / input.lightpos.w;
+	float shadowDepth = g_texShadow.Sample(g_sampler, shadowUV).r;
 	
 	if (g_lightDir.x != 0.0f || g_lightDir.y != 0.0f || g_lightDir.z != 0.0f) {
-		float3 L = normalize(-g_lightDir.xyz);					// ŒõŒ¹‚Ö‚ÌƒxƒNƒgƒ‹
-		float3 N = normalize(input.Normal);						// –@üƒxƒNƒgƒ‹
-		float3 V = normalize(g_cameraPos.xyz - input.PosForPS);	// ‹“_‚Ö‚ÌƒxƒNƒgƒ‹
-		float3 H = normalize(L + V);							// ƒn[ƒtƒxƒNƒgƒ‹
+		float3 L = normalize(-g_lightDir.xyz);					// ÂŒÅ‘ÂŒÅ¡Â‚Ã–Â‚ÄšÂƒxÂƒNÂƒgÂƒÂ‹
+		float3 N = normalize(input.Normal);						// Â–@ÂÃ¼ÂƒxÂƒNÂƒgÂƒÂ‹
+		float3 V = normalize(g_cameraPos.xyz - input.PosForPS);	// ÂÂ‹Â“_Â‚Ã–Â‚ÄšÂƒxÂƒNÂƒgÂƒÂ‹
+		float3 H = normalize(L + V);							// ÂƒnÂ[ÂƒtÂƒxÂƒNÂƒgÂƒÂ‹
 		Diff = g_lightAmbient.rgb * g_Ambient.rgb +
-			g_lightDiffuse.rgb * Diff * saturate(dot(L, N));	// ŠgUF + ŠÂ‹«F
+			g_lightDiffuse.rgb * Diff * saturate(dot(L, N));	// ÂŠgÂUÂF + ÂŠÃ‚Â‹Å¤ÂF
 			float aaa = max(g_Specular.a,0.0001f);
 		float3 Spec = g_Specular.rgb * g_lightSpecular.rgb *
-			pow(saturate(dot(N, H)), aaa);				// ‹¾–Ê”½ËF
+			pow(saturate(dot(N, H)), aaa);				// Â‹Å¾Â–Ä˜Â”ËÂÃ‹ÂF
 			float3 zero3 = float3(0,0,0);
 		Diff += Spec;
 	}
 
-	float3 Emis = g_Emissive.rgb;								// ”­ŒõF
+	float3 Emis = g_Emissive.rgb;								// Â”Â­ÂŒÅ‘ÂF
 	if (g_Emissive.a != 0.0f) {
 		float4 Emis4 = g_texEmissive.Sample(g_sampler, input.Tex);
 		Emis *= (Emis4.rgb * Emis4.a);
 	}
-	Diff += Emis;
+	//Diff += Emis;
+
+	if(depth > shadowDepth+ 0.005f)
+	{
+		Diff.rgb *= 0.3f;
+	}
 
 	return float4(Diff, Alpha);
 }

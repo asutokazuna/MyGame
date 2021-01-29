@@ -492,6 +492,9 @@
     <ClCompile Include="ObjectRenderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ShadowCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -896,6 +899,9 @@
     <ClInclude Include="ObjectRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ShadowCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Vertex2D.hlsl">
@@ -944,6 +950,9 @@
       <Filter>ソース ファイル\shader</Filter>
     </FxCompile>
     <FxCompile Include="LifeGaugePS.hlsl">
+      <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ShadowPassVS.hlsl">
       <Filter>ソース ファイル\shader</Filter>
     </FxCompile>
   </ItemGroup>

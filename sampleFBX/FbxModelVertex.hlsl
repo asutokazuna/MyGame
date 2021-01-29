@@ -18,6 +18,11 @@ cbuffer global_bones : register(b2) {
 	matrix g_BoneWorld[MAX_BONE_MATRIX];
 };
 
+cbuffer global_shadowCamera : register(b3)
+{
+	float4x4 cameraview;
+}
+
 // パラメータ
 struct VS_INPUT {
 	float3	Pos		: POSITION;
@@ -32,6 +37,7 @@ struct VS_OUTPUT {
 	float2	Tex			: TEXCOORD0;
 	float3	Normal		: TEXCOORD1;
 	float3	PosForPS	: TEXCOORD2;
+	float4 lightpos :TEXCOORD3;
 };
 
 // スキニング後の頂点・法線
@@ -90,5 +96,7 @@ VS_OUTPUT main(VS_INPUT input)
 	output.Tex		= input.Tex;
 	output.Normal	= mul(vSkinned.Norm, (float3x3)g_World);
 	output.PosForPS = mul(vSkinned.Pos, g_World).xyz;
+	
+	output.lightpos = mul(float4(output.PosForPS,1) ,cameraview);
 	return output;
 }

@@ -43,6 +43,7 @@ void SceneManager::Init()
 	ModelData::Init();
 	CSound::Init();
 	CollisionManager::GetInstance().Init();
+	ObjectRenderer::GetInstance().Init();
 
 	// 全オブジェクト初期化
 	m_pCamera = new CCamera();

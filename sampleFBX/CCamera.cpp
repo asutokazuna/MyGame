@@ -4,6 +4,8 @@
 
 // 静的メンバ
 CCamera* CCamera::m_pCamera = nullptr;
+CCamera* CCamera::m_pPreCamera = nullptr;
+
 const float NEARZ = 10.0f;
 const float FAR_Z = 10000.0f;
 //XMFLOAT3 CCamera::m_vNowEye;	//!< 現在の視点
@@ -21,7 +23,8 @@ void CCamera::Awake()
 	transform->position = Vector3(0.0f, 200.0f, -400.0f);
 	m_vLook = Vector3(0.0f, 0.0f, 0.0f);
 	m_vUp = Vector3(0.0f, 1.0f, 0.0f);
-
+	m_width = 10;
+	m_height = 10;
 	m_fFOVY = XMConvertToRadians(45);
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fNearZ = NEARZ;
@@ -93,6 +96,28 @@ void CCamera::UpdateMatrix()
 	XMStoreFloat4x4(&m_Proj, XMMatrixPerspectiveFovLH(m_fFOVY, m_fAspect, m_fNearZ, m_fFarZ));
 }
 
+
+void CCamera::UpdateMatrixOrthograph()
+{
+	XMFLOAT3 pos;
+	XMFLOAT3 look;
+	XMFLOAT3 up;
+
+	Vector3 cameraPos = transform->position;
+	Vector3 cameraUP = transform->GetUp();
+
+	pos = XMFLOAT3(cameraPos.x, cameraPos.y, cameraPos.z);
+	look = XMFLOAT3(m_vLook.x, m_vLook.y, m_vLook.z);
+	up = XMFLOAT3(m_vUp.x, m_vUp.y, m_vUp.z);
+
+	// ビュー変換更新
+	XMStoreFloat4x4(&m_View,
+		XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&look), XMLoadFloat3(&up)));
+
+	// 射影変換更新
+	XMStoreFloat4x4(&m_Proj, XMMatrixOrthographicLH(m_width, m_height, m_fNearZ, m_fFarZ));
+}
+
 void CCamera::SetPos(XMFLOAT3 eye){	}
 void CCamera::SetTransform(Transform& trans) { 
 	m_transform = &trans;
@@ -109,6 +134,7 @@ void CCamera::Set(CCamera* pCamera)
 	if (m_pCamera != NULL) {
 		m_pCamera->m_isActive = false;
 	}
+	m_pPreCamera = m_pCamera;
 	m_pCamera = pCamera; 
 	m_pCamera->m_isActive = true;
 }

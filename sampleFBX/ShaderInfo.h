@@ -5,6 +5,7 @@
 #include "MyMath.h"
 #include <unordered_map>
 #include <memory>
+#include "Singleton.h"
 
 enum ShaderKind
 {
@@ -53,6 +54,16 @@ public:
 	~ShaderBuffer()
 	{
 		SAFE_RELEASE(m_cbuffer);
+	}
+
+	void SetData(void* data)
+	{
+		UpdateData(data);
+	}
+
+	ID3D11Buffer* Get()
+	{
+		return m_cbuffer;
 	}
 
 	void Bind(int kind, UINT slot, void* data);
@@ -116,6 +127,33 @@ public:
 	static void BindCBuffer(std::string name, void* data)
 	{
 
+	}
+};
+
+class CBufferManager: public Singleton<CBufferManager>
+{
+public:
+	friend class Singleton<CBufferManager>;		//!< シングルトンクラスでの生成を可能に
+private:
+	std::unordered_map<std::string, std::unique_ptr<ShaderBuffer>> m_buffList;
+
+public:
+
+	void Create(std::string name, UINT size)
+	{
+		m_buffList[name] = std::make_unique<ShaderBuffer>();
+		m_buffList[name].get()->CreateCBuffer(size);
+	}
+
+
+	void SetData(std::string name, void* data)
+	{
+		m_buffList[name].get()->SetData(data);
+	}
+
+	ID3D11Buffer* GetCBuffer(std::string name)
+	{
+		return m_buffList[name].get()->Get();
 	}
 };
 

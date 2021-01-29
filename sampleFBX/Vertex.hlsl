@@ -7,6 +7,10 @@ cbuffer global : register(b0) {
 	matrix g_mTexture;
 };
 
+cbuffer global_shadowCamera : register(b3)
+{
+	float4x4 cameraview;
+}
 // ÉpÉâÉÅÅ[É^
 struct VS_INPUT {
 	float3	Position	: POSITION;
@@ -21,6 +25,7 @@ struct VS_OUTPUT {
 	float3	Normal		: TEXCOORD1;
 	float2	TexCoord	: TEXCOORD2;
 	float4	Diffuse		: COLOR0;
+	float4 lightpos :TEXCOORD3;
 };
 
 VS_OUTPUT main(VS_INPUT input)
@@ -32,5 +37,6 @@ VS_OUTPUT main(VS_INPUT input)
 	output.Normal = mul(float4(input.Normal, 0.0f), g_mWorld).xyz;
 	output.TexCoord = mul(float4(input.TexCoord, 0.0f, 1.0f), g_mTexture).xy;
 	output.Diffuse = input.Diffuse;
+	output.lightpos = mul(float4(output.Pos4PS,1), cameraview);
 	return output;
 }

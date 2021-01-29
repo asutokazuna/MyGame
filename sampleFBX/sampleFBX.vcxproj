@@ -254,6 +254,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderInfo.cpp" />
+    <ClCompile Include="ShadowCamera.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StarColor.cpp" />
     <ClCompile Include="StarCreater.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderInfo.h" />
+    <ClInclude Include="ShadowCamera.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundData.h" />
@@ -587,6 +589,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="ShadowPassVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Vertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

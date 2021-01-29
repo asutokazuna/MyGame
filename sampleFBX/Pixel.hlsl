@@ -22,15 +22,26 @@ struct VS_OUTPUT {
 	float3	Normal		: TEXCOORD1;
 	float2	TexCoord	: TEXCOORD2;
 	float4	Diffuse		: COLOR0;
+	float4 lightpos :TEXCOORD3;
 };
 
 Texture2D    g_texture : register(t0);	// テクスチャ
 SamplerState g_sampler : register(s0);	// サンプラ
+Texture2D    g_texShadow	: register(t3);	// ?????e?N?X?`??
 
 float4 main(VS_OUTPUT input) : SV_Target0
 {
 	float3 Diff = input.Diffuse.rgb * g_vKd.rgb;
 	float Alpha = input.Diffuse.a * g_vKd.a;
+		// 光源から見た座標をUV値で取得
+	float2 shadowUV ;
+	shadowUV.x = 0.5f + (input.lightpos.x / input.lightpos.w * 0.5f);
+	shadowUV.y = 0.5f - (input.lightpos.y / input.lightpos.w * 0.5f);
+	// 描画する座標の深度値を計算
+	float depth = input.lightpos.z / input.lightpos.w;
+	// テクスチャの深度値を取得
+	float shadowDepth = g_texShadow.Sample(g_sampler, shadowUV).r;
+
 	if (g_vKa.a > 0.0f) {
 		// テクスチャ有
 		float4 vTd = g_texture.Sample(g_sampler, input.TexCoord);
@@ -54,6 +65,9 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 
 	Diff += g_vKe.rgb;										// 発光色
-
+	if(depth > shadowDepth+0.005f)
+	{
+		Diff.rgb *= 0.3f;
+	}
 	return float4(Diff, Alpha);
 }
