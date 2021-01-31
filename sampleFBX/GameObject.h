@@ -16,9 +16,12 @@
 class GameObject :public Object
 {
 protected:
-	Transform* transform;			//!< トランスフォーム
+	Transform*	transform;			//!< トランスフォーム
 	int			tag;				//!< オブジェクト識別用タグ
+	int			layer;					//!< 所属レイヤー
 	GameObject* parent;
+	GameObject* root;
+	int childCount;
 
 private:
 	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
@@ -87,12 +90,30 @@ public:
 	void SetChild(GameObject* child);
 
 	/**
+	 * @brief 親オブジェクトのセット
+	 * @return なし
+	 */
+	void SetParent(GameObject* parent);
+
+	/**
+	 * @brief 子オブジェクトの取得
+	 * @param int index 子オブジェクトの格納差sれテイルインデックス
+	 * @return 子オブジェクト
+	 */
+	GameObject* GetChildTest(int index);
+
+	/**
 	 * @brief 親の取得
 	 * @return 親オブジェクト
 	 */
 	GameObject* GetParent() {
 		return parent;
 	}
+
+	GameObject* GetRoot() {
+		return root;
+	}
+
 	/**
 	 * @brief トランスフォームの取得
 	 * @return トランスフォーム
@@ -126,21 +147,20 @@ public:
 	void SetTag(int tag) {
 		this->tag = tag;
 	}
-
 	/**
-	 * @brief 名前のセット
+	 * @brief レイヤーのセット
 	 * @return なし
 	 */
-	void SetName(std::string name) {
-		this->name = name;
+	void SetLayer(int layer) {
+		this->layer = layer;
 	}
 
 	/**
-	 * @brief 名前の取得
-	 * @return オブジェクトにセットした名前
+	 * @brief レイヤーの取得
+	 * @return なし
 	 */
-	std::string GetName() {
-		return this->name;
+	int GetLayer() {
+		return layer;
 	}
 
 	/**
@@ -168,6 +188,7 @@ public:
 	{
 		T* buff = new T();
 		buff->m_Parent = this;
+		buff->m_ParentTransform = this->transform;
 		m_ComponentList.push_back(buff);
 		buff->Awake();
 		return buff;

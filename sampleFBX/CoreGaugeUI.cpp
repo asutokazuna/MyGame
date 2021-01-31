@@ -1,28 +1,31 @@
-/**
+ï»¿/**
  * @file CoreGaugeUI
- * @brief ƒRƒA‚ÌHPƒQ[ƒW•\¦UIƒIƒuƒWƒFƒNƒg
+ * @brief ã‚³ã‚¢ã®HPã‚²ãƒ¼ã‚¸è¡¨ç¤ºUIã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #include "CoreGaugeUI.h"
 #include "GaugeUI.h"
 #include "UIMesh.h"
 #include "CorePlayerGauge.h"
 #include "CoreEnemyGauge.h"
+#include "ObjectManager.h"
 
 /**
- * @breif ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @breif åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void CoreGaugeUI::Awake()
 {
-	GameObject* playerCoreUI = new GaugeUI();
+	GameObject* playerCoreUI;
+	playerCoreUI = ObjectManager::Create<GaugeUI>("PlayerCoreUI");
 	playerCoreUI->SetName("PlayerCoreUI");
 	SetChild(playerCoreUI);
 	playerCoreUI->AddComponent<CorePlayerGauge>();
-	GameObject* enemyCoreUI = new GaugeUI();
-	playerCoreUI->SetName("EnemyCoreUI");
+	GameObject* enemyCoreUI;
+	enemyCoreUI = ObjectManager::Create<GaugeUI>("EnemyCoreUI");
+	enemyCoreUI->SetName("EnemyCoreUI");
 	SetChild(enemyCoreUI);
 	enemyCoreUI->AddComponent<CoreEnemyGauge>();
-	//BG—p
+	//BGç”¨
 	//AddComponent<UIMesh>();
 }
 

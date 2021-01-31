@@ -5,16 +5,99 @@
 #include "ObjectManager.h"
 #include "ObjectRenderer.h"
 
+void ObjectManager::CreateHierarchy()
+{
+	Object* workObj;				//!< オブジェクト格納用
+	HierarchyData data = HierarchyData();
+
+	for (auto &obj : m_ObjList)
+	{
+		data.gameObject = obj.second.get();
+		// ヒエラルキーにセット
+		m_hierarchy.push_back(data);
+		// ワークをクリア
+		data = HierarchyData();
+	}
+}
+
+void ObjectManager::SetHierarchy(GameObject* obj)
+{
+	HierarchyData data = HierarchyData();
+	data.gameObject = obj;
+	m_hierarchy.push_back(data);
+}
+
+GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, int index)
+{
+	for (auto objInHierarchy : m_hierarchy)
+	{
+		if (objInHierarchy.gameObject == findObj)
+		{
+			return objInHierarchy.m_childList.at(index).gameObject;
+		}
+	}
+}
+
+void ObjectManager::SetParent(GameObject * parent, GameObject * childObj)
+{
+	GameObject* workchild = nullptr;
+	GameObject* root = childObj->GetRoot();
+	HierarchyData childData;
+
+	// 子オブジェクトのデータを探し出しリストから削除
+	for (auto itHierarchy = m_hierarchy.begin(); itHierarchy != m_hierarchy.end(); itHierarchy++)
+	{
+		// 親階層で検索
+		if (itHierarchy->gameObject == childObj)
+		{
+			childData = *itHierarchy;
+			itHierarchy = m_hierarchy.erase(itHierarchy);
+			break;
+		}
+
+		// 子階層で検索
+		for (auto inChild = itHierarchy->m_childList.begin(); inChild != itHierarchy->m_childList.end(); inChild++)
+		{
+			if (inChild->gameObject== childObj)
+			{
+				childData = *inChild;
+				itHierarchy->m_childList.erase(itHierarchy);
+				break;
+			}
+		}
+	}
+
+	// 子にセット
+	for (auto hierarchyObj : m_hierarchy)
+	{
+		if (hierarchyObj.gameObject == root)
+		{
+			if (hierarchyObj.gameObject == parent) {
+				hierarchyObj.m_childList.push_back(childData);
+			}
+			for (auto inChild : hierarchyObj.m_childList)
+			{
+				if (inChild.gameObject == parent) {
+					inChild.m_childList.push_back(childData);
+				}
+			}
+		}
+	}
+}
 /**
  * @brief 初期化処理
  * @return　なし
  */
 void ObjectManager::Awake()
 {
-	auto& buff = m_ObjList;
-	for (auto& obj : buff) {
-		obj.second.get()->Awake();
-	}
+	/**
+	 * objectのAwake処理はCreate時に呼んでいるため処理しない
+	 */
+
+	//auto& buff = m_ObjList;
+	//for (auto& obj : buff) {
+	//	obj.second.get()->Awake();
+	//}
 }
 
 /**
@@ -23,6 +106,7 @@ void ObjectManager::Awake()
  */
  HRESULT ObjectManager::Init()
 {
+	 //CreateHierarchy();
 	 auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Init();

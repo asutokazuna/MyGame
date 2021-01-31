@@ -99,6 +99,18 @@ public:
 		return m_isActive;
 	}
 
+	/**
+	 * @brief 名前のセット
+	 * @return なし
+	 */
+	void SetName(std::string name) {
+		this->name = name;
+	}
+
+	/**
+	 * @brief 名前の取得
+	 * @return 名前
+	 */
 	std::string GetName() {
 		return name;
 	}

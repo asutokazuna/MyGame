@@ -6,6 +6,7 @@
 #include "Object.h"
 
 class GameObject;
+class Transform;
 
 /**
  *@class Component
@@ -15,11 +16,14 @@ class Component : public Object
 {
 public:
 	GameObject *m_Parent;	//!< 親オブジェクト
+	int m_tagParent;				//!< ゲームオブジェクトのタグ
+	Transform* m_ParentTransform;	//!< ゲームオブジェクトについているtransform
 
+public:
 	/**
 	 * @brief コンストラクタ
 	 */
-	Component():m_Parent(nullptr){}
+	Component():m_Parent(nullptr), m_tagParent(-1), m_ParentTransform(nullptr){}
 
 	/**
 	 * @brief デストラクタ

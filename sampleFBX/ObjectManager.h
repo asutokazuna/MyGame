@@ -8,6 +8,7 @@
 #include <memory>
 #include "GameObject.h"
 #include <list>
+#include <vector>
 
 class Object;
 
@@ -17,12 +18,30 @@ class Object;
  */
 class ObjectManager : public Singleton<ObjectManager>
 {
+private:
+	struct HierarchyData
+	{
+		HierarchyData() = default;
+		GameObject* gameObject;
+		std::vector<HierarchyData> m_childList;
+	};
 public:
 	friend class Singleton<ObjectManager>;		//!< シングルトンクラスでの生成を可能に
 
 public:
-	std::unordered_map<std::string, std::unique_ptr<Object>> m_ObjList;
-	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやる
+	std::unordered_map<std::string, std::unique_ptr<GameObject>> m_ObjList;
+	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやるかも
+
+	std::vector<HierarchyData> m_hierarchy;
+private:
+
+	/**
+	 * @brief ヒエラルキーの作成
+	 * @return なし
+	 */
+	void CreateHierarchy();
+
+	void SetHierarchy(GameObject* obj);
 
 public:
 
@@ -35,10 +54,24 @@ public:
 	static T* Create(std::string name)
 	{
 		std::unique_ptr<T> work(new T());
+		int num = 0;
+		std::string keyName = name;
+		GameObject* obj;
 
-		ObjectManager::GetInstance().m_ObjList[name] = std::move(work);
-		ObjectManager::GetInstance().m_ObjList[name]->Awake();
-		return dynamic_cast<T*>(ObjectManager::GetInstance().m_ObjList[name].get());
+		while (ObjectManager::GetInstance().m_ObjList.find(keyName) != ObjectManager::GetInstance().m_ObjList.end())
+		{
+			keyName.clear();
+			keyName = name + std::to_string(num);
+			num++;
+		}
+
+		ObjectManager::GetInstance().m_ObjList[keyName] = std::move(work);
+		obj = ObjectManager::GetInstance().m_ObjList[keyName].get();
+		obj->SetName(name);
+		ObjectManager::GetInstance().SetHierarchy(obj);
+		obj->Awake();
+
+		return dynamic_cast<T*>(ObjectManager::GetInstance().m_ObjList[keyName].get());
 	}
 
 	/**
@@ -61,6 +94,12 @@ public:
 		ObjectManager::GetInstance().m_ObjList.clear();
 	}
 
+	//void SetChild(GameObject* parent, GameObject* child);
+
+	void SetParent(GameObject* parent, GameObject* childObj);
+
+	GameObject* FindChildInHierarchy(GameObject* findObj, int index);
+
 	/**
 	 * @brief 初期化処理
 	 * @return　なし
@@ -72,6 +111,7 @@ public:
 	 * @return　なし
 	 */
 	HRESULT Init();
+
 
 	/**
 	 * @brief 終了処理

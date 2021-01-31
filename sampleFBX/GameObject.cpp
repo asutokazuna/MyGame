@@ -3,12 +3,15 @@
  * @brief ゲームオブジェクト
  */
 #include "GameObject.h"
+#include "ObjectManager.h"
 
 /**
  * @brief コンストラクタ
  */
-GameObject::GameObject() : parent(nullptr){
+GameObject::GameObject() : parent(nullptr), root(nullptr), childCount(0) 
+{
 	transform = AddComponent<Transform>();
+	transform->m_ParentTransform = transform;
 	tag = 0;
 }
 
@@ -30,9 +33,9 @@ HRESULT GameObject::Init()
 	for (auto com : buff)
 		com->Init();
 
-	for (auto& child : m_ChildList) {
-		child->Init();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->Init();
+	//}
 
 	return S_OK;
 }
@@ -47,9 +50,9 @@ void GameObject::Uninit()
 	for (auto com : buff)
 		com->Uninit();
 
-	for (auto& child : m_ChildList) {
-		child->Uninit();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->Uninit();
+	//}
 }
 
 /**
@@ -69,9 +72,9 @@ void GameObject::Update()
 		com->Update();
 	}
 	
-	for (auto& child : m_ChildList) {
-		child->Update();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->Update();
+	//}
 }
 
 /**
@@ -91,9 +94,9 @@ void GameObject::LateUpdate()
 		com->LateUpdate();
 	}
 
-	for (auto& child : m_ChildList) {
-		child->LateUpdate();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->LateUpdate();
+	//}
 }
 
 /**
@@ -114,9 +117,9 @@ void GameObject::LateUpdate()
 		 com->LastUpdate();
 	 }
 
-	 for (auto& child : m_ChildList) {
-		 child->LastUpdate();
-	 }
+	 //for (auto& child : m_ChildList) {
+		// child->LastUpdate();
+	 //}
  }
 
 /**
@@ -135,9 +138,9 @@ void GameObject::Draw()
 		com->Draw();
 	}
 
-	for (auto& child : m_ChildList) {
-		child->Draw();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->Draw();
+	//}
 }
 
 /**
@@ -156,9 +159,9 @@ void GameObject::DrawAlpha()
 		com->DrawAlpha();
 	}
 
-	for (auto& child : m_ChildList) {
-		child->DrawAlpha();
-	}
+	//for (auto& child : m_ChildList) {
+	//	child->DrawAlpha();
+	//}
 }
 
 /**
@@ -170,8 +173,32 @@ void GameObject::DrawAlpha()
 	 std::unique_ptr<GameObject> buff(child);
 
 	 buff->parent = this;
-	 buff->Awake();
+	 //buff->Awake();
 	 m_ChildList.push_back(std::move(buff));
+ }
+
+ void GameObject::SetParent(GameObject* parent)
+ {
+	 GameObject* workRoot = parent;
+	 this->parent = parent;
+
+	 parent->childCount++;
+	 while (workRoot != nullptr)
+	 {
+		 this->root = workRoot;
+		 workRoot = workRoot->GetParent();
+	 }
+
+	 ObjectManager::GetInstance().SetParent(parent, this);
+ }
+
+ GameObject * GameObject::GetChildTest(int index)
+ {
+	 GameObject* childObj = nullptr;
+
+	 ObjectManager::GetInstance().FindChildInHierarchy(this, index);
+
+	 return ;
  }
 
  /**

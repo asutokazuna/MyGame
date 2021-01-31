@@ -20,6 +20,7 @@
 #include "PlayerLifeCtrl.h"
 #include "NumberList.h"
 #include "GaugeUI.h"
+#include "ObjectManager.h"
 
 #define DIGIT (2)
 
@@ -44,7 +45,8 @@ void CPlayer::Awake()
 
 	AddComponent<PlayerShotDir>();
 	// ロックオン
-	GameObject* obj = new Lockon();
+	GameObject* obj = ObjectManager::Create<GameObject>("Lockon");
+	obj->SetParent(this);
 	SetChild(obj);
 
 	// 残弾数
