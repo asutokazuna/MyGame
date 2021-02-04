@@ -14,6 +14,7 @@
 #include "Gauge.h"
 #include "EnemyLifeGaugeCtrl.h"
 #include "ObjectManager.h"
+#include "EnemyWeaponCtrl.h"
 
 /**
  * @brief 初期化処理
@@ -26,6 +27,7 @@ void Enemy::Awake()
 
 	m_Weapon = //new Weapon(20);
 		ObjectManager::Create<Weapon>("EnemyWeapon");
+	m_Weapon->AddComponent<EnemyWeaponCtrl>();
 	m_Weapon->SetTag(OBJ_TAG_ENEMYMISSILE);
 	m_Weapon->SetParent(this);
 

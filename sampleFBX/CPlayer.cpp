@@ -21,6 +21,7 @@
 #include "NumberList.h"
 #include "GaugeUI.h"
 #include "ObjectManager.h"
+#include "PlayerWeaponCtrl.h"
 
 #define DIGIT (2)
 
@@ -41,6 +42,7 @@ void CPlayer::Awake()
 	// 武器
 	m_Weapon = //new Weapon(30);
 		ObjectManager::Create<Weapon>("Weapon");
+	m_Weapon->AddComponent<PlayerWeaponCtrl>();
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	m_Weapon->SetParent(this);
 

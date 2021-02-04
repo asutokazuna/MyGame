@@ -22,7 +22,7 @@ HRESULT WeaponBulletCount::Init()
 	const int& num = WeapCtrl->GetBulletCnt();
 	m_BulletNum->GetComponent<NumberListCtrl>()->SetNumber(num);
 	m_BulletNum->GetComponent<NumberListCtrl>()->SetPos(Vector3(100,0,0));
-	m_BulletNum->GetComponent<NumberListCtrl>()->SetWidth(20);
+	//m_BulletNum->GetComponent<NumberListCtrl>()->SetWidth(20);
 
 	return E_NOTIMPL;
 }

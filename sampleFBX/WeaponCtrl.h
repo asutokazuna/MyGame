@@ -19,7 +19,7 @@ class GameObject;
 class WeaponCtrl :public Component
 {
 private:
-	std::list<Missile*> m_BulletList;	//!< ミサイルリスト
+	std::list<GameObject*> m_BulletList;	//!< ミサイルリスト
 	Transform* m_ParentTrans;			//!< 親の座標
 	int m_BulletCount;					//!< 現在の弾数
 	int m_ReloadTime;					//!< リロードの時間
@@ -76,6 +76,11 @@ public:
 	 * @return なし
 	 */
 	void SetMaxBullet(int num);
+
+	std::list<GameObject*> *GetMissileList()
+	{
+		return &m_BulletList;
+	}
 
 	/**
 	 * @brief 玉の発射

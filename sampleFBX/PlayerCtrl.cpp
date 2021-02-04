@@ -26,7 +26,7 @@ void PlayerCtrl::Awake()
 HRESULT PlayerCtrl::Init()
 {
 	m_Weapon = m_Parent->GetChildTest("Weapon");
-	m_Weapon->GetComponent<WeaponCtrl>()->SetMaxBullet(MAX_BULLET);
+	//m_Weapon->GetComponent<WeaponCtrl>()->SetMaxBullet(MAX_BULLET);
 
 	return E_NOTIMPL;
 }

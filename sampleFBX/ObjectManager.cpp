@@ -221,6 +221,13 @@ GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, std::string
 	return nullptr;
 }
 
+void ObjectManager::Clear()
+{
+	ObjectManager::GetInstance().m_ObjList.clear();
+	ObjectManager::GetInstance().m_hierarchy.clear();
+	ObjectManager::GetInstance().m_ObjListBuffer.clear();
+}
+
 /**
  * @biref オブジェクトを親のヒエラルキーデータの子供にセット
  * @param[in] parent　セットする親オブジェクトのデータ

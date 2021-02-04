@@ -24,6 +24,18 @@ int CountNumber(int num)
 	return cnt;
 }
 
+void NumberListCtrl::UpdatePos()
+{
+	int i = 0;
+	Vector3 scale = Vector3();
+	for (auto o : m_NumberList)
+	{
+		scale = o->GetTransform().scale;
+		o->GetTransform().position = Vector3(pos.x - m_width * i, pos.y, pos.z);
+		i++;
+	}
+}
+
 /**
  * @brief 初期化処理
  * @return なし
@@ -31,6 +43,7 @@ int CountNumber(int num)
 void NumberListCtrl::Awake()
 {
 	m_width = 35;
+	pos = Vector3();
 	//m_NumberList = m_Parent->GetChildren<DigitNumber>();
 }
 
@@ -56,12 +69,19 @@ void NumberListCtrl::SetNumber(int num)
 	int cnt = CountNumber(num);
 	DigitNumber* number;
 
+	Vector3 pos;
+
 	// 桁数分のリストを作成
 	while (m_NumberList.size() < cnt)
 	{
 		number = ObjectManager::Create<DigitNumber>("number");
 		m_NumberList.push_back(number);
 		number->SetParent(m_Parent);
+		//SetPos(m_NumberList.front()->GetTransform().position);
+	}
+
+	if (m_NumberList.size() > 0) {
+		UpdatePos();
 	}
 
 	// 数字を更新
@@ -80,14 +100,7 @@ void NumberListCtrl::SetNumber(int num)
  */
 void NumberListCtrl::SetPos(Vector3 pos)
 {
-	int i = 0;
-	Vector3 scale = Vector3();
-	for (auto o : m_NumberList)
-	{
-		scale = o->GetTransform().scale;
-		o->GetTransform().position = Vector3(pos.x - m_width * i, pos.y, pos.z);
-		i++;
-	}
+	this->pos = pos;
 }
 
 /**

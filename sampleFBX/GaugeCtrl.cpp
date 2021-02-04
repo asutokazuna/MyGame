@@ -10,15 +10,16 @@
  */
 void GaugeCtrl::Awake()
 {
+	m_target = nullptr;
+	m_offset = Vector3();
+	m_size = Vector3();
+
 	m_frame = m_Parent->GetChildTest("frame");
 	m_LifeGauge = m_Parent->GetChildTest("LifeGauge");
 }
 
 HRESULT GaugeCtrl::Init()
 {
-	m_target = nullptr;
-	m_offset = Vector3();
-	m_size = Vector3();
 
 	return S_OK;
 }

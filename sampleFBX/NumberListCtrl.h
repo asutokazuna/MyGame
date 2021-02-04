@@ -1,56 +1,59 @@
-/**
+ï»¿/**
  * @file NumberListCtrl
- * @brief ”š•\¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief æ•°å­—è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #pragma once
 #include "Component.h"
 #include <list>
 #include "MyMath.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class DigitNumber;
 
 /**
  * @class NumberListCtrl
- * @brief ”š—ñŠÇ—ƒNƒ‰ƒX
+ * @brief æ•°å­—åˆ—ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 class NumberListCtrl :public Component
 {
 private:
 	std::list<DigitNumber*> m_NumberList;
 	float m_width;
+	Vector3 pos;
+private:
+	void UpdatePos();
 
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	HRESULT Init();
 
 	/**
-	 * @brief ”š‚ÌƒZƒbƒg
-	 * @param[in] ƒZƒbƒg‚·‚é”š
-	 * @return ‚È‚µ
+	 * @brief æ•°å­—ã®ã‚»ãƒƒãƒˆ
+	 * @param[in] ã‚»ãƒƒãƒˆã™ã‚‹æ•°å­—
+	 * @return ãªã—
 	 */
 	void SetNumber(int num);
 
 	/**
-	 * @brief À•W‚Ìİ’è
-	 * @param[in] pos İ’èÀ•W
-	 * @return ‚È‚µ
+	 * @brief åº§æ¨™ã®è¨­å®š
+	 * @param[in] pos è¨­å®šåº§æ¨™
+	 * @return ãªã—
 	 */
 	void SetPos(Vector3 pos);
 
 	/**
-	 * @brief ”š“¯m‚Ì•‚Ìİ’è
-	 * @param[in] width •
-	 * @return ‚È‚µ
+	 * @brief æ•°å­—åŒå£«ã®å¹…ã®è¨­å®š
+	 * @param[in] width å¹…
+	 * @return ãªã—
 	 */
 	void SetWidth(float width);
 };

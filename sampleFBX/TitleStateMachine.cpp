@@ -170,12 +170,20 @@ struct TITLE_LEAVE : public State<TITLE_STATE>
  */
 void TitleStateMachine::Awake()
 {
+	SetState();
+}
+
+HRESULT TitleStateMachine::Init()
+{
+	StateMachine::Init();
+
 	m_rogo = ObjectManager::GetInstance().FindObject<Rogo>("Rogo");
 	m_startText = ObjectManager::GetInstance().FindObject<TitleStart>("TitleStart");
 	m_particle = ObjectManager::GetInstance().FindObject<GameObject>("StarManager");
 	m_rogoColor = ObjectManager::GetInstance().FindObject<RogoColor>("RogoColor");
-	SetState();
 	GoToState(E_TITLE_STATE_INIT);
+
+	return S_OK;
 }
 
 /**

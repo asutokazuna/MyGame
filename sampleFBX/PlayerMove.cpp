@@ -28,8 +28,8 @@ static int mousePosY;
  */
 HRESULT PlayerMove::Init()
 {
-	m_Transform = &m_Parent->GetTransform();
-	m_Transform->position = Vector3(0, 0, -500);
+	//m_ParentTransform = &m_Parent->GetTransform();
+	m_ParentTransform->position = Vector3(0, 0, -500);
 	m_move = Vector3();
 	m_isDelay = false;
 
@@ -71,10 +71,10 @@ void PlayerMove::Update()
 void PlayerMove::LateUpdate()
 {
 	// 座標更新
-	//m_Transform->position += m_Transform->GetForward() * m_move.z + m_Transform->GetRight() * m_move.x;
-	m_Transform->position += m_move;
-	if (m_Transform->position.y < 0) {
-		m_Transform->position.y = 0;
+	//m_ParentTransform->position += m_ParentTransform->GetForward() * m_move.z + m_ParentTransform->GetRight() * m_move.x;
+	m_ParentTransform->position += m_move;
+	if (m_ParentTransform->position.y < 0) {
+		m_ParentTransform->position.y = 0;
 		grav = 0;
 	}
 }
@@ -106,9 +106,9 @@ void PlayerMove::Rotate()
 	mousePosX = mousePos.x;
 	mousePosY = mousePos.y;
 
-	m_Transform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian((float)ax));
+	m_ParentTransform->AngleAxis(Transform::AXIS_WORLD_Y, MyMath::AngleToRadian((float)ax));
 	
-	m_Transform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)ay));
+	m_ParentTransform->AngleAxis(Transform::AXIS_X, MyMath::AngleToRadian((float)ay));
 	
 }
 
@@ -121,14 +121,14 @@ void PlayerMove::FullDrive()
 	m_isDelay = true;
 	m_delayTime = WAIT_TIME;
 
-	m_move += m_Transform->GetForward() * FD_POWER;
+	m_move += m_ParentTransform->GetForward() * FD_POWER;
 }
 
 void PlayerMove::Avoid()
 {
 	m_delayTime = 20;
 
-	m_Transform->position += m_Transform->GetRight() * 10;
+	m_ParentTransform->position += m_ParentTransform->GetRight() * 10;
 }
 
 /**
@@ -137,7 +137,7 @@ void PlayerMove::Avoid()
  */
 void PlayerMove::SetMove(Vector3 move)
 {
-	m_move = m_Transform->GetForward() * move.z + m_Transform->GetRight() * move.x;
+	m_move = m_ParentTransform->GetForward() * move.z + m_ParentTransform->GetRight() * move.x;
 }
 /**
  * @brief 移動量のセット
@@ -160,7 +160,7 @@ void PlayerMove::SetMove(Vector3 move, Quaternion quat)
  */
 void PlayerMove::AddMove(Vector3 move)
 {
-	m_move = m_move + (m_Transform->GetForward() * move.z) + (m_Transform->GetRight() * move.x) + (m_Transform->GetUp() * move.y);
+	m_move = m_move + (m_ParentTransform->GetForward() * move.z) + (m_ParentTransform->GetRight() * move.x) + (m_ParentTransform->GetUp() * move.y);
 }
 
 /**
@@ -186,7 +186,7 @@ void PlayerMove::OnCollisionEnter(GameObject* gameObj)
 {
 	if (gameObj->CompareTag(OBJ_TAG_FIELD))
 	{
-		//->position.y = gameObbj->GetTransform().position.y;// +m_Transform->scale.y;
+		//->position.y = gameObbj->GetTransform().position.y;// +m_ParentTransform->scale.y;
 	}
 }
 

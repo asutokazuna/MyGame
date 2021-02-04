@@ -98,10 +98,7 @@ public:
 	 * @breif オブジェクトリストのクリア
 	 * @return なし
 	 */
-	static void Clear()
-	{
-		ObjectManager::GetInstance().m_ObjList.clear();
-	}
+	static void Clear();
 
 	//void SetChild(GameObject* parent, GameObject* child);
 

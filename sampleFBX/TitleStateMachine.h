@@ -43,6 +43,8 @@ public:
 	 */
 	void Awake();
 
+	HRESULT Init();
+
 private:
 	/**
 	 * @brief ステートをリストにセット
