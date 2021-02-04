@@ -17,13 +17,11 @@ void CoreGaugeUI::Awake()
 {
 	GameObject* playerCoreUI;
 	playerCoreUI = ObjectManager::Create<GaugeUI>("PlayerCoreUI");
-	playerCoreUI->SetName("PlayerCoreUI");
-	SetChild(playerCoreUI);
+	playerCoreUI->SetParent(this);
 	playerCoreUI->AddComponent<CorePlayerGauge>();
 	GameObject* enemyCoreUI;
 	enemyCoreUI = ObjectManager::Create<GaugeUI>("EnemyCoreUI");
-	enemyCoreUI->SetName("EnemyCoreUI");
-	SetChild(enemyCoreUI);
+	enemyCoreUI->SetParent(this);
 	enemyCoreUI->AddComponent<CoreEnemyGauge>();
 	//BG用
 	//AddComponent<UIMesh>();

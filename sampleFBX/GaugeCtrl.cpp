@@ -1,19 +1,26 @@
-#include "GaugeCtrl.h"
+ï»¿#include "GaugeCtrl.h"
 #include "GameObject.h"
 #include "LifeGauge.h"
 #include "LifeGaugeShaderInfo.h"
 #include "DefaultShaderInfo.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void GaugeCtrl::Awake()
 {
-	m_frame = m_Parent->GetChild("frame");
-	m_LifeGauge = m_Parent->GetChild<LifeGauge>();
+	m_frame = m_Parent->GetChildTest("frame");
+	m_LifeGauge = m_Parent->GetChildTest("LifeGauge");
+}
+
+HRESULT GaugeCtrl::Init()
+{
 	m_target = nullptr;
 	m_offset = Vector3();
+	m_size = Vector3();
+
+	return S_OK;
 }
 
 void GaugeCtrl::Update()
@@ -26,6 +33,8 @@ void GaugeCtrl::Update()
 
 	m_frame->GetTransform().position = pos;
 	m_LifeGauge->GetTransform().position = pos;
+	m_frame->GetTransform().scale = m_size;
+	m_LifeGauge->GetTransform().scale = m_size;
 }
 
 void GaugeCtrl::SetPos(Vector3 pos)
@@ -36,8 +45,7 @@ void GaugeCtrl::SetPos(Vector3 pos)
 
 void GaugeCtrl::SetSize(Vector3 size)
 {
-	m_frame->GetTransform().scale = size;
-	m_LifeGauge->GetTransform().scale = size;
+	m_size = size;
 }
 
 void GaugeCtrl::SetTarget(Transform* trans)

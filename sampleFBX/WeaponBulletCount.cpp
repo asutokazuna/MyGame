@@ -1,6 +1,6 @@
-/**
- * @file@WeaponBulletCount
- * @brief •Ší‚ÌŽc‚èŽc’e”‚Ì•\Ž¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ï»¿/**
+ * @fileã€€WeaponBulletCount
+ * @brief æ­¦å™¨ã®æ®‹ã‚Šæ®‹å¼¾æ•°ã®è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #include "WeaponBulletCount.h"
 #include "GameObject.h"
@@ -12,17 +12,17 @@
 static WeaponCtrl* WeapCtrl;
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 HRESULT WeaponBulletCount::Init()
 {
-	m_BulletNum = m_Parent->GetChild<NumberList>("BulletUI");
-	WeapCtrl = m_Parent->GetChild<Weapon>()->GetComponent<WeaponCtrl>();
+	m_BulletNum = m_Parent->GetChildTest("BulletUI");
+	WeapCtrl = m_Parent->GetChildTest("Weapon")->GetComponent<WeaponCtrl>();
 	const int& num = WeapCtrl->GetBulletCnt();
 	m_BulletNum->GetComponent<NumberListCtrl>()->SetNumber(num);
 	m_BulletNum->GetComponent<NumberListCtrl>()->SetPos(Vector3(100,0,0));
-	//m_BulletNum->GetComponent<NumberListCtrl>()->SetWidth(20);
+	m_BulletNum->GetComponent<NumberListCtrl>()->SetWidth(20);
 
 	return E_NOTIMPL;
 }

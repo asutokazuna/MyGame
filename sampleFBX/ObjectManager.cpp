@@ -7,7 +7,6 @@
 
 void ObjectManager::CreateHierarchy()
 {
-	Object* workObj;				//!< オブジェクト格納用
 	HierarchyData data = HierarchyData();
 
 	for (auto &obj : m_ObjList)
@@ -27,63 +26,299 @@ void ObjectManager::SetHierarchy(GameObject* obj)
 	m_hierarchy.push_back(data);
 }
 
+void ObjectManager::InitMergeObject()
+{
+	if (m_ObjListBuffer.size() <= 0) {
+		return;
+	}
+	for (int i = 0; i < m_ObjListBuffer.size(); i++)
+	{
+		m_ObjListBuffer.at(i)->Init();
+	}
+}
+
+void ObjectManager::MergeObjList()
+{	
+	if (m_ObjListBuffer.size() <= 0) {
+		return;
+	}
+	std::vector<GameObject*> work;// = ObjectManager::GetInstance().m_ObjListBuffer;
+	//m_ObjListBuffer.clear();
+	std::string keyName;
+	int num = 0;
+	std::string name;
+
+	for (int i = 0; i < m_ObjListBuffer.size(); i++)
+	{
+		std::unique_ptr<GameObject> objPtr(m_ObjListBuffer.at(i));
+		name = keyName = m_ObjListBuffer.at(i)->GetName();
+
+		while (m_ObjList.find(keyName) != m_ObjList.end())
+		{
+			keyName.clear();
+			keyName = name + std::to_string(num);
+			num++;
+		}
+		m_ObjList[keyName] = std::move(objPtr);
+		
+	}
+
+	m_ObjListBuffer.clear();
+	//for (int i = 0; i < ObjectManager::GetInstance().m_ObjListBuffer.size(); i++)
+	//{
+	//	//ObjectManager::GetInstance().m_ObjListBuffer[i]
+	//}
+
+	//for (auto obj : work)
+	//{
+	//	name = keyName = obj.first;
+	//	obj.second->Init();
+	//	std::unique_ptr<GameObject> ptr(obj.second);
+
+	//	while (ObjectManager::GetInstance().m_ObjList.find(keyName) != ObjectManager::GetInstance().m_ObjList.end())
+	//	{
+	//		keyName.clear();
+	//		keyName = name + std::to_string(num);
+	//		num++;
+	//	}
+
+	//	ObjectManager::GetInstance().m_ObjList[keyName] = std::move(ptr);
+	//}
+
+	//MergeObjList();
+}
+
+
 GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, int index)
 {
 	for (auto objInHierarchy : m_hierarchy)
 	{
 		if (objInHierarchy.gameObject == findObj)
 		{
+			try {
+				objInHierarchy.m_childList.at(index);
+			}
+			catch (std::out_of_range){
+				return nullptr;
+			}
+
 			return objInHierarchy.m_childList.at(index).gameObject;
 		}
 	}
+	return nullptr;
 }
-
-void ObjectManager::SetParent(GameObject * parent, GameObject * childObj)
+/**
+ * @brief オブジェクトのヒエラルキーデータを取得
+ * @param[in] data ヒエラルキーの階層データ
+ * @param[in] obj ほしいデータのオブジェクト
+ * @return ヒエラルキーに入っているオブジェクトに対応したデータ
+ */
+ObjectManager::HierarchyData* ObjectManager::FindDataInHierarchy(std::vector<HierarchyData>& data, GameObject* obj)
 {
-	GameObject* workchild = nullptr;
-	GameObject* root = childObj->GetRoot();
-	HierarchyData childData;
+	GameObject* root = obj->GetRoot();
+	HierarchyData* result = nullptr;
 
-	// 子オブジェクトのデータを探し出しリストから削除
-	for (auto itHierarchy = m_hierarchy.begin(); itHierarchy != m_hierarchy.end(); itHierarchy++)
+	for (auto& objInData : data)
 	{
-		// 親階層で検索
-		if (itHierarchy->gameObject == childObj)
+		if (objInData.gameObject->GetRoot() == root)
 		{
-			childData = *itHierarchy;
-			itHierarchy = m_hierarchy.erase(itHierarchy);
-			break;
-		}
+			if (objInData.gameObject == obj) {
+				result = &objInData;
+				break;
+			}
 
-		// 子階層で検索
-		for (auto inChild = itHierarchy->m_childList.begin(); inChild != itHierarchy->m_childList.end(); inChild++)
-		{
-			if (inChild->gameObject== childObj)
-			{
-				childData = *inChild;
-				itHierarchy->m_childList.erase(itHierarchy);
+			result = FindDataInHierarchy(objInData.m_childList, obj);
+			if (result != nullptr) {
 				break;
 			}
 		}
 	}
 
-	// 子にセット
-	for (auto hierarchyObj : m_hierarchy)
+	return result;
+}
+
+/**
+ * @brief オブジェクトが所属しているヒエラルキーの階層データを取得
+ * @param[in] data 階層データ
+ * @param[in] obj 探し出すオブジェクトデータ
+ * @return オブジェクトが所属している階層のデータ
+ */
+std::vector<ObjectManager::HierarchyData>* ObjectManager::GetVectorData(std::vector<ObjectManager::HierarchyData>& data, GameObject* obj)
+{
+	std::vector<HierarchyData>* result = nullptr;
+
+	for (auto inData : data)
 	{
-		if (hierarchyObj.gameObject == root)
+		if (inData.gameObject == obj)
 		{
-			if (hierarchyObj.gameObject == parent) {
-				hierarchyObj.m_childList.push_back(childData);
-			}
-			for (auto inChild : hierarchyObj.m_childList)
-			{
-				if (inChild.gameObject == parent) {
-					inChild.m_childList.push_back(childData);
-				}
+			result = &data;
+			break;
+		}
+		else if (inData.gameObject == obj)
+		{
+			result = GetVectorData(inData.m_childList, obj);
+			if (result != nullptr) {
+				break;
 			}
 		}
 	}
+
+	return result;
 }
+
+
+/**
+ * @brief オブジェクトが所属しているヒエラルキーの階層データを取得
+ * @param[in] obj探し出したいオブジェクトデータ
+ * @return ヒエラルキー階層データ
+ */
+std::vector<ObjectManager::HierarchyData>* ObjectManager::GetHierarchyData(GameObject* obj)
+{
+	GameObject* root = obj->GetRoot();
+	std::vector<ObjectManager::HierarchyData>* result = nullptr;
+
+	for (auto inData : m_hierarchy)
+	{
+		if (inData.gameObject == obj)
+		{
+			result = &m_hierarchy;
+		}
+		else if (inData.gameObject == root)
+		{
+			result = GetVectorData(inData.m_childList, obj);
+		}
+	}
+	return result;
+}
+
+/**
+ * @brief ヒエラルキーから子オブジェクトを取得
+ * @param[in] findObj 探し出す親データ
+ * @param[in] name 子オブジェクトの名前
+ * @return nameに対応した子オブジェクト
+ */
+GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, std::string name)
+{
+	GameObject* work = nullptr;
+	HierarchyData* findData ;
+
+	// 親オブジェクトの取得
+	findData = FindDataInHierarchy(m_hierarchy, findObj);
+
+	// 親が存在しない
+	if (findData->gameObject == nullptr) {
+		return nullptr;
+	}
+
+	for (auto obj : findData->m_childList)
+	{
+		if (obj.gameObject->GetName() == name)
+		{
+			return obj.gameObject;
+		}
+	}
+
+	return nullptr;
+}
+
+/**
+ * @biref オブジェクトを親のヒエラルキーデータの子供にセット
+ * @param[in] parent　セットする親オブジェクトのデータ
+ * @param[in] childObj セットする子オブジェクトのデーター
+ * @return なし
+ */
+void ObjectManager::SetParent(GameObject * parent, GameObject * childObj)
+{
+	GameObject* workchild = nullptr;
+	GameObject* root = childObj->GetRoot();
+	HierarchyData childData;
+	std::vector<HierarchyData>* vecParent = nullptr;
+
+	vecParent = GetHierarchyData(childObj);
+
+	if (vecParent == nullptr) {
+		return;
+	}
+
+	for (auto objit = vecParent->begin(); objit != vecParent->end(); objit++)
+	{
+		if (objit->gameObject == childObj)
+		{
+			childData = *objit;
+			vecParent->erase(objit);
+			break;
+		}
+	}
+
+	//// 子オブジェクトのデータを探し出しリストから削除
+	//for (auto itHierarchy = m_hierarchy.begin(); itHierarchy != m_hierarchy.end(); itHierarchy++)
+	//{
+	//	// 親階層で検索
+	//	if (itHierarchy->gameObject == childObj)
+	//	{
+	//		childData = *itHierarchy;
+	//		itHierarchy = m_hierarchy.erase(itHierarchy);
+	//		break;
+	//	}
+
+	//	// 子階層で検索
+	//	for (auto inChild = itHierarchy->m_childList.begin(); inChild != itHierarchy->m_childList.end(); inChild++)
+	//	{
+	//		if (inChild->gameObject== childObj)
+	//		{
+	//			childData = *inChild;
+	//			itHierarchy->m_childList.erase(inChild);
+	//			break;
+	//		}
+	//	}
+	//}
+
+	// 子にセット
+	HierarchyData* parentData = FindDataInHierarchy(m_hierarchy, parent);
+	//childData.gameObject->SetRoot(parentData->gameObject->GetRoot());
+	parentData->m_childList.push_back(childData);
+	for (auto objInChild : childData.m_childList)
+	{
+		objInChild.gameObject->SetRoot(parentData->gameObject->GetRoot());
+	}
+
+	//for (auto& hierarchyObj : m_hierarchy)
+	//{
+	//	if (hierarchyObj.gameObject == root)
+	//	{
+	//		if (hierarchyObj.gameObject == parent) {
+	//			hierarchyObj.m_childList.push_back(childData);
+	//		}
+	//		for (auto inChild : hierarchyObj.m_childList)
+	//		{
+	//			if (inChild.gameObject == parent) {
+	//				inChild.m_childList.push_back(childData);
+	//			}
+	//		}
+	//	}
+	//}
+}
+
+void ObjectManager::UpdateHierarchy(std::vector<ObjectManager::HierarchyData> data)
+{
+	for (auto o : data)
+	{
+		o.gameObject->Update();
+		UpdateHierarchy(o.m_childList);
+	}
+}
+
+
+void ObjectManager::LateUpdateHierarchy(std::vector<ObjectManager::HierarchyData> data)
+{
+	for (auto o : data)
+	{
+		o.gameObject->LateUpdate();
+		LateUpdateHierarchy(o.m_childList);
+	}
+}
+
+
 /**
  * @brief 初期化処理
  * @return　なし
@@ -106,11 +341,14 @@ void ObjectManager::Awake()
  */
  HRESULT ObjectManager::Init()
 {
-	 //CreateHierarchy();
-	 auto& buff = m_ObjList;
+	MergeObjList();
+	//CreateHierarchy();
+	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Init();
 	}
+	InitMergeObject();
+	MergeObjList();
 
 	return E_NOTIMPL;
 }
@@ -133,19 +371,26 @@ void ObjectManager::Uninit()
  */
 void ObjectManager::Update()
 {
-	auto& buff = m_ObjList;
-	for (auto& obj : buff) {
-		if (obj.second.get()->GetActive() == false) {
-			continue;
-		}
-		obj.second.get()->Update();
-	}
-	for (auto& obj : buff) {
-		if (obj.second.get()->GetActive() == false) {
-			continue;
-		}
-		obj.second.get()->LateUpdate();
-	}
+	UpdateHierarchy(m_hierarchy);
+
+	LateUpdateHierarchy(m_hierarchy);
+
+	InitMergeObject();
+	MergeObjList();
+
+	//auto& buff = m_ObjList;
+	//for (auto& obj : buff) {
+	//	if (obj.second.get()->GetActive() == false) {
+	//		continue;
+	//	}
+	//	obj.second.get()->Update();
+	//}
+	//for (auto& obj : buff) {
+	//	if (obj.second.get()->GetActive() == false) {
+	//		continue;
+	//	}
+	//	obj.second.get()->LateUpdate();
+	//}
 }
 
 /**

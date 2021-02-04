@@ -8,6 +8,7 @@
 #include "LifeGaugeShaderInfo.h"
 #include "GaugeCtrl.h"
 #include "DefaultShaderInfo.h"
+#include "ObjectManager.h"
 
 /**
  * @brief コンストラクタ
@@ -22,11 +23,12 @@ Gauge::Gauge():m_Max(1),m_Min(0), m_Value(nullptr),m_offset(),m_transform(), m_m
  */
 void Gauge::Awake()
 {
-	m_LifeGauge = new LifeGauge();
-	m_frame = new GameObject();
-	m_frame->SetName("frame");
-	SetChild(m_LifeGauge);
-	SetChild(m_frame);
+	m_LifeGauge = //new LifeGauge();
+	ObjectManager::Create<LifeGauge>("LifeGauge");
+	m_LifeGauge->SetParent(this);
+	m_frame = //new GameObject();
+	ObjectManager::Create<GameObject>("frame");
+	m_frame->SetParent(this);
 	AddComponent<GaugeCtrl>()->SetSize(Vector3(50, 30, 1));
 	m_frame->AddComponent<DefaultShaderInfo>()->ChangeColor(1, 1, 1);
 	m_frame->AddComponent<Billboard>();

@@ -1,6 +1,6 @@
-/**
- * @file@WeaponBulletCount
- * @brief •Ší‚Ìc‚èc’e”‚Ì•\¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ï»¿/**
+ * @fileã€€WeaponBulletCount
+ * @brief æ­¦å™¨ã®æ®‹ã‚Šæ®‹å¼¾æ•°ã®è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #pragma once
 #include "Component.h"
@@ -11,17 +11,17 @@ class Missile;
 class WeaponBulletCount: public Component
 {
 private:
-	NumberList* m_BulletNum;
+	GameObject* m_BulletNum;
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	HRESULT Init();
 
 	/**
-	 * @brief XVˆ—
-	 * @return ‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Update();
 };

@@ -23,7 +23,7 @@ HRESULT EnemyCtrl::Init()
 	m_transform->AngleAxis(Transform::AXIS_Y, MyMath::AngleToRadian(180));
 
 	lookTarget = nullptr;
-	m_Weapon = m_Parent->GetChild<Weapon>();
+	m_Weapon = m_Parent->GetChildTest("EnemyWeapon");
 
 	return E_NOTIMPL;
 }

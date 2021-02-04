@@ -1,24 +1,24 @@
-/**
+ï»¿/**
  * @file MissileCtrl
- * @brief ’e‚Ì§ŒäƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief å¼¾ã®åˆ¶å¾¡ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #include "MissileCtrl.h"
 #include "GameObject.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void MissileCtrl::Awake()
 {
-	m_power = 1;		// ’e‚ÌUŒ‚—Í
+	m_power = 1;		// å¼¾ã®æ”»æ’ƒåŠ›
 	m_nLife = 0;
 }
 
 HRESULT MissileCtrl::Init()
 {
 	m_nLife = 0;
-	m_parentTrans = &m_Parent->GetTransform();
+	//m_ParentTransform = &m_Parent->GetTransform();
 	m_target = nullptr;
 
 	return E_NOTIMPL;
@@ -28,10 +28,10 @@ void MissileCtrl::Update()
 {
 	--m_nLife;
 
-	// ’Ç”ö
+	// è¿½å°¾
 	if (m_target != nullptr) {
-		Vector3 dir = m_target->GetTransform().position - m_parentTrans->position;
-		m_parentTrans->quaternion = MyMath::LookRotation(m_parentTrans->GetForward(), dir, 1 / 30.0f);
+		Vector3 dir = m_target->GetTransform().position - m_ParentTransform->position;
+		m_ParentTransform->quaternion = MyMath::LookRotation(m_ParentTransform->GetForward(), dir, 1 / 30.0f);
 	}
 
 	if (m_nLife <= 0) {
@@ -39,19 +39,19 @@ void MissileCtrl::Update()
 	}
 }
 
-// Offset‚ªƒ‚ƒfƒ‹À•W‚Å‚Ìƒ~ƒTƒCƒ‹‚ÌˆÊ’u‚ç‚µ‚¢‚æ
+// OffsetãŒãƒ¢ãƒ‡ãƒ«åº§æ¨™ã§ã®ãƒŸã‚µã‚¤ãƒ«ã®ä½ç½®ã‚‰ã—ã„ã‚ˆ
 bool MissileCtrl::Fire(Vector3* pos)
 {
 	m_Parent->SetActive(true);
-	m_parentTrans->position = *pos;
-	m_nLife =  2.5f * 60;		// 2.5•b
+	m_ParentTransform->position = *pos;
+	m_nLife =  2.5f * 60;		// 2.5ç§’
 	return true;
 }
 
 bool MissileCtrl::Fire(Vector3* pos, Quaternion quat)
 {
 	Fire(pos);
-	m_parentTrans->quaternion = quat;
+	m_ParentTransform->quaternion = quat;
 	return true;
 }
 
@@ -63,8 +63,8 @@ bool MissileCtrl::Fire(Vector3* pos, Quaternion quat, GameObject* target)
 }
 
 /**
- * ’e‚ÌˆĞ—Í‚Ìæ“¾
- * @return ’e‚ÌˆĞ—Í
+ * å¼¾ã®å¨åŠ›ã®å–å¾—
+ * @return å¼¾ã®å¨åŠ›
  */
 int MissileCtrl::GetPower()
 {

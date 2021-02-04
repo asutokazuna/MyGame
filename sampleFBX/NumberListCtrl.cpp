@@ -1,21 +1,42 @@
+ï»¿/**
+ * @file NumberListCtrl
+ * @brief æ•°å­—è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+ */
 #include "NumberListCtrl.h"
 #include "GameObject.h"
 #include "DigitNumber.h"
 #include "NumberDrawer.h"
+#include "ObjectManager.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief æ•°å­—ã®æ¡æ•°ã‚’æ•°ãˆã‚‹
+ * @param num æ•°å­—
+ * @return ãªã—
+ */
+int CountNumber(int num)
+{
+	int cnt = 0;
+	while (num > 0)
+	{
+		num /= 10;
+		cnt++;
+	}
+	return cnt;
+}
+
+/**
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void NumberListCtrl::Awake()
 {
 	m_width = 35;
-	m_NumberList = m_Parent->GetChildren<DigitNumber>();
+	//m_NumberList = m_Parent->GetChildren<DigitNumber>();
 }
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 HRESULT NumberListCtrl::Init()
 {
@@ -24,15 +45,26 @@ HRESULT NumberListCtrl::Init()
 }
 
 /**
- * @brief ”š‚ÌƒZƒbƒg
- * @param[in] ƒZƒbƒg‚·‚é”š
- * @return ‚È‚µ
+ * @brief æ•°å­—ã®ã‚»ãƒƒãƒˆ
+ * @param[in] ã‚»ãƒƒãƒˆã™ã‚‹æ•°å­—
+ * @return ãªã—
  */
 void NumberListCtrl::SetNumber(int num)
 {
 	int work = num;
 	int value = 0;
+	int cnt = CountNumber(num);
+	DigitNumber* number;
 
+	// æ¡æ•°åˆ†ã®ãƒªã‚¹ãƒˆã‚’ä½œæˆ
+	while (m_NumberList.size() < cnt)
+	{
+		number = ObjectManager::Create<DigitNumber>("number");
+		m_NumberList.push_back(number);
+		number->SetParent(m_Parent);
+	}
+
+	// æ•°å­—ã‚’æ›´æ–°
 	for (auto obj : m_NumberList)
 	{
 		value = work % 10;
@@ -42,9 +74,9 @@ void NumberListCtrl::SetNumber(int num)
 }
 
 /**
- * @brief À•W‚Ìİ’è
- * @param[in] pos İ’èÀ•W
- * @return ‚È‚µ
+ * @brief åº§æ¨™ã®è¨­å®š
+ * @param[in] pos è¨­å®šåº§æ¨™
+ * @return ãªã—
  */
 void NumberListCtrl::SetPos(Vector3 pos)
 {
@@ -59,9 +91,9 @@ void NumberListCtrl::SetPos(Vector3 pos)
 }
 
 /**
- * @brief ”š“¯m‚Ì•‚Ìİ’è
- * @param[in] width •
- * @return ‚È‚µ
+ * @brief æ•°å­—åŒå£«ã®å¹…ã®è¨­å®š
+ * @param[in] width å¹…
+ * @return ãªã—
  */
 void NumberListCtrl::SetWidth(float width)
 {

@@ -18,7 +18,7 @@ class EnemyCtrl :public Component
 {
 private:
 	Transform* m_transform;		// 親のトランスフォーム
-	Weapon* m_Weapon;
+	GameObject* m_Weapon;
 	GameObject* lookTarget;
 
 public:

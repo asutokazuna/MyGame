@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @class PlayerLifeCtrl
- * @brief ƒvƒŒƒCƒ„[‚ÌHP‚ÌŠÇ—
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã®ç®¡ç†
  */
 #pragma once
 #include "Component.h"
@@ -9,37 +9,37 @@ class NumberList;
 
 /**
  * @class PlayerLifeCtrl
- * @brief ƒvƒŒƒCƒ„[‚ÌHP‚ÌŠÇ—
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã®ç®¡ç†
  */
 class PlayerLifeCtrl :public Component
 {
 private:
 	int m_Life;		//!< HP
-	NumberList* m_numberUI;
+	GameObject* m_numberUI;
 	GameObject* m_gauge;
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
 
 	HRESULT Init();
 
 	/**
-	 * @brief XVˆ—
-	 * @return ‚È‚µ
+	 * @brief æ›´æ–°å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Update();
 
 	/**
-	 * @brief “–‚½‚Á‚½‚Ìˆ—
-	 * @return ‚È‚µ
+	 * @brief å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
+	 * @return ãªã—
 	 */
 	void  OnCollisionEnter(GameObject* gameObj);
 	/**
-	 * @brief HP‚Ìæ“¾
-	 * @return Œ»İHP‚Ìæ“¾
+	 * @brief HPã®å–å¾—
+	 * @return ç¾åœ¨HPã®å–å¾—
 	 */
 	int GetLife();
 };

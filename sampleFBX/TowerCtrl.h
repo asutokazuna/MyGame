@@ -20,7 +20,7 @@ class TowerCtrl: public Component
 private:
 	TFbxMaterial* material;
 	float m_percent;
-	LifeGauge* m_gauge;
+	GameObject* m_gauge;
 	ShaderInfo* m_shader;
 	TowerEnergy* m_energy;
 	int m_state;

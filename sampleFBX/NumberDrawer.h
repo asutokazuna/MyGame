@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file NumberDrawer
- * @brief 1”š•\¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief 1æ•°å­—è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #pragma once
 #include "Component.h"
@@ -19,21 +19,21 @@ private:
 public:
 
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	NumberDrawer();
 
 	void Awake();
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @retrun ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @retrun ãªã—
 	 */
-	//HRESULT Init();
+	HRESULT Init();
 
 	/**
-	 * @brief ”š‚ÌƒZƒbƒg
-	 * @return ‚È‚µ
+	 * @brief æ•°å­—ã®ã‚»ãƒƒãƒˆ
+	 * @return ãªã—
 	 */
 	void SetNumber(int num);
 };

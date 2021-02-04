@@ -1,6 +1,6 @@
 ﻿/**
  * @file WeaponCtrl
- * @brief 武器の制御クラス
+ * @brief 武器の制御コンポーネント
  */
 #pragma once
 #include "Component.h"
@@ -14,16 +14,22 @@ class GameObject;
 
 /**
  * @class WeaponCtrl
- * @brief 武器の制御
+ * @brief 武器の制御コンポーネント
  */
 class WeaponCtrl :public Component
 {
 private:
 	std::list<Missile*> m_BulletList;	//!< ミサイルリスト
 	Transform* m_ParentTrans;			//!< 親の座標
-	int m_BulletCount;
-	int m_ReloadTime;
+	int m_BulletCount;					//!< 現在の弾数
+	int m_ReloadTime;					//!< リロードの時間
+	int m_maxBullet;					//!< 弾の最大数
 public:
+
+	/**
+	 * @brief コンストラクタ
+	 */
+	WeaponCtrl();
 
 	/**
 	 * @brief 初期化処理
@@ -64,6 +70,12 @@ public:
 	const int& GetBulletCnt() {
 		return m_BulletCount;
 	}
+
+	/**
+	 * @brief 弾の最大数の設定
+	 * @return なし
+	 */
+	void SetMaxBullet(int num);
 
 	/**
 	 * @brief 玉の発射

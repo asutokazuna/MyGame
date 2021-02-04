@@ -28,7 +28,7 @@ void TowerCtrl::Awake()
 HRESULT TowerCtrl::Init()
 {
 	m_percent = 0;
-	m_gauge = m_Parent->GetChild<Gauge>()->GetChild<LifeGauge>();
+	m_gauge = m_Parent->GetChildTest("TowerGauge")->GetChildTest("LifeGauge");
 	m_shader = m_gauge->GetComponent<LifeGaugeShaderInfo>();
 	m_energy = m_Parent->GetComponent<TowerEnergy>();
 

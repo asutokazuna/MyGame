@@ -5,11 +5,11 @@
 #include "Weapon.h"
 #include "Missile.h"
 #include "WeaponCtrl.h"
-
-/**
- * @brief コンストラクタ
- */
-Weapon::Weapon(int num):m_BulletMax(num){}
+//
+///**
+// * @brief コンストラクタ
+// */
+//Weapon::Weapon(int num):m_BulletMax(num){}
 
 /**
  * @brief 初期化処理
@@ -17,13 +17,13 @@ Weapon::Weapon(int num):m_BulletMax(num){}
  */
 void Weapon::Awake()
 {
-	transform = &parent->GetTransform();
-	for (int i = 0; i < m_BulletMax; i++)
-	{
-		Missile* temp = new Missile();
-		m_BulletList.push_back(temp);
-		SetChild(temp);
-	}
+	//transform = &parent->GetTransform();
+	//for (int i = 0; i < m_BulletMax; i++)
+	//{
+	//	Missile* temp = new Missile();
+	//	m_BulletList.push_back(temp);
+	//	SetChild(temp);
+	//}
 
 	AddComponent<WeaponCtrl>();
 }

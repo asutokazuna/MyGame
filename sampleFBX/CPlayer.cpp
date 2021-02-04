@@ -39,35 +39,35 @@ void CPlayer::Awake()
 	m_col->SetModelKind(MODEL_PLAYER);
 
 	// 武器
-	m_Weapon = new Weapon(30);
+	m_Weapon = //new Weapon(30);
+		ObjectManager::Create<Weapon>("Weapon");
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
-	SetChild(m_Weapon);
+	m_Weapon->SetParent(this);
 
 	AddComponent<PlayerShotDir>();
 	// ロックオン
 	GameObject* obj = ObjectManager::Create<GameObject>("Lockon");
 	obj->SetParent(this);
-	SetChild(obj);
-
+	
 	// 残弾数
-	NumberList* m_bulletUI = new NumberList(2);
-	m_bulletUI->SetName("BulletUI");
-	SetChild(m_bulletUI);
-
+	NumberList* m_bulletUI =// new NumberList(2);
+	ObjectManager::Create<NumberList>("BulletUI");
+	m_bulletUI->SetParent(this);
+	
 	// HPの表示(数字)
-	NumberList* m_numberUI = new NumberList(3);
-	m_numberUI->SetName("LifeUI");
-	SetChild(m_numberUI);
-
-	GameObject* m_gaugeLife = new GaugeUI();
-	m_gaugeLife->SetName("LifeGauge");
-	SetChild(m_gaugeLife);
-
+	NumberList* m_numberUI = //new NumberList(3);
+		ObjectManager::Create<NumberList>("LifeUI");
+	m_numberUI->SetParent(this);
+	
+	GameObject* m_gaugeLife = //new GaugeUI();
+		ObjectManager::Create<GaugeUI>("LifeGauge");
+	m_gaugeLife->SetParent(this);
+	
+	AddComponent<PlayerCtrl>();
 	AddComponent<PlayerLifeCtrl>();
 
-	AddComponent<WeaponBulletCount>();
 
-	AddComponent<PlayerCtrl>();
+	AddComponent<WeaponBulletCount>();
 	AddComponent<PlayerStateMachine>();
 }
 

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file CoreEnemyGauge
- * @brief “GƒRƒA‚Ìc‚èHP•\¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief æ•µã‚³ã‚¢ã®æ®‹ã‚ŠHPè¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #pragma once
 #include "Component.h"
@@ -8,12 +8,13 @@
 
  /**
   * @class CoreEnemyGauge
-  * @brief “GƒRƒA‚Ìc‚èHP•\¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+  * @brief æ•µã‚³ã‚¢ã®æ®‹ã‚ŠHPè¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
   */
 class CoreEnemyGauge :public CoreGauge
 {
 public:
 	void Awake();
+	HRESULT Init();
 };
 
 // EOF

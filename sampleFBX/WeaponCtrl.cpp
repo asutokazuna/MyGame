@@ -1,22 +1,27 @@
 ﻿/**
  * @file WeaponCtrl
- * @brief 武器の制御クラス
+ * @brief 武器の制御コンポーネント
  */
 #include "WeaponCtrl.h"
 #include "Transform.h"
 #include "Missile.h"
 #include "GameObject.h"
 #include "MissileCtrl.h"
+#include "ObjectManager.h"
 
 /**
  * @brief 初期化処理
  * @return なし
  */
+WeaponCtrl::WeaponCtrl():m_BulletCount(0), m_ReloadTime(60), m_maxBullet(0)
+{
+}
+
 HRESULT WeaponCtrl::Init()
 {
-	m_BulletList = m_Parent->GetChildren<Missile>();
+	//m_BulletList = m_Parent->GetChildren<Missile>();
 	m_ParentTrans = &m_Parent->GetTransform();
-	m_BulletCount = (int)m_BulletList.size();
+	//m_BulletCount = (int)m_BulletList.size();
 
 	m_ReloadTime = 60;
 	return E_NOTIMPL;
@@ -43,11 +48,17 @@ void WeaponCtrl::Shot()
 		return;
 	}
 
-	for (auto m : m_BulletList) {
+	int cnt = 0;
+	for (auto m : m_BulletList) 
+	{
 		if (m->GetActive() == false)
 		{
 			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion);
 			m_BulletCount--;
+			break;
+		}
+		cnt++;
+		if (m_maxBullet <= cnt) {
 			break;
 		}
 	}
@@ -63,12 +74,18 @@ void WeaponCtrl::Shot(Quaternion quat)
 		return;
 	}
 
-	for (auto m : m_BulletList) {
+	int cnt = 0;
+	for (auto m : m_BulletList) 
+	{
 		if (m->GetActive() == false)
 		{
 			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, quat);
 			 m_BulletCount--;
 			 break;
+		}
+		cnt++;
+		if (m_maxBullet <= cnt) {
+			break;
 		}
 	}
 }
@@ -83,11 +100,17 @@ void WeaponCtrl::Shot(Quaternion quat, GameObject * target)
 		return;
 	}
 
-	for (auto m : m_BulletList) {
+	int cnt = 0;
+	for (auto m : m_BulletList) 
+	{
 		if (m->GetActive() == false)
 		{
 			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, quat, target);
 			m_BulletCount--;
+			break;
+		}
+		cnt++;
+		if (m_maxBullet <= cnt) {
 			break;
 		}
 	}
@@ -104,13 +127,35 @@ void WeaponCtrl::Shot(GameObject * target)
 		return;
 	}
 
-	for (auto m : m_BulletList) {
+	int cnt = 0;
+	for (auto m : m_BulletList) 
+	{
 		if (m->GetActive() == false)
 		{
 			m->GetComponent<MissileCtrl>()->Fire(&m_ParentTrans->position, m_ParentTrans->quaternion, target);
 			m_BulletCount--;
 			break;
 		}
+		cnt++;
+		if (m_maxBullet <= cnt) {
+			break;
+		}
+	}
+}
+
+/**
+ * @brief 弾の最大数の設定
+ * @return なし
+ */
+void WeaponCtrl::SetMaxBullet(int num) 
+{
+	m_maxBullet = m_BulletCount = num;
+	int cnt = m_maxBullet - (int)m_BulletList.size();
+	for (int i = 0; i < cnt; i++)
+	{
+		Missile* obj = ObjectManager::Create<Missile>("Missile");
+		obj->SetParent(m_Parent);
+		m_BulletList.push_back(obj);
 	}
 }
 

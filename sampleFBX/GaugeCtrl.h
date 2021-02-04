@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Component.h"
 #include "MyMath.h"
 
@@ -11,11 +11,13 @@ class GaugeCtrl :public Component
 {
 private:
 	GameObject* m_frame;
-	LifeGauge*  m_LifeGauge;
+	GameObject*  m_LifeGauge;
 	Vector3 m_offset;
+	Vector3 m_size;
 	Transform* m_target;
 public:
 	void Awake();
+	HRESULT Init();
 	void Update();
 	void SetPos(Vector3 pos);
 	void SetSize(Vector3 size);

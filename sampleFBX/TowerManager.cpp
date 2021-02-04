@@ -7,6 +7,7 @@
 #include "TowerEnergy.h"
 #include "collision.h"
 #include "TowerMgrCtrl.h"
+#include "ObjectManager.h"
 
 // @def
 #define POS_OFFSET_X (500)
@@ -19,9 +20,10 @@ void TowerManager::Awake()
 {
 	for (int i = 0; i < MAX_TOWER; i++)
 	{
-		Tower* temp = new Tower();
+		Tower* temp = //new Tower();
+		ObjectManager::Create<Tower>("Tower");
 		m_Tower.push_back(temp);
-		SetChild(temp);
+		temp->SetParent(this);
 	}
 	AddComponent<TowerMgrCtrl>();
 }

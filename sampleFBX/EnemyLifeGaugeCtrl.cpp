@@ -1,4 +1,4 @@
-#include "EnemyLifeGaugeCtrl.h"
+﻿#include "EnemyLifeGaugeCtrl.h"
 #include "GameObject.h"
 #include "GaugeCtrl.h"
 #include "EnemyLifeCtrl.h"
@@ -9,7 +9,7 @@ EnemyLifeCtrl* lifectrl;
 
 HRESULT EnemyLifeGaugeCtrl::Init()
 {
-	GameObject* gauge = m_Parent->GetChild("LifeGauge");
+	GameObject* gauge = m_Parent->GetChildTest("EnemyLifeGauge");
 	GaugeCtrl* gaugectrl = gauge->GetComponent<GaugeCtrl>();
 	shader = gaugectrl->GetLifeShader();
 	gaugectrl->SetOffset(Vector3(0,50,0));

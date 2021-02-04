@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include <list>
 #include <vector>
+#include <string>
 
 class Object;
 
@@ -30,6 +31,7 @@ public:
 
 public:
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> m_ObjList;
+	std::vector<GameObject*> m_ObjListBuffer;
 	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやるかも
 
 	std::vector<HierarchyData> m_hierarchy;
@@ -43,6 +45,8 @@ private:
 
 	void SetHierarchy(GameObject* obj);
 
+	void InitMergeObject();
+
 public:
 
 	/**
@@ -53,27 +57,32 @@ public:
 	template <class T>
 	static T* Create(std::string name)
 	{
-		std::unique_ptr<T> work(new T());
+		T* work = new T();
 		int num = 0;
 		std::string keyName = name;
 		GameObject* obj;
 
-		while (ObjectManager::GetInstance().m_ObjList.find(keyName) != ObjectManager::GetInstance().m_ObjList.end())
-		{
-			keyName.clear();
-			keyName = name + std::to_string(num);
-			num++;
-		}
+		//while (ObjectManager::GetInstance().m_ObjListBuffer.find(keyName) != ObjectManager::GetInstance().m_ObjListBuffer.end())
+		//{
+		//	keyName.clear();
+		//	keyName = name + std::to_string(num);
+		//	num++;
+		//}
 
-		ObjectManager::GetInstance().m_ObjList[keyName] = std::move(work);
-		obj = ObjectManager::GetInstance().m_ObjList[keyName].get();
+	/*	ObjectManager::GetInstance().m_ObjListBuffer[keyName] = (work);
+		obj = ObjectManager::GetInstance().m_ObjListBuffer[keyName];*/
+		ObjectManager::GetInstance().m_ObjListBuffer.push_back(work);
+		obj = dynamic_cast<GameObject*>(ObjectManager::GetInstance().m_ObjListBuffer.back());
 		obj->SetName(name);
 		ObjectManager::GetInstance().SetHierarchy(obj);
+		//ObjectManager::GetInstance().m_ObjListBuffer.
 		obj->Awake();
 
-		return dynamic_cast<T*>(ObjectManager::GetInstance().m_ObjList[keyName].get());
+		return dynamic_cast<T*>(obj);
 	}
 
+	void MergeObjList();
+	
 	/**
 	 * @brief オブジェクトの取得
 	 * @param[in] name 取得したいオブジェクトの名前
@@ -98,7 +107,23 @@ public:
 
 	void SetParent(GameObject* parent, GameObject* childObj);
 
+	void UpdateHierarchy(std::vector<ObjectManager::HierarchyData> data);
+
+	void LateUpdateHierarchy(std::vector<ObjectManager::HierarchyData> data);
+
 	GameObject* FindChildInHierarchy(GameObject* findObj, int index);
+
+	HierarchyData* FindDataInHierarchy(std::vector<HierarchyData>& data, GameObject * obj);
+
+	std::vector<ObjectManager::HierarchyData>* GetVectorData(std::vector<ObjectManager::HierarchyData>& data, GameObject * obj);
+
+	//std::vector<ObjectManager::HierarchyData>& GetHierarchyData(std::vector<ObjectManager::HierarchyData> data, GameObject * obj);
+	//
+	//std::vector<ObjectManager::HierarchyData>& GetHierarchyData(std::vector<ObjectManager::HierarchyData> data, GameObject * obj, GameObject * parent);
+
+	std::vector<ObjectManager::HierarchyData>* GetHierarchyData(GameObject * obj);
+
+	GameObject * FindChildInHierarchy(GameObject * findObj, std::string name);
 
 	/**
 	 * @brief 初期化処理

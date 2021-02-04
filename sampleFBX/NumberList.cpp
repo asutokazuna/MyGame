@@ -1,27 +1,27 @@
-/**
+ï»¿/**
  * @file NumberList
- * @brief •¶š•\¦ƒIƒuƒWƒFƒNƒg
+ * @brief æ–‡å­—è¡¨ç¤ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #include "NumberList.h"
 #include "DigitNumber.h"
 #include "NumberListCtrl.h"
+//
+///**
+// * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// * @param[in] num æ¡æ•°
+// */
+//NumberList::NumberList(int num)
+//{
+//	for (int i = 0; i < num; i++)
+//	{
+//		DigitNumber* BulletCnt = new DigitNumber();
+//		SetChild(BulletCnt);
+//	}
+//}
 
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
- * @param[in] num Œ…”
- */
-NumberList::NumberList(int num)
-{
-	for (int i = 0; i < num; i++)
-	{
-		DigitNumber* BulletCnt = new DigitNumber();
-		SetChild(BulletCnt);
-	}
-}
-
-/**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void NumberList::Awake()
 {

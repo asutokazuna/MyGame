@@ -23,8 +23,8 @@ enum CAMERA_STATE
 class CameraStateMachine :public StateMachine<CAMERA_STATE>
 {
 private:
-	CTPCamera * m_tpCamera;
-	DeadCamera* m_deadCamera;
+	GameObject* m_tpCamera;
+	GameObject* m_deadCamera;
 	GameObject* m_player;
 public:
 	CameraStateMachine() : m_deadCamera(nullptr), m_tpCamera(nullptr) ,m_player(nullptr) {}

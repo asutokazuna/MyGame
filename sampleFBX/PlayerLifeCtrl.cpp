@@ -31,11 +31,12 @@ void PlayerLifeCtrl::Awake()
 HRESULT PlayerLifeCtrl::Init()
 {
 	m_Life = MAX_LIFE;
-	m_numberUI = m_Parent->GetChild<NumberList>("LifeUI");
+	m_numberUI = m_Parent->GetChildTest("LifeUI");
+	m_numberUI->GetComponent<NumberListCtrl>()->SetNumber(m_Life);
 	m_numberUI->GetComponent<NumberListCtrl>()->SetWidth(30);
 	m_numberUI->GetComponent<NumberListCtrl>()->SetPos(Vector3(-SCREEN_CENTER_X + 120, -SCREEN_CENTER_Y + 50, 0));
 
-	m_gauge = m_Parent->GetChild<GameObject>("LifeGauge");
+	m_gauge = m_Parent->GetChildTest("LifeGauge");
 	m_gauge->GetTransform().scale = Vector3(100, 40, 0);
 	m_gauge->GetTransform().position = Vector3(-SCREEN_CENTER_X + 200, -SCREEN_CENTER_Y + 50, 0);
 

@@ -20,10 +20,10 @@ private:
 	int m_BulletMax;
 
 public:
-	/**
-	 * @brief コンストラクタ
-	 */
-	Weapon(int num);
+	///**
+	// * @brief コンストラクタ
+	// */
+	//Weapon(int num);
 
 	/**
 	 * @brief 初期化処理

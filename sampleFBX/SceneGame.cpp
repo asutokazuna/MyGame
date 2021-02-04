@@ -38,7 +38,7 @@ void SceneGame::Awake()
 	m_Core		= ObjectManager::Create<CorePlayer>("CorePlayer");
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
 	ObjectManager::Create<CoreGaugeUI>("CoreGaugeUI");
-	m_pCTPCamera = ObjectManager::Create<CTPCamera>("CTPCamera");
+	//m_pCTPCamera = ObjectManager::Create<CTPCamera>("CTPCamera");
 }
 
 /**

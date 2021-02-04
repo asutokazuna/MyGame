@@ -25,7 +25,7 @@ Missile::Missile()
 void Missile::Awake()
 {
 	HRESULT hr = S_OK;
-	tag = parent->GetTag();
+	//tag = parent->GetTag();
 	AddComponent<Object3D>()->SetModel(MODEL_MISSILE);
 	m_Move = AddComponent<MissileMove>();
 	m_col = AddComponent<Collision>()->SetModelKind(MODEL_MISSILE);

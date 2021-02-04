@@ -8,7 +8,7 @@
 /**
  * @brief コンストラクタ
  */
-GameObject::GameObject() : parent(nullptr), root(nullptr), childCount(0) 
+GameObject::GameObject() : parent(nullptr), root(this), childCount(0) 
 {
 	transform = AddComponent<Transform>();
 	transform->m_ParentTransform = transform;
@@ -163,20 +163,20 @@ void GameObject::DrawAlpha()
 	//	child->DrawAlpha();
 	//}
 }
-
-/**
- * @brief 子オブジェクトの設定
- * @return なし
- */
- void GameObject::SetChild(GameObject * child)
- {
-	 std::unique_ptr<GameObject> buff(child);
-
-	 buff->parent = this;
-	 //buff->Awake();
-	 m_ChildList.push_back(std::move(buff));
- }
-
+//
+///**
+// * @brief 子オブジェクトの設定
+// * @return なし
+// */
+// void GameObject::SetChild(GameObject * child)
+// {
+//	 std::unique_ptr<GameObject> buff(child);
+//
+//	 buff->parent = this;
+//	 //buff->Awake();
+//	 m_ChildList.push_back(std::move(buff));
+// }
+//
  void GameObject::SetParent(GameObject* parent)
  {
 	 GameObject* workRoot = parent;
@@ -185,20 +185,30 @@ void GameObject::DrawAlpha()
 	 parent->childCount++;
 	 while (workRoot != nullptr)
 	 {
-		 this->root = workRoot;
+		 this->root = workRoot->GetRoot();
 		 workRoot = workRoot->GetParent();
 	 }
 
 	 ObjectManager::GetInstance().SetParent(parent, this);
  }
 
- GameObject * GameObject::GetChildTest(int index)
+ GameObject* GameObject::GetChildTest(int index)
  {
 	 GameObject* childObj = nullptr;
 
-	 ObjectManager::GetInstance().FindChildInHierarchy(this, index);
+	 childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, index);
 
-	 return ;
+	 return childObj;
+ }
+
+
+ GameObject* GameObject::GetChildTest(std::string name)
+ {
+	 GameObject* childObj = nullptr;
+
+	 childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, name);
+
+	 return childObj;
  }
 
  /**
@@ -218,9 +228,9 @@ void GameObject::DrawAlpha()
 	 for (auto com : m_ComponentList)
 		 com->OnCollisionEnter(gameObbj);
 
-	 for (auto& child : m_ChildList) {
-		 child->OnCollisionEnter(gameObbj);
-	 }
+	 //for (auto& child : m_ChildList) {
+		// child->OnCollisionEnter(gameObbj);
+	 //}
  }
 
  /**

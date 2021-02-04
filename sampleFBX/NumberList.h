@@ -1,26 +1,26 @@
-/**
+ï»¿/**
  * @file NumberList
- * @brief •¶š•\¦ƒIƒuƒWƒFƒNƒg
+ * @brief æ–‡å­—è¡¨ç¤ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 #pragma once
 #include "GameObject.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class DigitNumber;
 
 class NumberList :public GameObject
 {
 public:
 
-	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param[in] num Œ…”
-	 */
-	NumberList(int num);
+	///**
+	// * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	// * @param[in] num æ¡æ•°
+	// */
+	//NumberList(int num);
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
 };

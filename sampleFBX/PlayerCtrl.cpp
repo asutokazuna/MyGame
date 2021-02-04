@@ -13,6 +13,7 @@
 #include "PlayerMove.h"
 
 #define WAIT_TIME (1 * 60)
+#define MAX_BULLET (30)
 
 /**
  * @brief 初期化処理
@@ -20,7 +21,14 @@
  */
 void PlayerCtrl::Awake()
 {
-	m_Weapon = m_Parent->GetChild<Weapon>();
+}
+
+HRESULT PlayerCtrl::Init()
+{
+	m_Weapon = m_Parent->GetChildTest("Weapon");
+	m_Weapon->GetComponent<WeaponCtrl>()->SetMaxBullet(MAX_BULLET);
+
+	return E_NOTIMPL;
 }
 
 static Quaternion dir;

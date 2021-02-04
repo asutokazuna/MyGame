@@ -9,7 +9,6 @@
 
  // 前方宣言
 class Transform;
-class Weapon;
 
 /**
  * @class PlayerCtrl
@@ -18,7 +17,7 @@ class Weapon;
 class PlayerCtrl: public Component
 {
 private:
-	Weapon* m_Weapon;
+	GameObject* m_Weapon;
 	Transform* m_ParentTrans;				//!< 親の座標など
 
 public:
@@ -27,6 +26,8 @@ public:
 	 * @return なし
 	 */
 	void Awake();
+
+	HRESULT Init();
 
 	/**
 	 * @brief 更新処理

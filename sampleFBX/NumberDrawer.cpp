@@ -1,21 +1,21 @@
-/**
+ï»¿/**
  * @file NumberDrawer
- * @brief 1”Žš•\Ž¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief 1æ•°å­—è¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #include "NumberDrawer.h"
 #include "GameObject.h"
 #include "DefaultShaderInfo.h"
 
 /**
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 NumberDrawer::NumberDrawer():num(0)
 {
 }
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @retrun ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @retrun ãªã—
  */
 void NumberDrawer::Awake()
 {
@@ -24,14 +24,19 @@ void NumberDrawer::Awake()
 	m_shader->SetUV(Vector3(num / (float)10, 1, 1), Vector3(1 / (float)10, 1, 1));
 }
 
+ HRESULT NumberDrawer::Init()
+ {
+	 return E_NOTIMPL;
+ }
+
 /**
- * @brief ”Žš‚ÌƒZƒbƒg
- * @return ‚È‚µ
+ * @brief æ•°å­—ã®ã‚»ãƒƒãƒˆ
+ * @return ãªã—
  */
 void NumberDrawer::SetNumber(int num)
 {
 	this->num = num;
-	// UVˆÚ“®
+	// UVç§»å‹•
 	m_shader->SetUV(Vector3(num / (float)10, 1, 0), Vector3(1 / (float)10, 1, 1));
 }
 

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file CorePlayerGauge
- * @brief –¡•ûƒRƒA‚ÌŽc‚èHP•\Ž¦ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief å‘³æ–¹ã‚³ã‚¢ã®æ®‹ã‚ŠHPè¡¨ç¤ºã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #include "CorePlayerGauge.h"
 #include "ObjectManager.h"
@@ -10,15 +10,23 @@
 #include "CoreState.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void CorePlayerGauge::Awake()
 {
 	CoreGauge::Awake();
+	//m_mesh->ChangeSize(400, 50, 0)->ChangePos(0, SCREEN_CENTER_Y - 50, 0);
+	//m_shader->ChangeColor(0, 0, 1);
+	//m_state = ObjectManager::GetInstance().FindObject<GameObject>("CorePlayer")->GetComponent<CoreState>();
+}
+
+HRESULT CorePlayerGauge::Init()
+{
 	m_mesh->ChangeSize(400, 50, 0)->ChangePos(0, SCREEN_CENTER_Y - 50, 0);
 	m_shader->ChangeColor(0, 0, 1);
 	m_state = ObjectManager::GetInstance().FindObject<GameObject>("CorePlayer")->GetComponent<CoreState>();
+	return S_OK;
 }
 
 // EOF

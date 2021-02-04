@@ -79,8 +79,8 @@ void CameraStateMachine::Awake()
 HRESULT CameraStateMachine::Init()
 {
 	m_player = ObjectManager::GetInstance().FindObject<GameObject>("Player");
-	m_tpCamera = m_Parent->GetChild<CTPCamera>("TPCamera");
-	m_deadCamera = m_Parent->GetChild<DeadCamera>("DeadCamera");
+	m_tpCamera = m_Parent->GetChildTest("TPCamera");
+	m_deadCamera = m_Parent->GetChildTest("DeadCamera");
 
 	GoToState(E_CAMERA_PLAYER);
 	StateMachine::Init();
@@ -100,12 +100,12 @@ void CameraStateMachine::SetState()
 
 CTPCamera* CameraStateMachine::GetTPCamera()
 {
-	return m_tpCamera;
+	return dynamic_cast<CTPCamera*>( m_tpCamera);
 }
 
 DeadCamera* CameraStateMachine::GetDeadCamera()
 {
-	return m_deadCamera;
+	return dynamic_cast<DeadCamera*>(m_deadCamera);
 }
 
 GameObject* CameraStateMachine::GetPlayer()

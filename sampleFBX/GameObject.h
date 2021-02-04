@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Object.h"
+#include <string>
 
 /**
  * @class GameObject
@@ -24,7 +25,7 @@ protected:
 	int childCount;
 
 private:
-	std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
+	//std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
 	//std::list<GameObject*> m_ChildList;	//!< 子オブジェクトリスト
 
 public:
@@ -87,7 +88,7 @@ public:
 	 * @brief 子オブジェクトの設定
 	 * @return なし
 	 */
-	void SetChild(GameObject* child);
+	//void SetChild(GameObject* child);
 
 	/**
 	 * @brief 親オブジェクトのセット
@@ -102,12 +103,18 @@ public:
 	 */
 	GameObject* GetChildTest(int index);
 
+	GameObject * GetChildTest(std::string name);
+
 	/**
 	 * @brief 親の取得
 	 * @return 親オブジェクト
 	 */
 	GameObject* GetParent() {
 		return parent;
+	}
+
+	void SetRoot(GameObject* root) {
+		this->root = root;
 	}
 
 	GameObject* GetRoot() {
@@ -194,21 +201,21 @@ public:
 		return buff;
 	}
 
-	/**
-	 * @breif 子オブジェクトの取得
-	 * @return 子オブジェクト
-	 */
-	template<class T>
-	T* GetChild()
-	{
-		for (auto& child : m_ChildList)
-		{
-			T* buff = dynamic_cast<T*>(child.get());
-			if (buff != nullptr)
-				return buff;
-		}
-		return nullptr;
-	}
+	///**
+	// * @breif 子オブジェクトの取得
+	// * @return 子オブジェクト
+	// */
+	//template<class T>
+	//T* GetChild()
+	//{
+	//	for (auto& child : m_ChildList)
+	//	{
+	//		T* buff = dynamic_cast<T*>(child.get());
+	//		if (buff != nullptr)
+	//			return buff;
+	//	}
+	//	return nullptr;
+	//}
 
 	/**
 	 * @breif 子オブジェクトの取得
@@ -219,66 +226,66 @@ public:
 	{
 		std::list<T*> work;
 
-		for (auto& child : m_ChildList)
-		{
-			T* buff = dynamic_cast<T*>(child.get());
-			if (buff != nullptr) {
-				work.push_back(buff);
-			}
-		}
+		//for (auto& child : m_ChildList)
+		//{
+		//	T* buff = dynamic_cast<T*>(child.get());
+		//	if (buff != nullptr) {
+		//		work.push_back(buff);
+		//	}
+		//}
 		return work;
 	}
 
-	/**
-	 * @breif 子オブジェクトの取得
-	 * @return 子オブジェクト
-	 */
-	template<class T>
-	T* GetChild(std::string name)
-	{
-		for (auto& child : m_ChildList)
-		{
-			if (name == child->name)
-			{
-				T* buff = dynamic_cast<T*>(child.get());
-				if (buff != nullptr)
-					return buff;
-			}
-		}
-		return nullptr;
-	}
+	///**
+	// * @breif 子オブジェクトの取得
+	// * @return 子オブジェクト
+	// */
+	//template<class T>
+	//T* GetChild(std::string name)
+	//{
+	//	for (auto& child : m_ChildList)
+	//	{
+	//		if (name == child->name)
+	//		{
+	//			T* buff = dynamic_cast<T*>(child.get());
+	//			if (buff != nullptr)
+	//				return buff;
+	//		}
+	//	}
+	//	return nullptr;
+	//}
 
-	/**
-	 * @breif 子オブジェクトの取得
-	 * @return 子オブジェクト
-	 */
-	GameObject* GetChild(int n)
-	{
-		int cnt = 0;
-		for (auto& child : m_ChildList)
-		{
-			if (cnt == n) {
-				return child.get();
-			}
-			cnt++;
-		}
-		return nullptr;
-	}
+	///**
+	// * @breif 子オブジェクトの取得
+	// * @return 子オブジェクト
+	// */
+	//GameObject* GetChild(int n)
+	//{
+	//	int cnt = 0;
+	//	for (auto& child : m_ChildList)
+	//	{
+	//		if (cnt == n) {
+	//			return child.get();
+	//		}
+	//		cnt++;
+	//	}
+	//	return nullptr;
+	//}
 
-	/**
-	 * @breif 子オブジェクトの取得
-	 * @return 子オブジェクト
-	 */
-	GameObject* GetChild(std::string name)
-	{
-		for (auto& child : m_ChildList)
-		{
-			if (name == child->name) {
-				return child.get();
-			}
-		}
-		return nullptr;
-	}
+	///**
+	// * @breif 子オブジェクトの取得
+	// * @return 子オブジェクト
+	// */
+	//GameObject* GetChild(std::string name)
+	//{
+	//	for (auto& child : m_ChildList)
+	//	{
+	//		if (name == child->name) {
+	//			return child.get();
+	//		}
+	//	}
+	//	return nullptr;
+	//}
 
 	/**
 	 * @brief 子オブジェクトのリストを取得
@@ -287,9 +294,9 @@ public:
 	std::list<GameObject*> GetChildList() {
 		std::list<GameObject*> work;
 
-		for (auto& child : m_ChildList) {
-			work.push_back(child.get());
-		}
+		//for (auto& child : m_ChildList) {
+		//	work.push_back(child.get());
+		//}
 
 		return work;
 	}

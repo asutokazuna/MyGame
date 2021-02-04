@@ -1,12 +1,12 @@
-#include "DigitNumber.h"
+ï»¿#include "DigitNumber.h"
 #include "UIMesh.h"
 #include "DefaultShaderInfo.h"
 #include "TextureData.h"
 #include "NumberDrawer.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void DigitNumber::Awake()
 {
