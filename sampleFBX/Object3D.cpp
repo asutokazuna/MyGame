@@ -23,8 +23,6 @@ Object3D::Object3D()
  */
 HRESULT Object3D::Init()
 {
-	Transform& Transform = m_Parent->GetTransform();
-	m_Transform = &Transform;
 	HRESULT hr = S_OK;
 
 	m_light.m_direction = XMFLOAT3(0, 0, 0);
@@ -41,7 +39,20 @@ void Object3D::Draw()
 {
 	CCamera* pCamera = CCamera::Get();
 
-	m_world = MyMath::StoreXMFloat4x4(*m_Transform);
+	//if (m_Parent->GetParent() == nullptr) {
+	//	//m_ParentTransform->localPosition = m_ParentTransform->position;
+	//	//m_ParentTransform->localRotation = m_ParentTransform->rotation;
+	//	//m_ParentTransform->localScale = m_ParentTransform->scale;
+	//	//m_ParentTransform->localQuaternion = m_ParentTransform->quaternion;
+	//}
+	//else {
+	//	m_ParentTransform->position = m_Parent->GetParent()->GetTransform().position;
+	//	m_ParentTransform->rotation = m_Parent->GetParent()->GetTransform().rotation;
+	//	m_ParentTransform->scale = m_Parent->GetParent()->GetTransform().scale;
+	//	m_ParentTransform->quaternion = m_Parent->GetParent()->GetTransform().quaternion;
+	//}
+
+	m_world = MyMath::StoreXMFloat4x4(*m_ParentTransform);
 
 	CGraphics::SetCullMode(CULLMODE_CW);
 	CGraphics::SetZWrite(true);

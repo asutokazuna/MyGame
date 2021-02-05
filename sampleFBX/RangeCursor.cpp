@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file RangeCursor
- * @brief UŒ‚”ÍˆÍ‚ÌUI•\¦
+ * @brief æ”»æ’ƒç¯„å›²ã®UIè¡¨ç¤º
  */
 #include "RangeCursor.h"
 #include "UIMesh.h"

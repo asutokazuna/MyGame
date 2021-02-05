@@ -59,10 +59,10 @@ DirectX::XMFLOAT4X4 MyMath::StoreXMFloat4x4(const Transform& transform)
 	mtxRot = XMMatrixMultiply(mtxRot, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
-
 	//Vector3 pos= 
 	//MyMath::Vector3xQuaternion(transform.position, transform.quaternion);
 	mtxTranslate = XMMatrixTranslation(transform.position.x, transform.position.y, transform.position.z);
+
 	//mtxTranslate = XMMatrixMultiply(mtxTranslate, mtxQuat);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 

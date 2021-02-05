@@ -11,6 +11,7 @@
 #include "Light.h"
 #include "FbxModel.h"
 #include "ShadowCamera.h"
+#include "UIMesh.h"
 
 static ShadowCamera* g_shadowCamera;
 
@@ -23,6 +24,27 @@ void ObjectRenderer::Init()
 {
 	CBufferManager::GetInstance().Create("LightPos", sizeof(DirectX::XMFLOAT4X4));
 	g_shadowCamera = ObjectManager::Create<ShadowCamera>("ShadowCamera");
+}
+
+void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
+{
+	for (auto& obj : data)
+	{
+		if (obj.gameObject->GetComponent<UIMesh>() != nullptr) {
+			m_2dObjVector.push_back(obj.gameObject);
+		}
+		else {
+			m_3dObjVector.push_back(obj.gameObject);
+		}
+		CreteData(obj.m_childList);
+	}
+}
+
+void ObjectRenderer::CreateDrawBuffer()
+{
+	std::vector<ObjectManager::HierarchyData>& hierarcy = ObjectManager::GetInstance().GetHierarchy();
+
+	CreteData(hierarcy);
 }
 
 void ObjectRenderer::DrawShadow()
@@ -44,7 +66,7 @@ void ObjectRenderer::DrawShadow()
 
 	CCamera::Set(g_shadowCamera);
 
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
+	auto& buff = ObjectManager::GetInstance().GetObjList();
 	for (auto& obj : buff) {
 		if (obj.second.get()->GetActive() == false) {
 			continue;
@@ -85,25 +107,39 @@ void ObjectRenderer::Draw()
 	CBufferManager::GetInstance().SetData("LightPos", &view4);
 	ID3D11Buffer* buf = CBufferManager::GetInstance().GetCBuffer("LightPos");
 	pDeviceContext->VSSetConstantBuffers(3,1, &buf);
-
-	auto& buff = ObjectManager::GetInstance().m_ObjList;
-	for (auto& obj : buff) {
-		if (obj.second.get()->GetActive() == false) {
-			continue;
-		}
-		GameObject* gameObj;
-		gameObj = dynamic_cast<GameObject*>(obj.second.get());
-		if (gameObj->GetComponent<Object3D>() != nullptr)
-		{
-
-			pDeviceContext->VSSetShader(vs, nullptr, 0);
-			pDeviceContext->PSSetShader(ps, nullptr, 0);
-			// 頂点インプットレイアウトをセット
-			pDeviceContext->IASetInputLayout(il);
-		}
-		obj.second.get()->Draw();
-
+	pDeviceContext->VSSetShader(vs, nullptr, 0);
+	pDeviceContext->PSSetShader(ps, nullptr, 0);
+	// 頂点インプットレイアウトをセット
+	pDeviceContext->IASetInputLayout(il);
+	for (auto obj : m_3dObjVector)
+	{
+		obj->Draw();
 	}
+
+
+	for (auto obj : m_2dObjVector)
+	{
+		obj->Draw();
+	}
+
+	//auto& buff = ObjectManager::GetInstance().GetObjList();
+	//for (auto& obj : buff) {
+	//	if (obj.second.get()->GetActive() == false) {
+	//		continue;
+	//	}
+	//	GameObject* gameObj;
+	//	gameObj = dynamic_cast<GameObject*>(obj.second.get());
+	//	if (gameObj->GetComponent<Object3D>() != nullptr)
+	//	{
+
+	//		pDeviceContext->VSSetShader(vs, nullptr, 0);
+	//		pDeviceContext->PSSetShader(ps, nullptr, 0);
+	//		// 頂点インプットレイアウトをセット
+	//		pDeviceContext->IASetInputLayout(il);
+	//	}
+	//	obj.second.get()->Draw();
+
+	//}
 
 }
 

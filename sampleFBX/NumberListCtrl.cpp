@@ -30,7 +30,7 @@ void NumberListCtrl::UpdatePos()
 	Vector3 scale = Vector3();
 	for (auto o : m_NumberList)
 	{
-		scale = o->GetTransform().scale;
+		//scale = o->GetTransform().scale;
 		o->GetTransform().position = Vector3(pos.x - m_width * i, pos.y, pos.z);
 		i++;
 	}

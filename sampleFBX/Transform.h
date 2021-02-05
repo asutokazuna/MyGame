@@ -26,6 +26,7 @@ public:
 	Vector3 axisY;
 	Vector3 axisZ;
 	Quaternion quaternion;
+	Quaternion localQuaternion;
 
 public:
 	Tween* Do;
@@ -41,6 +42,7 @@ public:
 		axisY = trs.axisY;
 		axisZ = trs.axisZ;
 		quaternion = trs.quaternion;
+		localQuaternion = trs.localQuaternion;
 		*(Do) = *(trs.Do);
 		//Tween t;
 		//t = *trs.Do;
@@ -59,6 +61,8 @@ public:
 	 * @brrief デストラクタ
 	 */
 	~Transform();
+
+	void Draw();
 
 	/**
 	 * @brief 座標の取得

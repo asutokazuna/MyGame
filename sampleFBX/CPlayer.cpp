@@ -46,9 +46,8 @@ void CPlayer::Awake()
 	m_Weapon->SetTag(OBJ_TAG_PLAYERMISSILE);
 	m_Weapon->SetParent(this);
 
-	AddComponent<PlayerShotDir>();
 	// ロックオン
-	GameObject* obj = ObjectManager::Create<GameObject>("Lockon");
+	GameObject* obj = ObjectManager::Create<Lockon>("Lockon");
 	obj->SetParent(this);
 	
 	// 残弾数
@@ -64,7 +63,8 @@ void CPlayer::Awake()
 	GameObject* m_gaugeLife = //new GaugeUI();
 		ObjectManager::Create<GaugeUI>("LifeGauge");
 	m_gaugeLife->SetParent(this);
-	
+
+	AddComponent<PlayerShotDir>();
 	AddComponent<PlayerCtrl>();
 	AddComponent<PlayerLifeCtrl>();
 

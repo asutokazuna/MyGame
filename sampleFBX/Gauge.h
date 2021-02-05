@@ -1,17 +1,17 @@
-/**
+ï»¿/**
  * @file Gauge
- * @brief ƒQ[ƒW•\¦ƒNƒ‰ƒX
+ * @brief ã‚²ãƒ¼ã‚¸è¡¨ç¤ºã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "GameObject.h"
 #include "MyMath.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class Mesh;
 
 /**
  * @class Gauge
- * @brief ƒQ[ƒW
+ * @brief ã‚²ãƒ¼ã‚¸
  */
 class Gauge :public GameObject
 {
@@ -24,22 +24,22 @@ private:
 	GameObject* m_frame;
 	Transform* m_transform;
 
-	Mesh* barmesh;
 	Vector3 m_myColor;
 	Vector3 m_EnemyColor;
 	Vector3 m_offset;
 public:
 
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	Gauge();
 
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
+	HRESULT Init();
 };
 
 // EOF

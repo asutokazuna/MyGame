@@ -141,7 +141,7 @@ void PlayerShotDir::LateUpdate()
 		}
 	}
 	if (m_target == nullptr) {
-		m_Lockon->SetActive(false);
+		//m_Lockon->SetActive(false);
 	}
 
 }

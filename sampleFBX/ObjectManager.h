@@ -10,6 +10,7 @@
 #include <list>
 #include <vector>
 #include <string>
+#include <map>
 
 class Object;
 
@@ -19,7 +20,7 @@ class Object;
  */
 class ObjectManager : public Singleton<ObjectManager>
 {
-private:
+public:
 	struct HierarchyData
 	{
 		HierarchyData() = default;
@@ -29,7 +30,7 @@ private:
 public:
 	friend class Singleton<ObjectManager>;		//!< シングルトンクラスでの生成を可能に
 
-public:
+private:
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> m_ObjList;
 	std::vector<GameObject*> m_ObjListBuffer;
 	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやるかも
@@ -48,6 +49,13 @@ private:
 	void InitMergeObject();
 
 public:
+
+	std::unordered_map<std::string, std::unique_ptr<GameObject>>& GetObjList() {
+		return m_ObjList;
+	}
+	std::vector<HierarchyData>& GetHierarchy(){
+		return m_hierarchy;
+	}
 
 	/**
 	 * @brief オブジェクトの生成

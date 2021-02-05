@@ -4,6 +4,7 @@
  */
 #include "Transform.h"
 #include "Tween.h"
+//#include "GameObject.h"
 
 /**
  * @brief コンストラクタ
@@ -22,6 +23,7 @@ Transform::Transform()
 	axisY = { 0,1,0 };
 	axisZ = { 0,0,1 };
 	quaternion = { 1,0,0,0 };
+	localQuaternion = { 1,0,0,0 };
 }
 
 Transform::Transform(const Transform & trans)
@@ -39,12 +41,29 @@ Transform::Transform(const Transform & trans)
 	axisY = trans.axisY;
 	axisZ = trans.axisZ;
 	quaternion = trans.quaternion;
+	localQuaternion = trans.localQuaternion;
 }
 
 Transform::~Transform()
 {
 	delete Do;
 	Do = nullptr;
+}
+
+void Transform::Draw()
+{
+	//if (m_Parent->GetParent() == nullptr) {
+	//	//m_ParentTransform->localPosition = m_ParentTransform->position;
+	//	//m_ParentTransform->localRotation = m_ParentTransform->rotation;
+	//	//m_ParentTransform->localScale = m_ParentTransform->scale;
+	//	//m_ParentTransform->localQuaternion = m_ParentTransform->quaternion;
+	//}
+	//else {
+	//	m_ParentTransform->position = m_Parent->GetParent()->GetTransform().position;
+	//	m_ParentTransform->rotation = m_Parent->GetParent()->GetTransform().rotation;
+	//	m_ParentTransform->scale = m_Parent->GetParent()->GetTransform().scale;
+	//	m_ParentTransform->quaternion = m_Parent->GetParent()->GetTransform().quaternion;
+	//}
 }
 
 /**

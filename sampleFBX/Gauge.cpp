@@ -32,7 +32,13 @@ void Gauge::Awake()
 	AddComponent<GaugeCtrl>()->SetSize(Vector3(50, 30, 1));
 	m_frame->AddComponent<DefaultShaderInfo>()->ChangeColor(1, 1, 1);
 	m_frame->AddComponent<Billboard>();
+}
+
+HRESULT Gauge::Init()
+{
 	m_LifeGauge->GetComponent<LifeGaugeShaderInfo>()->ChangeColor(1, 0.5f, 0);
+
+	return S_OK;
 }
 
 // EOF
