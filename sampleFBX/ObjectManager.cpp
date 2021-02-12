@@ -7,16 +7,16 @@
 
 void ObjectManager::CreateHierarchy()
 {
-	HierarchyData data = HierarchyData();
+	//HierarchyData data = HierarchyData();
 
-	for (auto &obj : m_ObjList)
-	{
-		data.gameObject = obj.second.get();
-		// ヒエラルキーにセット
-		m_hierarchy.push_back(data);
-		// ワークをクリア
-		data = HierarchyData();
-	}
+	//for (auto &obj : m_ObjList)
+	//{
+	//	data.gameObject = obj.second.get();
+	//	// ヒエラルキーにセット
+	//	m_hierarchy.push_back(data);
+	//	// ワークをクリア
+	//	data = HierarchyData();
+	//}
 }
 
 void ObjectManager::SetHierarchy(GameObject* obj)
@@ -24,6 +24,7 @@ void ObjectManager::SetHierarchy(GameObject* obj)
 	HierarchyData data = HierarchyData();
 	data.gameObject = obj;
 	m_hierarchy.push_back(data);
+	m_cntHierarchy++;
 }
 
 void ObjectManager::InitMergeObject()
@@ -42,8 +43,7 @@ void ObjectManager::MergeObjList()
 	if (m_ObjListBuffer.size() <= 0) {
 		return;
 	}
-	std::vector<GameObject*> work;// = ObjectManager::GetInstance().m_ObjListBuffer;
-	//m_ObjListBuffer.clear();
+
 	std::string keyName;
 	int num = 0;
 	std::string name;
@@ -64,28 +64,6 @@ void ObjectManager::MergeObjList()
 	}
 
 	m_ObjListBuffer.clear();
-	//for (int i = 0; i < ObjectManager::GetInstance().m_ObjListBuffer.size(); i++)
-	//{
-	//	//ObjectManager::GetInstance().m_ObjListBuffer[i]
-	//}
-
-	//for (auto obj : work)
-	//{
-	//	name = keyName = obj.first;
-	//	obj.second->Init();
-	//	std::unique_ptr<GameObject> ptr(obj.second);
-
-	//	while (ObjectManager::GetInstance().m_ObjList.find(keyName) != ObjectManager::GetInstance().m_ObjList.end())
-	//	{
-	//		keyName.clear();
-	//		keyName = name + std::to_string(num);
-	//		num++;
-	//	}
-
-	//	ObjectManager::GetInstance().m_ObjList[keyName] = std::move(ptr);
-	//}
-
-	//MergeObjList();
 }
 
 
@@ -226,6 +204,7 @@ void ObjectManager::Clear()
 	ObjectManager::GetInstance().m_ObjList.clear();
 	ObjectManager::GetInstance().m_hierarchy.clear();
 	ObjectManager::GetInstance().m_ObjListBuffer.clear();
+	ObjectManager::GetInstance().m_cntHierarchy = 0;
 }
 
 /**

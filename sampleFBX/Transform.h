@@ -62,7 +62,7 @@ public:
 	 */
 	~Transform();
 
-	void Draw();
+	//void Draw();
 
 	/**
 	 * @brief 座標の取得

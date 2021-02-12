@@ -48,8 +48,8 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		Diff *= vTd.rgb;
 		Alpha *= vTd.a;
 	}
-	clip(Alpha - 0.0001f);
-	if (Alpha <= 0.001f) discard;
+	//clip(Alpha - 0.0001f);
+	if (Alpha <= 0.0f) discard;
 
 	if (g_vLightDir.x != 0.0f || g_vLightDir.y != 0.0f || g_vLightDir.z != 0.0f) {
 		// ŒõŒ¹—LŒø

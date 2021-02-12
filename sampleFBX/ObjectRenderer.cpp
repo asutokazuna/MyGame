@@ -25,6 +25,7 @@ void ObjectRenderer::Init()
 	CBufferManager::GetInstance().Create("LightPos", sizeof(DirectX::XMFLOAT4X4));
 	g_shadowCamera = ObjectManager::Create<ShadowCamera>("ShadowCamera");
 }
+static int cnt = 0;
 
 void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
 {
@@ -37,14 +38,23 @@ void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
 			m_3dObjVector.push_back(obj.gameObject);
 		}
 		CreteData(obj.m_childList);
+		cnt++;
 	}
 }
+
 
 void ObjectRenderer::CreateDrawBuffer()
 {
 	std::vector<ObjectManager::HierarchyData>& hierarcy = ObjectManager::GetInstance().GetHierarchy();
+	int temp = ObjectManager::GetInstance().GetHierarchyCnt();
 
-	CreteData(hierarcy);
+
+	if (cnt != temp) {
+		m_2dObjVector.clear();
+		m_3dObjVector.clear();
+		cnt = 0;
+		CreteData(hierarcy);
+	}
 }
 
 void ObjectRenderer::DrawShadow()

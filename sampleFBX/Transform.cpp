@@ -49,22 +49,22 @@ Transform::~Transform()
 	delete Do;
 	Do = nullptr;
 }
-
-void Transform::Draw()
-{
-	//if (m_Parent->GetParent() == nullptr) {
-	//	//m_ParentTransform->localPosition = m_ParentTransform->position;
-	//	//m_ParentTransform->localRotation = m_ParentTransform->rotation;
-	//	//m_ParentTransform->localScale = m_ParentTransform->scale;
-	//	//m_ParentTransform->localQuaternion = m_ParentTransform->quaternion;
-	//}
-	//else {
-	//	m_ParentTransform->position = m_Parent->GetParent()->GetTransform().position;
-	//	m_ParentTransform->rotation = m_Parent->GetParent()->GetTransform().rotation;
-	//	m_ParentTransform->scale = m_Parent->GetParent()->GetTransform().scale;
-	//	m_ParentTransform->quaternion = m_Parent->GetParent()->GetTransform().quaternion;
-	//}
-}
+//
+//void Transform::Draw()
+//{
+//	//if (m_Parent->GetParent() == nullptr) {
+//	//	//m_ParentTransform->localPosition = m_ParentTransform->position;
+//	//	//m_ParentTransform->localRotation = m_ParentTransform->rotation;
+//	//	//m_ParentTransform->localScale = m_ParentTransform->scale;
+//	//	//m_ParentTransform->localQuaternion = m_ParentTransform->quaternion;
+//	//}
+//	//else {
+//	//	m_ParentTransform->position = m_Parent->GetParent()->GetTransform().position;
+//	//	m_ParentTransform->rotation = m_Parent->GetParent()->GetTransform().rotation;
+//	//	m_ParentTransform->scale = m_Parent->GetParent()->GetTransform().scale;
+//	//	m_ParentTransform->quaternion = m_Parent->GetParent()->GetTransform().quaternion;
+//	//}
+//}
 
 /**
  * @brief 座標の取得

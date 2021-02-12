@@ -98,6 +98,8 @@ void SceneManager::Uninit()
  */
 void SceneManager::Update()
 {
+
+	ObjectRenderer::GetInstance().CreateDrawBuffer();
 	Fade::Update();
 	CSound::Update();
 	if (Fade::IsFade() == true) {

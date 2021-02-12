@@ -36,6 +36,8 @@ private:
 	//std::unordered_map<std::string, std::unique_ptr<Object>> m_DontDestroyObjList;    // あとでやるかも
 
 	std::vector<HierarchyData> m_hierarchy;
+	int m_cntHierarchy;
+
 private:
 
 	/**
@@ -49,6 +51,10 @@ private:
 	void InitMergeObject();
 
 public:
+
+	int GetHierarchyCnt() {
+		return m_cntHierarchy;
+	}
 
 	std::unordered_map<std::string, std::unique_ptr<GameObject>>& GetObjList() {
 		return m_ObjList;
@@ -70,20 +76,10 @@ public:
 		std::string keyName = name;
 		GameObject* obj;
 
-		//while (ObjectManager::GetInstance().m_ObjListBuffer.find(keyName) != ObjectManager::GetInstance().m_ObjListBuffer.end())
-		//{
-		//	keyName.clear();
-		//	keyName = name + std::to_string(num);
-		//	num++;
-		//}
-
-	/*	ObjectManager::GetInstance().m_ObjListBuffer[keyName] = (work);
-		obj = ObjectManager::GetInstance().m_ObjListBuffer[keyName];*/
 		ObjectManager::GetInstance().m_ObjListBuffer.push_back(work);
 		obj = dynamic_cast<GameObject*>(ObjectManager::GetInstance().m_ObjListBuffer.back());
 		obj->SetName(name);
 		ObjectManager::GetInstance().SetHierarchy(obj);
-		//ObjectManager::GetInstance().m_ObjListBuffer.
 		obj->Awake();
 
 		return dynamic_cast<T*>(obj);
@@ -99,6 +95,9 @@ public:
 	template <class T>
 	T* FindObject(std::string name)
 	{
+		if (m_ObjList.find(name) == m_ObjList.end()) {
+			return nullptr;
+		}
 		return dynamic_cast<T*>(m_ObjList[name].get());
 	}
 
@@ -129,6 +128,10 @@ public:
 	std::vector<ObjectManager::HierarchyData>* GetHierarchyData(GameObject * obj);
 
 	GameObject * FindChildInHierarchy(GameObject * findObj, std::string name);
+
+	ObjectManager() {
+		m_cntHierarchy = 0;
+	}
 
 	/**
 	 * @brief 初期化処理
