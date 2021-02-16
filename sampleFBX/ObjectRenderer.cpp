@@ -12,8 +12,9 @@
 #include "FbxModel.h"
 #include "ShadowCamera.h"
 #include "UIMesh.h"
+#include <memory>
 
-static ShadowCamera* g_shadowCamera;
+static std::unique_ptr<ShadowCamera> g_shadowCamera;
 
 struct LightPos
 {
@@ -27,7 +28,8 @@ struct LightPos
 void ObjectRenderer::Init()
 {
 	CBufferManager::GetInstance().Create("LightPos", sizeof(DirectX::XMFLOAT4X4));
-	g_shadowCamera = ObjectManager::Create<ShadowCamera>("ShadowCamera");
+	g_shadowCamera = std::make_unique<ShadowCamera>();
+	g_shadowCamera->Awake(); g_shadowCamera->Init();
 }
 static int cnt = 0;
 
@@ -89,7 +91,7 @@ void ObjectRenderer::DrawShadow()
 	float viewD = 10.0f;
 
 	// 光源から見える景色を表示するためのカメラを作成
-	CCamera::Set(g_shadowCamera);
+	CCamera::Set(g_shadowCamera.get());
 
 	auto& buff = ObjectManager::GetInstance().GetObjList();
 	for (auto& obj : buff) {
@@ -98,8 +100,9 @@ void ObjectRenderer::DrawShadow()
 		}
 		GameObject* gameObj;
 		gameObj = dynamic_cast<GameObject*>(obj.second.get());
-		if (gameObj->GetComponent<Object3D>() != nullptr || 
-			obj.first == "TowerManager")
+		if (gameObj->GetComponent<Object3D>() != nullptr 
+			//obj.first == "TowerManager"
+			)
 		{
 			pDeviceContext->VSSetShader(vs, nullptr, 0);
 			pDeviceContext->PSSetShader(ps, nullptr, 0);
@@ -140,6 +143,8 @@ void ObjectRenderer::Draw()
 	pDeviceContext->PSSetShader(ps, nullptr, 0);
 	// 頂点インプットレイアウトをセット
 	pDeviceContext->IASetInputLayout(il);
+
+	g_shadowCamera->Draw();
 
 	// 3D描画
 	for (auto obj : m_3dObjVector)

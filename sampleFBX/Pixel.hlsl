@@ -48,8 +48,8 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		Diff *= vTd.rgb;
 		Alpha *= vTd.a;
 	}
-	//clip(Alpha - 0.0001f);
-	if (Alpha <= 0.0f) discard;
+	clip(Alpha - 0.0001f);
+	//if (Alpha <= 0.0f) discard;
 
 	if (g_vLightDir.x != 0.0f || g_vLightDir.y != 0.0f || g_vLightDir.z != 0.0f) {
 		// ŒõŒ¹—LŒø
@@ -65,7 +65,7 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 
 	Diff += g_vKe.rgb;										// ”­ŒõF
-	if(depth > shadowDepth+0.005f)
+	if(depth > shadowDepth+0.00f)
 	{
 		Diff.rgb *= 0.3f;
 	}

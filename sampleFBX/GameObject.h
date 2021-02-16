@@ -21,11 +21,11 @@ protected:
 	Transform*	transform;			//!< トランスフォーム
 	int			tag;				//!< オブジェクト識別用タグ
 	int			layer;					//!< 所属レイヤー
-	// TODO : transformにもっていく
+	// TODO: transformにもっていく
 	GameObject* parent;				//!< 親オブジェクト
 	GameObject* root;				//!< 一番上の親オブジェクト
 	int childCount;					//!< 子オブジェクトの数
-
+	bool	m_castShadow;			//!< 影を付けるかどうか
 public:
 	std::list<Component*> m_ComponentList;		//!< コンポーネントリスト
 
@@ -179,6 +179,15 @@ public:
 	 */
 	int GetLayer() {
 		return layer;
+	}
+
+	/**
+	 * @brief 影を付けるかどうか
+	 * @return 影を付ける場合true
+	 * @details レンダー専用のコンポーネントが作れた場合そちらに移動する
+	 */
+	bool IsCastShadow() {
+		return m_castShadow;
 	}
 
 	/**

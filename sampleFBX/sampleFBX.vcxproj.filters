@@ -489,9 +489,6 @@
     <ClCompile Include="Default3DShaderInfo.cpp">
       <Filter>ソース ファイル\ShaderInfo</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ShadowCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -503,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="PlayerUILife.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectRenderer.cpp">
+      <Filter>ソース ファイル\99_share</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

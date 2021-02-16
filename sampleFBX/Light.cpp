@@ -16,7 +16,7 @@ using namespace DirectX;
 #define LIGHT0_DIR_Y	(-1.0f)
 #define LIGHT0_DIR_Z	(1.0f)
 CFbxLight* Light::m_light = nullptr;
-XMFLOAT3 Light::pos = XMFLOAT3(1000, 1000,-1000);
+XMFLOAT3 Light::pos = XMFLOAT3(1000, 1000,-2000);
 
 CFbxLight* Light::Get()
 {

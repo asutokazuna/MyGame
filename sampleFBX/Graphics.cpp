@@ -30,6 +30,9 @@ ID3D11DepthStencilView*		CGraphics::m_pDepthStencliViewShadow;
 ID3D11ShaderResourceView*	CGraphics::m_ShadowTexture;
 ID3D11Texture2D*			CGraphics::m_pDepthStencilTextureShadow;
 
+static D3D11_VIEWPORT vp[2];
+static const int SHADOW_TEX_RATE = 8;
+
 // グラフィック環境の初期化
 HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
 {
@@ -215,8 +218,8 @@ HRESULT CGraphics::CreateBackBuffer()
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
 	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
-	texDesc.Width = SCREEN_WIDTH;
-	texDesc.Height = SCREEN_HEIGHT;
+	texDesc.Width = SCREEN_WIDTH	 * SHADOW_TEX_RATE;
+	texDesc.Height = SCREEN_HEIGHT	 * SHADOW_TEX_RATE;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.SampleDesc.Count = 1;
@@ -248,14 +251,21 @@ HRESULT CGraphics::CreateBackBuffer()
 	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
 
 	// ビューポート設定
-	D3D11_VIEWPORT vp;
-	vp.Width = (float)SCREEN_WIDTH;
-	vp.Height = (float)SCREEN_HEIGHT;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	m_pDeviceContext->RSSetViewports(1, &vp);
+	vp[0].Width = (float)SCREEN_WIDTH;
+	vp[0].Height = (float)SCREEN_HEIGHT;
+	vp[0].MinDepth = 0.0f;
+	vp[0].MaxDepth = 1.0f;
+	vp[0].TopLeftX = 0;
+	vp[0].TopLeftY = 0;
+	m_pDeviceContext->RSSetViewports(1, &vp[0]);	
+	// ビューポート設定
+	D3D11_VIEWPORT vp2;
+	vp[1].Width = (float)SCREEN_WIDTH	* SHADOW_TEX_RATE;
+	vp[1].Height = (float)SCREEN_HEIGHT	* SHADOW_TEX_RATE;
+	vp[1].MinDepth = 0.0f;
+	vp[1].MaxDepth = 1.0f;
+	vp[1].TopLeftX = 0;
+	vp[1].TopLeftY = 0;
 
 	return hr;
 }
@@ -287,6 +297,7 @@ void CGraphics::Draw(SceneManager* pScene)
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencliViewShadow, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
+	m_pDeviceContext->RSSetViewports(1, &vp[1]);
 	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
 
 	ObjectRenderer::GetInstance().DrawShadow();
@@ -295,6 +306,7 @@ void CGraphics::Draw(SceneManager* pScene)
 	
 	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
 
+	m_pDeviceContext->RSSetViewports(1, &vp[0]);
 #if _DEBUG
 	ImGui::Begin("DebugWindow");
 #endif
@@ -304,6 +316,8 @@ void CGraphics::Draw(SceneManager* pScene)
 	}
 
 #if _DEBUG
+	ImVec2 size = { 300,300 };
+	ImGui::Image(m_ShadowTexture, size);
 	ImGui::End();
 #endif
 #if _DEBUG

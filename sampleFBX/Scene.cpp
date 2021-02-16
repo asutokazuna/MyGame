@@ -45,27 +45,6 @@ void CScene::Update()
 // 描画
 void CScene::Draw()
 {
-	m_szDebug[0] = _T('\0');	// デバッグ文字列初期化
-
-	// FPS を画面に描画するための文字列を作成
-	TCHAR	str[256];
-	_stprintf_s(str, _countof(str), _T("FPS = %d\n"), m_FPS);
-	lstrcat(m_szDebug, str);
-
-	// カメラ反映
-	//if (m_pCamera) {
-	//	//m_pCamera->Draw();
-	//}
-
-	// 前面カリング (FBXは表裏が反転するため)
-	CGraphics::SetCullMode(CULLMODE_CW);
-	CGraphics::SetBlendState(BS_NONE);			// アルファ処理しない
-	CGraphics::SetZWrite(true);
-
-
-
-	CGraphics::SetZWrite(false);
-	CGraphics::SetBlendState(BS_ALPHABLEND);	// 半透明描画
 	
 }
 

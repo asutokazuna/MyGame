@@ -27,6 +27,10 @@ public:
 	 */
 	void Awake();
 
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	HRESULT Init();
 
 	/**

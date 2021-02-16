@@ -3,7 +3,9 @@
 
 class ShadowCamera :public CCamera
 {
+public:
 	void Awake();
+	void Draw();
 };
 
 // EOF

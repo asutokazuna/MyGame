@@ -1,6 +1,7 @@
 ﻿/**
  * @file WeaponCtrl
  * @brief 武器の制御コンポーネント
+ * @author Ariga
  */
 #include "WeaponCtrl.h"
 #include "Transform.h"

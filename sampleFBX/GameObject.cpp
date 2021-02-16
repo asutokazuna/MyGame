@@ -9,7 +9,7 @@
 /**
  * @brief コンストラクタ
  */
-GameObject::GameObject() : parent(nullptr), root(this), childCount(0) 
+GameObject::GameObject() : parent(nullptr), root(this), childCount(0), m_castShadow(true)
 {
 	transform = AddComponent<Transform>();
 	transform->m_ParentTransform = transform;
