@@ -1,13 +1,14 @@
 ﻿/**
  * @file MissileMove
  * @brief ミサイルの動きクラス
+ * @author Ariga
  */
 #include "MissileMove.h"
 #include "GameObject.h"
 
-//*****************************************************************************
-// 定数定義
-//*****************************************************************************
+/**
+ * @def
+ */
 #define SPEED			(5.0f)
 
 /**
@@ -18,14 +19,16 @@ HRESULT MissileMove::Init()
 {
 	m_Speed = SPEED;
 
-	m_transform = &m_Parent->GetTransform();
-
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void MissileMove::Update()
 {
-	m_transform->position += m_transform->GetForward() * m_Speed;
+	m_ParentTransform->position += m_ParentTransform->GetForward() * m_Speed;
 }
 
 // EOF

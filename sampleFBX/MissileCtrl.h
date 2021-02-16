@@ -1,6 +1,7 @@
 /**
  * @file MissileCtrl
  * @brief 弾の制御コンポーネント
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"
@@ -17,8 +18,7 @@ class MissileCtrl :public Component
 protected:
 	int m_nLife;			//!< 寿命
 	int m_power;		//!< 弾の威力
-	GameObject* m_target;
-	Transform* m_parentTrans;
+	GameObject* m_target;	//!< 追従オブジェクト
 
 public:
 	/**
@@ -29,6 +29,10 @@ public:
 
 	HRESULT Init();
 
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
 	void Update();
 
 	/**
@@ -38,10 +42,29 @@ public:
 	virtual int GetPower();
 
 
-	bool Fire(Vector3* pos);
+	/**
+	 * @brief 弾の発射処理
+	 * @param[in] pos 発射座標
+	 * @return なし
+	 */
+	void Fire(Vector3* pos);
 
-	bool Fire(Vector3* pos, Quaternion quat);
-	bool Fire(Vector3* pos, Quaternion quat, GameObject* target);
+	/**
+	 * @brief 弾の発射処理
+	 * @param[in] pos 発射座標
+	 * @param[in] quat 発射方向
+	 * @return なし
+	 */
+	void Fire(Vector3* pos, Quaternion quat);
+
+	/**
+	 * @brief 弾の発射処理
+	 * @param[in] pos 発射座標
+	 * @param[in] quat 発射方向
+	 * @param[in] target 追従オブジェクト
+	 * @return なし
+	 */
+	void Fire(Vector3* pos, Quaternion quat, GameObject* target);
 };
 
 // EOF

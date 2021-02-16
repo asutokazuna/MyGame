@@ -7,14 +7,6 @@
 #include "collision.h"
 #include "GameObject.h"
 #include "MissileCtrl.h"
-#include "NumberList.h"
-#include "NumberListCtrl.h"
-#include "LifeGaugeShaderInfo.h"
-#include "CharacterSpawner.h"
-#include "CharacterSpawnCtrl.h"
-#include "ObjectManager.h"
-
-#define MAX_LIFE (10)	//!< プレイヤーのライフ
 
 /**
  * @brief 初期化処理
@@ -32,26 +24,8 @@ void PlayerLifeCtrl::Awake()
 HRESULT PlayerLifeCtrl::Init()
 {
 	m_Life = MAX_LIFE;
-	m_numberUI = m_Parent->GetChildTest("LifeUI");
-	m_numberUI->GetComponent<NumberListCtrl>()->SetNumber(m_Life);
-	m_numberUI->GetComponent<NumberListCtrl>()->SetWidth(30);
-	m_numberUI->GetComponent<NumberListCtrl>()->SetPos(Vector3(-SCREEN_CENTER_X + 120, -SCREEN_CENTER_Y + 50, 0));
-
-	m_gauge = m_Parent->GetChildTest("LifeGauge");
-	m_gauge->GetTransform().scale = Vector3(100, 40, 0);
-	m_gauge->GetTransform().position = Vector3(-SCREEN_CENTER_X + 200, -SCREEN_CENTER_Y + 50, 0);
 
 	return E_NOTIMPL;
-}
-
-/**
- * @brief 更新処理
- * @return なし
- */
-void PlayerLifeCtrl::Update()
-{
-	m_numberUI->GetComponent<NumberListCtrl>()->SetNumber(m_Life);
-	m_gauge->GetComponent<LifeGaugeShaderInfo>()->SetFloat("Life", m_Life / (float)MAX_LIFE);
 }
 
 /**
@@ -73,8 +47,6 @@ void PlayerLifeCtrl::OnCollisionEnter(GameObject* gameObj)
 		}
 		gameObj->SetActive(false);
 	}
-
-
 }
 
 /**

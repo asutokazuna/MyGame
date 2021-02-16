@@ -19,20 +19,13 @@
  * @brief 初期化処理
  * @return なし
  */
-void PlayerCtrl::Awake()
-{
-}
-
 HRESULT PlayerCtrl::Init()
 {
 	m_Weapon = m_Parent->GetChildTest("Weapon");
-	//m_Weapon->GetComponent<WeaponCtrl>()->SetMaxBullet(MAX_BULLET);
 
 	return E_NOTIMPL;
 }
 
-static Quaternion dir;
-GameObject* target;
 /**
  * @brief 更新処理
  * @return なし
@@ -48,6 +41,11 @@ void PlayerCtrl::Update()
 	}
 
 }
+
+/**
+ * @brief 描画処理
+ * @return なし
+ */
 void PlayerCtrl::Draw()
 {
 #ifdef _DEBUG
@@ -63,6 +61,10 @@ void PlayerCtrl::Draw()
 #endif
 }
 
+/**
+ * @brief 弾発射
+ * @return なし
+ */
 void PlayerCtrl::Attak()
 {
 	m_Weapon->GetComponent<WeaponCtrl>()->Shot(dir, target);

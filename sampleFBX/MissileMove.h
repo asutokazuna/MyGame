@@ -1,18 +1,21 @@
 ﻿/**
  * @file MissileMove
  * @brief ミサイルの動きクラス
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"
 
+// 前方宣言
 class Transform;
 
+/**
+ * @class MissileMove 
+ * @brief ミサイルの動きを制御するコンポーネント
+ */
 class MissileMove :public Component
 {
 private:
-	Transform* m_transform;
-
-public:
 	float m_Speed;		//!< 弾の移動速度
 
 public:
@@ -22,6 +25,11 @@ public:
 	 * @return なし
 	 */
 	HRESULT Init();
+
+	/**
+	 * @brief 更新処理
+	 * @return なし
+	 */
 	void Update();
 };
 

@@ -1,6 +1,7 @@
 ﻿/**
  * @file WeaponCtrl
  * @brief 武器の制御コンポーネント
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"
@@ -20,7 +21,6 @@ class WeaponCtrl :public Component
 {
 private:
 	std::list<GameObject*> m_BulletList;	//!< ミサイルリスト
-	Transform* m_ParentTrans;			//!< 親の座標
 	int m_BulletCount;					//!< 現在の弾数
 	int m_ReloadTime;					//!< リロードの時間
 	int m_maxBullet;					//!< 弾の最大数

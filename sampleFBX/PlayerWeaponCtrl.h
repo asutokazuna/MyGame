@@ -12,6 +12,10 @@
 class PlayerWeaponCtrl :public Component
 {
 public:
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	HRESULT Init();
 };
 

@@ -22,8 +22,7 @@
 #include "GaugeUI.h"
 #include "ObjectManager.h"
 #include "PlayerWeaponCtrl.h"
-
-#define DIGIT (2)
+#include "PlayerUILife.h"
 
 /**
  * @brief 初期化処理
@@ -55,20 +54,23 @@ void CPlayer::Awake()
 	ObjectManager::Create<NumberList>("BulletUI");
 	m_bulletUI->SetParent(this);
 	
-	// HPの表示(数字)
+	// UIの管理部分オブジェクト
+	GameObject* m_playerUI = ObjectManager::Create<NumberList>("PlayerUI");
+	m_playerUI->AddComponent<PlayerUILife>();
+
+	// HPの表示(数字)オブジェクト
 	NumberList* m_numberUI = //new NumberList(3);
-		ObjectManager::Create<NumberList>("LifeUI");
-	m_numberUI->SetParent(this);
+		ObjectManager::Create<NumberList>("PlayerLifeUI");
+	m_numberUI->SetParent(m_playerUI);
 	
+	// HPゲージ表示オブジェクト
 	GameObject* m_gaugeLife = //new GaugeUI();
 		ObjectManager::Create<GaugeUI>("LifeGauge");
-	m_gaugeLife->SetParent(this);
+	m_gaugeLife->SetParent(m_playerUI);
 
 	AddComponent<PlayerShotDir>();
 	AddComponent<PlayerCtrl>();
 	AddComponent<PlayerLifeCtrl>();
-
-
 	AddComponent<WeaponBulletCount>();
 	AddComponent<PlayerStateMachine>();
 }

@@ -16,8 +16,9 @@
  */
 HRESULT PlayerWeaponCtrl::Init()
 {
-	std::list<GameObject*> *missileList = m_Parent->GetComponent<WeaponCtrl>()->GetMissileList();
+	// 弾を発射できる数分のセット
 	m_Parent->GetComponent<WeaponCtrl>()->SetMaxBullet(MAX_BULLET);
+	std::list<GameObject*> *missileList = m_Parent->GetComponent<WeaponCtrl>()->GetMissileList();
 
 	for (auto missile : *missileList)
 	{
