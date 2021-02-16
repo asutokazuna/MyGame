@@ -1,6 +1,7 @@
 ﻿/**
  * @file Collision
  * @brief 当たり判定クラス
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"

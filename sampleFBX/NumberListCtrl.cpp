@@ -1,6 +1,7 @@
 ﻿/**
  * @file NumberListCtrl
  * @brief 数字表示コンポーネント
+ * @author Ariga
  */
 #include "NumberListCtrl.h"
 #include "GameObject.h"
@@ -24,13 +25,15 @@ int CountNumber(int num)
 	return cnt;
 }
 
+/**
+ * @brief 座標の更新
+ * @return なし
+ */
 void NumberListCtrl::UpdatePos()
 {
 	int i = 0;
-	Vector3 scale = Vector3();
 	for (auto o : m_NumberList)
 	{
-		//scale = o->GetTransform().scale;
 		o->GetTransform().position = Vector3(pos.x - m_width * i, pos.y, pos.z);
 		i++;
 	}
@@ -44,7 +47,6 @@ void NumberListCtrl::Awake()
 {
 	m_width = 35;
 	pos = Vector3();
-	//m_NumberList = m_Parent->GetChildren<DigitNumber>();
 }
 
 /**
@@ -77,7 +79,6 @@ void NumberListCtrl::SetNumber(int num)
 		number = ObjectManager::Create<DigitNumber>("number");
 		m_NumberList.push_back(number);
 		number->SetParent(m_Parent);
-		//SetPos(m_NumberList.front()->GetTransform().position);
 	}
 
 	if (m_NumberList.size() > 0) {

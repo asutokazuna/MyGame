@@ -1,6 +1,7 @@
 ﻿/**
  * @file Mesh
  * @brief メッシュクラス
+ * @author Ariga
  */
 #include "Mesh.h"
 #include "Graphics.h"
@@ -8,6 +9,9 @@
 #include "ShaderInfo.h"
 #include "DefaultShaderInfo.h"
 
+/**
+ * @brief コンストラクタ
+ */
 Mesh::Mesh()
 {
 	m_transform = nullptr;
@@ -24,11 +28,18 @@ Mesh::Mesh()
 	m_isZwerite = true;
 }
 
+/**
+ * @brief デストラクタ
+ */
 Mesh::~Mesh()
 {
 	delete m_default;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void Mesh::Awake()
 {
 	m_default->m_Parent = this->m_Parent;
@@ -37,12 +48,20 @@ void Mesh::Awake()
 	m_default->SetFloat("World", MyMath::StoreXMFloat4x4(*m_transform));
 }
 
+/**
+ * @brief 終了処理
+ * @return なし
+ */
 void Mesh::Uninit()
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void Mesh::Update()
 {
 }
@@ -87,6 +106,10 @@ void Mesh::Draw()
 	pDeviceContext->DrawIndexed(m_nNumIndex, 0, 0);
 }
 
+/**
+ * @brief メッシュの頂点データの生成
+ * @return なし
+ */
 HRESULT Mesh::MakeMeshVertex(VERTEX_3D vertexWk[], int indexWk[])
 {
 	ID3D11Device* pDevice = CGraphics::GetDevice();
@@ -114,65 +137,11 @@ HRESULT Mesh::MakeMeshVertex(VERTEX_3D vertexWk[], int indexWk[])
 	return hr;
 }
 
-Mesh* Mesh::ChangeColor(XMFLOAT3 color)
-{
-	if (m_material == nullptr) {
-		return this;
-	}
-	m_material->Diffuse.x = color.x;
-	m_material->Diffuse.y = color.y;
-	m_material->Diffuse.z = color.z;
-
-	return this;
-}
-
-Mesh* Mesh::ChangeColor(Vector3 color)
-{
-	if (m_material == nullptr) {
-		return this;
-	}
-	m_material->Diffuse.x = color.x;
-	m_material->Diffuse.y = color.y;
-	m_material->Diffuse.z = color.z;
-
-	return this;
-}
-
-Mesh * Mesh::ChangeColor(float r, float g, float b)
-{
-	if (m_material == nullptr) {
-		return this;
-	}
-	m_material->Diffuse.x = r;
-	m_material->Diffuse.y = g;
-	m_material->Diffuse.z = b;
-
-	return this;
-}
-
-Mesh* Mesh::ChangeColor(XMFLOAT4 color)
-{
-	if (m_material == nullptr) {
-		return this;
-	}
-	m_material->Diffuse = color;
-
-	return this;
-}
-
-Mesh * Mesh::ChangeColor(float r, float g, float b, float a)
-{
-	if (m_material == nullptr) {
-		return this;
-	}
-	m_material->Diffuse.x = r;
-	m_material->Diffuse.y = g;
-	m_material->Diffuse.z = b;
-	m_material->Diffuse.w = a;
-
-	return this;
-}
-
+/**
+ * @brief 大きさの変更
+ * @param[in] size 大きさ
+ * @return インスタンス
+ */
 Mesh* Mesh::ChangeSize(XMFLOAT3 size)
 {
 	if (m_transform == nullptr) {
@@ -186,6 +155,13 @@ Mesh* Mesh::ChangeSize(XMFLOAT3 size)
 	return this;
 }
 
+/**
+ * @brief 大きさの変更
+ * @param[in] x x方向の大きさ
+ * @param[in] y y方向の大きさ
+ * @param[in] z z方向の大きさ
+ * @return インスタンス
+ */
 Mesh * Mesh::ChangeSize(float x, float y, float z)
 {
 	if (m_transform == nullptr) {
@@ -198,6 +174,11 @@ Mesh * Mesh::ChangeSize(float x, float y, float z)
 	return this;
 }
 
+/**
+ * @brief 座標の変更
+ * @param[in]
+ * @return インスタンス
+ */
 Mesh* Mesh::ChangePos(XMFLOAT3 pos)
 {
 	if (m_transform == nullptr) {
@@ -211,6 +192,11 @@ Mesh* Mesh::ChangePos(XMFLOAT3 pos)
 	return this;
 }
 
+/**
+ * @brief 座標の変更
+ * @param[in]
+ * @return インスタンス
+ */
 Mesh* Mesh::ChangePos(float x, float y, float z)
 {
 	if (m_transform == nullptr) {
@@ -224,6 +210,11 @@ Mesh* Mesh::ChangePos(float x, float y, float z)
 	return this;
 }
 
+/**
+ * @brief シェーダーの設定
+ * @param[in]
+ * @return なし
+ */
 void Mesh::SetShader(ShaderInfo& shader)
 {
 	m_shader = &shader;

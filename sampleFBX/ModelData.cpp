@@ -1,24 +1,30 @@
 ﻿/**
  * @file ModelData
  * @brief モデルデータクラス
+ * @author Ariga
  */
 #include "ModelData.h"
 #include "Graphics.h"
 #include "Light.h"
 
-#define PATH_MODELSKY		"data/model/sky.fbx"
-#define PATH_MODELPLAYER	"data/model/cube.fbx"
-#define PATH_MODELENEMY		"data/model/cube.fbx"
-#define PATH_MISSILE		"data/model/bullet.fbx"
-#define PATH_TOWER			"data/model/tower.fbx"
-#define PATH_CORE			"data/model/core.fbx"
+#define PATH_MODELSKY		"data/model/sky.fbx"		//!< スカイボックスモデルデータパス
+#define PATH_MODELPLAYER	"data/model/cube.fbx"		//!< プレイヤーモデルデータパス
+#define PATH_MODELENEMY		"data/model/cube.fbx"		//!< 敵モデルデータパス
+#define PATH_MISSILE		"data/model/bullet.fbx"		//!< 弾モデルデータパス
+#define PATH_TOWER			"data/model/tower.fbx"		//!< 塔モデルデータパス
+#define PATH_CORE			"data/model/core.fbx"		//!< エネルギーコアモデルデータパス
 
+/**
+ * @struct MODEL_TABLE
+ * @brief モデルデータテーブル
+ */
 struct MODEL_TABLE
 {
 	LPCSTR filename;
 	ModelKind kind;
 };
 
+//！ 読み込むモデルデータ
 static MODEL_TABLE g_Model_Table[MODEL_MAX] = {
 	{PATH_MODELSKY, MODEL_SKY},
 	{PATH_MODELPLAYER, MODEL_PLAYER},

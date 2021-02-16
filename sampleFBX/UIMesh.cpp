@@ -1,6 +1,7 @@
 ﻿/**
  * @file UIMesh
  * @brief UIのメッシュクラス
+ * @author Ariga
  */
 #include "UIMesh.h"
 #include "Graphics.h"
@@ -71,6 +72,10 @@ void UIMesh::Awake()
 	delete[] pVertexWk;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT UIMesh::Init()
 {
 	XMFLOAT4X4 view, proj, world;

@@ -1,6 +1,7 @@
 ﻿/**
  * @file Object.h
  * @brief ベースとなるオブジェクトクラス
+ * @author Ariga
  */
 #pragma once
 #include "main.h"
@@ -18,8 +19,9 @@ protected:
 
 public:
 	/**
-	 * @brief 未実装
+	 * @brief 削除関数
 	 * @return なし
+	 * @details 単純に削除するだけだと問題が出てくるため未実装
 	 */
 	static void Destroy(Object* obj);
 

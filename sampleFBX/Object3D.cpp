@@ -1,6 +1,7 @@
 ﻿/**
  * @file Object3D.h
  * @brief 3Dオブジェクト用コンポーネント
+ * @author Ariga
  */
 #include "Object3D.h"
 #include "CCamera.h"

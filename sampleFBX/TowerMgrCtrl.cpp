@@ -1,6 +1,7 @@
-/**
+ï»¿/**
  * @file TowerMgrCtrl
- * @brief ƒ^ƒ[ŠÇ—ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief ã‚¿ãƒ¯ãƒ¼ç®¡ç†ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+ * @author Ariga
  */
 #include "TowerMgrCtrl.h"
 #include "GameObject.h"
@@ -8,17 +9,17 @@
 #include "TowerCtrl.h"
 
 /**
- * @brief ‰Šú‰»ˆ—
- * @return ‚È‚µ
+ * @brief åˆæœŸåŒ–å‡¦ç†
+ * @return ãªã—
  */
 void TowerMgrCtrl::Awake()
 {
-	m_towerList = m_Parent->GetChildren<Tower>();
+	//m_towerList = m_Parent->GetChildren<Tower>();
 }
 
 /**
- * @brief ”¼•ªˆÈãè‹’‚µ‚Ä‚¢‚é‚©
- * @return ”¼•ªˆÈãè‹’‚µ‚Ä‚¢‚ê‚Îfalse
+ * @brief åŠåˆ†ä»¥ä¸Šå æ‹ ã—ã¦ã„ã‚‹ã‹
+ * @return åŠåˆ†ä»¥ä¸Šå æ‹ ã—ã¦ã„ã‚Œã°false
  */
 bool TowerMgrCtrl::IsOccupation(int kind)
 {

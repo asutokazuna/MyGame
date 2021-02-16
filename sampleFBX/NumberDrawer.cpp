@@ -1,6 +1,7 @@
 ﻿/**
  * @file NumberDrawer
  * @brief 1数字表示コンポーネント
+ * @author Ariga
  */
 #include "NumberDrawer.h"
 #include "GameObject.h"

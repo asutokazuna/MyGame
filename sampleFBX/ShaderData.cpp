@@ -1,10 +1,15 @@
 ﻿/**
  * @file ShaderData
  * @brief シェーダーデータクラス
+ * @author Ariga
  */
 #include "ShaderData.h"
 #include "Shader.h"
 
+/**
+ * @enum LAYOUT_KIND
+ * @brief インプットレイアウトの種類
+ */
 enum LAYOUT_KIND
 {
 	IL_2D,
@@ -20,11 +25,14 @@ struct SHADER_TABLE {
 	const char* filename;
 };
 
+/**
+ * @struct VERTEX_TABLE
+ * @brief 頂点シェーダーのデータ型
+ */
 struct VERTEX_TABLE
 {
 	SHADER_TABLE table;
 	LAYOUT_KIND layoutKind;
-
 };
 
 /**
@@ -187,6 +195,11 @@ ID3D11PixelShader* ShaderData::GetPixelShader(int kind)
 	return ShaderData::GetInstance().m_PS.Get(kind);
 }
 
+/**
+ * @brief ハルシェーダーの取得
+ * @param[in] 取得したい種類のenum
+ * @return 引数に対応したシェーダーデータ
+ */
 ID3D11HullShader * ShaderData::GetHullShader(int kind)
 {
 	if (HS_KIND::HS_MAX <= kind ||
@@ -196,6 +209,11 @@ ID3D11HullShader * ShaderData::GetHullShader(int kind)
 	return ShaderData::GetInstance().m_HS.Get(kind);
 }
 
+/**
+ * @brief ドメインシェーダーの取得
+ * @param[in] 取得したい種類のenum
+ * @return 引数に対応したシェーダーデータ
+ */
 ID3D11DomainShader * ShaderData::GetDomainShader(int kind)
 {
 	if (DS_KIND::DS_MAX <= kind ||
@@ -205,6 +223,11 @@ ID3D11DomainShader * ShaderData::GetDomainShader(int kind)
 	return ShaderData::GetInstance().m_DS.Get(kind);
 }
 
+/**
+ * @brief ジオメトリシェーダーの取得
+ * @param[in] 取得したい種類のenum
+ * @return 引数に対応したシェーダーデータ
+ */
 ID3D11GeometryShader* ShaderData::GetGeometryShader(int kind)
 {
 	if (GS_KIND::GS_MAX <= kind ||

@@ -1,6 +1,7 @@
 ﻿/**
  * @file Field.cpp
  * @brief 地面クラス
+ * @author Ariga
  */
 #include "Field.h"
 #include "FieldMesh.h"

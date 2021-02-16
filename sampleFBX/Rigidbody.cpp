@@ -1,6 +1,7 @@
 ﻿/**
  * @file Rigidbody
  * @brief 物理挙動
+ * @author Ariga
  */
 #include "Rigidbody.h"
 #include "GameObject.h"

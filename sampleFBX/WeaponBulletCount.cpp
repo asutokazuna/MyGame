@@ -9,8 +9,6 @@
 #include "NumberList.h"
 #include "NumberListCtrl.h"
 
-static WeaponCtrl* WeapCtrl;
-
 /**
  * @brief 初期化処理
  * @return なし
@@ -27,6 +25,10 @@ HRESULT WeaponBulletCount::Init()
 	return E_NOTIMPL;
 }
 
+/**
+ * @brief 更新処理
+ * @return なし
+ */
 void WeaponBulletCount::Update()
 {
 	const int& num = WeapCtrl->GetBulletCnt();

@@ -1,6 +1,7 @@
 ﻿/**
  * @file UIMesh
  * @brief UIのメッシュクラス
+ * @author Ariga
  */
 #pragma once
 #include "Mesh.h"
@@ -18,6 +19,10 @@ public:
 	 */
 	void Awake();
 
+	/**
+	 * @brief 初期化処理
+	 * @return なし
+	 */
 	HRESULT Init();
 
 	/**

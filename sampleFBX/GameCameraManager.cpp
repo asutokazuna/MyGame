@@ -1,6 +1,7 @@
 ﻿/**
  * @file GameCameraManager .cpp
  * @brief ゲームシーンのカメラ管理オブジェクト
+ * @author Ariga
  */
 #include "GameCameraManager.h"
 #include "CameraStateMachine.h"

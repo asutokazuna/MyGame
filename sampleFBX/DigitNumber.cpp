@@ -1,4 +1,9 @@
-﻿#include "DigitNumber.h"
+﻿/**
+ * @file DigitNumber
+ * @brief 数字表示
+ * @author Ariga
+ */
+#include "DigitNumber.h"
 #include "UIMesh.h"
 #include "DefaultShaderInfo.h"
 #include "TextureData.h"

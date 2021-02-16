@@ -1,9 +1,15 @@
 ﻿/**
  * @file Object.h
  * @brief ベースとなるオブジェクトクラス
+ * @author Ariga
  */
 #include "Object.h"
 
+/**
+ * @brief 削除関数
+ * @return なし
+ * @details 単純に削除するだけだと問題が出てくるため未実装
+ */
 void Object::Destroy(Object* obj) 
 {
 	//delete[] obj;

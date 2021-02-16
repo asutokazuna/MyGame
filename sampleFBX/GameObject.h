@@ -1,6 +1,7 @@
 ﻿/**
  * @file GameObject.h
  * @brief ゲームオブジェクト
+ * @author Ariga
  */
 #pragma once
 #include <list>
@@ -20,13 +21,10 @@ protected:
 	Transform*	transform;			//!< トランスフォーム
 	int			tag;				//!< オブジェクト識別用タグ
 	int			layer;					//!< 所属レイヤー
-	GameObject* parent;
-	GameObject* root;
-	int childCount;
-
-private:
-	//std::list<std::unique_ptr<GameObject>> m_ChildList;	//!< 子オブジェクトリスト
-	//std::list<GameObject*> m_ChildList;	//!< 子オブジェクトリスト
+	// TODO : transformにもっていく
+	GameObject* parent;				//!< 親オブジェクト
+	GameObject* root;				//!< 一番上の親オブジェクト
+	int childCount;					//!< 子オブジェクトの数
 
 public:
 	std::list<Component*> m_ComponentList;		//!< コンポーネントリスト
@@ -98,11 +96,16 @@ public:
 
 	/**
 	 * @brief 子オブジェクトの取得
-	 * @param int index 子オブジェクトの格納差sれテイルインデックス
+	 * @param int index 子オブジェクトの格納差されている位置インデックス
 	 * @return 子オブジェクト
 	 */
 	GameObject* GetChildTest(int index);
 
+	/**
+	 * @brief 子オブジェクトの取得
+	 * @param name 子オブジェクトの名前
+	 * @return 子オブジェクト
+	 */
 	GameObject * GetChildTest(std::string name);
 
 	/**
@@ -113,10 +116,18 @@ public:
 		return parent;
 	}
 
+	/**
+	 * @brief ルートとなるオブジェクトのセット
+	 * @return なし
+	 */
 	void SetRoot(GameObject* root) {
 		this->root = root;
 	}
 
+	/**
+	 * @brief ルートとなるオブジェクトの取得
+	 * @return ルートオブジェクト
+	 */
 	GameObject* GetRoot() {
 		return root;
 	}
@@ -200,107 +211,6 @@ public:
 		buff->Awake();
 		return buff;
 	}
-
-	///**
-	// * @breif 子オブジェクトの取得
-	// * @return 子オブジェクト
-	// */
-	//template<class T>
-	//T* GetChild()
-	//{
-	//	for (auto& child : m_ChildList)
-	//	{
-	//		T* buff = dynamic_cast<T*>(child.get());
-	//		if (buff != nullptr)
-	//			return buff;
-	//	}
-	//	return nullptr;
-	//}
-
-	/**
-	 * @breif 子オブジェクトの取得
-	 * @return 子オブジェクト
-	 */
-	template<class T>
-	std::list<T*> GetChildren()
-	{
-		std::list<T*> work;
-
-		//for (auto& child : m_ChildList)
-		//{
-		//	T* buff = dynamic_cast<T*>(child.get());
-		//	if (buff != nullptr) {
-		//		work.push_back(buff);
-		//	}
-		//}
-		return work;
-	}
-
-	///**
-	// * @breif 子オブジェクトの取得
-	// * @return 子オブジェクト
-	// */
-	//template<class T>
-	//T* GetChild(std::string name)
-	//{
-	//	for (auto& child : m_ChildList)
-	//	{
-	//		if (name == child->name)
-	//		{
-	//			T* buff = dynamic_cast<T*>(child.get());
-	//			if (buff != nullptr)
-	//				return buff;
-	//		}
-	//	}
-	//	return nullptr;
-	//}
-
-	///**
-	// * @breif 子オブジェクトの取得
-	// * @return 子オブジェクト
-	// */
-	//GameObject* GetChild(int n)
-	//{
-	//	int cnt = 0;
-	//	for (auto& child : m_ChildList)
-	//	{
-	//		if (cnt == n) {
-	//			return child.get();
-	//		}
-	//		cnt++;
-	//	}
-	//	return nullptr;
-	//}
-
-	///**
-	// * @breif 子オブジェクトの取得
-	// * @return 子オブジェクト
-	// */
-	//GameObject* GetChild(std::string name)
-	//{
-	//	for (auto& child : m_ChildList)
-	//	{
-	//		if (name == child->name) {
-	//			return child.get();
-	//		}
-	//	}
-	//	return nullptr;
-	//}
-
-	/**
-	 * @brief 子オブジェクトのリストを取得
-	 * @return 子オブジェクトリスト
-	 */
-	std::list<GameObject*> GetChildList() {
-		std::list<GameObject*> work;
-
-		//for (auto& child : m_ChildList) {
-		//	work.push_back(child.get());
-		//}
-
-		return work;
-	}
-
 };
 
 // EOF

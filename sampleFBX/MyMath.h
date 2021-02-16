@@ -1,6 +1,7 @@
 ﻿/**
  * @file MyMath.h
  * @brief 計算管理クラス
+ * @author Ariga
  */
 #pragma once
 #include <DirectXMath.h>

@@ -1,6 +1,7 @@
 ﻿/**
  * @class PlayerLifeCtrl
  * @brief プレイヤーのHPの管理
+ * @author Ariga
  */
 #include "PlayerLifeCtrl.h"
 #include "collision.h"
@@ -13,7 +14,7 @@
 #include "CharacterSpawnCtrl.h"
 #include "ObjectManager.h"
 
-#define MAX_LIFE (10)
+#define MAX_LIFE (10)	//!< プレイヤーのライフ
 
 /**
  * @brief 初期化処理

@@ -1,6 +1,7 @@
 ﻿/*
  *@file ObjectManager.h
  * @brief オブジェクト管理クラス
+ * @author Ariga
  */
 #include "ObjectManager.h"
 #include "ObjectRenderer.h"
@@ -19,6 +20,11 @@ void ObjectManager::CreateHierarchy()
 	//}
 }
 
+/**
+ * @brief ヒエラルキーにデータをセット
+ * @param[in] obj セットするデータ
+ * @return なし
+ */
 void ObjectManager::SetHierarchy(GameObject* obj)
 {
 	HierarchyData data = HierarchyData();
@@ -27,17 +33,26 @@ void ObjectManager::SetHierarchy(GameObject* obj)
 	m_cntHierarchy++;
 }
 
-void ObjectManager::InitMergeObject()
+/**
+ * @brief 一時保存されてるオブジェクトの初期化処理
+ * @return なし
+ */
+void ObjectManager::InitObjectBuffer()
 {
 	if (m_ObjListBuffer.size() <= 0) {
 		return;
 	}
+
 	for (int i = 0; i < m_ObjListBuffer.size(); i++)
 	{
 		m_ObjListBuffer.at(i)->Init();
 	}
 }
 
+/**
+ * @brief 一時保存されているオブジェクトをリストに登録
+ * @return なし
+ */
 void ObjectManager::MergeObjList()
 {	
 	if (m_ObjListBuffer.size() <= 0) {
@@ -53,20 +68,26 @@ void ObjectManager::MergeObjList()
 		std::unique_ptr<GameObject> objPtr(m_ObjListBuffer.at(i));
 		name = keyName = m_ObjListBuffer.at(i)->GetName();
 
+		// 名前の重複確認
 		while (m_ObjList.find(keyName) != m_ObjList.end())
 		{
-			keyName.clear();
+			//keyName.clear();
 			keyName = name + std::to_string(num);
 			num++;
 		}
+		// 登録
 		m_ObjList[keyName] = std::move(objPtr);
-		
 	}
 
 	m_ObjListBuffer.clear();
 }
 
-
+/**
+ * @brief ヒエラルキーから子オブジェクトを探し出す
+ * @param[in] findObj 探し出す親のオブジェクト
+ * @param[in] index 子オブジェクトの番号
+ * @return 子オブジェクトのデータ
+ */
 GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, int index)
 {
 	for (auto objInHierarchy : m_hierarchy)
@@ -85,8 +106,9 @@ GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, int index)
 	}
 	return nullptr;
 }
+
 /**
- * @brief オブジェクトのヒエラルキーデータを取得
+ * @brief オブジェクトのヒエラルキーデータを取得する再帰関数
  * @param[in] data ヒエラルキーの階層データ
  * @param[in] obj ほしいデータのオブジェクト
  * @return ヒエラルキーに入っているオブジェクトに対応したデータ
@@ -144,7 +166,6 @@ std::vector<ObjectManager::HierarchyData>* ObjectManager::GetVectorData(std::vec
 	return result;
 }
 
-
 /**
  * @brief オブジェクトが所属しているヒエラルキーの階層データを取得
  * @param[in] obj探し出したいオブジェクトデータ
@@ -199,6 +220,10 @@ GameObject* ObjectManager::FindChildInHierarchy(GameObject* findObj, std::string
 	return nullptr;
 }
 
+/**
+ * @brief リストの消去
+ * @return なし
+ */
 void ObjectManager::Clear()
 {
 	ObjectManager::GetInstance().m_ObjList.clear();
@@ -236,55 +261,20 @@ void ObjectManager::SetParent(GameObject * parent, GameObject * childObj)
 		}
 	}
 
-	//// 子オブジェクトのデータを探し出しリストから削除
-	//for (auto itHierarchy = m_hierarchy.begin(); itHierarchy != m_hierarchy.end(); itHierarchy++)
-	//{
-	//	// 親階層で検索
-	//	if (itHierarchy->gameObject == childObj)
-	//	{
-	//		childData = *itHierarchy;
-	//		itHierarchy = m_hierarchy.erase(itHierarchy);
-	//		break;
-	//	}
-
-	//	// 子階層で検索
-	//	for (auto inChild = itHierarchy->m_childList.begin(); inChild != itHierarchy->m_childList.end(); inChild++)
-	//	{
-	//		if (inChild->gameObject== childObj)
-	//		{
-	//			childData = *inChild;
-	//			itHierarchy->m_childList.erase(inChild);
-	//			break;
-	//		}
-	//	}
-	//}
-
 	// 子にセット
 	HierarchyData* parentData = FindDataInHierarchy(m_hierarchy, parent);
-	//childData.gameObject->SetRoot(parentData->gameObject->GetRoot());
+
 	parentData->m_childList.push_back(childData);
 	for (auto objInChild : childData.m_childList)
 	{
 		objInChild.gameObject->SetRoot(parentData->gameObject->GetRoot());
 	}
-
-	//for (auto& hierarchyObj : m_hierarchy)
-	//{
-	//	if (hierarchyObj.gameObject == root)
-	//	{
-	//		if (hierarchyObj.gameObject == parent) {
-	//			hierarchyObj.m_childList.push_back(childData);
-	//		}
-	//		for (auto inChild : hierarchyObj.m_childList)
-	//		{
-	//			if (inChild.gameObject == parent) {
-	//				inChild.m_childList.push_back(childData);
-	//			}
-	//		}
-	//	}
-	//}
 }
 
+/**
+ * @brief ヒエラルキーの更新処理
+ * @return なし
+ */
 void ObjectManager::UpdateHierarchy(std::vector<ObjectManager::HierarchyData> data)
 {
 	for (auto o : data)
@@ -294,7 +284,10 @@ void ObjectManager::UpdateHierarchy(std::vector<ObjectManager::HierarchyData> da
 	}
 }
 
-
+/**
+ * @brief ヒエラルキーの遅れた更新処理
+ * @return なし
+ */
 void ObjectManager::LateUpdateHierarchy(std::vector<ObjectManager::HierarchyData> data)
 {
 	for (auto o : data)
@@ -328,12 +321,13 @@ void ObjectManager::Awake()
  HRESULT ObjectManager::Init()
 {
 	MergeObjList();
-	//CreateHierarchy();
+
 	auto& buff = m_ObjList;
 	for (auto& obj : buff) {
 		obj.second.get()->Init();
 	}
-	InitMergeObject();
+
+	InitObjectBuffer();
 	MergeObjList();
 
 	return E_NOTIMPL;
@@ -361,22 +355,8 @@ void ObjectManager::Update()
 
 	LateUpdateHierarchy(m_hierarchy);
 
-	InitMergeObject();
+	InitObjectBuffer();
 	MergeObjList();
-
-	//auto& buff = m_ObjList;
-	//for (auto& obj : buff) {
-	//	if (obj.second.get()->GetActive() == false) {
-	//		continue;
-	//	}
-	//	obj.second.get()->Update();
-	//}
-	//for (auto& obj : buff) {
-	//	if (obj.second.get()->GetActive() == false) {
-	//		continue;
-	//	}
-	//	obj.second.get()->LateUpdate();
-	//}
 }
 
 /**
@@ -426,7 +406,11 @@ void ObjectManager::Draw()
 #endif
 }
 
+/**
+ * @brief オブジェクトを探し出す
 
+ * @return 見つけ出したオブジェクトデータ
+ */
 GameObject* Find(GameObject* obj, int tag)
 {
 	GameObject* work = nullptr;
@@ -436,14 +420,14 @@ GameObject* Find(GameObject* obj, int tag)
 		return obj;
 	}
 
-	for (auto& child : obj->GetChildList())
-	{
-	
-		work = Find(child, tag);
-		if (work != nullptr) {
-			break;
-		}
-	}
+	//for (auto& child : obj->GetChildList())
+	//{
+	//
+	//	work = Find(child, tag);
+	//	if (work != nullptr) {
+	//		break;
+	//	}
+	//}
 
 	return work;
 }
@@ -456,10 +440,10 @@ std::list<GameObject*> Finds(GameObject* obj, int tag)
 		work.push_back(obj);
 	}
 
-	for (auto& child : obj->GetChildList())
-	{
-		work.merge(Finds(child,tag));
-	}
+	//for (auto& child : obj->GetChildList())
+	//{
+	//	work.merge(Finds(child,tag));
+	//}
 
 	return work;
 }
@@ -478,20 +462,25 @@ std::list<GameObject*> ObjectManager::FindObjectsWithTag(int tag)
 	return result;
 }
 
- GameObject* ObjectManager::FindWithTag(int tag)
- {
-	 GameObject* resultObj = nullptr;
-	 GameObject* work;
+/**
+ * @brief オブジェクトの取得
+ * @param[in] tag　オブジェクトの識別タグ
+ * @return 見つけ出したオブジェクト　何もなければnullptr
+ */
+GameObject* ObjectManager::FindWithTag(int tag)
+{
+	GameObject* resultObj = nullptr;
+	GameObject* work;
 
-	 auto& buff = m_ObjList;
-	 for (auto& obj : buff) {
+	auto& buff = m_ObjList;
+	for (auto& obj : buff) {
 		 work = dynamic_cast<GameObject*>(obj.second.get());
 		 resultObj = Find(work, tag);
 		 if (resultObj != nullptr) {
 			 break;
 		 }
-	 }
-	 return resultObj;
- }
+	}
+	return resultObj;
+}
 
 // EOF

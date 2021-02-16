@@ -1,6 +1,7 @@
 ﻿/**
  * @file Collision
  * @brief 当たり判定クラス
+ * @author Ariga
  */
 #include "collision.h"
 #include "GameObject.h"

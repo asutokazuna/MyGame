@@ -1,6 +1,7 @@
 ﻿/**
  * @file SceneGame
  * @brief ゲームシーンクラス
+ * @author Ariga
  */
 #include "SceneGame.h"
 #include "CPlayer.h"
@@ -38,7 +39,6 @@ void SceneGame::Awake()
 	m_Core		= ObjectManager::Create<CorePlayer>("CorePlayer");
 	m_CoreEnemy = ObjectManager::Create<CoreEnemy>("CoreEnemy");
 	ObjectManager::Create<CoreGaugeUI>("CoreGaugeUI");
-	//m_pCTPCamera = ObjectManager::Create<CTPCamera>("CTPCamera");
 }
 
 /**
@@ -59,7 +59,6 @@ HRESULT SceneGame::Init()
 void SceneGame::Uninit()
 {
 	CScene::Uninit();
-
 }
 
 /**
@@ -88,6 +87,10 @@ void SceneGame::Update()
 	CScene::Update();
 }
 
+/**
+ * @brief ゲームオーバー移行用一時的な関数
+ * @return なし
+ */
 void SceneGame::GameOver()
 {
 	m_isGameOver = true;

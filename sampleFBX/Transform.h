@@ -1,12 +1,14 @@
 ﻿/**
  * @file Transform.h
  * @brief 座標管理クラス
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"
 #include "MyMath.h"
 #include "Tween.h"
 
+// 前方宣言
 class Tween;
 
 /**
@@ -16,21 +18,24 @@ class Tween;
 class Transform : public Component
 {
 public:
-	Vector3 position;
-	Vector3 rotation;
-	Vector3 scale;
-	Vector3 localPosition;
-	Vector3 localRotation;
-	Vector3 localScale;
-	Vector3 axisX;
-	Vector3 axisY;
-	Vector3 axisZ;
-	Quaternion quaternion;
+	Vector3 position;		//!< 座標
+	Vector3 rotation;		//!< 角度
+	Vector3 scale;			//!< 大きさ
+	Vector3 localPosition;	//!< ローカル座標
+	Vector3 localRotation;	//!< ローカル角度
+	Vector3 localScale;		//!< ローカルサイズ
+	Vector3 axisX;			//!< ローカルX軸方向
+	Vector3 axisY;			//!< ローカルY軸方向
+	Vector3 axisZ;			//!< ローカルZ軸方向
+	Quaternion quaternion;	//!< クォータニオン
 	Quaternion localQuaternion;
 
 public:
 	Tween* Do;
 
+	/**
+	 * =演算子のオーバーロード
+	 */
 	Transform& operator= (const Transform trs) {
 		position = trs.position;
 		rotation = trs.rotation;
@@ -48,12 +53,14 @@ public:
 		//t = *trs.Do;
 		return *this;
 	}
+
 	/**
 	 * @brief コンストラクタ
 	 */
 	Transform();
+
 	/**
-	* @brief コンストラクタ
+	* @brief コピーコンストラクタ
 	*/
 	Transform(const Transform &trans);
 
@@ -88,10 +95,21 @@ public:
 	 */
 	Vector3 GetForward();
 
+	/**
+	 * @brief 右方向の取得
+	 * @return 右方向
+	 */
 	Vector3 GetRight();
 
+	/**
+	 * @brief 上方向の取得
+	 * @return 上方向
+	 */
 	Vector3 GetUp();
 
+	/**
+	 * @brief 軸方向
+	 */
 	enum AxisKind
 	{
 		AXIS_X,

@@ -1,6 +1,7 @@
 ﻿/**
  * @file GameObject.h
  * @brief ゲームオブジェクト
+ * @author Ariga
  */
 #include "GameObject.h"
 #include "ObjectManager.h"
@@ -33,10 +34,6 @@ HRESULT GameObject::Init()
 	for (auto com : buff)
 		com->Init();
 
-	//for (auto& child : m_ChildList) {
-	//	child->Init();
-	//}
-
 	return S_OK;
 }
 
@@ -49,10 +46,6 @@ void GameObject::Uninit()
 	auto buff = m_ComponentList;
 	for (auto com : buff)
 		com->Uninit();
-
-	//for (auto& child : m_ChildList) {
-	//	child->Uninit();
-	//}
 }
 
 /**
@@ -71,10 +64,6 @@ void GameObject::Update()
 		}
 		com->Update();
 	}
-	
-	//for (auto& child : m_ChildList) {
-	//	child->Update();
-	//}
 }
 
 /**
@@ -93,10 +82,6 @@ void GameObject::LateUpdate()
 		}
 		com->LateUpdate();
 	}
-
-	//for (auto& child : m_ChildList) {
-	//	child->LateUpdate();
-	//}
 }
 
 /**
@@ -116,10 +101,6 @@ void GameObject::LateUpdate()
 		 }
 		 com->LastUpdate();
 	 }
-
-	 //for (auto& child : m_ChildList) {
-		// child->LastUpdate();
-	 //}
  }
 
 /**
@@ -137,10 +118,6 @@ void GameObject::Draw()
 		}
 		com->Draw();
 	}
-
-	//for (auto& child : m_ChildList) {
-	//	child->Draw();
-	//}
 }
 
 /**
@@ -158,88 +135,72 @@ void GameObject::DrawAlpha()
 		}
 		com->DrawAlpha();
 	}
-
-	//for (auto& child : m_ChildList) {
-	//	child->DrawAlpha();
-	//}
 }
-//
-///**
-// * @brief 子オブジェクトの設定
-// * @return なし
-// */
-// void GameObject::SetChild(GameObject * child)
-// {
-//	 std::unique_ptr<GameObject> buff(child);
-//
-//	 buff->parent = this;
-//	 //buff->Awake();
-//	 m_ChildList.push_back(std::move(buff));
-// }
-//
- void GameObject::SetParent(GameObject* parent)
- {
-	 GameObject* workRoot = parent;
-	 this->parent = parent;
 
-	 parent->childCount++;
-	 while (workRoot != nullptr)
-	 {
-		 this->root = workRoot->GetRoot();
-		 workRoot = workRoot->GetParent();
-	 }
+/**
+ * @brief 親オブジェクトの設定
+ * @param[in] parent 親オブジェクト
+ * @return なし
+ */
+void GameObject::SetParent(GameObject* parent)
+{
+	GameObject* workRoot = parent;
+	this->parent = parent;
+	
+	parent->childCount++;
+	while (workRoot != nullptr)
+	{
+	 this->root = workRoot->GetRoot();
+	 workRoot = workRoot->GetParent();
+	}
+	
+	ObjectManager::GetInstance().SetParent(parent, this);
+}
 
-	 ObjectManager::GetInstance().SetParent(parent, this);
- }
+GameObject* GameObject::GetChildTest(int index)
+{
+	GameObject* childObj = nullptr;
 
- GameObject* GameObject::GetChildTest(int index)
- {
-	 GameObject* childObj = nullptr;
+	childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, index);
 
-	 childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, index);
-
-	 return childObj;
- }
+	return childObj;
+}
 
 
- GameObject* GameObject::GetChildTest(std::string name)
- {
-	 GameObject* childObj = nullptr;
+GameObject* GameObject::GetChildTest(std::string name)
+{
+	GameObject* childObj = nullptr;
 
-	 childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, name);
+	childObj = ObjectManager::GetInstance().FindChildInHierarchy(this, name);
 
-	 return childObj;
- }
+	return childObj;
+}
 
- /**
-  * @brief トランスフォームの取得
-  * @return トランスフォーム
-  */
- Transform& GameObject::GetTransform() {
-	 return *transform;
- }
+/**
+ * @brief トランスフォームの取得
+ * @return トランスフォーム
+ */
+Transform& GameObject::GetTransform() {
+	return *transform;
+}
 
- /**
-  * @brief 当たり判定処理
-  * @return なし
-  */
- void GameObject::OnCollisionEnter(GameObject * gameObbj)
- {
-	 for (auto com : m_ComponentList)
-		 com->OnCollisionEnter(gameObbj);
-
-	 //for (auto& child : m_ChildList) {
-		// child->OnCollisionEnter(gameObbj);
-	 //}
- }
+/**
+ * @brief 当たり判定処理
+ * @return なし
+ */
+void GameObject::OnCollisionEnter(GameObject * gameObbj)
+{
+	for (auto com : m_ComponentList)
+		com->OnCollisionEnter(gameObbj);
+}
 
  /**
   * @brief タグの比較
   * @return 一致していればtrue
   */
- bool GameObject::CompareTag(int objTag)
- {
-	 return objTag == tag;
- }
+bool GameObject::CompareTag(int objTag)
+{
+	return objTag == tag;
+}
 
 // EOF

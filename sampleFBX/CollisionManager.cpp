@@ -1,6 +1,7 @@
 ﻿/**
  * @file CollisionManager
  * @brief 当たり判定管理クラス
+ * @author Ariga
  */
 #include "CollisionManager.h"
 #include "GameObject.h"
@@ -70,6 +71,10 @@ bool OBB(Vector3 myPos, Quaternion myVector, Vector3 myScale, Vector3 othorPos, 
 	return true;
 }
 
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 void CollisionManager::Init()
 {
 	const int LEVEL = 5;
@@ -79,6 +84,10 @@ void CollisionManager::Init()
 	m_CollisionTree.Init(LEVEL,MIN,MAX);
 }
 
+/**
+ * @brief 終了処理
+ * @reutrn なし
+ */
 void CollisionManager::Uninit()
 {
 	for (auto &list : m_registList)
@@ -90,6 +99,10 @@ void CollisionManager::Uninit()
 
 DWORD num = 0;
 
+/**
+ * @brief 描画処理
+ * @return なし
+ */
 void CollisionManager::Draw()
 {
 #ifdef _DEBUG
@@ -154,6 +167,11 @@ void CollisionManager::Check()
 	}
 }
 
+/**
+ * @brief コリジョンをを当たり判定管理リストにセット
+ * @param[in] col セットするコリジョンオブジェクト
+ * @return なし
+ */
 void CollisionManager::Set(Collision* col)
 {
 	std::unique_ptr<TreeRegisterObject<Collision>> obj = std::make_unique<TreeRegisterObject<Collision>>();
@@ -162,6 +180,11 @@ void CollisionManager::Set(Collision* col)
 	m_registList.push_back(((std::move(obj))));
 }
 
+/**
+ * @brief コリジョンを当たり判定管理リストから削除
+ * @param[in] col コリジョンオブジェクト
+ * @return なし
+ */
 void CollisionManager::Remove(Collision* col)
 {
 	for (auto it = m_registList.begin(); it != m_registList.end();)
@@ -175,6 +198,14 @@ void CollisionManager::Remove(Collision* col)
 	}
 }
 
+/**
+ * @brief OBBの当たり判定確認処理
+ * @param[in] myObj 自分のトランスフォーム
+ * @param[in] othorObj 相手のトランスフォーム
+ * @param[in] myCol 自分のコリジョン
+ * @param[in] othorCol　相手のコリジョン
+ * @return 当たっていればtrue
+ */
 bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othorObj, Collision* myCol, Collision* othorCol)
 {
 	bool isHit = false;
@@ -195,6 +226,13 @@ bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othor
 
 	return isHit;
 }
+
+/**
+ * @brief OBBのアルゴリズム
+ * @param[in] myObj　自分のトランスフォーム
+ * @param[in]
+ * @return 当たっていればtrue
+ */
 bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othorObj)
 {
 	bool isHit = false;
@@ -216,6 +254,11 @@ bool CollisionManager::CheckOBB(const Transform & myObj, const Transform & othor
 	return isHit;
 }
 
+/**
+ * @brief オブジェクトのオフセットのサイズを取得(ただしサイズは半分の数値になっているので注意)
+ * @param[in] trans トランスフォーム
+ * @return サイズ
+ */
 Vector3 CollisionManager::GetSize(const Transform & trans)
 {
 	Vector3 size = trans.m_Parent->GetComponent<Collision>()->GetoffsetSize();

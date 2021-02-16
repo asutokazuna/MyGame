@@ -1,111 +1,117 @@
-/**
+ï»¿/**
  * @file Fade
- * @brief ƒtƒF[ƒhƒNƒ‰ƒX
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¯ãƒ©ã‚¹
+ * @author Ariga
  */
 #pragma once
 #include "Singleton.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class GameObject;
+class ShaderInfo;
 
 /**
  * @class Fade
- * @brief ƒtƒF[ƒh
+ * @brief ãƒ•ã‚§ãƒ¼ãƒ‰
  */
 class Fade: public Singleton<Fade>
 {
 private:
+	/**
+	 * @enm FADE_STATE
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã®çŠ¶æ…‹
+	 */
 	enum FADE_STATE
 	{
 		FADE_NONE,
 		FADE_IN,
 		FADE_OUT
-
 	};
 private:
-	GameObject* m_Mesh;
-	bool m_isFade;
-	float m_Alpha;
-	int m_State;
+	GameObject* m_Mesh;	//!< ãƒ•ã‚§ãƒ¼ãƒ‰ç”¨ãƒ¡ãƒƒã‚·ãƒ¥
+	ShaderInfo* m_shader;	//!< ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	bool m_isFade;		//!< ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹ã©ã†ã‹
+	float m_Alpha;		//!< ãƒ•ã‚§ãƒ¼ãƒ‰ã®Î±
+	int m_State;		//!< ä»Šã®çŠ¶æ…‹
 
 private:
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	void InitInst();
 
 	/**
-	 * @brief I—¹
-	 * @return ‚È‚µ
+	 * @brief çµ‚äº†
+	 * @return ãªã—
 	 */
 	void UninitInst();
 
 	/**
-	 * @brief XV
-	 * @return ‚È‚µ
+	 * @brief æ›´æ–°
+	 * @return ãªã—
 	 */
 	void UpdateInst();
 
 	/**
-	 * @brief •`‰æ
-	 * @return ‚È‚µ
+	 * @brief æç”»
+	 * @return ãªã—
 	 */
 	void DrawInst();
 
 	/**
-	 * @brief ƒtƒF[ƒh’†‚©”»’è‚·‚é
-	 * @return ƒtƒF[ƒh’†‚È‚çtrue
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹åˆ¤å®šã™ã‚‹
+	 * @return ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ãªã‚‰true
 	 */
 	bool IsFadeInst();
 
 	/**
-	 * @brief ƒtƒF[ƒhˆ—
-	 * @return ‚È‚µ
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰å‡¦ç†
+	 * @return ãªã—
 	 */
 	void SetState(FADE_STATE state);
 
 public:
 
 	/**
-	 * @brief ‰Šú‰»
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–
+	 * @return ãªã—
 	 */
 	static void Init();
 
 	/**
-	 * @brief I—¹
-	 * @return ‚È‚µ
+	 * @brief çµ‚äº†
+	 * @return ãªã—
 	 */
 	static void Uninit();
 
 	/**
-	 * @brief XV
-	 * @return ‚È‚µ
+	 * @brief æ›´æ–°
+	 * @return ãªã—
 	 */
 	static void Update();
 
 	/**
-	 * @brief •`‰æ
-	 * @return ‚È‚µ
+	 * @brief æç”»
+	 * @return ãªã—
 	 */
 	static void Draw();
 
 	/**
-	 * @brief ƒtƒF[ƒh’†‚©”»’è‚·‚é
-	 * @return ƒtƒF[ƒh’†‚È‚çtrue
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹åˆ¤å®šã™ã‚‹
+	 * @return ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ãªã‚‰true
 	 */
 	static bool IsFade();
 
 	/**
-	 * @brief ƒtƒF[ƒhƒCƒ“
-	 * @return ‚È‚µ
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+	 * @return ãªã—
 	 */
 	static void FadeIn();
 
 	/**
-	 * @brief ƒtƒF[ƒhƒAƒEƒg
-	 * @return ‚È‚µ
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+	 * @return ãªã—
 	 */
 	static void FadeOut();
 };

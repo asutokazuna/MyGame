@@ -1,6 +1,7 @@
 ﻿/**
  * @file Field.h
  * @brief 地面クラス
+ * @author Ariga
  */
 #pragma once
 #include "GameObject.h"

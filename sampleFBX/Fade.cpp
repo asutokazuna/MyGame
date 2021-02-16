@@ -1,14 +1,15 @@
 ﻿/**
  * @file Fade
  * @brief フェードクラス
+ * @author Ariga
  */
 #include "Fade.h"
 #include "UIMesh.h"
 #include "main.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
+#include "DefaultShaderInfo.h"
 
-static Mesh* UI;
 
 /**
  * @brief 初期化
@@ -18,8 +19,11 @@ void Fade::InitInst()
 {
 	m_Mesh = new GameObject();
 
-	UI = m_Mesh->AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH, SCREEN_HEIGHT, 1)->ChangeColor(0, 0, 0, 1)
+	static Mesh* UI;
+	UI = m_Mesh->AddComponent<UIMesh>()->ChangeSize(SCREEN_WIDTH, SCREEN_HEIGHT, 1)
 		->ChangePos(0,0,-1);
+	m_shader = m_Mesh->AddComponent<DefaultShaderInfo>()->ChangeColor(0, 0, 0, 1);
+	UI->SetShader(*m_shader);
 	m_Mesh->Init();
 	m_Alpha = 0.0f;
 	m_isFade = false;
@@ -86,7 +90,7 @@ void Fade::DrawInst()
 	}
 #endif // _DEBUG
 
-	UI->ChangeColor(0,0,0, m_Alpha);
+	m_shader->ChangeColor(0,0,0, m_Alpha);
 
 	m_Mesh->Draw();
 }

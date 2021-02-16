@@ -1,17 +1,19 @@
 ﻿/**
  * @file Rigidbody
  * @brief 物理挙動
+ * @author Ariga
  */
 #pragma once
 #include "Component.h"
 #include "MyMath.h"
 
+// 前方宣言
 class Transform;
 class Collision;
 
 /**
  * @class Rigidbody
- * @brief 物理演算
+ * @brief 物理演算を作りたかったが考えがまとまっていないので未完成
  */
 class Rigidbody: public Component
 {

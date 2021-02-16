@@ -1,6 +1,7 @@
 ﻿/**
  * @file Billboard
  * @brief ビルボードクラス
+ * @author Ariga
  */
 #pragma once
 #include "Mesh.h"

@@ -1,6 +1,7 @@
 ﻿/**
  * @file Billboard
  * @brief ビルボードクラス
+ * @author Ariga
  */
 #include "Billboard.h"
 #include "Texture.h"

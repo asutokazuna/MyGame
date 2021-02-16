@@ -1,6 +1,7 @@
 ﻿/**
  * @file MyMath.cpp
  * @brief 計算管理クラス
+ * @author Ariga
  */
 #include "MyMath.h"
 #include "Transform.h"

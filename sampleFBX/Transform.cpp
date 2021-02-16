@@ -1,6 +1,7 @@
 ﻿/**
  * @file Transform.h
  * @brief 座標管理クラス
+ * @author Ariga
  */
 #include "Transform.h"
 #include "Tween.h"
@@ -26,6 +27,9 @@ Transform::Transform()
 	localQuaternion = { 1,0,0,0 };
 }
 
+/**
+ * @brief コピーコンストラクタ
+ */
 Transform::Transform(const Transform & trans)
 {
 
@@ -44,27 +48,14 @@ Transform::Transform(const Transform & trans)
 	localQuaternion = trans.localQuaternion;
 }
 
+/**
+ * @brief デストラクタ
+ */
 Transform::~Transform()
 {
 	delete Do;
 	Do = nullptr;
 }
-//
-//void Transform::Draw()
-//{
-//	//if (m_Parent->GetParent() == nullptr) {
-//	//	//m_ParentTransform->localPosition = m_ParentTransform->position;
-//	//	//m_ParentTransform->localRotation = m_ParentTransform->rotation;
-//	//	//m_ParentTransform->localScale = m_ParentTransform->scale;
-//	//	//m_ParentTransform->localQuaternion = m_ParentTransform->quaternion;
-//	//}
-//	//else {
-//	//	m_ParentTransform->position = m_Parent->GetParent()->GetTransform().position;
-//	//	m_ParentTransform->rotation = m_Parent->GetParent()->GetTransform().rotation;
-//	//	m_ParentTransform->scale = m_Parent->GetParent()->GetTransform().scale;
-//	//	m_ParentTransform->quaternion = m_Parent->GetParent()->GetTransform().quaternion;
-//	//}
-//}
 
 /**
  * @brief 座標の取得

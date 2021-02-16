@@ -5,13 +5,19 @@
 #pragma once
 #include "Component.h"
 
-class NumberList;
-class Missile;
+// 前方宣言
+class WeaponCtrl;
 
+/**
+ * @class WeaponBulletCount
+ * @brief 武器の残り残弾数の表示コンポーネント
+ */
 class WeaponBulletCount: public Component
 {
 private:
-	GameObject* m_BulletNum;
+	GameObject* m_BulletNum;	//!< 弾数表示UIオブジェクト
+	WeaponCtrl* WeapCtrl;		//!< 武器管理コンポーネント(弾数取得用)
+
 public:
 	/**
 	 * @brief 初期化処理

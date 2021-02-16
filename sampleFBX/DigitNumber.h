@@ -1,24 +1,30 @@
-/**
+ï»¿/**
  * @file DigitNumber
- * @brief ”š•\¦
+ * @brief æ•°å­—è¡¨ç¤º
+ * @author Ariga
  */
 #pragma once
 #include "GameObject.h"
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class Mesh;
 class ShaderInfo;
 
 /** 
  * @class DigitNumber
- * @brief ”š1Œ…•\¦ƒIƒuƒWƒFƒNƒg
+ * @brief æ•°å­—1æ¡è¡¨ç¤ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  */
 class DigitNumber :public GameObject
 {
 private:
-	ShaderInfo* m_shader;
-	Mesh* m_mesh;
+	ShaderInfo* m_shader;	//!< ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	Mesh* m_mesh;		//!< è¡¨ç¤ºã™ã‚‹ãƒ¡ãƒƒã‚·ãƒ¥
+
 public:
+	/**
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
+	 */
 	void Awake();
 };
 

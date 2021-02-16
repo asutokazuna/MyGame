@@ -1,6 +1,7 @@
 ﻿/**
  * @file TextureData.cpp
  * @brief テクスチャデータ管理クラス
+ * @author Ariga
  */
 #include "TextureData.h"
 #include "Texture.h"
