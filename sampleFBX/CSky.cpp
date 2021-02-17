@@ -1,8 +1,9 @@
-#include "CSky.h"
+ï»¿#include "CSky.h"
 #include "CCamera.h"
 #include "ModelData.h"
 #include "FbxModel.h"
 #include "Graphics.h"
+#include "ShaderData.h"
 
 static CFbxLight light = CFbxLight();
 
@@ -18,11 +19,20 @@ HRESULT CSky::Init()
 
 void CSky::Draw()
 {
-	// ‘O–ÊƒJƒŠƒ“ƒO (FBX‚Í•\— ‚ª”½“]‚·‚é‚½‚ß)
+	// å‰é¢ã‚«ãƒªãƒ³ã‚° (FBXã¯è¡¨è£ãŒåè»¢ã™ã‚‹ãŸã‚)
 	CGraphics::SetCullMode(CULLMODE_CW);
 	CGraphics::SetZWrite(false);
-	CGraphics::SetBlendState(BS_NONE);			// ƒAƒ‹ƒtƒ@ˆ—‚µ‚È‚¢
-	// FBXƒtƒ@ƒCƒ‹•\Ž¦
+	CGraphics::SetBlendState(BS_NONE);			// ã‚¢ãƒ«ãƒ•ã‚¡å‡¦ç†ã—ãªã„
+	ID3D11DeviceContext* pDeviceContext = CGraphics::GetContext();
+	ID3D11VertexShader* vs = ShaderData::GetVertexShader(ShaderData::VS_KIND::VS_VERTEX3D);
+	ID3D11InputLayout*	il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX3D);
+	ID3D11PixelShader*	ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL3D_UNSHADOW);
+	
+	pDeviceContext->VSSetShader(vs, nullptr, 0);
+	pDeviceContext->PSSetShader(ps, nullptr, 0);
+	// é ‚ç‚¹ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’ã‚»ãƒƒãƒˆ
+	pDeviceContext->IASetInputLayout(il);
+	// FBXãƒ•ã‚¡ã‚¤ãƒ«è¡¨ç¤º
 	XMFLOAT4X4 world;
 	CCamera* pCamera = CCamera::Get();
 	XMFLOAT3 vEye = pCamera->GetEye();

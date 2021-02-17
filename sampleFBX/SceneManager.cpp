@@ -1,6 +1,7 @@
 ﻿/**
  * @file SceneManager
  * @brief シーンマネージャークラス
+ * @author Ariga
  */
 #include "SceneManager.h"
 #include "SceneGame.h"
@@ -132,6 +133,13 @@ void SceneManager::Draw()
 		//ImGui::TreePop();
 	//}
 #endif
+
+	CGraphics::SetDrawShadow();
+
+	ObjectRenderer::GetInstance().DrawShadow();
+
+	CGraphics::SetDrawDefauolt();
+
 	m_pSky->Draw();
 	//CCamera::Get()->Draw();
 	m_nowScene->Draw();

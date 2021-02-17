@@ -25,7 +25,8 @@ protected:
 	GameObject* parent;				//!< 親オブジェクト
 	GameObject* root;				//!< 一番上の親オブジェクト
 	int childCount;					//!< 子オブジェクトの数
-	bool	m_castShadow;			//!< 影を付けるかどうか
+	bool	m_castShadow;			//!< 影を落とすかどうか
+	bool	m_reciveShadow;			//!< 影を受けるかどうか
 public:
 	std::list<Component*> m_ComponentList;		//!< コンポーネントリスト
 
@@ -182,12 +183,39 @@ public:
 	}
 
 	/**
-	 * @brief 影を付けるかどうか
-	 * @return 影を付ける場合true
+	 * @brief 影を落とすかどうか
+	 * @return 影を落とす場合true
 	 * @details レンダー専用のコンポーネントが作れた場合そちらに移動する
 	 */
 	bool IsCastShadow() {
 		return m_castShadow;
+	}
+
+	/**
+	 * @brief 影を落とすフラグをセット
+	 * @param[in] flg 影を落としたいときはtrue
+	 * @return なし
+	 */
+	void SetCastShadow(bool flg) {
+		m_castShadow = flg;
+	}
+
+	/**
+	 * @brief 影を受けるかどうか
+	 * @return 影を受ける場合true
+	 * @details レンダー専用のコンポーネントが作れた場合そちらに移動する
+	 */
+	bool IsReciveShadow() {
+		return m_reciveShadow;
+	}
+
+	/**
+	 * @brief 影を受けるフラグをセット
+	 * @param[in] flg 影を受けたいときはtrue
+	 * @return なし
+	 */
+	void SetReciveShadow(bool flg) {
+		m_reciveShadow = flg;
 	}
 
 	/**

@@ -21,9 +21,7 @@ cbuffer global2 : register(b1) {
 
 Texture2D    g_texture		: register(t0);	// eNX`
 Texture2D    g_texEmissive	: register(t1);	// ­őeNX`
-Texture2D    g_texShadow	: register(t3);	// ­őeNX`
 SamplerState g_sampler		: register(s0);	// Tv
-SamplerState g_samplershadow : register(s1);	// サンプラ
 
 // p[^
 struct VS_OUTPUT {
@@ -46,12 +44,7 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		Diff *= TexDiff.rgb;
 		Alpha *= TexDiff.a;
 	}
-	if (Alpha <= 0.0f) discard;
-	float2 shadowUV;
-	shadowUV.x = 0.5f + (input.lightpos.x / input.lightpos.w * 0.5f);
-	shadowUV.y = 0.5f - (input.lightpos.y / input.lightpos.w * 0.5f);
-	float depth = input.lightpos.z / input.lightpos.w;
-	float shadowDepth = g_texShadow.Sample(g_samplershadow, shadowUV).r;
+	clip(Alpha - 0.0001f);
 	
 	if (g_lightDir.x != 0.0f || g_lightDir.y != 0.0f || g_lightDir.z != 0.0f) {
 		float3 L = normalize(-g_lightDir.xyz);					// őšÖĚxNg
@@ -73,11 +66,6 @@ float4 main(VS_OUTPUT input) : SV_Target0
 		Emis *= (Emis4.rgb * Emis4.a);
 	}
 	//Diff += Emis;
-
-	if(depth > shadowDepth+ 0.005f)
-	{
-		Diff.rgb *= 0.3f;
-	}
 
 	return float4(Diff, Alpha);
 }

@@ -480,7 +480,7 @@ HRESULT CFbxMesh::CreateIndexBuffer(DWORD dwSize, int* pIndex, ID3D11Buffer** pp
 void CFbxMesh::RenderMesh(EByOpacity byOpacity)
 {
 	// シェーダーをパイプラインにセット
-	m_shader->SetShader();
+	//m_shader->SetShader();
 
 	// 定数領域更新
 	D3D11_MAPPED_SUBRESOURCE pData;

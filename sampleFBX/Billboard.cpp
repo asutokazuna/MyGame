@@ -25,6 +25,8 @@ void Billboard::Awake()
 	ID3D11Device* pDevice = CGraphics::GetDevice();
 
 	m_transform = &m_Parent->GetTransform();
+	m_Parent->SetCastShadow(false);
+	m_Parent->SetReciveShadow(false);
 
 	Mesh::Awake();
 

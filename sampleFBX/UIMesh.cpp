@@ -20,6 +20,8 @@ void UIMesh::Awake()
 
 	m_transform = &m_Parent->GetTransform();
 	m_transform->position.z = 1;
+	m_Parent->SetCastShadow(false);
+	m_Parent->SetReciveShadow(false);
 
 	Mesh::Awake();
 

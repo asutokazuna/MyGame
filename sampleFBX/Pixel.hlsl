@@ -27,6 +27,7 @@ struct VS_OUTPUT {
 
 Texture2D    g_texture : register(t0);	// テクスチャ
 SamplerState g_sampler : register(s0);	// サンプラ
+SamplerState g_samplershadow : register(s1);	// サンプラ
 Texture2D    g_texShadow	: register(t3);	// ?????e?N?X?`??
 
 float4 main(VS_OUTPUT input) : SV_Target0
@@ -40,7 +41,7 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	// 描画する座標の深度値を計算
 	float depth = input.lightpos.z / input.lightpos.w;
 	// テクスチャの深度値を取得
-	float shadowDepth = g_texShadow.Sample(g_sampler, shadowUV).r;
+	float shadowDepth = g_texShadow.Sample(g_samplershadow, shadowUV).r;
 
 	if (g_vKa.a > 0.0f) {
 		// テクスチャ有
@@ -65,7 +66,7 @@ float4 main(VS_OUTPUT input) : SV_Target0
 	}
 
 	Diff += g_vKe.rgb;										// 発光色
-	if(depth > shadowDepth+0.00f)
+	if(depth > shadowDepth+0.0001f)
 	{
 		Diff.rgb *= 0.3f;
 	}

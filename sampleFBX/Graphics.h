@@ -22,25 +22,6 @@ enum ECullMode {
 
 	MAX_CULLMODE
 };
-//// シェーダに渡す値
-//struct SHADER_GLOBAL {
-//	XMMATRIX	mWVP;		// ワールド×ビュー×射影行列(転置行列)
-//	XMMATRIX	mW;			// ワールド行列(転置行列)
-//	XMMATRIX	mTex;		// テクスチャ行列(転置行列)
-//};
-//struct SHADER_GLOBAL2 {
-//	XMVECTOR	vEye;		// 視点座標
-//	// 光源
-//	XMVECTOR	vLightDir;	// 光源方向
-//	XMVECTOR	vLa;		// 光源色(アンビエント)
-//	XMVECTOR	vLd;		// 光源色(ディフューズ)
-//	XMVECTOR	vLs;		// 光源色(スペキュラ)
-//	// マテリアル
-//	XMVECTOR	vAmbient;	// アンビエント色(+テクスチャ有無)
-//	XMVECTOR	vDiffuse;	// ディフューズ色
-//	XMVECTOR	vSpecular;	// スペキュラ色(+スペキュラ強度)
-//	XMVECTOR	vEmissive;	// エミッシブ色
-//};
 
 class SceneManager;
 class CGraphics
@@ -57,10 +38,12 @@ private:
 	static ID3D11BlendState*		m_pBlendState[MAX_BLENDSTATE];// ブレンド ステート
 	static ID3D11DepthStencilState*	m_pDSS[2];				// Zバッファ/ステンシル ステート
 	static ID3D11SamplerState*		m_pSamplerState;		// テクスチャ サンプラ
+	static ID3D11SamplerState*		m_pSamplerStateShadow;		// テクスチャ サンプラ
 
 	static ID3D11DepthStencilView*	m_pDepthStencliViewShadow;
 	static ID3D11ShaderResourceView* m_ShadowTexture;
 	static ID3D11Texture2D*			m_pDepthStencilTextureShadow;
+	static D3D11_VIEWPORT m_ViewPort[2];
 
 private:
 	static HRESULT CreateBackBuffer();
@@ -76,6 +59,10 @@ public:
 	static ID3D11DeviceContext* GetDeviceContext() { return m_pDeviceContext; }
 	static ID3D11DeviceContext* GetContext() { return m_pDeviceContext; }
 	static ID3D11SamplerState* GetSamplerState() { return m_pSamplerState; }
+	static ID3D11SamplerState* GetSamplerStateShadow() { return m_pSamplerStateShadow; }
+	static void SetViewport(int kind);
+	static void SetDrawShadow();
+	static void SetDrawDefauolt();
 	static void SetZBuffer(bool bEnable);
 	static void SetZWrite(bool bEnable);
 	static void SetBlendState(int nBlendState);

@@ -42,6 +42,18 @@ void DefaultShaderInfo::Awake()
 	m_Proj = CCamera::Get()->GetProj();
 	m_world = XMFLOAT4X4();
 }
+
+HRESULT DefaultShaderInfo::Init()
+{
+	if (m_Parent->IsReciveShadow() == true) {
+		m_PSKind = ShaderData::PS_PIXEL;
+	}
+	else {
+		m_PSKind = ShaderData::PS_PIXEL_UNSHADOW;
+	}
+
+	return E_NOTIMPL;
+}
 	
 /**
  * @brief 終了

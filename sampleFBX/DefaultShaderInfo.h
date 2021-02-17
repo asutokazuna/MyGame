@@ -33,7 +33,7 @@ public:
 	DefaultShaderInfo();
 	~DefaultShaderInfo();
 	void Awake();
-	//HRESULT Init();
+	HRESULT Init();
 	void Uninit();
 	void UpdateConstant();
 	void SetView(XMFLOAT4X4 view);

@@ -25,13 +25,14 @@ ID3D11RasterizerState*		CGraphics::m_pRs[MAX_CULLMODE];		// ラスタライザ �
 ID3D11BlendState*			CGraphics::m_pBlendState[MAX_BLENDSTATE];// ブレンド ステート
 ID3D11DepthStencilState*	CGraphics::m_pDSS[2];				// Zバッファ/ステンシル ステート
 ID3D11SamplerState*			CGraphics::m_pSamplerState;		// テクスチャ サンプラ1Buffer
+ID3D11SamplerState*			CGraphics::m_pSamplerStateShadow;		// テクスチャ サンプラ1Buffer
 
 ID3D11DepthStencilView*		CGraphics::m_pDepthStencliViewShadow;
 ID3D11ShaderResourceView*	CGraphics::m_ShadowTexture;
 ID3D11Texture2D*			CGraphics::m_pDepthStencilTextureShadow;
 
-static D3D11_VIEWPORT vp[2];
-static const int SHADOW_TEX_RATE = 8;
+D3D11_VIEWPORT CGraphics::m_ViewPort[2];
+static const int SHADOW_TEX_SIZE = 1024 * 4;
 
 // グラフィック環境の初期化
 HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
@@ -133,7 +134,13 @@ HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
 	if (FAILED(hr)) {
 		return hr;
 	}
-
+	sd.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sd.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sd.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	hr = m_pDevice->CreateSamplerState(&sd, &m_pSamplerStateShadow);
+	if (FAILED(hr)) {
+		return hr;
+	}
 	return hr;
 }
 
@@ -141,6 +148,7 @@ HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
 void CGraphics::Uninit()
 {
 	// テクスチャ サンプラの開放
+	SAFE_RELEASE(m_pSamplerStateShadow);
 	SAFE_RELEASE(m_pSamplerState);
 
 	// 深度ステンシルステート解放
@@ -218,8 +226,8 @@ HRESULT CGraphics::CreateBackBuffer()
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
 	texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
-	texDesc.Width = SCREEN_WIDTH	 * SHADOW_TEX_RATE;
-	texDesc.Height = SCREEN_HEIGHT	 * SHADOW_TEX_RATE;
+	texDesc.Width	= SHADOW_TEX_SIZE ;
+	texDesc.Height	= SHADOW_TEX_SIZE ;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.SampleDesc.Count = 1;
@@ -251,21 +259,21 @@ HRESULT CGraphics::CreateBackBuffer()
 	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
 
 	// ビューポート設定
-	vp[0].Width = (float)SCREEN_WIDTH;
-	vp[0].Height = (float)SCREEN_HEIGHT;
-	vp[0].MinDepth = 0.0f;
-	vp[0].MaxDepth = 1.0f;
-	vp[0].TopLeftX = 0;
-	vp[0].TopLeftY = 0;
-	m_pDeviceContext->RSSetViewports(1, &vp[0]);	
-	// ビューポート設定
-	D3D11_VIEWPORT vp2;
-	vp[1].Width = (float)SCREEN_WIDTH	* SHADOW_TEX_RATE;
-	vp[1].Height = (float)SCREEN_HEIGHT	* SHADOW_TEX_RATE;
-	vp[1].MinDepth = 0.0f;
-	vp[1].MaxDepth = 1.0f;
-	vp[1].TopLeftX = 0;
-	vp[1].TopLeftY = 0;
+	// ウィンドウ描画
+	m_ViewPort[0].Width = (float)SCREEN_WIDTH;
+	m_ViewPort[0].Height = (float)SCREEN_HEIGHT;
+	m_ViewPort[0].MinDepth = 0.0f;
+	m_ViewPort[0].MaxDepth = 1.0f;
+	m_ViewPort[0].TopLeftX = 0;
+	m_ViewPort[0].TopLeftY = 0;
+	m_pDeviceContext->RSSetViewports(1, &m_ViewPort[0]);
+	// 深度バッファテクスチャ
+	m_ViewPort[1].Width		= (float)SHADOW_TEX_SIZE;
+	m_ViewPort[1].Height	= (float)SHADOW_TEX_SIZE;
+	m_ViewPort[1].MinDepth = 0.0f;
+	m_ViewPort[1].MaxDepth = 1.0f;
+	m_ViewPort[1].TopLeftX = 0;
+	m_ViewPort[1].TopLeftY = 0;
 
 	return hr;
 }
@@ -296,17 +304,9 @@ void CGraphics::Draw(SceneManager* pScene)
 	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, ClearColor);
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencliViewShadow, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_pDeviceContext->PSSetSamplers(0, 1, &m_pSamplerState);
+	m_pDeviceContext->PSSetSamplers(1, 1, &m_pSamplerStateShadow);
 
-	m_pDeviceContext->RSSetViewports(1, &vp[1]);
-	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
-
-	ObjectRenderer::GetInstance().DrawShadow();
-
-	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
-	
-	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
-
-	m_pDeviceContext->RSSetViewports(1, &vp[0]);
 #if _DEBUG
 	ImGui::Begin("DebugWindow");
 #endif
@@ -328,6 +328,25 @@ void CGraphics::Draw(SceneManager* pScene)
 	// バックバッファとフロントバッファの入れ替え
 	m_pSwapChain->Present(m_uSyncInterval, 0);
 
+}
+
+void CGraphics::SetViewport(int kind)
+{
+	m_pDeviceContext->RSSetViewports(1, &m_ViewPort[kind]);
+	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
+}
+
+void CGraphics::SetDrawShadow()
+{
+	m_pDeviceContext->RSSetViewports(1, &m_ViewPort[1]);
+	m_pDeviceContext->OMSetRenderTargets(0, nullptr, m_pDepthStencliViewShadow);
+}
+
+void CGraphics::SetDrawDefauolt()
+{
+	m_pDeviceContext->RSSetViewports(1, &m_ViewPort[0]);
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+	m_pDeviceContext->PSSetShaderResources(3, 1, &m_ShadowTexture);
 }
 
 // 深度バッファ有効無効制御

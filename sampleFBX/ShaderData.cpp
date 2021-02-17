@@ -52,7 +52,9 @@ VERTEX_TABLE VS_Table[] =
 SHADER_TABLE PS_Table[] = 
 {
 	{ShaderData::PS_PIXEL, "Pixel"},
+	{ShaderData::PS_PIXEL_UNSHADOW, "PixelUnShadow"},
 	{ShaderData::PS_PIXEL3D, "FbxModelPixel"},
+	{ShaderData::PS_PIXEL3D_UNSHADOW, "FbxModelPixelUnShadow"},
 	{ShaderData::PS_CLOTH, "ClothPixel"},
 	{ShaderData::PS_EXPLOSION, "ExplosionPS"},
 	{ShaderData::PS_LIFEGAUGE, "LifeGaugePS"},

@@ -42,11 +42,11 @@ void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
 {
 	for (auto& obj : data)
 	{
-		if (obj.gameObject->GetComponent<UIMesh>() != nullptr) {
-			m_2dObjVector.push_back(obj.gameObject);
+		if (obj.gameObject->GetComponent<Object3D>() != nullptr) {
+			m_3dObjVector.push_back(obj.gameObject);
 		}
 		else {
-			m_3dObjVector.push_back(obj.gameObject);
+			m_2dObjVector.push_back(obj.gameObject);
 		}
 		CreteData(obj.m_childList);
 		cnt++;
@@ -100,9 +100,7 @@ void ObjectRenderer::DrawShadow()
 		}
 		GameObject* gameObj;
 		gameObj = dynamic_cast<GameObject*>(obj.second.get());
-		if (gameObj->GetComponent<Object3D>() != nullptr 
-			//obj.first == "TowerManager"
-			)
+		if (gameObj->IsCastShadow() == true)
 		{
 			pDeviceContext->VSSetShader(vs, nullptr, 0);
 			pDeviceContext->PSSetShader(ps, nullptr, 0);
@@ -122,8 +120,8 @@ void ObjectRenderer::Draw()
 {
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 	ID3D11VertexShader* vs = ShaderData::GetVertexShader(ShaderData::VS_KIND::VS_VERTEX3D);
-	ID3D11PixelShader*	ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL3D);
 	ID3D11InputLayout*	il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX3D);
+	ID3D11PixelShader*	ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL3D);
 
 	DirectX::XMMATRIX vView = DirectX::XMLoadFloat4x4(&g_shadowCamera->GetView());
 	DirectX::XMMATRIX vProj = DirectX::XMLoadFloat4x4((&g_shadowCamera->GetProj()));
