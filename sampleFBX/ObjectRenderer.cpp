@@ -31,7 +31,6 @@ void ObjectRenderer::Init()
 	g_shadowCamera = std::make_unique<ShadowCamera>();
 	g_shadowCamera->Awake(); g_shadowCamera->Init();
 }
-static int cnt = 0;
 
 /**
  * @brief 描画用オブジェクトリスト作成する再帰関数
@@ -49,7 +48,7 @@ void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
 			m_2dObjVector.push_back(obj.gameObject);
 		}
 		CreteData(obj.m_childList);
-		cnt++;
+		m_objCnt++;
 	}
 }
 
@@ -63,7 +62,7 @@ void ObjectRenderer::CreateDrawBuffer()
 	int temp = ObjectManager::GetInstance().GetHierarchyCnt();
 	
 	// ヒエラルキーの数が変わっているか判定
-	if (cnt != temp) {
+	if (m_objCnt != temp) {
 		m_2dObjVector.clear();
 		m_3dObjVector.clear();
 		cnt = 0;
@@ -155,6 +154,17 @@ void ObjectRenderer::Draw()
 	{
 		obj->Draw();
 	}
+}
+
+/**
+ * @brief クリア処理
+ * @return なし
+ */
+void ObjectRenderer::Clear()
+{
+	m_2dObjVector.clear();
+	m_3dObjVector.clear();
+	m_objCnt = 0;
 }
 
 // EOF

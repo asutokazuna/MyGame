@@ -22,6 +22,7 @@ public:
 private:
 	std::vector<GameObject*> m_2dObjVector;		//!< 2D描画用オブジェクト配列
 	std::vector<GameObject*> m_3dObjVector;		//!< 3D描画用オブジェクト配列
+	int m_objCnt;		//!< 描画するすべてのオブジェクト数
 
 public:
 	/**
@@ -47,6 +48,12 @@ public:
 	 * @return なし
 	 */
 	void Draw();
+
+	/**
+	 * @brief クリア処理
+	 * @return なし
+	 */
+	void Clear();
 
 private:
 	/**

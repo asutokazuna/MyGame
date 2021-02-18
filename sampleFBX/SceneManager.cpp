@@ -99,13 +99,9 @@ void SceneManager::Uninit()
  */
 void SceneManager::Update()
 {
-
 	ObjectRenderer::GetInstance().CreateDrawBuffer();
 	Fade::Update();
 	CSound::Update();
-	if (Fade::IsFade() == true) {
-		return;
-	}
 	Change();
 
 	if (Fade::IsFade() == true) {
@@ -169,6 +165,9 @@ void SceneManager::Change()
 	if (m_SceneID == m_NextSceneID) {
 		return;
 	}
+	if (Fade::IsFade() == true) {
+		return;
+	}
 
 	m_SceneID = m_NextSceneID;
 
@@ -203,6 +202,7 @@ void SceneManager::Change()
 
 	ObjectRenderer::GetInstance().Init();
 	Fade::FadeIn();
+	ObjectRenderer::GetInstance().CreateDrawBuffer();
 }
 
 /**
