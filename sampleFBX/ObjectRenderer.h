@@ -20,8 +20,11 @@ public:
 	friend class Singleton<ObjectRenderer>;		//!< シングルトンクラスでの生成を可能に
 
 private:
-	std::vector<GameObject*> m_2dObjVector;		//!< 2D描画用オブジェクト配列
-	std::vector<GameObject*> m_3dObjVector;		//!< 3D描画用オブジェクト配列
+	std::vector<GameObject*> m_2dObjVector;			//!< 2Dオブジェクト描画用配列
+	std::vector<GameObject*> m_3dObjVector;			//!< 3Dオブジェクト描画用配列
+	std::vector<GameObject*> m_2dAlphaObjVector;	//!< 2D透明オブジェクト描画用配列
+	std::vector<GameObject*> m_3dAlphaObjVector;	//!< 3D透明オブジェクト描画用配列
+	std::vector<GameObject*> m_objVector;	//!< 描画しない部分の更新前処理用配列
 	int m_objCnt;		//!< 描画するすべてのオブジェクト数
 
 public:

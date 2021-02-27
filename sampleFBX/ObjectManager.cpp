@@ -390,12 +390,12 @@ void ObjectManager::Draw()
 	//	obj.second.get()->Draw();
 
 	//}
-	for (auto& obj : buff) {
-		if (obj.second.get()->GetActive() == false) {
-			continue;
-		}
-		obj.second.get()->DrawAlpha();
-	}
+	//for (auto& obj : buff) {
+	//	if (obj.second.get()->GetActive() == false) {
+	//		continue;
+	//	}
+	//	obj.second.get()->DrawAlpha();
+	//}
 #ifdef _DEBUG
 	if (ImGui::TreeNode("ObjectName")) {
 		for (auto& obj : buff) {

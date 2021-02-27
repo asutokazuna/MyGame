@@ -74,6 +74,7 @@ void Mesh::Draw()
 {	
 	CGraphics::SetCullMode(CULLMODE_NONE);
 	CGraphics::SetZWrite(m_isZwerite);
+	//CGraphics::SetZBuffer(m_isZwerite);
 	CGraphics::SetBlendState(m_BSKind);
 	ID3D11DeviceContext* pDeviceContext = CGraphics::GetDeviceContext();
 

@@ -13,6 +13,8 @@
 #include "ShadowCamera.h"
 #include "UIMesh.h"
 #include <memory>
+#include "Billboard.h"
+#include "FieldMesh.h"
 
 static std::unique_ptr<ShadowCamera> g_shadowCamera;
 
@@ -41,11 +43,30 @@ void ObjectRenderer::CreteData(std::vector<ObjectManager::HierarchyData>& data)
 {
 	for (auto& obj : data)
 	{
-		if (obj.gameObject->GetComponent<Object3D>() != nullptr) {
+		if (obj.gameObject->GetComponent<Object3D>() != nullptr  
+			//obj.gameObject->GetComponent<Billboard>() != nullptr ||
+			//obj.gameObject->GetComponent<FieldMesh>() != nullptr
+			) {
+	/*		auto test = obj.gameObject->GetComponent<ShaderInfo>();
+			if (test->GetMaterial().Diffuse.w >= 1) {
+				m_3dObjVector.push_back(obj.gameObject);
+			}
+			else {
+				m_3dAlphaObjVector.push_back(obj.gameObject);
+			}*/
 			m_3dObjVector.push_back(obj.gameObject);
 		}
+		else if(obj.gameObject->GetComponent<UIMesh>() != nullptr){
+			auto test = obj.gameObject->GetComponent<ShaderInfo>();
+			if (test->GetMaterial().Diffuse.w >= 1) {
+				m_2dObjVector.push_back(obj.gameObject);
+			}
+			else {
+				m_2dAlphaObjVector.push_back(obj.gameObject);
+			}
+		}
 		else {
-			m_2dObjVector.push_back(obj.gameObject);
+			m_objVector.push_back(obj.gameObject);
 		}
 		CreteData(obj.m_childList);
 		m_objCnt++;
@@ -65,7 +86,10 @@ void ObjectRenderer::CreateDrawBuffer()
 	if (m_objCnt != temp) {
 		m_2dObjVector.clear();
 		m_3dObjVector.clear();
-		cnt = 0;
+		m_2dAlphaObjVector.clear();
+		m_3dAlphaObjVector.clear();
+		m_objVector.clear();
+		m_objCnt = 0;
 		CreteData(hierarcy);
 	}
 }
@@ -143,6 +167,16 @@ void ObjectRenderer::Draw()
 
 	g_shadowCamera->Draw();
 
+	// 描画
+	for (auto obj : m_objVector)
+	{
+		obj->Draw();
+	}
+		
+	pDeviceContext->VSSetShader(vs, nullptr, 0);
+	pDeviceContext->PSSetShader(ps, nullptr, 0);
+	// 頂点インプットレイアウトをセット
+	pDeviceContext->IASetInputLayout(il);
 	// 3D描画
 	for (auto obj : m_3dObjVector)
 	{
@@ -154,6 +188,22 @@ void ObjectRenderer::Draw()
 	{
 		obj->Draw();
 	}
+
+	pDeviceContext->VSSetShader(vs, nullptr, 0);
+	pDeviceContext->PSSetShader(ps, nullptr, 0);
+	// 頂点インプットレイアウトをセット
+	pDeviceContext->IASetInputLayout(il);
+	for (auto obj : m_3dObjVector)
+	{
+		obj->Draw();
+	}
+
+	// 2D描画
+	for (auto obj : m_2dAlphaObjVector)
+	{
+		obj->Draw();
+	}
+
 }
 
 /**
@@ -163,7 +213,10 @@ void ObjectRenderer::Draw()
 void ObjectRenderer::Clear()
 {
 	m_2dObjVector.clear();
-	m_3dObjVector.clear();
+	m_3dObjVector.clear();	
+	m_2dAlphaObjVector.clear();
+	m_3dAlphaObjVector.clear();
+	m_objVector.clear();
 	m_objCnt = 0;
 }
 

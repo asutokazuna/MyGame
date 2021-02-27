@@ -91,6 +91,7 @@ struct TITLE_FADE : public State<TITLE_STATE>
 		t  += 1 / (float)120;
 		if (t >= 1) {
 			machine.GoToState(E_TITLE_STATE_IDOL);
+			machine.m_rogo->SetActive(false);
 		}
 	}
 };
@@ -107,6 +108,7 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 
 	void Init()
 	{
+		machine.m_rogo->SetActive(false);
 		machine.m_startText->SetActive(true);
 		machine.m_particle->SetActive(true);
 		loopTime = 0;
@@ -130,7 +132,7 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 };
 
 /**
- * @struct ロゴが飛んでいくところ
+ * @struct ロゴが飛んでいくところ(現在は未使用)
  */
 struct TITLE_LEAVE : public State<TITLE_STATE>
 {

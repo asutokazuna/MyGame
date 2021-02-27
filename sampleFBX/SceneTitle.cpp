@@ -24,8 +24,8 @@ void SceneTitle::Awake()
 {
 	m_camera = ObjectManager::Create<TitleCamera>("TitleCamera");
 	ObjectManager::Create<TitleStart>("TitleStart");
-	ObjectManager::Create<Rogo>("Rogo");
 	ObjectManager::Create<RogoColor>("RogoColor");
+	ObjectManager::Create<Rogo>("Rogo");
 	ObjectManager::Create<GameObject>("StarManager")->AddComponent<StarCreater>();
 
 	m_stateMachine = ObjectManager::Create<GameObject>("StateMachine");
