@@ -134,9 +134,13 @@ HRESULT CGraphics::Init(HWND hWnd, int nWidth, int nHeight, bool bWindow)
 	if (FAILED(hr)) {
 		return hr;
 	}
-	sd.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	sd.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	sd.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sd.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	sd.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	sd.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	sd.BorderColor[0] =
+		sd.BorderColor[1] =
+		sd.BorderColor[2] =
+		sd.BorderColor[3] = 1.0f;
 	hr = m_pDevice->CreateSamplerState(&sd, &m_pSamplerStateShadow);
 	if (FAILED(hr)) {
 		return hr;
