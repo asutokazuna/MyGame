@@ -40,11 +40,23 @@ void SceneTitle::Awake()
  */
 void SceneTitle::Update()
 {
-	m_stateMachine->GetComponent<TitleStateMachine>()->GetState();
-	if (CInput::GetKeyTrigger(VK_SPACE)) {
-		SceneManager::Change(SceneManager::ESCENE::SCENE_GAME);
-		return;
+	// 現在のステートの取得
+	int state = m_stateMachine->GetComponent<TitleStateMachine>()->GetState();
+
+	// スペースを押したとき
+	if (CInput::GetKeyTrigger(VK_SPACE)) 
+	{
+		// 待機でなければ待機へ
+		if (state != TITLE_STATE::E_TITLE_STATE_IDOL) {
+			m_stateMachine->GetComponent<TitleStateMachine>()->GoToState(E_TITLE_STATE_IDOL);
+		}
+		else // 待機の時はシーン遷移
+		{
+			SceneManager::Change(SceneManager::ESCENE::SCENE_GAME);
+			return;
+		}
 	}
+
 	if (CSound::IsPlaying(SOUND_LABEL_TITLE) == false) {
 		CSound::Play(SOUND_LABEL_TITLE);
 	}

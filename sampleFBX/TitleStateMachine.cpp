@@ -21,7 +21,7 @@ struct TITLE_INIT : public State<TITLE_STATE>
 
 	void Init()
 	{
-		machine.m_rogo->SetActive(true);
+		machine.m_rogo->SetActive(false);
 		machine.m_rogo->InitParam();
 		machine.m_startText->SetActive(false);
 		machine.m_particle->SetActive(false);
@@ -48,6 +48,7 @@ struct TITLE_FLY : public State<TITLE_STATE>
 	void Init()
 	{
 		time = 0;
+		machine.m_rogo->SetActive(true);
 	}
 
 	void Update()
@@ -77,7 +78,6 @@ struct TITLE_FADE : public State<TITLE_STATE>
 	void Init()
 	{
 		machine.m_rogoColor->SetActive(true);
-		//machine.m_startText->SetActive(true);
 		t = 0;
 		wait = 0;
 	}
@@ -111,15 +111,12 @@ struct TITLE_IDOL : public State<TITLE_STATE>
 		machine.m_rogo->SetActive(false);
 		machine.m_startText->SetActive(true);
 		machine.m_particle->SetActive(true);
+		machine.m_rogoColor->SetActive(true);
 		loopTime = 0;
 	}
 
 	void Update()
 	{
-		//loopTime++;
-		//if (loopTime > MAX_LOOP_TIME) {
-		//	machine.GoToState(E_TITLE_STATE_LEAVE);
-		//}
 		machine.m_particle->GetComponent<StarCreater>()->Move();
 	}
 
