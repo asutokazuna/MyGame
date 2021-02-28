@@ -15,8 +15,7 @@
 #include <memory>
 #include "Billboard.h"
 #include "FieldMesh.h"
-
-static std::unique_ptr<ShadowCamera> g_shadowCamera;
+#include "SceneManager.h"
 
 struct LightPos
 {
@@ -30,8 +29,6 @@ struct LightPos
 void ObjectRenderer::Init()
 {
 	CBufferManager::GetInstance().Create("LightPos", sizeof(DirectX::XMFLOAT4X4));
-	g_shadowCamera = std::make_unique<ShadowCamera>();
-	g_shadowCamera->Awake(); g_shadowCamera->Init();
 }
 
 /**
@@ -114,7 +111,7 @@ void ObjectRenderer::DrawShadow()
 	float viewD = 10.0f;
 
 	// 光源から見える景色を表示するためのカメラを作成
-	CCamera::Set(g_shadowCamera.get());
+	CCamera::Set(SceneManager::GetInstance().GetShadowCamera());
 
 	auto& buff = ObjectManager::GetInstance().GetObjList();
 	for (auto& obj : buff) {
@@ -146,8 +143,8 @@ void ObjectRenderer::Draw()
 	ID3D11InputLayout*	il = ShaderData::GetInputLayout(ShaderData::VS_KIND::VS_VERTEX3D);
 	ID3D11PixelShader*	ps = ShaderData::GetPixelShader(ShaderData::PS_KIND::PS_PIXEL3D);
 
-	DirectX::XMMATRIX vView = DirectX::XMLoadFloat4x4(&g_shadowCamera->GetView());
-	DirectX::XMMATRIX vProj = DirectX::XMLoadFloat4x4((&g_shadowCamera->GetProj()));
+	DirectX::XMMATRIX vView = DirectX::XMLoadFloat4x4(&SceneManager::GetInstance().GetShadowCamera()->GetView());
+	DirectX::XMMATRIX vProj = DirectX::XMLoadFloat4x4((&SceneManager::GetInstance().GetShadowCamera()->GetProj()));
 	DirectX::XMMATRIX vScreen = DirectX::XMMatrixScaling(0.5f, -0.5f, 1.0f) * DirectX::XMMatrixTranslation(0.5f, 0.5f, 0.0f);
 
 	XMMATRIX 
@@ -165,7 +162,7 @@ void ObjectRenderer::Draw()
 	// 頂点インプットレイアウトをセット
 	pDeviceContext->IASetInputLayout(il);
 
-	g_shadowCamera->Draw();
+	SceneManager::GetInstance().GetShadowCamera()->Draw();
 
 	// 描画
 	for (auto obj : m_objVector)

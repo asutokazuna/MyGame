@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "Singleton.h"
+#include "ShadowCamera.h"
 
 // 前方宣言
 class CScene;
@@ -36,6 +37,7 @@ private:
 	CCamera*	m_pCamera;			// アクティブなカメラ
 	CSky*	m_pSky;
 
+	std::unique_ptr<ShadowCamera> g_shadowCamera;
 	int m_FPS;
 
 public:
@@ -86,6 +88,10 @@ public:
 	 * @return なし
 	 */
 	static void Change(ESCENE sceneID);
+
+	ShadowCamera* GetShadowCamera() {
+		return g_shadowCamera.get();
+	}
 
 	void SetFPS(int nFPS) { m_FPS = (nFPS); }
 };

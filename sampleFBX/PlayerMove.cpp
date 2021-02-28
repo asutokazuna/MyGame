@@ -11,6 +11,8 @@
 #include "collision.h"
 #include "ObjectManager.h"
 #include "ImGui/imgui.h"
+#include "ShadowCamera.h"
+#include "SceneManager.h"
 
 /**
  * @def 
@@ -26,9 +28,17 @@ static int mousePosY;
  * @brief 初期化処理
  * @return なし
  */
+void PlayerMove::Awake()
+{
+	m_ParentTransform->position = Vector3(0, 0, -500);
+}
+
+/**
+ * @brief 初期化処理
+ * @return なし
+ */
 HRESULT PlayerMove::Init()
 {
-	//m_ParentTransform = &m_Parent->GetTransform();
 	m_ParentTransform->position = Vector3(0, 0, -500);
 	m_move = Vector3();
 	m_isDelay = false;
@@ -36,6 +46,8 @@ HRESULT PlayerMove::Init()
 	//rb = m_Parent->GetComponent<Rigidbody>();
 	mousePosX = CInput::GetMousePosition()->x;
 	mousePosY = CInput::GetMousePosition()->y;
+
+	SceneManager::GetInstance().GetShadowCamera()->SetTarget(m_Parent);
 
 	return S_OK;
 }
@@ -54,9 +66,8 @@ void PlayerMove::Update()
 	}
 	m_move = Vector3();
 
-	if (!CInput::GetKeyPress(VK_P)) {
-		Rotate();
-	}
+	Rotate();
+
 
 	grav -= 0.01f;
 
@@ -100,7 +111,7 @@ void PlayerMove::Rotate()
 
 	float ax, ay;
 
-	ax = (mousePos.x - mousePosX) / 3.0f;
+	ax = (mousePos.x - mousePosX) / 2.0f;
 	ay = (mousePos.y - mousePosY) / 1.0f;
 
 	mousePosX = mousePos.x;
@@ -124,6 +135,10 @@ void PlayerMove::FullDrive()
 	m_move += m_ParentTransform->GetForward() * FD_POWER;
 }
 
+/**
+ * @brief 回避行動
+ * @return なし
+ */
 void PlayerMove::Avoid()
 {
 	m_delayTime = 20;

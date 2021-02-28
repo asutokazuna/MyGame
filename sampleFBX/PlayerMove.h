@@ -30,6 +30,7 @@ public:
 	 * @brief 初期化処理
 	 * @return なし
 	 */
+	void Awake();
 	HRESULT Init();
 
 	/**

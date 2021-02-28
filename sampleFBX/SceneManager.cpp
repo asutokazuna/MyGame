@@ -31,6 +31,8 @@ int SceneManager::m_NextSceneID = 0;
  */
 SceneManager::SceneManager(): m_pCamera(nullptr),m_pSky(nullptr), m_FPS(0)
 {
+	g_shadowCamera = std::make_unique<ShadowCamera>();
+	g_shadowCamera->Awake();
 }
 
 /**
@@ -43,6 +45,7 @@ void SceneManager::Init()
 	TextureData::Init();
 	ModelData::Init();
 	CSound::Init();
+	g_shadowCamera->Init();
 	CollisionManager::GetInstance().Init();
 	ObjectRenderer::GetInstance().Init();
 
@@ -82,6 +85,7 @@ void SceneManager::Uninit()
 	if(m_pCamera)
 	m_pCamera->Uninit();
 	CollisionManager::GetInstance().Uninit();
+	g_shadowCamera->Uninit();
 	CSound::Fin();
 	Fade::Uninit();
 	ModelData::Uninit();
@@ -102,6 +106,7 @@ void SceneManager::Update()
 	ObjectRenderer::GetInstance().CreateDrawBuffer();
 	Fade::Update();
 	CSound::Update();
+	g_shadowCamera->Update();
 	Change();
 
 	if (Fade::IsFade() == true) {
@@ -195,7 +200,7 @@ void SceneManager::Change()
 	SetDefCamera();
 	m_nowScene->Awake();
 	//ObjectManager::GetInstance().Awake();
-
+	g_shadowCamera->Init();
 	m_nowScene->Init();
 
 	ObjectManager::GetInstance().Init();
