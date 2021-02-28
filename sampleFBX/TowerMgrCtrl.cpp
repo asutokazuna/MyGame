@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "Tower.h"
 #include "TowerCtrl.h"
+#include "ObjectManager.h"
+#include "collision.h"
 
 /**
  * @brief 初期化処理
@@ -15,6 +17,13 @@
 void TowerMgrCtrl::Awake()
 {
 	//m_towerList = m_Parent->GetChildren<Tower>();
+}
+
+HRESULT TowerMgrCtrl::Init()
+{
+	m_towerList = ObjectManager::GetInstance().FindObjectsWithTag(OBJ_TAG_TOWER);
+
+	return S_OK;
 }
 
 /**

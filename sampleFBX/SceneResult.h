@@ -31,6 +31,12 @@ public:
 	 * @return  なし
 	 */
 	void Update();
+
+#ifdef _DEBUG
+
+	void Draw();
+#endif // _DEBUG
+
 };
 
 // EOF

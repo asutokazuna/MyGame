@@ -34,6 +34,8 @@ void TowerManager::Awake()
  */
 HRESULT TowerManager::Init()
 {
+	GameObject::Init();
+
 	for (auto t : m_Tower)
 	{
 		t->Init();

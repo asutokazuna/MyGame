@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file TowerMgrCtrl
- * @brief ƒ^ƒ[ŠÇ—ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief ã‚¿ãƒ¯ãƒ¼ç®¡ç†ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 #pragma once
 #include "Component.h"
@@ -12,23 +12,25 @@ class Tower;
 
 /**
  * @class TowerMgrCtrl
- * @brief ƒ^ƒ[ŠÇ—ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief ã‚¿ãƒ¯ãƒ¼ç®¡ç†ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 class TowerMgrCtrl:public Component
 {
 private:
-	std::list<Tower*> m_towerList;
+	std::list<GameObject*> m_towerList;
 
 public:
 	/**
-	 * @brief ‰Šú‰»ˆ—
-	 * @return ‚È‚µ
+	 * @brief åˆæœŸåŒ–å‡¦ç†
+	 * @return ãªã—
 	 */
 	void Awake();
 
+	HRESULT Init();
+
 	/**
-	 * @brief ”¼•ªˆÈãè‹’‚µ‚Ä‚¢‚é‚©
-	 * @return ”¼•ªˆÈãè‹’‚µ‚Ä‚¢‚ê‚Îtrue
+	 * @brief åŠåˆ†ä»¥ä¸Šå æ‹ ã—ã¦ã„ã‚‹ã‹
+	 * @return åŠåˆ†ä»¥ä¸Šå æ‹ ã—ã¦ã„ã‚Œã°true
 	 */
 	bool IsOccupation(int kind);
 };
